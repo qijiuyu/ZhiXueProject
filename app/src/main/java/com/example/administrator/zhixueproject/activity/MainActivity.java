@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import com.example.administrator.zhixueproject.R;
 
+/**
+ * 首页
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
