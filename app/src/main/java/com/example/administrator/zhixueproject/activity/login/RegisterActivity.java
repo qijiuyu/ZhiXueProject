@@ -77,13 +77,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                      break;
                 //动态改变验证码秒数
                 case 0x001:
-                    tvCode.setText(time + "秒后重试");
+                    tvCode.setText(time + getString(R.string.login_code_later));
                     break;
                 case 0x002:
                     if (null != mTimer) {
                         mTimer.cancel();
                     }
-                    tvCode.setText("获取验证码");
+                    tvCode.setText(getString(R.string.get_code));
                     MyApplication.spUtil.removeMessage(SPUtil.SMS_CODE_TIME);
                     break;
                 //注册
