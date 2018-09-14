@@ -9,7 +9,7 @@
     </style>
     <style name="view_line">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dm001</item>
+        <item name="android:layout_height">1dp</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:background">@color/color_f0f0f0</item>
     </style>

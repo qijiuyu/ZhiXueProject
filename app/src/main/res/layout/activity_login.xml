@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <include layout="@layout/head"/>
+        
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="57dp">
+            
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/phone_icon"/>
+
+            <EditText
+                android:id="@+id/et_telphone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:hint="@string/input_telphone"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:maxLength="11"
+                android:textColor="@color/color_333333"
+                android:textColorHint="@color/color_999999"/>
+
+        </LinearLayout>
+
+        <View
+            style="@style/view_line"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="57dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/pwd_icon"/>
+
+            <EditText
+                android:id="@+id/et_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:hint="@string/input_password"
+                android:textSize="15sp"
+                android:inputType="textPassword"
+                android:maxLength="16"
+                android:textColor="@color/color_333333"
+                android:textColorHint="@color/color_999999"/>
+
+        </LinearLayout>
+
+        <View
+            style="@style/view_line"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <RelativeLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="57dp">
+
+            <ImageView
+                android:id="@+id/iv_code_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/code_icon"/>
+
+            <ImageView
+                android:id="@+id/iv_get_code"
+                android:layout_alignParentRight="true"
+                android:layout_width="61dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true" />
+
+            <EditText
+                android:id="@+id/et_code"
+                android:layout_toRightOf="@+id/iv_code_icon"
+                android:layout_toLeftOf="@+id/iv_get_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:maxLength="4"
+                android:background="@null"
+                android:hint="@string/code"
+                android:textSize="15sp"
+                android:textColor="@color/color_333333"
+                android:textColorHint="@color/color_999999"/>
+
+        </RelativeLayout>
+
+        <View
+            style="@style/view_line"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@mipmap/bg_botton"
+            android:layout_marginTop="47dp"
+            android:gravity="center"
+            android:text="@string/login"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_forget_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/forget_pwd"
+            android:textColor="@color/color_40c5f1"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_weixin_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="33dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/weixin"/>
+
+    <RelativeLayout
+        android:layout_above="@+id/iv_weixin_login"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp">
+
+        <TextView
+            android:id="@+id/tv_weixin_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/weixin_login"
+            android:textColor="@color/color_999999"
+            android:textSize="13sp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_dbdbdb"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_weixin_login"
+            android:layout_marginRight="17dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_dbdbdb"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/tv_weixin_login"
+            android:layout_marginLeft="17dp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

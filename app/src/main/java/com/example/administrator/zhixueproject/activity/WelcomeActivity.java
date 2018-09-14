@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.login.LoginActivity;
 import com.example.administrator.zhixueproject.activity.login.RegisterActivity;
 
 public class WelcomeActivity extends BaseActivity {
@@ -42,7 +43,7 @@ public class WelcomeActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                setClass(RegisterActivity.class);
+                setClass(LoginActivity.class);
             }
         });
         relativeLayout.setAnimation(myAnimation_Alpha);

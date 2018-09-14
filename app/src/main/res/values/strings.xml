@@ -30,4 +30,5 @@
     <string name="login_right_code">验证码不能为空</string>
     <string name="code_error">验证码不正确</string>
     <string name="register_success">注册成功!</string>
+    <string name="main_title">学院管理系统</string>
 </resources>
