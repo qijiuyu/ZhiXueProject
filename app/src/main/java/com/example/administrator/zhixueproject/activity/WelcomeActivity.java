@@ -44,6 +44,7 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 setClass(LoginActivity.class);
+                finish();
             }
         });
         relativeLayout.setAnimation(myAnimation_Alpha);
