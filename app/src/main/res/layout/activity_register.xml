@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/head"/>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -20,8 +22,8 @@
             android:layout_height="57dp">
 
             <ImageView
-                android:layout_width="21dp"
-                android:layout_height="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@mipmap/phone_icon"/>
 
             <EditText
@@ -29,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
                 android:background="@null"
                 android:hint="@string/input_telphone_11"
                 android:textSize="15sp"
@@ -41,10 +44,10 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="1dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:background="@color/color_f0f0f0"/>
+            android:background="@color/color_EBEBEB"/>
 
         <RelativeLayout
             android:layout_marginLeft="20dp"
@@ -59,7 +62,7 @@
                 android:layout_centerVertical="true"
                 android:src="@mipmap/code_icon"/>
 
-            <TextView
+            <com.example.administrator.zhixueproject.view.ClickTextView
                 android:id="@+id/tv_get_code"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
@@ -73,6 +76,7 @@
                 android:id="@+id/et_code"
                 android:layout_toRightOf="@+id/iv_code_icon"
                 android:layout_toLeftOf="@+id/tv_get_code"
+                android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
@@ -90,7 +94,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="1dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:background="@color/color_f0f0f0"/>
@@ -112,6 +116,7 @@
                 android:id="@+id/et_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
                 android:hint="@string/setting_pwd"
@@ -125,7 +130,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="1dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:background="@color/color_f0f0f0"/>
@@ -147,6 +152,7 @@
                 android:id="@+id/et_confirm_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
                 android:hint="@string/confirm_pwd"
@@ -160,15 +166,15 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="1dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:background="@color/color_f0f0f0"/>
 
-        <TextView
+        <com.example.administrator.zhixueproject.view.ClickTextView
             android:id="@+id/tv_register"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@mipmap/bg_botton"

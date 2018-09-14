@@ -10,6 +10,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.login.RegisterActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.utils.SPUtil;
+
 import java.util.ArrayList;
 
 /**
@@ -28,7 +31,10 @@ public class GuideActivity extends BaseActivity {
     };
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题
+        if(MyApplication.spUtil.getBoolean(SPUtil.IS_FIRST_OPEN)){
+            setClass(WelcomeActivity.class);
+            finish();
+        }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏
         setContentView(R.layout.activity_guide);
         startBanner();
@@ -54,10 +60,6 @@ public class GuideActivity extends BaseActivity {
 
             }
             public void onPageSelected(int i) {
-                if(i==2){
-                    setClass(RegisterActivity.class);
-                    finish();
-                }
             }
             public void onPageScrollStateChanged(int i) {
 
@@ -81,9 +83,18 @@ public class GuideActivity extends BaseActivity {
 
         //加载页面
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(ViewGroup container, final int position) {
             ImageView iv = imageViews.get(position);
             container.addView(iv);
+            iv.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if(position==2){
+                        setClass(WelcomeActivity.class);
+                        MyApplication.spUtil.addBoolean(SPUtil.IS_FIRST_OPEN,true);
+                        finish();
+                    }
+                }
+            });
             return iv;
         }
 

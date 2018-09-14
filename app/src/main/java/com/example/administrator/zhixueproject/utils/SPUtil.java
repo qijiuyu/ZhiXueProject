@@ -9,6 +9,13 @@ public class SPUtil {
     private SharedPreferences shar;
     private Editor editor;
     public final static String USERMESSAGE = "zhixue";
+
+    //是否首次打开APP
+    public static final String IS_FIRST_OPEN="is_first_open";
+    //验证码计时器
+    public static final String SMS_CODE_TIME="sms_code_time";
+    //登陆手机号码
+    public static final String LOGIN_MOBILE="login_mobile";
     private static SPUtil sharUtil = null;
     private SPUtil(Context context, String sharname) {
         shar = context.getSharedPreferences(sharname, Context.MODE_PRIVATE + Context.MODE_APPEND);

@@ -19,5 +19,15 @@ public interface HttpApi1 {
      */
     @FormUrlEncoded
     @POST(HttpConstant.GET_SMS_CODE)
-    Call<BaseBean> sendCode(@FieldMap Map<String, String> map);
+    Call<BaseBean> getSmsCode(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 注册
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.REGISTER)
+    Call<BaseBean> register(@FieldMap Map<String, String> map);
 }
