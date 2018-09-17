@@ -1,10 +1,12 @@
 package com.example.administrator.zhixueproject.http.api;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -30,4 +32,14 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.REGISTER)
     Call<BaseBean> register(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 登陆
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.LOGIN)
+    Call<UserInfo> login(@FieldMap Map<String, String> map);
 }

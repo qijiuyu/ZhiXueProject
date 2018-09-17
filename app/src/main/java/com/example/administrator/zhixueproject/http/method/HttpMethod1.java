@@ -3,14 +3,17 @@ package com.example.administrator.zhixueproject.http.method;
 import android.os.Handler;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.api.HttpApi1;
 import com.example.administrator.zhixueproject.http.base.BaseRequst;
 import com.example.administrator.zhixueproject.http.base.Http;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,6 +66,31 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 登陆
+     * @param handler
+     */
+    public static void login(String mobile,String pwd,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("mobile",mobile);
+        map.put("pwd",pwd);
+        Http.getRetrofit().create(HttpApi1.class).login(map).enqueue(new Callback<UserInfo>() {
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.LOGIN_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<UserInfo> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });

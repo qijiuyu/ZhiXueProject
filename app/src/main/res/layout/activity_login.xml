@@ -94,8 +94,8 @@
             <ImageView
                 android:id="@+id/iv_get_code"
                 android:layout_alignParentRight="true"
-                android:layout_width="61dp"
-                android:layout_height="25dp"
+                android:layout_width="71dp"
+                android:layout_height="35dp"
                 android:layout_centerVertical="true" />
 
             <EditText
@@ -120,7 +120,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"/>
 
-        <TextView
+        <com.example.administrator.zhixueproject.view.ClickTextView
             android:id="@+id/tv_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
