@@ -1,5 +1,7 @@
 package com.example.administrator.zhixueproject.activity;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,23 +13,44 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 public class BaseActivity extends FragmentActivity {
     protected Context mContext = this;
     private ProgressDialog progressDialog = null;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 21){
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        transparencyBar(this);
+    }
+
+    /**
+     * 修改状态栏为全透明
+     *
+     * @param activity
+     */
+    @TargetApi(19)
+    public void transparencyBar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = activity.getWindow();
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
 
-
     /**
      * 跳转Activity
+     *
      * @param cls
      */
     protected void setClass(Class<?> cls) {
@@ -39,6 +62,7 @@ public class BaseActivity extends FragmentActivity {
 
     /**
      * 显示进度条
+     *
      * @param msg
      */
     public void showProgress(String msg) {
@@ -80,6 +104,7 @@ public class BaseActivity extends FragmentActivity {
 
     /**
      * 显示Toast提示
+     *
      * @param msg
      */
     public void showMsg(String msg) {

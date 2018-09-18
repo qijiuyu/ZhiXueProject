@@ -11,11 +11,6 @@
         android:background="@mipmap/home_title_bg"
         android:orientation="vertical">
 
-        <View
-            android:id="@+id/view_statusbar"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-
         <RelativeLayout
             android:id="@+id/rl_title"
             android:layout_marginTop="15dp"

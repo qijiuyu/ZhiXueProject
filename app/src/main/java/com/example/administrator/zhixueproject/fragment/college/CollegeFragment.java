@@ -1,7 +1,6 @@
 package com.example.administrator.zhixueproject.fragment.college;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,12 +12,9 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.TabActivity;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
-import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.view.PagerSlidingTabStrip;
 
@@ -27,33 +23,36 @@ import com.example.administrator.zhixueproject.view.PagerSlidingTabStrip;
  * Created by Administrator on 2018/1/3 0003.
  */
 
-public class CollegeFragment extends BaseFragment implements View.OnClickListener{
+public class CollegeFragment extends BaseFragment implements View.OnClickListener {
 
     private PagerSlidingTabStrip tabs;
     private CircleImageView imgHead;
     private DisplayMetrics dm;
     private ViewPager pager;
-    private CollegeInfoFragment collegeInfoFragment=new CollegeInfoFragment();
-    private BuyVipFragment buyVipFragment=new BuyVipFragment();
+    private CollegeInfoFragment collegeInfoFragment = new CollegeInfoFragment();
+    private BuyVipFragment buyVipFragment = new BuyVipFragment();
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
 
-    View view=null;
+    View view = null;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_college, container, false);
-        pager=(ViewPager)view.findViewById(R.id.pager);
-        imgHead=(CircleImageView)view.findViewById(R.id.img_fc_head);
+        pager = (ViewPager) view.findViewById(R.id.pager);
+        imgHead = (CircleImageView) view.findViewById(R.id.img_fc_head);
         imgHead.setOnClickListener(this);
-        tabs = (PagerSlidingTabStrip)view.findViewById(R.id.tabs);
+        tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         dm = getResources().getDisplayMetrics();
         pager.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
         pager.setOffscreenPageLimit(2);
         tabs.setViewPager(pager);
         setTabsValue();
+        view.setFitsSystemWindows(false);
         return view;
     }
 
@@ -86,10 +85,10 @@ public class CollegeFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.img_fc_head:
                 TabActivity.openLeft();
-                 break;
+                break;
         }
     }
 
@@ -100,7 +99,7 @@ public class CollegeFragment extends BaseFragment implements View.OnClickListene
             super(fm);
         }
 
-        private final String[] titles = { "基本信息","学院VIP购买"};
+        private final String[] titles = {"基本信息", "学院VIP购买"};
 
         @Override
         public CharSequence getPageTitle(int position) {
@@ -114,15 +113,14 @@ public class CollegeFragment extends BaseFragment implements View.OnClickListene
 
         @Override
         public Fragment getItem(int position) {
-            if(position==0){
+            if (position == 0) {
                 return collegeInfoFragment;
-            }else{
+            } else {
                 return buyVipFragment;
             }
         }
 
     }
-
 
 
 }
