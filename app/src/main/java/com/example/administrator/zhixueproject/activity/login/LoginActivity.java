@@ -107,7 +107,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                          return;
                      }
                      if(userInfo.isStatus()){
-                         
+
                      }else{
                          showMsg(userInfo.getErrorMsg());
                      }
