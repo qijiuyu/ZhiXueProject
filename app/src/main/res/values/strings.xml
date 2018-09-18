@@ -31,4 +31,18 @@
     <string name="code_error">验证码不正确</string>
     <string name="register_success">注册成功!</string>
     <string name="main_title">学院管理系统</string>
+    <!--学院管理-->
+    <string name="institution_manage">学院管理</string>
+    <string name="open_institution">开通学院</string>
+    <string name="member_level_setting">会员等级设置</string>
+    <string name="medal_manage">勋章管理</string>
+    <string name="vip_apply">VIP申请明细</string>
+    <string name="report_manage">举报管理</string>
+    <string name="friendly_business_in">友商管理(购进)</string>
+    <string name="friendly_business_out">友商管理(售出)</string>
+    <string name="recent_earnings">近期收益</string>
+    <string name="cash_details">提现明细</string>
+    <string name="announcement_edit">公告编辑</string>
+    <string name="feedback">意见反馈</string>
+    <string name="about_platform">关于平台</string>
 </resources>

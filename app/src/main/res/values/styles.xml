@@ -37,4 +37,30 @@
         <item name="android:textColor">@drawable/tab_text</item>
     </style>
 
+    <!--学院管理条目-->
+    <style name="iv_icon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="tv_item">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="iv_right_arrow">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">12dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:src">@mipmap/right_arrow</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
 </resources>
