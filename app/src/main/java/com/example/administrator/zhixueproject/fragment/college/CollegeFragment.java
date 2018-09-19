@@ -56,6 +56,7 @@ public class CollegeFragment extends BaseFragment implements View.OnClickListene
         pager.setOffscreenPageLimit(2);
         tabs.setViewPager(pager);
         setTabsValue();
+        view.setFitsSystemWindows(false);
         return view;
     }
 
