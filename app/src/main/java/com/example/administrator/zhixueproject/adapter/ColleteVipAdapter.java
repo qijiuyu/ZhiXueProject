@@ -50,6 +50,7 @@ public class ColleteVipAdapter extends BaseAdapter{
 			holder.tvYearMoney=(TextView)view.findViewById(R.id.tv_year_fee);
 			holder.tvPersonNum=(TextView)view.findViewById(R.id.tv_person_num);
 			holder.tvTopIc=(TextView)view.findViewById(R.id.tv_topic_num);
+			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
 		}
