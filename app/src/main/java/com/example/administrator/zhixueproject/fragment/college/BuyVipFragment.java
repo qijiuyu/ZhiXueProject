@@ -56,7 +56,7 @@ public class BuyVipFragment extends BaseFragment{
                          return;
                      }
                      if(colleteVips.isStatus()){
-                         LogUtils.e(colleteVips.getData().getCollegeGradeList()+"++++++++++");
+                         LogUtils.e(colleteVips.getData().getCollegeGradeList().size()+"++++++++++");
                          list.addAll(colleteVips.getData().getCollegeGradeList());
                          colleteVipAdapter=new ColleteVipAdapter(getActivity(),list);
                          listView.setAdapter(colleteVipAdapter);
@@ -64,6 +64,11 @@ public class BuyVipFragment extends BaseFragment{
                          showMsg(colleteVips.getErrorMsg());
                      }
                      break;
+                case HandlerConstant1.REQUST_ERROR:
+                     showMsg(getString(R.string.net_error));
+                     break;
+                     default:
+                         break;
             }
 
 
