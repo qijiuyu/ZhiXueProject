@@ -1,7 +1,6 @@
 package com.example.administrator.zhixueproject.fragment.college;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,13 +12,10 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
-import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.view.PagerSlidingTabStrip;
 
@@ -51,6 +47,8 @@ public class CollegeFragment extends BaseFragment implements View.OnClickListene
         imgHead.setOnClickListener(this);
         view.findViewById(R.id.iv_college).setOnClickListener(this);
         tabs = (PagerSlidingTabStrip)view.findViewById(R.id.tabs);
+        view.findViewById(R.id.iv_college).setOnClickListener(this);
+        tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         dm = getResources().getDisplayMetrics();
         pager.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
         pager.setOffscreenPageLimit(2);
