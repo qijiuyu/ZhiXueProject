@@ -12,4 +12,7 @@ public class HttpConstant {
 
     //登陆
     public static final String LOGIN="user/login.do";
+
+    //查询学院VIP数据
+    public static final String GET_COLLETE_VIPS="college/getCollegeGradeList.do";
 }

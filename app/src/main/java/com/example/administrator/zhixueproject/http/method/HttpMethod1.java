@@ -3,6 +3,7 @@ package com.example.administrator.zhixueproject.http.method;
 import android.os.Handler;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.api.HttpApi1;
@@ -91,6 +92,30 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<UserInfo> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 查询学院vip等级
+     * @param handler
+     */
+    public static void getCollegeVips(final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        Http.getRetrofit().create(HttpApi1.class).getCollegeVips(map).enqueue(new Callback<ColleteVips>() {
+            public void onResponse(Call<ColleteVips> call, Response<ColleteVips> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_COLLETE_VIPS_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ColleteVips> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });

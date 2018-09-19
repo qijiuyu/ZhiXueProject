@@ -44,7 +44,7 @@ public class BaseFragment extends Fragment {
 
     protected void setClass(Class<?> cls) {
         Intent intent = new Intent();
-        intent.setClass(getActivity(), cls);
+        intent.setClass(mActivity, cls);
         startActivity(intent);
     }
 
