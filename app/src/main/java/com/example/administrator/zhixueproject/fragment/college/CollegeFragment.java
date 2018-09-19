@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.TabActivity;
+import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
@@ -48,6 +49,7 @@ public class CollegeFragment extends BaseFragment implements View.OnClickListene
         pager=(ViewPager)view.findViewById(R.id.pager);
         imgHead=(CircleImageView)view.findViewById(R.id.img_fc_head);
         imgHead.setOnClickListener(this);
+        view.findViewById(R.id.iv_college).setOnClickListener(this);
         tabs = (PagerSlidingTabStrip)view.findViewById(R.id.tabs);
         dm = getResources().getDisplayMetrics();
         pager.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
@@ -87,9 +89,16 @@ public class CollegeFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            //点击头像
             case R.id.img_fc_head:
                 TabActivity.openLeft();
                  break;
+            //点击设置
+            case R.id.iv_college:
+                 setClass(CollegeManageActivity.class);
+                 break;
+                 default:
+                     break;
         }
     }
 

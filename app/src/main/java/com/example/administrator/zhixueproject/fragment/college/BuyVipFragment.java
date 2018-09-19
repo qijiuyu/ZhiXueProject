@@ -1,13 +1,24 @@
 package com.example.administrator.zhixueproject.fragment.college;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.adapter.ColleteVipAdapter;
+import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
+import com.example.administrator.zhixueproject.http.HandlerConstant1;
+import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.utils.LogUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 帖子fragment
@@ -16,19 +27,66 @@ import com.example.administrator.zhixueproject.fragment.BaseFragment;
 
 public class BuyVipFragment extends BaseFragment{
 
+    private ListView listView;
+    private List<ColleteVips.ColleteVipsBean.collegeGradeListBean> list=new ArrayList<>();
+    private ColleteVipAdapter colleteVipAdapter;
+    //fragment是否可见
+    private boolean isVisibleToUser=false;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
 
-    View view=null;
-    @Nullable
-    @Override
+    View view;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_login, container, false);
+        view = inflater.inflate(R.layout.fragment_college_vips, container, false);
+        listView=(ListView)view.findViewById(R.id.listView);
+        getVips();
         return view;
     }
 
 
+    private Handler mHandler=new Handler(){
+        public void handleMessage(Message msg) {
+            clearTask();
+            switch (msg.what){
+                case HandlerConstant1.GET_COLLETE_VIPS_SUCCESS:
+                     ColleteVips colleteVips= (ColleteVips) msg.obj;
+                     if(null==colleteVips){
+                         return;
+                     }
+                     if(colleteVips.isStatus()){
+                         LogUtils.e(colleteVips.getData().getCollegeGradeList()+"++++++++++");
+                         list.addAll(colleteVips.getData().getCollegeGradeList());
+                         colleteVipAdapter=new ColleteVipAdapter(getActivity(),list);
+                         listView.setAdapter(colleteVipAdapter);
+                     }else{
+                         showMsg(colleteVips.getErrorMsg());
+                     }
+                     break;
+            }
+
+
+        }
+    };
+
+
+    /**
+     * 查询学院vip等级
+     */
+    private void getVips(){
+        if(isVisibleToUser && view!=null && list.size()==0){
+            showProgress("数据查询中");
+            HttpMethod1.getCollegeVips(mHandler);
+        }
+    }
+
+
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser=isVisibleToUser;
+        //查询数据
+        getVips();
+    }
 
 }

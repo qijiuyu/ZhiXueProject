@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.http.api;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 
@@ -42,4 +43,14 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.LOGIN)
     Call<UserInfo> login(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 查询学院vip等级
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_COLLETE_VIPS)
+    Call<ColleteVips> getCollegeVips(@FieldMap Map<String, String> map);
 }

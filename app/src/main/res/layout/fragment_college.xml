@@ -39,22 +39,15 @@
                 android:layout_centerInParent="true"
                 android:background="@android:color/transparent"/>
 
-
-            <RelativeLayout
+            <ImageView
+                android:id="@+id/iv_college"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp">
-
-                <ImageView
-                    android:id="@+id/iv_college"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/institution_icon" />
-
-            </RelativeLayout>
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/institution_icon" />
 
         </RelativeLayout>
 

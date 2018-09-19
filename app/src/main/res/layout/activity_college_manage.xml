@@ -11,7 +11,7 @@
         android:scrollbars="none"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dm000">
+        android:layout_height="0dp">
 
         <LinearLayout
             android:orientation="vertical"
@@ -27,7 +27,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_institution_manage"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dm036">
+                    android:layout_height="48dp">
 
                     <ImageView
                         android:id="@+id/iv_institution_manage"
@@ -44,7 +44,6 @@
                 </RelativeLayout>
 
                 <View
-                    android:layout_marginTop="@dimen/dm034"
                     style="@style/view_line"/>
 
             </LinearLayout>
@@ -53,7 +52,7 @@
             <RelativeLayout
                 android:id="@+id/rl_open_institution"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm101">
+                android:layout_height="48dp">
                 <ImageView
                     android:id="@+id/iv_open_institution"
                     style="@style/iv_icon"
@@ -72,7 +71,7 @@
             <RelativeLayout
                 android:id="@+id/rl_member_level_setting"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm101">
+                android:layout_height="48dp">
                 <ImageView
                     android:id="@+id/iv_member_level_setting"
                     style="@style/iv_icon"
@@ -91,7 +90,7 @@
             <RelativeLayout
                 android:id="@+id/rl_medal_manage"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm101">
+                android:layout_height="48dp">
                 <ImageView
                     android:id="@+id/iv_medal_manage"
                     style="@style/iv_icon"
@@ -110,7 +109,7 @@
             <RelativeLayout
                 android:id="@+id/rl_vip_apply"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm101">
+                android:layout_height="48dp">
                 <ImageView
                     android:id="@+id/iv_vip_apply"
                     style="@style/iv_icon"
@@ -129,7 +128,7 @@
             <RelativeLayout
                 android:id="@+id/rl_report_manage"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm101">
+                android:layout_height="48dp">
                 <ImageView
                     android:id="@+id/iv_report_manage"
                     style="@style/iv_icon"
@@ -148,7 +147,7 @@
             <RelativeLayout
                 android:id="@+id/rl_friendly_business_in"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm101">
+                android:layout_height="48dp">
                 <ImageView
                     android:id="@+id/iv_friendly_business_in"
                     style="@style/iv_icon"
@@ -167,7 +166,7 @@
             <RelativeLayout
                 android:id="@+id/rl_friendly_business_out"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm101">
+                android:layout_height="48dp">
                 <ImageView
                     android:id="@+id/iv_friendly_business_out"
                     style="@style/iv_icon"
@@ -186,7 +185,7 @@
             <RelativeLayout
                 android:id="@+id/rl_recent_earnings"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm101">
+                android:layout_height="48dp">
                 <ImageView
                     android:id="@+id/iv_recent_earnings"
                     style="@style/iv_icon"
@@ -205,7 +204,7 @@
             <RelativeLayout
                 android:id="@+id/rl_cash_details"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm101">
+                android:layout_height="48dp">
                 <ImageView
                     android:id="@+id/iv_cash_details"
                     style="@style/iv_icon"
@@ -224,7 +223,7 @@
             <RelativeLayout
                 android:id="@+id/rl_announcement_edit"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm101">
+                android:layout_height="48dp">
                 <ImageView
                     android:id="@+id/iv_announcement_edit"
                     style="@style/iv_icon"
@@ -243,7 +242,7 @@
             <RelativeLayout
                 android:id="@+id/rl_feedback"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm101">
+                android:layout_height="48dp">
                 <ImageView
                     android:id="@+id/iv_feedback"
                     style="@style/iv_icon"
@@ -262,7 +261,7 @@
             <RelativeLayout
                 android:id="@+id/rl_about_platform"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm101">
+                android:layout_height="48dp">
                 <ImageView
                     android:id="@+id/iv_about_platform"
                     style="@style/iv_icon"
