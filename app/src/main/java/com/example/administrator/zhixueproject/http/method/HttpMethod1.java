@@ -4,6 +4,7 @@ import android.os.Handler;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
+import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.api.HttpApi1;
@@ -115,6 +116,31 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<ColleteVips> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 查询首页信息
+     * @param handler
+     */
+    public static void getHomeInfo(String c,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("c",c);
+        Http.getRetrofit().create(HttpApi1.class).getHomeInfo(map).enqueue(new Callback<Home>() {
+            public void onResponse(Call<Home> call, Response<Home> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_HOME_INFO_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<Home> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

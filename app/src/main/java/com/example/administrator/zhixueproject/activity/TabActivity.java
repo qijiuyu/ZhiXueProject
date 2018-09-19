@@ -1,17 +1,18 @@
 package com.example.administrator.zhixueproject.activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioButton;
-
+import android.widget.Toast;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.adapter.TabAdapter;
+import com.example.administrator.zhixueproject.utils.ActivitysLifecycle;
 import com.example.administrator.zhixueproject.utils.EnumTAB;
 import com.example.administrator.zhixueproject.utils.EnumUtils;
 import com.example.administrator.zhixueproject.view.MyViewPager;
@@ -22,7 +23,8 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
     //侧滑菜单
     public static DrawerLayout mDrawerLayout;
     private TabAdapter tabAdapter;
-
+    // 按两次退出
+    protected long exitTime = 0;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
@@ -106,6 +108,20 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
     public static void openLeft() {
         mDrawerLayout.openDrawer(Gravity.LEFT);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.LEFT);
+    }
+
+
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN ) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(getApplicationContext(),"再按一次退出程序!",Toast.LENGTH_LONG).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                ActivitysLifecycle.getInstance().exit();
+            }
+            return false;
+        }
+        return super.dispatchKeyEvent(event);
     }
 
 }

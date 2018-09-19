@@ -16,6 +16,8 @@ public class SPUtil {
     public static final String SMS_CODE_TIME="sms_code_time";
     //登陆手机号码
     public static final String LOGIN_MOBILE="login_mobile";
+    //用户信息
+    public static final String USER_INFO="user_info";
     private static SPUtil sharUtil = null;
     private SPUtil(Context context, String sharname) {
         shar = context.getSharedPreferences(sharname, Context.MODE_PRIVATE + Context.MODE_APPEND);

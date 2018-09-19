@@ -42,7 +42,7 @@
             android:name="design_height"
             android:value="1280"></meta-data>
 
-        <activity android:name=".activity.TabActivity">
+        <activity android:name=".activity.GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,7 +54,7 @@
         <activity android:name=".activity.login.RegisterActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.LoginActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.CollegeHomeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.GuideActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.TabActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.CollegeManageActivity" android:screenOrientation="portrait"/>
 
     </application>
