@@ -50,24 +50,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activity.WelcomeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.login.RegisterActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.login.LoginActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.college.CollegeHomeActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.GuideActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.collegeManager.CollegeManagerActivity"
-            android:screenOrientation="portrait" />
         <activity android:name=".activity.WelcomeActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.RegisterActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.LoginActivity" android:screenOrientation="portrait"/>

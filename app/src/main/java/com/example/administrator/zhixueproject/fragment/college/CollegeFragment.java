@@ -1,8 +1,6 @@
 package com.example.administrator.zhixueproject.fragment.college;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,16 +12,10 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.TabActivity;
-import com.example.administrator.zhixueproject.activity.collegeManager.CollegeManagerActivity;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
-import com.example.administrator.zhixueproject.utils.LogUtils;
-import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.view.PagerSlidingTabStrip;
 
@@ -106,15 +98,6 @@ public class CollegeFragment extends BaseFragment implements View.OnClickListene
                  break;
                  default:
                      break;
-                break;
-            case R.id.iv_college:
-                LogUtils.e("onClick");
-                Intent mIntent=new Intent();
-                mIntent.setClass(getActivity(),CollegeManagerActivity.class);
-                startActivity(mIntent);
-                break;
-            default:
-                break;
         }
     }
 
