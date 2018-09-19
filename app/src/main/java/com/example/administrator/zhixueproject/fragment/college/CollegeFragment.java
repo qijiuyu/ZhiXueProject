@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.fragment.college;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +13,13 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.TabActivity;
+import com.example.administrator.zhixueproject.activity.collegeManager.CollegeManagerActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.view.PagerSlidingTabStrip;
 
@@ -46,6 +51,7 @@ public class CollegeFragment extends BaseFragment implements View.OnClickListene
         pager = (ViewPager) view.findViewById(R.id.pager);
         imgHead = (CircleImageView) view.findViewById(R.id.img_fc_head);
         imgHead.setOnClickListener(this);
+        view.findViewById(R.id.iv_college).setOnClickListener(this);
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         dm = getResources().getDisplayMetrics();
         pager.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
@@ -88,6 +94,14 @@ public class CollegeFragment extends BaseFragment implements View.OnClickListene
         switch (v.getId()) {
             case R.id.img_fc_head:
                 TabActivity.openLeft();
+                break;
+            case R.id.iv_college:
+                LogUtils.e("onClick");
+                Intent mIntent=new Intent();
+                mIntent.setClass(getActivity(),CollegeManagerActivity.class);
+                startActivity(mIntent);
+                break;
+            default:
                 break;
         }
     }
