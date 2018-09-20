@@ -29,7 +29,7 @@
 
             <com.example.administrator.zhixueproject.view.PagerSlidingTabStrip
                 android:id="@+id/tabs"
-                android:layout_width="200dp"
+                android:layout_width="230dp"
                 android:layout_height="45dp"
                 android:layout_centerInParent="true"
                 android:background="@android:color/transparent"/>

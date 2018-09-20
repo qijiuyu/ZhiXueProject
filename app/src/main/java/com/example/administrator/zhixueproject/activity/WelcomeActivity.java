@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.login.LoginActivity;
 import com.example.administrator.zhixueproject.activity.login.RegisterActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
 
 public class WelcomeActivity extends BaseActivity {
 
@@ -43,7 +44,11 @@ public class WelcomeActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                setClass(LoginActivity.class);
+                if(null== MyApplication.userInfo){
+                    setClass(LoginActivity.class);
+                }else{
+                    setClass(TabActivity.class);
+                }
                 finish();
             }
         });

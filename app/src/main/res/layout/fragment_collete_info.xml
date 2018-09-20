@@ -15,10 +15,11 @@
             android:layout_height="wrap_content"
             android:padding="19dp">
 
-            <com.example.administrator.zhixueproject.view.XCRoundRectImageView
+            <com.example.administrator.zhixueproject.view.OvalImageViews
                 android:id="@+id/iv_college"
-                android:layout_width="match_parent"
+                android:layout_width="337dp"
                 android:layout_height="192dp"
+                android:layout_centerInParent="true"
                 android:scaleType="centerCrop" />
 
             <ImageView
@@ -36,17 +37,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dm030"
+            android:layout_marginTop="15dp"
             android:singleLine="true"
             android:text=""
             android:textColor="@color/color_222222"
-            android:textSize="@dimen/dm034" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dm030"
+            android:layout_marginTop="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -55,36 +56,35 @@
                 android:layout_height="wrap_content"
                 android:text="学院VIP等级"
                 android:textColor="@color/color_fd703e"
-                android:textSize="@dimen/dm024" />
+                android:textSize="12sp" />
 
             <ImageView
                 android:id="@+id/iv_grade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dm010"
+                android:layout_marginLeft="5dp"
                 android:background="@mipmap/vip_iv" />
 
             <TextView
                 android:id="@+id/tv_expire_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dm040"
-                android:text=""
+                android:layout_marginLeft="19dp"
                 android:textColor="@color/color_999999"
-                android:textSize="@dimen/dm022" />
+                android:textSize="10sp" />
+
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dm040"
+            android:layout_margin="19dp"
             android:ellipsize="end"
             android:gravity="center"
-            android:lineSpacingExtra="@dimen/dm008"
-            android:text=""
+            android:lineSpacingExtra="4dp"
             android:textColor="#8c8c8c"
-            android:textSize="@dimen/dm028" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 

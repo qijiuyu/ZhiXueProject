@@ -13,11 +13,14 @@ import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.activity.TabActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.CodeUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.example.administrator.zhixueproject.utils.Utils;
 
 /**
@@ -102,12 +105,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             super.handleMessage(msg);
             clearTask();
             switch (msg.what){
+                //登陆回执
                 case HandlerConstant1.LOGIN_SUCCESS:
-                     UserInfo userInfo= (UserInfo) msg.obj;
+                     final UserInfo userInfo= (UserInfo) msg.obj;
                      if(null==userInfo){
                          return;
                      }
                      if(userInfo.isStatus()){
+                         MyApplication.userInfo=userInfo;
+                         MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(userInfo));
+                         setClass(TabActivity.class);
+                         finish();
                          // 保存用户id
                          int userId=userInfo.getData().getUser().getUserId();
                          MyApplication.spUtil.addInt("c",userId);

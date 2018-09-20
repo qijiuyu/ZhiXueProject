@@ -27,7 +27,7 @@ public class DateUtil {
      * @param time
      * @return
      */
-    public static String getData(long time) {
+    public static String gethour(long time) {
         if (time <= 0) {
             return "";
         }
