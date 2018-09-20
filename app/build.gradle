@@ -42,7 +42,14 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-    compile files('libs/glide-3.7.0.jar')
-    compile 'com.zhy:autolayout:1.4.5'
     compile 'com.android.support:recyclerview-v7:23.0.0'
+    //刷新和加载
+    compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
+    //通用adapter
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    compile 'com.github.bumptech.glide:glide:4.0.0'
+    //侧滑菜单
+    compile 'com.github.anzaizai:EasySwipeMenuLayout:1.1.2'
+
+
 }

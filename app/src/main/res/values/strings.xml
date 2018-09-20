@@ -45,4 +45,17 @@
     <string name="announcement_edit">公告编辑</string>
     <string name="feedback">意见反馈</string>
     <string name="about_platform">关于平台</string>
+
+    <array name="add_topic">
+        <item>免费</item>
+        <item>付费</item>
+        <item>VIP</item>
+        <item>权限</item>
+    </array>
+
+    <array name="topic_type">
+        <item>全部</item>
+        <item>课程</item>
+        <item>大家谈</item>
+    </array>
 </resources>

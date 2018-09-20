@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
@@ -107,7 +108,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                          return;
                      }
                      if(userInfo.isStatus()){
-
+                         // 保存用户id
+                         int userId=userInfo.getData().getUser().getUserId();
+                         MyApplication.spUtil.addInt("c",userId);
                      }else{
                          showMsg(userInfo.getErrorMsg());
                      }
