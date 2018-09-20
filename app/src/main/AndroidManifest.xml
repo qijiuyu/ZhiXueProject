@@ -52,6 +52,7 @@
 
         <activity android:name=".activity.WelcomeActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.RegisterActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.login.SettingPwdActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.LoginActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.CollegeHomeActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.TabActivity" android:screenOrientation="portrait"/>

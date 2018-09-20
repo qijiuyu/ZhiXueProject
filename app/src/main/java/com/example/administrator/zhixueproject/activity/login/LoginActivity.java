@@ -39,6 +39,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     /**
      * 初始化控件
      */
+    //13911896806 123456
     private void initView(){
         TextView tvTitle=(TextView)findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.main_title));
@@ -51,6 +52,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         imgCode.setImageBitmap(CodeUtils.getInstance().createBitmap());
         findViewById(R.id.tv_login).setOnClickListener(this);
         findViewById(R.id.iv_get_code).setOnClickListener(this);
+        findViewById(R.id.tv_forget_pwd).setOnClickListener(this);
+        findViewById(R.id.lin_back).setOnClickListener(this);
         tvRegister.setOnClickListener(this);
     }
 
@@ -95,6 +98,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 showProgress("登陆中...");
                 HttpMethod1.login(mobile,pwd,mHandler);
                  break;
+            //忘记密码
+            case R.id.tv_forget_pwd:
+                 setClass(SettingPwdActivity.class);
+                 break;
+            case R.id.lin_back:
+                 finish();
+                 break;
+                 default:
+                     break;
         }
     }
 
@@ -128,4 +140,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             }
         }
     };
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final String mobile=MyApplication.spUtil.getString(SPUtil.LOGIN_MOBILE);
+        etMobile.setText(mobile);
+    }
 }

@@ -21,4 +21,7 @@ public class HttpConstant {
 
     //查询首页信息
     public static final String GET_HOME_INFO="user/home.do";
+
+    //修改密码
+    public static final String UPDATE_PWD="user/updatePwdByMobile.do";
 }

@@ -15,7 +15,6 @@ import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
-import com.example.administrator.zhixueproject.utils.FileUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.example.administrator.zhixueproject.utils.Utils;
 import com.example.administrator.zhixueproject.view.ClickTextView;
@@ -24,9 +23,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * 注册页面
+ * 忘记密码
  */
-public class RegisterActivity extends BaseActivity implements View.OnClickListener{
+public class SettingPwdActivity extends BaseActivity implements View.OnClickListener{
 
     private EditText etMobile,etCode,etPwd,etConPwd;
     private ClickTextView tvCode;
@@ -35,7 +34,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private int time = 0;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_setting_pwd);
         initView();
         //判断验证码秒数是否超过一分钟
         checkTime();
@@ -47,7 +46,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      */
     private void initView(){
         TextView tvTitle=(TextView)findViewById(R.id.tv_title);
-        tvTitle.setText(getString(R.string.register));
+        tvTitle.setText(getString(R.string.forget_pwd));
         etMobile=(EditText)findViewById(R.id.et_register_phone);
         etCode=(EditText)findViewById(R.id.et_code);
         etPwd=(EditText)findViewById(R.id.et_pwd);
@@ -91,7 +90,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     tvCode.setText(getString(R.string.get_code));
                     MyApplication.spUtil.removeMessage(SPUtil.SMS_CODE_TIME);
                     break;
-                //注册
+                //提交
                 case HandlerConstant1.REGISTER_SUCCESS:
                      clearTask();
                      baseBean= (BaseBean) msg.obj;
@@ -100,7 +99,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                      }
                      if(baseBean.isStatus()){
                          MyApplication.spUtil.addString(SPUtil.LOGIN_MOBILE,etMobile.getText().toString().trim());
-                         showMsg(getString(R.string.register_success));
                          finish();
                      }else{
                         showMsg(baseBean.getErrorMsg());
@@ -127,7 +125,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                      showMsg(getString(R.string.login_phone));
                  }else{
                      showProgress(getString(R.string.get_code));
-                     HttpMethod1.getSmsCode(mobile,"1",mHandler);
+                     HttpMethod1.getSmsCode(mobile,"2",mHandler);
                  }
                  break;
             //注册
@@ -163,12 +161,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     showMsg(getString(R.string.login_confirm_error));
                     return;
                 }
-                showProgress("注册中...");
+                showProgress("提交中...");
                 HttpMethod1.register(mobile,pwd,smsCode,mHandler);
                 break;
             case R.id.lin_back:
-                 finish();
-                 break;
+                finish();
+                break;
                 default:
                     break;
         }
