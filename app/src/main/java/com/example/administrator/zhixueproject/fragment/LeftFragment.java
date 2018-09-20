@@ -31,16 +31,14 @@ import retrofit2.http.POST;
 public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
 
     private CollegeNameAdapter mAdapter;
+    private View view = null;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-
-    private View view=null;
     @Nullable
     @Override
-    View view=null;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_left_menu, container, false);
         initView();
@@ -48,18 +46,18 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
     }
 
     private void initView() {
-        ImageView imgHead= (ImageView) view.findViewById(R.id.iv_menu_head);
-        TextView tvName= (TextView) view.findViewById(R.id.tv__menu_name);
-        TextView tvSign= (TextView) view.findViewById(R.id.tv_meun_sign);
+        ImageView imgHead = (ImageView) view.findViewById(R.id.iv_menu_head);
+        TextView tvName = (TextView) view.findViewById(R.id.tv__menu_name);
+        TextView tvSign = (TextView) view.findViewById(R.id.tv_meun_sign);
         // recyclerView
-        RecyclerView mRecyclerView= (RecyclerView) view.findViewById(R.id.rv_college_name);
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_college_name);
         LinearLayoutManager layout = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layout);
-        UserInfo userInfo=MyApplication.userInfo;
-        if (userInfo==null){
+        UserInfo userInfo = MyApplication.userInfo;
+        if (userInfo == null) {
             return;
         }
-        UserBean bean=userInfo.getData().getUser();
+        UserBean bean = userInfo.getData().getUser();
         // 头像
         Glide.with(MyApplication.application).
                 load(bean.getUserImg()).
@@ -69,7 +67,7 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
         // 简介
         tvSign.setText(bean.getUserIntro());
         // adapter 数据
-        List<Colleges> dataBean=userInfo.getData().getColleges();
+        List<Colleges> dataBean = userInfo.getData().getColleges();
         mAdapter = new CollegeNameAdapter(R.layout.joined_college_item, dataBean);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
@@ -79,7 +77,7 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
 
     @Override
     public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
-        Colleges colleges=mAdapter.getData().get(position);
+        Colleges colleges = mAdapter.getData().get(position);
         // 设置title
     }
 }
