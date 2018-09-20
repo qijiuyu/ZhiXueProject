@@ -6,6 +6,13 @@ import java.util.List;
 
 
 public class TopicsListBean extends BaseBean {
+
+    private DataBean data;
+
+    public DataBean getData() {
+        return data;
+    }
+
     public static class DataBean {
         /**
          * totalPage : 2

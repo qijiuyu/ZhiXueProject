@@ -16,7 +16,7 @@ public interface HttpApi2 {
      */
     @FormUrlEncoded
     @POST(HttpConstant.GET_TOPIC_LIST)
-    Call<TopicsListBean.DataBean> getTopicList(@FieldMap Map<String,String> map);
+    Call<TopicsListBean> getTopicList(@FieldMap Map<String,String> map);
 
 
 }

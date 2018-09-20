@@ -32,13 +32,12 @@ public class HttpMethod2 extends BaseRequst{
     public static void getTopicList(String c, String collegeId, String timestamp, String page, String limit, final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("c", c);
-        // map.put("collegeId", MUtils.getMUtils().getMem("collegeId","45"));
-        map.put("collegeId", "45");
+        map.put("collegeId", "60");
         map.put(TIME, timestamp);
         map.put(PAGE, page);
         map.put(LIMIT, limit);
-        Http.getRetrofit().create(HttpApi2.class).getTopicList(map).enqueue(new Callback<TopicsListBean.DataBean>() {
-            public void onResponse(Call<TopicsListBean.DataBean> call, Response<TopicsListBean.DataBean> response) {
+        Http.getRetrofit().create(HttpApi2.class).getTopicList(map).enqueue(new Callback<TopicsListBean>() {
+            public void onResponse(Call<TopicsListBean> call, Response<TopicsListBean> response) {
                 try {
                     sendMessage(handler, index, response.body());
                 }catch (Exception e){
@@ -47,7 +46,7 @@ public class HttpMethod2 extends BaseRequst{
                 }
             }
 
-            public void onFailure(Call<TopicsListBean.DataBean> call, Throwable t) {
+            public void onFailure(Call<TopicsListBean> call, Throwable t) {
                 sendMessage(handler, HandlerConstant2.REQUST_ERROR, null);
             }
         });

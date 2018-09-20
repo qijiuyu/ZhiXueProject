@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.adapter.topic.TopicListAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
@@ -20,7 +19,6 @@ import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,26 +32,24 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
     private List<TopicListBean> listData = new ArrayList<>();
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = "";
+    private String TIMESTAMP = System.currentTimeMillis()+"";
+    private RecyclerView mRecyclerView;
+    private MyRefreshLayout mRefreshLayout;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.topic_list, container, false);
-        initView(view);
         initData();
+        initView(view);
         return view;
     }
 
     private void initView(View view) {
-        MyRefreshLayout mRefreshLayout = (MyRefreshLayout) view.findViewById(R.id.mrl_topic_list);
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_topic_list);
-        mAdapter = new TopicListAdapter(R.layout.topic_list_item, listData, true);
-        mRecyclerView.setAdapter(mAdapter);
+        mRefreshLayout = (MyRefreshLayout) view.findViewById(R.id.mrl_topic_list);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_topic_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) mRecyclerView.getParent());
-
         //添加分隔线
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), R.drawable.divider_activity_line, LinearLayoutManager.VERTICAL);
         mRecyclerView.addItemDecoration(itemDecoration);
@@ -64,7 +60,6 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
     private void initData() {
         showProgress(getString(R.string.loading));
         getTopicList(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
-
     }
 
     @Override
@@ -83,11 +78,11 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
     /**
      * 查询话题列表数据
      *
-     * @param index
+     * @param index handler消息
      */
     private void getTopicList(int index) {
         int c = MyApplication.spUtil.getInteger("c");
-        HttpMethod2.getTopicList(String.valueOf(c), "", TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
+        HttpMethod2.getTopicList(String.valueOf(c), "60", TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
     }
 
     private Handler mHandler = new Handler() {
@@ -95,26 +90,69 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
-            TopicsListBean.DataBean bean = null;
+            TopicsListBean bean = (TopicsListBean) msg.obj;
             switch (msg.what) {
                 case HandlerConstant2.GET_TOPIC_LIST_SUCCESS:
-                    bean = (TopicsListBean.DataBean) msg.obj;
-                    listData.clear();
-                    if (null == bean) {
-                        return;
-                    }
-                    listData.addAll(bean.getTopicList());
+                    getDataSuccess(bean);
                     break;
                 case HandlerConstant2.GET_TOPIC_LIST_SUCCESS2:
-                    bean = (TopicsListBean.DataBean) msg.obj;
-                    listData.addAll(bean.getTopicList());
+                    loadMoreSuccess(bean);
                     break;
                 case HandlerConstant2.REQUST_ERROR:
-                    showMsg(getString(R.string.load_failed));
+                    requestError();
                     break;
                 default:
                     break;
             }
         }
     };
+
+    /**
+     * 加载数据
+     */
+    private void getDataSuccess(TopicsListBean bean) {
+        mRefreshLayout.refreshComplete();
+        listData.clear();
+        if (null == bean) {
+            return;
+        }
+        if (bean.isStatus()) {
+            TopicsListBean.DataBean dataBean = bean.getData();
+            listData = dataBean.getTopicList();
+            mAdapter = new TopicListAdapter(R.layout.topic_list_item, listData, true);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) mRecyclerView.getParent());
+        }
+    }
+
+    /**
+     * 加载更多
+     */
+    private void loadMoreSuccess(TopicsListBean bean) {
+        mRefreshLayout.loadMoreComplete();
+        if (null == bean) {
+            return;
+        }
+        if (bean.isStatus()) {
+            TopicsListBean.DataBean dataBean = bean.getData();
+            if (dataBean.getTopicList().size() <= 0) {
+                showMsg(getResources().getString(R.string.no_more_data));
+                return;
+            }
+            listData.addAll(dataBean.getTopicList());
+            mAdapter = new TopicListAdapter(R.layout.topic_list_item, listData, true);
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) mRecyclerView.getParent());
+        }
+    }
+
+    /**
+     * 加载失败
+     */
+    private void requestError() {
+        mRefreshLayout.refreshComplete();
+        mRefreshLayout.loadMoreComplete();
+        showMsg(getString(R.string.load_failed));
+    }
+
 }

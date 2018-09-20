@@ -17,7 +17,7 @@ public class HttpConstant {
     public static final String GET_COLLETE_VIPS="college/getCollegeGradeList.do";
 
     //查询话题列表
-    public static final String GET_TOPIC_LIST="client/topic/getTopicList.do";
+    public static final String GET_TOPIC_LIST="topic/getTopicList.do";
 
     //查询首页信息
     public static final String GET_HOME_INFO="user/home.do";

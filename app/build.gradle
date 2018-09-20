@@ -48,10 +48,7 @@ dependencies {
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
     //通用adapter
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
-    compile 'com.github.bumptech.glide:glide:4.0.0'
     //侧滑菜单
     compile 'com.github.anzaizai:EasySwipeMenuLayout:1.1.2'
-
-
     compile 'com.github.bumptech.glide:glide:3.7.0'
 }
