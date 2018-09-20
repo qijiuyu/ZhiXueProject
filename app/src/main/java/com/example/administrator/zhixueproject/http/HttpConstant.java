@@ -16,6 +16,9 @@ public class HttpConstant {
     //查询学院VIP数据
     public static final String GET_COLLETE_VIPS="college/getCollegeGradeList.do";
 
+    //查询话题列表
+    public static final String GET_TOPIC_LIST="topic/getTopicList.do";
+
     //查询首页信息
     public static final String GET_HOME_INFO="user/home.do";
 

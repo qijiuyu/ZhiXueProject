@@ -9,18 +9,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.Colleges;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.CodeUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
-import com.example.administrator.zhixueproject.utils.Utils;
+
+import java.util.List;
 
 /**
  * 登陆
