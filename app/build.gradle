@@ -28,11 +28,28 @@ android {
 
     }
 
+    signingConfigs {
+        keyConfig {
+            storeFile file("zhixue.zhixue")
+            storePassword "zhixue123"
+            keyAlias "zhixue"
+            keyPassword "zhixue123"
+        }
+    }
+
 
     buildTypes {
+        //开发环境
+        debug {
+            //实现自动签名
+            signingConfig signingConfigs.keyConfig
+        }
+        //生产环境
         release {
             minifyEnabled false
+            signingConfig signingConfigs.keyConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
     }
 }
@@ -51,4 +68,5 @@ dependencies {
     //侧滑菜单
     compile 'com.github.anzaizai:EasySwipeMenuLayout:1.1.2'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile files('libs/wechat-sdk-android-with-mta-1.0.2.jar')
 }

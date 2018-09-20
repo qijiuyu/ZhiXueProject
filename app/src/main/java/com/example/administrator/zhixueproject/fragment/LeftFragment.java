@@ -40,6 +40,7 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
     private View view=null;
     @Nullable
     @Override
+    View view=null;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_left_menu, container, false);
         initView();
