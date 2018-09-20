@@ -64,4 +64,14 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_HOME_INFO)
     Call<Home> getHomeInfo(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 修改密码
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_PWD)
+    Call<BaseBean> updatePwd(@FieldMap Map<String, String> map);
 }

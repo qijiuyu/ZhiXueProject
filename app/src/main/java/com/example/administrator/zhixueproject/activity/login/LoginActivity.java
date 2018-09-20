@@ -50,6 +50,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         imgCode.setImageBitmap(CodeUtils.getInstance().createBitmap());
         findViewById(R.id.tv_login).setOnClickListener(this);
         findViewById(R.id.iv_get_code).setOnClickListener(this);
+        findViewById(R.id.tv_forget_pwd).setOnClickListener(this);
+        findViewById(R.id.lin_back).setOnClickListener(this);
         tvRegister.setOnClickListener(this);
     }
 
@@ -94,6 +96,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 showProgress("登陆中...");
                 HttpMethod1.login(mobile,pwd,mHandler);
                  break;
+            //忘记密码
+            case R.id.tv_forget_pwd:
+                 setClass(SettingPwdActivity.class);
+                 break;
+            case R.id.lin_back:
+                 finish();
+                 break;
+                 default:
+                     break;
         }
     }
 

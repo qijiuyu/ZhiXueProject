@@ -6,6 +6,21 @@
     android:fitsSystemWindows="true"
     android:background="@mipmap/bg_title">
 
+    <LinearLayout android:id="@+id/lin_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingRight="30dp"
+        android:layout_marginLeft="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back_icon"/>
+
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
