@@ -43,11 +43,7 @@
             android:value="1280"></meta-data>
 
         <activity android:name=".activity.GuideActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name=".activity.WelcomeActivity" android:screenOrientation="portrait"/>
@@ -55,7 +51,17 @@
         <activity android:name=".activity.login.SettingPwdActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.LoginActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.CollegeHomeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.TabActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.userinfo.UserInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.userinfo.ModifyPhoneActivity" android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.TabActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".activity.college.CollegeManageActivity" android:screenOrientation="portrait"/>
 
     </application>

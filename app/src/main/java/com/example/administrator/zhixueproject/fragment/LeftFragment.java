@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.userinfo.UserInfoActivity;
 import com.example.administrator.zhixueproject.adapter.CollegeNameAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.Colleges;
@@ -28,7 +29,7 @@ import retrofit2.http.POST;
  * Created by Administrator on 2018/1/3 0003.
  */
 
-public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
+public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
 
     private CollegeNameAdapter mAdapter;
     private View view = null;
@@ -47,6 +48,7 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
 
     private void initView() {
         ImageView imgHead = (ImageView) view.findViewById(R.id.iv_menu_head);
+        imgHead.setOnClickListener(this);
         TextView tvName = (TextView) view.findViewById(R.id.tv__menu_name);
         TextView tvSign = (TextView) view.findViewById(R.id.tv_meun_sign);
         // recyclerView
@@ -79,5 +81,17 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
     public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
         Colleges colleges = mAdapter.getData().get(position);
         // 设置title
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_menu_head:
+                setClass(UserInfoActivity.class);
+                break;
+            default:
+                break;
+        }
     }
 }
