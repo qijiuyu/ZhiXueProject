@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_drawer_nume"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rel_drawer_nume"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:background="@color/color_ffffff"
     android:clickable="true"
-    android:orientation="vertical"
     android:tag="left">
 
     <LinearLayout
+        android:id="@+id/lin_icon_and_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="77dp"
@@ -39,6 +39,7 @@
         android:id="@+id/tv_meun_sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/lin_icon_and_name"
         android:layout_marginLeft="33dp"
         android:layout_marginTop="13dp"
         android:text="你的学校不不不不好"
@@ -49,7 +50,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_college_name"
         android:layout_width="match_parent"
-        android:layout_height="460dp" />
+        android:layout_height="460dp"
+        android:layout_below="@+id/tv_meun_sign" />
 
 
     <RelativeLayout
@@ -68,4 +70,4 @@
     </RelativeLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

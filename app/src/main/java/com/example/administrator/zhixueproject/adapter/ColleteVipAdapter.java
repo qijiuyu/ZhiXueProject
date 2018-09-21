@@ -28,8 +28,8 @@ public class ColleteVipAdapter extends BaseAdapter{
 	}
 
 	@Override
-	public Object getItem(int position) {
-		return position;
+	public ColleteVips.ColleteVipsBean.collegeGradeListBean getItem(int position) {
+		return listAll.get(position);
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class ColleteVipAdapter extends BaseAdapter{
 	}
 
 
-	private class ViewHolder{
+	 private class ViewHolder{
 	    ImageView imgVip;
 		TextView tvIfLive,tvLiveNum,tvMonthMoney,tvYearMoney,tvPersonNum,tvTopIc;
 	 }

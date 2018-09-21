@@ -146,4 +146,30 @@ public class HttpMethod1  extends BaseRequst {
             }
         });
     }
+
+
+    /**
+     * 修改密码
+     * @param handler
+     */
+    public static void updatePwd(String mobile,String newPwd,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("mobile",mobile);
+        map.put("newPwd",newPwd);
+        Http.getRetrofit().create(HttpApi1.class).updatePwd(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.UPDATE_PWD_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
 }

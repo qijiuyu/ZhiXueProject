@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
@@ -44,6 +46,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * 初始化控件
      */
     private void initView(){
+        TextView tvTitle=(TextView)findViewById(R.id.tv_title);
+        tvTitle.setText(getString(R.string.register));
         etMobile=(EditText)findViewById(R.id.et_register_phone);
         etCode=(EditText)findViewById(R.id.et_code);
         etPwd=(EditText)findViewById(R.id.et_pwd);
@@ -51,6 +55,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         tvCode=(ClickTextView)findViewById(R.id.tv_get_code);
         tvCode.setOnClickListener(this);
         findViewById(R.id.tv_register).setOnClickListener(this);
+        findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
 
@@ -122,7 +127,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                      showMsg(getString(R.string.login_phone));
                  }else{
                      showProgress(getString(R.string.get_code));
-                     HttpMethod1.getSmsCode(mobile,"0",mHandler);
+                     HttpMethod1.getSmsCode(mobile,"1",mHandler);
                  }
                  break;
             //注册
@@ -161,6 +166,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 showProgress("注册中...");
                 HttpMethod1.register(mobile,pwd,smsCode,mHandler);
                 break;
+            case R.id.lin_back:
+                 finish();
+                 break;
                 default:
                     break;
         }
