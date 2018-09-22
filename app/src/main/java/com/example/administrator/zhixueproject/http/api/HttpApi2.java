@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.http.api;
 
+import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import java.util.Map;
@@ -17,6 +18,15 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_TOPIC_LIST)
     Call<TopicsListBean> getTopicList(@FieldMap Map<String,String> map);
+
+    /**
+     * 修改个人资料
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.MODIFY_USER_INFO)
+    Call<BaseBean> modifyUserInfo(@FieldMap Map<String,String> map);
 
 
 }

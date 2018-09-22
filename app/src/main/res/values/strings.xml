@@ -73,6 +73,8 @@
     <string name="sign_empty">编辑签名描述不能为空</string>
     <string name="network_can_not_be_accessed_please_check_the_network_connection">网络无法访问，请检查网络连接!</string>
     <string name="configure">配置</string>
+    <string name="print_certify_code">请输入验证码</string>
+    <string name="modify_phone_success">修改绑定手机成功</string>
 
     <array name="add_topic">
         <item>免费</item>

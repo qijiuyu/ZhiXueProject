@@ -2,6 +2,7 @@ package com.example.administrator.zhixueproject.http.method;
 
 import android.os.Handler;
 
+import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
@@ -47,6 +48,38 @@ public class HttpMethod2 extends BaseRequst{
             }
 
             public void onFailure(Call<TopicsListBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant2.REQUST_ERROR, null);
+            }
+        });
+    }
+
+    /**
+     *  修改个人资料
+     * @param userName  用户名
+     * @param mobile  手机号
+     * @param email  新密码
+     * @param code  验证码（修改绑定手机号和邮箱时，必填）
+     * @param userIntro  个人简介
+     * @param handler
+     */
+    public static void modifyUserInfo(String userName, String mobile, String email, String code, String userIntro, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userName", userName);
+        map.put("mobile", mobile);
+        map.put("email", email);
+        map.put("code", code);
+        map.put("userIntro", userIntro);
+        Http.getRetrofit().create(HttpApi2.class).modifyUserInfo(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.MODIFY_USER_INFO_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant2.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
                 sendMessage(handler, HandlerConstant2.REQUST_ERROR, null);
             }
         });

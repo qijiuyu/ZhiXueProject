@@ -24,4 +24,7 @@ public class HttpConstant {
 
     //修改密码
     public static final String UPDATE_PWD="user/updatePwdByMobile.do";
+
+    // 修改个人资料
+    public static final String MODIFY_USER_INFO ="client/user/update.do" ;
 }
