@@ -19,7 +19,7 @@ import java.io.File;
 
 public class AddImageUtils {
     private static Uri imageUri;//原图保存地址
-    private static Uri outputUri;//裁剪后地址
+    public static String outputUri=FileUtils.getSdcardPath()+"crop.png";//裁剪后地址
     private static String imagePath;
     public static final int REQUEST_PICK_IMAGE = 1; //相册选取
     public static final int REQUEST_CAPTURE = 2;  //拍照
@@ -49,10 +49,7 @@ public class AddImageUtils {
     /**
      * 裁剪
      */
-    public static Uri cropPhoto(Context context) {
-        File file = new FileStorage().createCropFile();
-        //缩略图保存地址
-        outputUri = Uri.fromFile(file);
+    public static void cropPhoto(Context context) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(imageUri, "image/*");
         intent.putExtra("crop", "true");
@@ -62,11 +59,10 @@ public class AddImageUtils {
         intent.putExtra("outputY", 480);
         intent.putExtra("scale", true);
         intent.putExtra("return-data", false);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(outputUri)));
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         intent.putExtra("noFaceDetection", true);
         ((Activity) context).startActivityForResult(intent, REQUEST_PICTURE_CUT);
-        return outputUri;
     }
 
     /**

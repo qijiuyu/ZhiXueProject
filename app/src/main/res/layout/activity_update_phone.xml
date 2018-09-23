@@ -3,50 +3,60 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <include layout="@layout/head"/>
+    
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+        
         <LinearLayout
             android:layout_marginTop="19dp"
-            android:layout_marginLeft="38dp"
-            android:layout_marginRight="38dp"
+            android:layout_marginLeft="37dp"
+            android:layout_marginRight="37dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="54dp">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/phone_info_icon"/>
+                android:src="@mipmap/mailbox_icon"/>
+
             <EditText
-                android:id="@+id/et_tel"
+                android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
+                android:inputType="textEmailAddress"
                 android:background="@null"
-                android:hint="@string/input_telphone_11"
+                android:hint="@string/input_mailbox"
                 android:textSize="15sp"
                 android:textColor="@color/color_333333"
                 android:textColorHint="@color/color_999999"/>
         </LinearLayout>
+
         <View
             style="@style/view_line"
-            android:layout_marginLeft="38dp"
-            android:layout_marginRight="38dp"/>
+            android:layout_marginLeft="37dp"
+            android:layout_marginRight="37dp"/>
+
         <RelativeLayout
-            android:layout_marginLeft="38dp"
-            android:layout_marginRight="38dp"
+            android:layout_marginLeft="37dp"
+            android:layout_marginRight="37dp"
             android:layout_width="match_parent"
             android:layout_height="54dp">
+
             <ImageView
                 android:id="@+id/iv_code_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/code_info_icon"/>
+
             <TextView
                 android:id="@+id/tv_get_code"
                 android:layout_alignParentRight="true"
@@ -55,9 +65,10 @@
                 android:gravity="center_vertical"
                 android:text="@string/get_code"
                 android:textColor="@color/color_666666"
-                android:textSize="14dp"/>
+                android:textSize="14sp"/>
+
             <EditText
-                android:id="@+id/et_code"
+                android:id="@+id/et_email_code"
                 android:layout_toRightOf="@+id/iv_code_icon"
                 android:layout_toLeftOf="@+id/tv_get_code"
                 android:layout_width="match_parent"
@@ -74,21 +85,20 @@
         </RelativeLayout>
         <View
             style="@style/view_line"
-            android:layout_marginLeft="38dp"
-            android:layout_marginRight="38dp"/>
+            android:layout_marginLeft="37dp"
+            android:layout_marginRight="37dp"/>
         <TextView
-            android:id="@+id/tv_next"
+            android:id="@+id/tv_aup_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
+            android:layout_marginLeft="31dp"
+            android:layout_marginRight="31dp"
             android:background="@mipmap/bg_botton"
-            android:layout_marginTop="96dp"
+            android:layout_marginTop="95dp"
             android:gravity="center"
             android:text="下一步"
-            android:textColor="@color/color_ffffff"
-            android:textSize="16sp"/>
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/dm032"/>
     </LinearLayout>
-    <include layout="@layout/include_bottom" />
 
 </LinearLayout>

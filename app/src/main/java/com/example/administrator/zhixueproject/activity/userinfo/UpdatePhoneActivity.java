@@ -26,81 +26,67 @@ import java.util.TimerTask;
  * @author petergee
  * @date 2018/9/21
  */
-public class ModifyPhoneActivity extends BaseActivity implements View.OnClickListener {
+public class UpdatePhoneActivity extends BaseActivity implements View.OnClickListener {
 
-    private EditText etTel;
+    private EditText etEmail;
     private EditText etCode;
     private TextView tvGetCode;
     //计数器
     private Timer mTimer;
     private int time = 0;
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modify_phone);
+        setContentView(R.layout.activity_update_phone);
         initView();
         checkTime();
     }
 
+    /**
+     * 初始化控件
+     */
     private void initView() {
-        etTel = (EditText) findViewById(R.id.et_tel);
-        etCode = (EditText) findViewById(R.id.et_code);
+        TextView tvHead=(TextView)findViewById(R.id.tv_title);
+        tvHead.setText(getString(R.string.modify_phone));
+        etEmail = (EditText) findViewById(R.id.et_email);
+        etCode = (EditText) findViewById(R.id.et_email_code);
         tvGetCode = (TextView) findViewById(R.id.tv_get_code);
         tvGetCode.setOnClickListener(this);
-        TextView tvNext = (TextView) findViewById(R.id.tv_next);
-        tvNext.setOnClickListener(this);
+        findViewById(R.id.tv_aup_next).setOnClickListener(this);
+        findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        String mobile = etTel.getText().toString().trim();
+        final String email = etEmail.getText().toString().trim();
         switch (view.getId()) {
+            //获取验证码
             case R.id.tv_get_code:
-                if (TextUtils.isEmpty(mobile)) {
-                    showMsg(getString(R.string.login_phone));
-                } else if (mobile.length() < 11) {
-                    showMsg(getString(R.string.login_right_phone));
+                if (TextUtils.isEmpty(email)) {
+                    showMsg(getString(R.string.input_mailbox));
                 } else {
-                    // 发短信
                     showProgress(getString(R.string.get_code));
-                    HttpMethod1.getSmsCode(mobile, "1", mHandler);
+                    HttpMethod1.getEmailCode(email, "1", mHandler);
                 }
                 break;
-            case R.id.tv_next:
+            //下一步
+            case R.id.tv_aup_next:
                 String code = etCode.getText().toString().trim();
-                String tel = etTel.getText().toString().trim();
-                if (TextUtils.isEmpty(code)) {
+                if (TextUtils.isEmpty(email)) {
+                    showMsg(getString(R.string.input_mailbox));
+                }else if(TextUtils.isEmpty(code)) {
                     showMsg(getString(R.string.print_certify_code));
-                    return;
-                }
-                if (isInput()) {
-                    // 修改个人信息
+                }else{
                     showProgress(getString(R.string.loading));
-                    HttpMethod2.modifyUserInfo("", tel, "", code, "", mHandler);
+                    HttpMethod2.modifyUserInfo(null, null, email, code, null, mHandler);
                 }
                 break;
+            case R.id.lin_back:
+                 finish();
+                 break;
             default:
                 break;
         }
 
-    }
-
-    /**
-     * 输入判断
-     *
-     * @return
-     */
-    public boolean isInput() {
-        if (TextUtils.isEmpty(etTel.getText().toString().trim())) {
-            showMsg(getString(R.string.login_phone));
-            return false;
-        }
-        if ((etCode.getText().toString().trim().length() != 11)) {
-            showMsg(getString(R.string.login_right_phone));
-            return false;
-        }
-        return true;
     }
 
 
@@ -111,7 +97,7 @@ public class ModifyPhoneActivity extends BaseActivity implements View.OnClickLis
             BaseBean baseBean = null;
             switch (msg.what) {
                 //获取验证码
-                case HandlerConstant1.GET_SMS_CODE_SUCCESS:
+                case HandlerConstant1.GET_EMAIL_CODE_SUCCESS:
                     clearTask();
                     baseBean = (BaseBean) msg.obj;
                     if (null == baseBean) {
@@ -139,8 +125,8 @@ public class ModifyPhoneActivity extends BaseActivity implements View.OnClickLis
                     break;
                 // 修改资料成功
                 case HandlerConstant2.MODIFY_USER_INFO_SUCCESS:
+                     clearTask();
                     if (baseBean.status) {
-                        showMsg(getString(R.string.modify_phone_success));
                     } else {
                         showMsg(baseBean.errorMsg);
                     }

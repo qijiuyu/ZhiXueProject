@@ -12,9 +12,13 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.view.PagerSlidingTabStrip;
@@ -38,8 +42,6 @@ public class CollegeFragment extends BaseFragment implements View.OnClickListene
 
 
     View view=null;
-    @Nullable
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_college, container, false);
         pager=(ViewPager)view.findViewById(R.id.pager);
@@ -132,5 +134,10 @@ public class CollegeFragment extends BaseFragment implements View.OnClickListene
     }
 
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        final UserBean userBean= MyApplication.userInfo.getData().getUser();
+        Glide.with(mActivity).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
+    }
 }

@@ -31,20 +31,23 @@ public class CollegeInfoFragment extends BaseFragment {
     private OvalImageViews imgBJ;
     private ImageView imgEdit,imgGrade;
     private TextView tvName,tvTime,tvContent;
+    //fragment是否可见
+    private boolean isVisibleToUser=false;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
 
+    View view;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_collete_info, container, false);
+        view = inflater.inflate(R.layout.fragment_collete_info, container, false);
         imgBJ=(OvalImageViews)view.findViewById(R.id.iv_college);
         imgEdit=(ImageView)view.findViewById(R.id.iv_edit);
         tvName=(TextView)view.findViewById(R.id.tv_college_name);
         imgGrade=(ImageView)view.findViewById(R.id.iv_grade);
         tvTime=(TextView)view.findViewById(R.id.tv_expire_time);
         tvContent=(TextView)view.findViewById(R.id.tv_content);
-
+        //查询首页信息
         getHomeInfo();
         return view;
     }
@@ -80,10 +83,20 @@ public class CollegeInfoFragment extends BaseFragment {
 
 
     /**
-     * 查询用户信息
+     * 查询首页信息
      */
     private void getHomeInfo(){
-        final UserBean userBean= MyApplication.userInfo.getData().getUser();
-        HttpMethod1.getHomeInfo(userBean.getUserId()+"",mHandler);
+        if(isVisibleToUser && view!=null){
+            final UserBean userBean= MyApplication.userInfo.getData().getUser();
+            HttpMethod1.getHomeInfo(userBean.getUserId()+"",mHandler);
+        }
+    }
+
+
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser=isVisibleToUser;
+        //查询首页信息
+        getHomeInfo();
     }
 }

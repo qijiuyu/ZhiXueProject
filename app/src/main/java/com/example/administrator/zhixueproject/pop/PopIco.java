@@ -19,8 +19,7 @@ import com.example.administrator.zhixueproject.R;
  *
  *
  */
-public class PopIco implements OnClickListener
-{
+public class PopIco implements OnClickListener{
     private PopupWindow popupWindow;
     private View v;
     /** 回调接口 */
@@ -32,8 +31,7 @@ public class PopIco implements OnClickListener
      *            点击的控件
      * @param context
      */
-    public PopIco(View v, Context context)
-    {
+    public PopIco(View v, Context context) {
         this.v = v;
         View view = LayoutInflater.from(context).inflate(R.layout.pop_ico, null);
         // 设置popwindow弹出大小

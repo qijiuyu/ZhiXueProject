@@ -19,10 +19,9 @@ import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.Colleges;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.UserInfo;
+import com.example.administrator.zhixueproject.view.CircleImageView;
 
 import java.util.List;
-
-import retrofit2.http.POST;
 
 /**
  * 侧边栏
@@ -38,20 +37,20 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_left_menu, container, false);
         initView();
         return view;
     }
 
+    /**
+     * 初始化
+     */
     private void initView() {
-        ImageView imgHead = (ImageView) view.findViewById(R.id.iv_menu_head);
+        CircleImageView imgHead = (CircleImageView) view.findViewById(R.id.iv_menu_head);
         imgHead.setOnClickListener(this);
         TextView tvName = (TextView) view.findViewById(R.id.tv__menu_name);
         TextView tvSign = (TextView) view.findViewById(R.id.tv_meun_sign);
-        // recyclerView
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_college_name);
         LinearLayoutManager layout = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layout);
@@ -61,9 +60,7 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
         }
         UserBean bean = userInfo.getData().getUser();
         // 头像
-        Glide.with(MyApplication.application).
-                load(bean.getUserImg()).
-                into(imgHead);
+        Glide.with(MyApplication.application).load(bean.getUserImg()).override(60,60).into(imgHead);
         // 昵称
         tvName.setText(bean.getUserName());
         // 简介

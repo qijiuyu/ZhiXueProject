@@ -2,9 +2,10 @@ package com.example.administrator.zhixueproject.activity.userinfo;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,8 +14,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.UploadFile;
+import com.example.administrator.zhixueproject.bean.UserBean;
+import com.example.administrator.zhixueproject.http.HandlerConstant1;
+import com.example.administrator.zhixueproject.http.HttpConstant;
+import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.pop.PopIco;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
+import com.example.administrator.zhixueproject.utils.LogUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 个人信息
@@ -25,35 +37,59 @@ import com.example.administrator.zhixueproject.utils.AddImageUtils;
 public class UserInfoActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView ivHeadIcon;
+    private TextView tvUserName,tvSign;
     private RelativeLayout relHead;
-    private Uri mOutputUri;
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
         initView();
     }
 
+    /**
+     * 初始化控件
+     */
     private void initView() {
+        TextView tvHead=(TextView)findViewById(R.id.tv_title);
+        tvHead.setText(getString(R.string.personal_info));
         ivHeadIcon = (ImageView) findViewById(R.id.iv_head_icon);
-        ivHeadIcon.setOnClickListener(this);
-        RelativeLayout relModifyPhone = (RelativeLayout) findViewById(R.id.rl_modify_phone);
-        relModifyPhone.setOnClickListener(this);
-        RelativeLayout relModifyMail = (RelativeLayout) findViewById(R.id.rl_modify_mailbox);
-        relModifyMail.setOnClickListener(this);
-        RelativeLayout relModifyPwd = (RelativeLayout) findViewById(R.id.rl_modify_pwd);
-        relModifyPwd.setOnClickListener(this);
-        RelativeLayout relUserName = (RelativeLayout) findViewById(R.id.rl_user_name);
-        relUserName.setOnClickListener(this);
-        RelativeLayout relSign = (RelativeLayout) findViewById(R.id.rl_sign);
-        relSign.setOnClickListener(this);
-        RelativeLayout relPersonalBg = (RelativeLayout) findViewById(R.id.rl_personal_bg);
-        relPersonalBg.setOnClickListener(this);
-        TextView tvLogOut = (TextView) findViewById(R.id.tv_login_out);
-        tvLogOut.setOnClickListener(this);
+        tvUserName=(TextView)findViewById(R.id.tv_username);
+        tvSign=(TextView)findViewById(R.id.tv_personal_sign);
         relHead = (RelativeLayout) findViewById(R.id.rel_head);
+        ivHeadIcon.setOnClickListener(this);
+        findViewById(R.id.rl_modify_phone).setOnClickListener(this);
+        findViewById(R.id.rl_modify_mailbox).setOnClickListener(this);
+        findViewById(R.id.rl_modify_pwd).setOnClickListener(this);
+        findViewById(R.id.rl_user_name).setOnClickListener(this);
+        findViewById(R.id.rl_sign).setOnClickListener(this);
+        findViewById(R.id.rl_personal_bg).setOnClickListener(this);
+        findViewById(R.id.tv_login_out).setOnClickListener(this);
+        findViewById(R.id.lin_back).setOnClickListener(this);
     }
+
+
+    private Handler mHandler=new Handler(){
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            clearTask();
+            switch (msg.what){
+                //上传头像
+                case HandlerConstant1.UPLOAD_HEAD_SUCCESS:
+                     final UploadFile uploadFile= (UploadFile) msg.obj;
+                     if(null==uploadFile){
+                         return;
+                     }
+                     if(uploadFile.isStatus()){
+                         MyApplication.userInfo.getData().getUser().setUserImg(uploadFile.getData().getUrl());
+                         showUserInfo();
+                     }else{
+                         showMsg(uploadFile.getErrorMsg());
+                     }
+                     break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onClick(View v) {
@@ -62,37 +98,24 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 addPic();
                 break;
             case R.id.rl_modify_phone://修改绑定手机
-                setClass(ModifyPhoneActivity.class);
+                setClass(UpdatePhoneActivity.class);
                 break;
             case R.id.rl_modify_mailbox://修改绑定邮箱
-                //  ModifyNewMailboxUI.start(this);
                 break;
             case R.id.rl_modify_pwd://修改密码
-                //  ModifyPwdUI.start(this);
                 break;
             case R.id.rl_user_name://用户名
-                //  EditUsernameUI.start(this);
                 break;
             case R.id.rl_sign://签名
-                //  EditSignUI.start(this);
+                setClass(SetSignActivity.class);
                 break;
             case R.id.rl_personal_bg://个性背景
-                // PersonalBgUI.start(this);
                 break;
             case R.id.tv_login_out://退出登录
-             /*   CustomDialogUtils.getInstance().createCustomDialog(this, getResources().getString(R.string.is_login_out),
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                MyApplication.cleanUserInfo();
-                                //清空登录记录
-                                SPUtils.put(PersonalInfoUI.this, LoginUI.LOGIN_FLAG, LoginUI.LOGIN_OUT);
-                                UIManager.getInstance().popAllActivity();
-                                LoginUI.start(PersonalInfoUI.this);
-//                                finish();
-                            }
-                        });*/
                 break;
+            case R.id.lin_back:
+                 finish();
+                 break;
             default:
                 break;
 
@@ -101,7 +124,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
     /**
-     * 上传图片
+     * 选择图片
      */
     private void addPic() {
         PopIco popIco = new PopIco(ivHeadIcon, this);
@@ -133,19 +156,47 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                         } else {
                             AddImageUtils.handleImageBeforeKitKat(data, UserInfoActivity.this);
                         }
-                        mOutputUri = AddImageUtils.cropPhoto(UserInfoActivity.this);
+                        AddImageUtils.cropPhoto(UserInfoActivity.this);
                     }
                     break;
                 case AddImageUtils.REQUEST_CAPTURE://拍照
-                    mOutputUri = AddImageUtils.cropPhoto(UserInfoActivity.this);
+                     AddImageUtils.cropPhoto(UserInfoActivity.this);
                     break;
                 case AddImageUtils.REQUEST_PICTURE_CUT://裁剪完成
                     if (data != null) {
-                        Glide.with(this).load(mOutputUri.toString()).error(R.mipmap.unify_circle_head).into(ivHeadIcon);
+                        final File file=new File(AddImageUtils.outputUri);
+                        if(!file.isFile()){
+                            return;
+                        }
+                        List<File> list=new ArrayList<>();
+                        list.add(file);
+                        showProgress("图片上传中");
+                        //上传图片
+                        HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES,list,mHandler);
                     }
+                    break;
+                default:
                     break;
             }
 
         }
+    }
+
+
+    /**
+     * 显示用户信息
+     */
+    private void showUserInfo(){
+        final UserBean userBean=MyApplication.userInfo.getData().getUser();
+        Glide.with(mContext).load(userBean.getUserImg()).override(50,50).into(ivHeadIcon);
+        tvUserName.setText(userBean.getUserName());
+        tvSign.setText(userBean.getUserIntro());
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showUserInfo();
     }
 }

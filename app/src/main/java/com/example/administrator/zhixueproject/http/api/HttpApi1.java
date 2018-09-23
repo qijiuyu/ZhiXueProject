@@ -74,4 +74,24 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.UPDATE_PWD)
     Call<BaseBean> updatePwd(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取邮箱验证码
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_EMAIL_CODE)
+    Call<BaseBean> getEmailCode(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取个人资料
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_USER_INFO)
+    Call<ResponseBody> getUserInfo(@FieldMap Map<String, String> map);
 }

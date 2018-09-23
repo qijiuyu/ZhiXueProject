@@ -2,9 +2,11 @@ package com.example.administrator.zhixueproject.http.method;
 
 import android.os.Handler;
 
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
+import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.api.HttpApi1;
@@ -12,7 +14,10 @@ import com.example.administrator.zhixueproject.http.base.BaseRequst;
 import com.example.administrator.zhixueproject.http.base.Http;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -168,6 +173,75 @@ public class HttpMethod1  extends BaseRequst {
 
             public void onFailure(Call<BaseBean> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 获取邮箱验证码
+     * @param handler
+     */
+    public static void getEmailCode(String email,String type,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("email",email);
+        map.put("type",type);
+        Http.getRetrofit().create(HttpApi1.class).getEmailCode(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_EMAIL_CODE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 获取个人资料
+     * @param handler
+     */
+    public static void getUserInfo(final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        Http.getRetrofit().create(HttpApi1.class).getUserInfo(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_USER_INFO_SUCCESS, response.body().string());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 上传头像
+     */
+    public static void uploadFile(String url, List<File> list, final Handler handler) {
+        Http.upLoadFile(url, "files", list, null, new okhttp3.Callback() {
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                final String body = response.body().string();
+                LogUtils.e(body+"____________________");
+                final UploadFile uploadFile= MyApplication.gson.fromJson(body,UploadFile.class);
+                sendMessage(handler, HandlerConstant1.UPLOAD_HEAD_SUCCESS, uploadFile);
+            }
+
+            public void onFailure(okhttp3.Call call, IOException e) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });

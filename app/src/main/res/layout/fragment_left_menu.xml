@@ -12,14 +12,14 @@
         android:id="@+id/lin_icon_and_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="77dp"
+        android:layout_marginTop="70dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.example.administrator.zhixueproject.view.CircleImageView
             android:id="@+id/iv_menu_head"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="25dp"
             android:background="@mipmap/img_left_menu_head" />
 
@@ -42,7 +42,6 @@
         android:layout_below="@+id/lin_icon_and_name"
         android:layout_marginLeft="33dp"
         android:layout_marginTop="13dp"
-        android:text="你的学校不不不不好"
         android:textColor="@color/color_999999"
         android:textSize="13sp" />
 
@@ -52,22 +51,5 @@
         android:layout_width="match_parent"
         android:layout_height="460dp"
         android:layout_below="@+id/tv_meun_sign" />
-
-
-    <RelativeLayout
-        android:id="@+id/rl_college_joined"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@mipmap/img_down_arrow"
-            android:rotation="90" />
-    </RelativeLayout>
-
 
 </RelativeLayout>

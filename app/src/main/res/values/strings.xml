@@ -75,6 +75,7 @@
     <string name="configure">配置</string>
     <string name="print_certify_code">请输入验证码</string>
     <string name="modify_phone_success">修改绑定手机成功</string>
+    <string name="save">保存</string>
 
     <array name="add_topic">
         <item>免费</item>

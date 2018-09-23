@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
@@ -20,6 +21,19 @@ import java.text.DecimalFormat;
  */
 
 public class FileUtils {
+
+    /**
+     * 获取sd卡路径
+     */
+    public static String getSdcardPath() {
+        String path = Environment.getExternalStorageDirectory() + File.separator + "zhixue" + File.separator;
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return path;
+    }
+
     public static void mkdirsPath(String path) {
         File file = new File(path);
         if (file == null) {

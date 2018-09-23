@@ -9,6 +9,8 @@ import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.api.HttpApi2;
 import com.example.administrator.zhixueproject.http.base.BaseRequst;
 import com.example.administrator.zhixueproject.http.base.Http;
+import com.example.administrator.zhixueproject.utils.LogUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 import retrofit2.Call;
