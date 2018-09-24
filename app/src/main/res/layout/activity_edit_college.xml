@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dm010"
+            android:layout_marginTop="5dp"
             android:background="@android:color/white"
             android:orientation="vertical">
 
@@ -32,7 +32,7 @@
 
                 <TextView
                     style="@style/release_common_tv"
-                    android:layout_marginLeft="@dimen/dm020"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/iv_college_name"
                     android:text="学院名称" />
 
@@ -46,7 +46,7 @@
                     android:maxLength="15"
                     android:textColor="@color/color_666666"
                     android:textColorHint="@color/color_999999"
-                    android:textSize="@dimen/dm028" />
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <View style="@style/gray_line" />
@@ -62,7 +62,7 @@
 
                 <TextView
                     style="@style/release_common_tv"
-                    android:layout_marginLeft="@dimen/dm020"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/iv_registrant"
                     android:text="注册人" />
 
@@ -76,7 +76,7 @@
                     android:maxLength="15"
                     android:textColor="@color/color_666666"
                     android:textColorHint="@color/color_999999"
-                    android:textSize="@dimen/dm028" />
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <View style="@style/gray_line" />
@@ -92,7 +92,7 @@
 
                 <TextView
                     style="@style/release_common_tv"
-                    android:layout_marginLeft="@dimen/dm020"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/iv_bank_name"
                     android:text="修改开户行" />
 
@@ -106,7 +106,7 @@
                     android:maxLength="15"
                     android:textColor="@color/color_666666"
                     android:textColorHint="@color/color_999999"
-                    android:textSize="@dimen/dm028" />
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <View style="@style/gray_line" />
@@ -122,7 +122,7 @@
 
                 <TextView
                     style="@style/release_common_tv"
-                    android:layout_marginLeft="@dimen/dm020"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/iv_card_number"
                     android:text="银行卡号" />
 
@@ -137,7 +137,7 @@
                     android:maxLength="15"
                     android:textColor="@color/color_666666"
                     android:textColorHint="@color/color_999999"
-                    android:textSize="@dimen/dm028" />
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <View style="@style/gray_line" />
@@ -153,7 +153,7 @@
 
                 <TextView
                     style="@style/release_common_tv"
-                    android:layout_marginLeft="@dimen/dm020"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/iv_college_sort"
                     android:text="学院类别" />
 
@@ -177,11 +177,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dm024"
-                android:layout_marginTop="@dimen/dm030"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="15dp"
                 android:text="学院背景图"
                 android:textColor="@color/color_333333"
-                android:textSize="@dimen/dm030" />
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:id="@+id/ll_selected_pic"
@@ -194,7 +194,7 @@
                     android:scaleType="centerCrop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dm024"
+                    android:layout_margin="11dp"
                     android:src="@mipmap/uploading_iv"/>
             </LinearLayout>
 
@@ -203,17 +203,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dm024"
-                android:layout_marginTop="@dimen/dm030"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="15dp"
                 android:text="用户学院比例"
                 android:textColor="@color/color_333333"
-                android:textSize="@dimen/dm030" />
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="@dimen/dm020"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <SeekBar
@@ -228,9 +228,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dm030"
-                    android:layout_marginRight="@dimen/dm030"
-                    android:layout_marginTop="@dimen/dm020"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -239,7 +239,7 @@
                         android:gravity="left"
                         android:text="0"
                         android:textColor="@color/color_48c6ef"
-                        android:textSize="@dimen/dm030" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -248,7 +248,7 @@
                         android:gravity="right"
                         android:text="25"
                         android:textColor="@color/color_48c6ef"
-                        android:textSize="@dimen/dm030" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -257,7 +257,7 @@
                         android:gravity="right"
                         android:text="50"
                         android:textColor="@color/color_48c6ef"
-                        android:textSize="@dimen/dm030" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -266,7 +266,7 @@
                         android:gravity="right"
                         android:text="75"
                         android:textColor="@color/color_48c6ef"
-                        android:textSize="@dimen/dm030" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -275,7 +275,7 @@
                         android:gravity="right"
                         android:text="100"
                         android:textColor="@color/color_48c6ef"
-                        android:textSize="@dimen/dm030" />
+                        android:textSize="15sp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -283,21 +283,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dm040"
-                android:layout_marginTop="@dimen/dm018"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="8dp"
                 android:text="入群设置"
                 android:textColor="@color/color_333333"
-                android:textSize="@dimen/dm030" />
+                android:textSize="15sp" />
 
             <RadioGroup
                 android:id="@+id/rg_group_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dm045"
-                android:layout_marginLeft="@dimen/dm040"
-                android:layout_marginTop="@dimen/dm030"
+                android:layout_marginBottom="21dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal"
-                android:textSize="@dimen/dm030">
+                android:textSize="15sp">
 
                 <RadioButton
                     android:id="@+id/item_option1"
@@ -306,101 +306,89 @@
                     android:checked="true"
                     android:button="@null"
                     android:drawableLeft="@drawable/group_tab"
-                    android:drawablePadding="@dimen/dm012"
-                    android:text="付费入群"
+                    android:drawablePadding="6dp"
+                    android:text="设为私密"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dm028" />
+                    android:textSize="14sp" />
 
                 <RadioButton
                     android:id="@+id/item_option2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dm080"
+                    android:layout_marginLeft="38dp"
                     android:button="@null"
                     android:drawableLeft="@drawable/group_tab"
-                    android:drawablePadding="@dimen/dm012"
+                    android:drawablePadding="6dp"
                     android:text="开放入群"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dm028" />
+                    android:textSize="14sp" />
+
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/rg_group_setting2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="21dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:textSize="15sp">
 
                 <RadioButton
                     android:id="@+id/item_option3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dm080"
                     android:button="@null"
                     android:drawableLeft="@drawable/group_tab"
-                    android:drawablePadding="@dimen/dm012"
+                    android:drawablePadding="6dp"
+                    android:text="付费入群"
+                    android:textColor="@color/color_333333"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/item_option4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="38dp"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/group_tab"
+                    android:drawablePadding="6dp"
                     android:text="审核入群"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dm028" />
+                    android:textSize="14sp" />
             </RadioGroup>
 
             <View style="@style/gray_line" />
 
-            <RelativeLayout
-                android:id="@+id/rl_stick"
-                style="@style/release_common_rl">
-
-                <TextView
-                    android:text="学院私密状态"
-                    style="@style/release_common_tv" />
-
-                <com.example.administrator.zhixueproject.view.SwitchButton
-                    android:id="@+id/sb_stick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    app:sb_checked="true"
-                    app:sb_checked_color="@color/color_fd703e"
-                    app:sb_show_indicator="false" />
-
-            </RelativeLayout>
-
-            <View style="@style/gray_line" />
-
-            <LinearLayout
-                android:background="@color/color_f0f0f0"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dm120">
-
-                <TextView
-                    android:layout_margin="@dimen/dm020"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/color_999999"
-                    android:textSize="@dimen/dm028"
-                    android:text="设置私密状态后客户端将看不到学院信息，只有用户主动申请加入学院，管理员才能收到请求"/>
-            </LinearLayout>
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dm024"
-                android:layout_marginTop="@dimen/dm040"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="19dp"
                 android:text="学院简介"
                 android:textColor="@color/color_333333"
-                android:textSize="@dimen/dm030" />
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm250">
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/et_address_detail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="top"
-                    android:padding="@dimen/dm010"
-                    android:layout_margin="@dimen/dm024"
+                    android:padding="5dp"
+                    android:minLines="7"
+                    android:layout_margin="11dp"
                     android:background="@null"
                     android:hint="编辑学院简介"
-                    android:maxLength="100"
+                    android:maxLength="500"
                     android:textColor="@color/color_666666"
                     android:textColorHint="@color/color_999999"
-                    android:textSize="@dimen/dm028" />
+                    android:textSize="14sp" />
+
             </LinearLayout>
 
             <View style="@style/gray_line" />
@@ -409,27 +397,27 @@
                 android:id="@+id/tv_commit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dm080"
-                android:layout_marginRight="@dimen/dm080"
-                android:layout_marginTop="@dimen/dm086"
+                android:layout_marginLeft="38dp"
+                android:layout_marginRight="38dp"
+                android:layout_marginTop="41dp"
                 android:background="@mipmap/bg_botton"
                 android:gravity="center"
                 android:text="提交"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/dm032" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/tv_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/dm066"
-                android:layout_marginTop="@dimen/dm030"
+                android:layout_marginBottom="31dp"
+                android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:padding="@dimen/dm030"
+                android:padding="15dp"
                 android:text="返回"
                 android:textColor="@color/color_333333"
-                android:textSize="@dimen/dm032" />
+                android:textSize="15sp" />
 
         </LinearLayout>
     </ScrollView>
