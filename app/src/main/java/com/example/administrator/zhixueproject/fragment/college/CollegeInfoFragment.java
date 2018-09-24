@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.college.EditCollegeActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.UserBean;
@@ -26,7 +27,7 @@ import com.example.administrator.zhixueproject.view.OvalImageViews;
  * Created by Administrator on 2018/1/3 0003.
  */
 
-public class CollegeInfoFragment extends BaseFragment {
+public class CollegeInfoFragment extends BaseFragment implements View.OnClickListener{
 
     private OvalImageViews imgBJ;
     private ImageView imgEdit,imgGrade;
@@ -47,6 +48,7 @@ public class CollegeInfoFragment extends BaseFragment {
         imgGrade=(ImageView)view.findViewById(R.id.iv_grade);
         tvTime=(TextView)view.findViewById(R.id.tv_expire_time);
         tvContent=(TextView)view.findViewById(R.id.tv_content);
+        view.findViewById(R.id.iv_edit).setOnClickListener(this);
         //查询首页信息
         getHomeInfo();
         return view;
@@ -82,6 +84,19 @@ public class CollegeInfoFragment extends BaseFragment {
     };
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            //编辑学院
+            case R.id.iv_edit:
+                setClass(EditCollegeActivity.class);
+                break;
+            default:
+                break;
+        }
+    }
+
+
     /**
      * 查询首页信息
      */
@@ -99,4 +114,5 @@ public class CollegeInfoFragment extends BaseFragment {
         //查询首页信息
         getHomeInfo();
     }
+
 }
