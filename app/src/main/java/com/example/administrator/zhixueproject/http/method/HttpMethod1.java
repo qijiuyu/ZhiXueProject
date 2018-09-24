@@ -210,8 +210,9 @@ public class HttpMethod1  extends BaseRequst {
      * 获取个人资料
      * @param handler
      */
-    public static void getUserInfo(final Handler handler) {
+    public static void getUserInfo(String c,final Handler handler) {
         Map<String, String> map = new HashMap<>();
+        map.put("c",c);
         Http.getRetrofit().create(HttpApi1.class).getUserInfo(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -267,6 +268,32 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<CollegeList> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 修改密码
+     * @param handler
+     */
+    public static void updatePwd2(String pwd,String newPwd,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("pwd",pwd);
+        map.put("newPwd",newPwd);
+        Http.getRetrofit().create(HttpApi1.class).updatePwd2(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.UPDATE_PWD2_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

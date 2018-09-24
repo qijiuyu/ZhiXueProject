@@ -172,6 +172,7 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        HttpMethod1.getUserInfo(mHandler);
+        final UserBean userBean= MyApplication.userInfo.getData().getUser();
+        HttpMethod1.getUserInfo(userBean.getUserId()+"",mHandler);
     }
 }

@@ -105,4 +105,14 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_MORE_COLLEGE)
     Call<CollegeList> getMoreCollege(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 修改密码
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_PWD2)
+    Call<BaseBean> updatePwd2(@FieldMap Map<String, String> map);
 }

@@ -13,4 +13,5 @@ public class HandlerConstant1 {
     public static final int GET_USER_INFO_SUCCESS=1118;
     public static final int UPLOAD_HEAD_SUCCESS=1119;
     public static final int GET_MORE_COLLEGE_SUCCESS=1120;
+    public static final int UPDATE_PWD2_SUCCESS=1121;
 }

@@ -22,7 +22,6 @@ import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.pop.PopIco;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
-import com.example.administrator.zhixueproject.utils.LogUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -103,11 +102,13 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             case R.id.rl_modify_mailbox://修改绑定邮箱
                 break;
             case R.id.rl_modify_pwd://修改密码
+                setClass(UpdatePwdActivity.class);
                 break;
             case R.id.rl_user_name://用户名
+                setClass(EditUserNameActivity.class);
                 break;
             case R.id.rl_sign://签名
-                setClass(SetSignActivity.class);
+                setClass(EditSignActivity.class);
                 break;
             case R.id.rl_personal_bg://个性背景
                 break;

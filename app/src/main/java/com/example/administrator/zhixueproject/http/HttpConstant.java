@@ -39,4 +39,7 @@ public class HttpConstant {
 
     //用户加入过的更多学院
     public static final String GET_MORE_COLLEGE="user/getMoreUserCollege.do";
+
+    //修改密码
+    public static final String UPDATE_PWD2="user/updatePwd.do";
 }
