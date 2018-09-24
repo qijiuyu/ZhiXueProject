@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
     private ImageView imgBJ;
     private SeekBar seekBar;
     private RadioGroup radioGroup,radioGroup2;
+    private RadioButton radioButton1,radioButton2,radioButton3,radioButton4;
     private Home.HomeBean homeBean;
     //学院背景图地址
     private String collegeBackimg;
@@ -72,6 +74,10 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         seekBar=(SeekBar)findViewById(R.id.college_seek_bar);
         radioGroup=(RadioGroup)findViewById(R.id.rg_group_setting);
         radioGroup2=(RadioGroup)findViewById(R.id.rg_group_setting2);
+        radioButton1=(RadioButton)findViewById(R.id.item_option1);
+        radioButton2=(RadioButton)findViewById(R.id.item_option2);
+        radioButton3=(RadioButton)findViewById(R.id.item_option3);
+        radioButton4=(RadioButton)findViewById(R.id.item_option4);
         etDetails=(EditText)findViewById(R.id.et_address_detail);
         imgBJ.setOnClickListener(this);
         findViewById(R.id.tv_commit).setOnClickListener(this);
@@ -87,6 +93,8 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
     private void RadioGraoupListener(){
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                radioButton3.setChecked(false);
+                radioButton4.setChecked(false);
                 switch (checkedId){
                     case R.id.item_option1:
                          break;
@@ -100,6 +108,8 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
 
         radioGroup2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                radioButton1.setChecked(false);
+                radioButton2.setChecked(false);
                 switch (checkedId){
                     case R.id.item_option3:
                         break;
