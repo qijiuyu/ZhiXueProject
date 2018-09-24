@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.fragment.college;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +35,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
     private TextView tvName,tvTime,tvContent;
     //fragment是否可见
     private boolean isVisibleToUser=false;
+    private Home.HomeBean homeBean;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -64,7 +66,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
                          return;
                      }
                      if(home.isStatus()){
-                         final Home.HomeBean homeBean=home.getData().getCollege();
+                         homeBean=home.getData().getCollege();
                          if(null==homeBean){
                              return;
                          }
@@ -89,7 +91,9 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
         switch (v.getId()){
             //编辑学院
             case R.id.iv_edit:
-                setClass(EditCollegeActivity.class);
+                Intent intent=new Intent(mActivity,EditCollegeActivity.class);
+                intent.putExtra("homeBean",homeBean);
+                startActivity(intent);
                 break;
             default:
                 break;

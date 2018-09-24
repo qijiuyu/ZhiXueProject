@@ -192,10 +192,11 @@
                 <ImageView
                     android:id="@+id/iv_college_back_img"
                     android:scaleType="centerCrop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="95dp"
+                    android:layout_height="95dp"
                     android:layout_margin="11dp"
                     android:src="@mipmap/uploading_iv"/>
+
             </LinearLayout>
 
             <View style="@style/gray_line" />
@@ -212,7 +213,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
@@ -393,7 +393,7 @@
 
             <View style="@style/gray_line" />
 
-            <TextView
+            <com.example.administrator.zhixueproject.view.ClickTextView
                 android:id="@+id/tv_commit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -406,7 +406,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="15sp" />
 
-            <TextView
+            <com.example.administrator.zhixueproject.view.ClickTextView
                 android:id="@+id/tv_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
