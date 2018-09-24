@@ -50,6 +50,7 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
     private void initView() {
         CircleImageView imgHead = (CircleImageView) view.findViewById(R.id.iv_menu_head);
         imgHead.setOnClickListener(this);
+        view.findViewById(R.id.img_next).setOnClickListener(this);
         TextView tvName = (TextView) view.findViewById(R.id.tv__menu_name);
         TextView tvSign = (TextView) view.findViewById(R.id.tv_meun_sign);
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_college_name);
@@ -86,8 +87,11 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_menu_head:
-                setClass(MoreCollegeActivity.class);
+                setClass(UserInfoActivity.class);
                 break;
+            case R.id.img_next:
+                setClass(MoreCollegeActivity.class);
+                 break;
             default:
                 break;
         }

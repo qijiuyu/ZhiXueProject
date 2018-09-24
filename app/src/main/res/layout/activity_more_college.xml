@@ -6,18 +6,10 @@
 
     <include layout="@layout/head" />
 
-    <com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout
-        android:id="@+id/amc_collete_list"
+    <ListView
+        android:id="@+id/rv_college_list"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ListView
-            android:id="@+id/rv_college_list"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

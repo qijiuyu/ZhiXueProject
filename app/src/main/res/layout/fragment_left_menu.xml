@@ -57,7 +57,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/down_arrow_gray"
-        android:layout_below="@id/rv_college_name"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
 

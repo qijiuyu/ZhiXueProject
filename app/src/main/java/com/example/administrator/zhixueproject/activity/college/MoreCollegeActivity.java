@@ -4,10 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
@@ -18,10 +17,6 @@ import com.example.administrator.zhixueproject.bean.Colleges;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
-import com.example.administrator.zhixueproject.view.DividerItemDecoration;
-import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
-import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +25,8 @@ import java.util.List;
  * Created by Administrator on 2018/9/23.
  */
 
-public class MoreCollegeActivity extends BaseActivity  implements MyRefreshLayoutListener {
+public class MoreCollegeActivity extends BaseActivity{
     private ListView listView;
-    private MyRefreshLayout mRefreshLayout;
     private List<Colleges> list=new ArrayList<>();
     private CollegeItemAdapter collegeItemAdapter;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,10 +40,14 @@ public class MoreCollegeActivity extends BaseActivity  implements MyRefreshLayou
      * 初始化控件
      */
     private void initView(){
-        mRefreshLayout = (MyRefreshLayout)findViewById(R.id.amc_collete_list);
+        TextView tvHead=(TextView)findViewById(R.id.tv_title);
+        tvHead.setText(getString(R.string.joined_college));
         listView = (ListView)findViewById(R.id.rv_college_list);
-        //刷新加载
-        mRefreshLayout.setMyRefreshLayoutListener(this);
+        findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                MoreCollegeActivity.this.finish();
+            }
+        });
     }
 
 
@@ -65,7 +63,6 @@ public class MoreCollegeActivity extends BaseActivity  implements MyRefreshLayou
                      }
                      if(collegeList.isStatus()){
                          list.addAll(collegeList.getData().getData());
-                         mRefreshLayout.refreshComplete();
                          collegeItemAdapter=new CollegeItemAdapter(mContext,list);
                          listView.setAdapter(collegeItemAdapter);
                      }else{
@@ -80,16 +77,6 @@ public class MoreCollegeActivity extends BaseActivity  implements MyRefreshLayou
             }
         }
     };
-
-    @Override
-    public void onRefresh(View view) {
-        mRefreshLayout.refreshComplete();
-    }
-
-    @Override
-    public void onLoadMore(View view) {
-        mRefreshLayout.loadMoreComplete();
-    }
 
 
     /**
