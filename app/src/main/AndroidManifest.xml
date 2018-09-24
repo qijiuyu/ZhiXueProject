@@ -60,6 +60,7 @@
         <activity android:name=".activity.userinfo.UpdatePhoneActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.userinfo.SetSignActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.CollegeManageActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.college.MoreCollegeActivity" android:screenOrientation="portrait"/>
 
     </application>
 

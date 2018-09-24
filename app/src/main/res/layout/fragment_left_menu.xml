@@ -12,7 +12,7 @@
         android:id="@+id/lin_icon_and_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="60dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -49,7 +49,16 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_college_name"
         android:layout_width="match_parent"
-        android:layout_height="460dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tv_meun_sign" />
+
+    <ImageView
+        android:id="@+id/img_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/down_arrow_gray"
+        android:layout_below="@id/rv_college_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
 
 </RelativeLayout>

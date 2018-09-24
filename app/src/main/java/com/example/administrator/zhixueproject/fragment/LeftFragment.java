@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.college.MoreCollegeActivity;
 import com.example.administrator.zhixueproject.activity.userinfo.UserInfoActivity;
 import com.example.administrator.zhixueproject.adapter.CollegeNameAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
@@ -85,7 +86,7 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_menu_head:
-                setClass(UserInfoActivity.class);
+                setClass(MoreCollegeActivity.class);
                 break;
             default:
                 break;

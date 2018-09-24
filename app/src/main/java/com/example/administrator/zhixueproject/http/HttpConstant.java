@@ -36,4 +36,7 @@ public class HttpConstant {
 
     //上传文件
     public static final String UPDATE_FILES="sys/uploadFiles.do";
+
+    //用户加入过的更多学院
+    public static final String GET_MORE_COLLEGE="user/getMoreUserCollege.do";
 }

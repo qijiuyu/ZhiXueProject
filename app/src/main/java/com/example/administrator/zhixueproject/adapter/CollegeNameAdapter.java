@@ -9,6 +9,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.Colleges;
+import com.example.administrator.zhixueproject.utils.LogUtils;
+
 import java.util.List;
 
 
@@ -24,6 +26,7 @@ public class CollegeNameAdapter extends BaseQuickAdapter<Colleges, BaseViewHolde
 
     @Override
     protected void convert(BaseViewHolder helper, Colleges item) {
+        LogUtils.e(helper.getAdapterPosition()+"++++++++++");
         helper.setText(R.id.tv_college_name, item.getCollegeName());
         ImageView imgCollegeIcon = helper.getView(R.id.iv_college_img);
         Glide.with(MyApplication.application).load(item.getCollegeLogo()).override(60,44).into(imgCollegeIcon);

@@ -4,6 +4,7 @@ import android.os.Handler;
 
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.UploadFile;
@@ -242,6 +243,31 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(okhttp3.Call call, IOException e) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 获取加入过的更多学院
+     * @param handler
+     */
+    public static void getMoreCollege(String userId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId",userId);
+        Http.getRetrofit().create(HttpApi1.class).getMoreCollege(map).enqueue(new Callback<CollegeList>() {
+            public void onResponse(Call<CollegeList> call, Response<CollegeList> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_MORE_COLLEGE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<CollegeList> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
