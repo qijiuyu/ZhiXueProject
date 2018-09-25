@@ -34,9 +34,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
     private OvalImageViews imgBJ;
     private ImageView imgEdit,imgGrade;
     private TextView tvName,tvTime,tvContent;
-    //fragment是否可见
-    private boolean isVisibleToUser=false;
-    private Home.HomeBean homeBean;
+    public static Home.HomeBean homeBean;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }

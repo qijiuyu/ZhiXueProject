@@ -4,6 +4,7 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
+import com.example.administrator.zhixueproject.bean.MemBerLevel;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 
@@ -125,4 +126,14 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.EDIT_COLLEGE)
     Call<BaseBean> editCollege(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 会员等级设置
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.MEMBER_LEVEL_SETTING)
+    Call<MemBerLevel> settingMemberLevel(@FieldMap Map<String, String> map);
 }

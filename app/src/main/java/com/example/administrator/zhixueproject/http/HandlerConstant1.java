@@ -15,4 +15,5 @@ public class HandlerConstant1 {
     public static final int GET_MORE_COLLEGE_SUCCESS=1120;
     public static final int UPDATE_PWD2_SUCCESS=1121;
     public static final int EDIT_COLLEGE_SUCCESS=1122;
+    public static final int SETTING_MEMBER_LEVEL_SUCCESS=1123;
 }

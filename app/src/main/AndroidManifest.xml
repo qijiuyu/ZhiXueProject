@@ -64,6 +64,7 @@
         <activity android:name=".activity.college.EditCollegeActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.userinfo.EditUserNameActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.userinfo.UpdatePwdActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.college.MemberLevelActivity" android:screenOrientation="portrait"/>
 
     </application>
 

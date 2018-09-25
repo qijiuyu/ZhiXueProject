@@ -45,4 +45,7 @@ public class HttpConstant {
 
     //编辑学院
     public static final String EDIT_COLLEGE="college/editCollege.do";
+
+    //会员等级设置
+    public static final String MEMBER_LEVEL_SETTING="college/updateVipGrade.do";
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_marginLeft="19dp"
+    android:layout_marginRight="19dp"
+    android:layout_width="match_parent"
+    android:layout_height="62dp">
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="61dp">
+
+        <TextView
+            android:id="@+id/tv_level"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/color_fd703e"
+            android:textSize="16sp"/>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/et_jifen"
+                android:layout_centerInParent="true"
+                android:layout_width="140dp"
+                android:layout_height="33dp"
+                android:inputType="number"
+                android:background="@drawable/bg_jifen_edit"
+                android:gravity="center_horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="8dp"
+                android:textSize="14sp"
+                android:textColor="@color/color_666666"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View style="@style/view_line"/>
+</LinearLayout>

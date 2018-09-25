@@ -7,6 +7,7 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
+import com.example.administrator.zhixueproject.bean.MemBerLevel;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
@@ -347,4 +348,31 @@ public class HttpMethod1  extends BaseRequst {
             }
         });
     }
+
+
+    /**
+     * 会员等级设置
+     * @param handler
+     */
+    public static void settingMemberLevel(int c,int collegeId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("c",c+"");
+        map.put("collegeId",collegeId+"");
+        Http.getRetrofit().create(HttpApi1.class).settingMemberLevel(map).enqueue(new Callback<MemBerLevel>() {
+            public void onResponse(Call<MemBerLevel> call, Response<MemBerLevel> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.SETTING_MEMBER_LEVEL_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<MemBerLevel> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }
