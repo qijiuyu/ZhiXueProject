@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Headers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -89,17 +90,20 @@ public class HttpMethod1  extends BaseRequst {
         Map<String, String> map = new HashMap<>();
         map.put("mobile",mobile);
         map.put("pwd",pwd);
-        Http.getRetrofit().create(HttpApi1.class).login(map).enqueue(new Callback<UserInfo>() {
-            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+        Http.getRetrofit().create(HttpApi1.class).login(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant1.LOGIN_SUCCESS, response.body());
+                    sendMessage(handler, HandlerConstant1.LOGIN_SUCCESS, response.body().string());
+                    //保存sessionId
+                    saveSessionId(response.headers());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
-            public void onFailure(Call<UserInfo> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });

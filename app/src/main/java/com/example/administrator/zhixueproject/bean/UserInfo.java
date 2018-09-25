@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class UserInfo extends BaseBean {
     }
 
     public static class UserInfoBean implements Serializable{
-        private List<Colleges> colleges;
+        private List<Colleges> colleges=new ArrayList<>();
 
         private UserBean user;
 

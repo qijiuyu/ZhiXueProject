@@ -13,12 +13,18 @@ import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.Colleges;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.CodeUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * 登陆
@@ -116,6 +122,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             switch (msg.what){
                 //登陆回执
                 case HandlerConstant1.LOGIN_SUCCESS:
+                     final String message= (String) msg.obj;
+                     if(TextUtils.isEmpty(message)){
+                         return;
+                     }
+                     try {
+                         final JSONObject jsonObject=new JSONObject(message);
+                         if(jsonObject.getBoolean("status")){
+                             final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
+                             if(!TextUtils.isEmpty(jsonObject1.getString("colleges"))){
+                                 List<Colleges> colleges=MyApplication.gson.fromJson(jsonObject1.getString("colleges"), new TypeToken<List<Colleges>>(){}.getType());
+                             }
+
+                         }else{
+                             showMsg(jsonObject.getString("errorMsg"));
+                         }
+                     }catch (Exception e){
+                         e.printStackTrace();
+                     }
                      final UserInfo userInfo= (UserInfo) msg.obj;
                      if(null==userInfo){
                          return;

@@ -45,7 +45,7 @@ public interface HttpApi1 {
      */
     @FormUrlEncoded
     @POST(HttpConstant.LOGIN)
-    Call<UserInfo> login(@FieldMap Map<String, String> map);
+    Call<ResponseBody> login(@FieldMap Map<String, String> map);
 
 
     /**

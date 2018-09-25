@@ -3,6 +3,13 @@ package com.example.administrator.zhixueproject.http.base;
 import android.os.Handler;
 import android.os.Message;
 
+import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.utils.SPUtil;
+
+import java.util.List;
+
+import okhttp3.Headers;
+
 /**
  * Created by lyn on 2017/5/9.
  */
@@ -17,5 +24,17 @@ public class BaseRequst {
         message.what = wat;
         message.obj = obj;
         handler.sendMessage(message);
+    }
+
+
+    /**
+     * 保存sessionId
+     * @param headers
+     */
+    public static void saveSessionId(Headers headers){
+        List cookies = headers.values("Set-Cookie");
+        final String session = (String) cookies.get(0);
+        final String sessionid = session.substring(0,session.indexOf(";"));
+        MyApplication.spUtil.addString(SPUtil.SESSION_ID,sessionid);
     }
 }
