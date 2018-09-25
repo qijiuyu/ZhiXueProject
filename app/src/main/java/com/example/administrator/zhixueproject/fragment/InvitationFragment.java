@@ -122,6 +122,9 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
             mAdapter = new TopicListAdapter(R.layout.topic_list_item, listData, true);
             mRecyclerView.setAdapter(mAdapter);
             mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) mRecyclerView.getParent());
+        }else {
+            showMsg(bean.errorMsg);
+
         }
     }
 
@@ -143,6 +146,8 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
             mAdapter = new TopicListAdapter(R.layout.topic_list_item, listData, true);
             mRecyclerView.setAdapter(mAdapter);
             mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) mRecyclerView.getParent());
+        }else {
+            showMsg(bean.errorMsg);
         }
     }
 

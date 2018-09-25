@@ -6,6 +6,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.example.administrator.zhixueproject.http.HttpConstant;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;

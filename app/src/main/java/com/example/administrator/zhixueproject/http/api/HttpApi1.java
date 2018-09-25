@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.http.api;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.UserInfo;
@@ -74,4 +75,44 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.UPDATE_PWD)
     Call<BaseBean> updatePwd(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取邮箱验证码
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_EMAIL_CODE)
+    Call<BaseBean> getEmailCode(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取个人资料
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_USER_INFO)
+    Call<ResponseBody> getUserInfo(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取加入过的更多学院
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_MORE_COLLEGE)
+    Call<CollegeList> getMoreCollege(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 修改密码
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_PWD2)
+    Call<BaseBean> updatePwd2(@FieldMap Map<String, String> map);
 }

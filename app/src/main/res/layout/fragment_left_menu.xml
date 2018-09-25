@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_drawer_nume"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rel_drawer_nume"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:background="@color/color_ffffff"
     android:clickable="true"
-    android:orientation="vertical"
     android:tag="left">
 
     <LinearLayout
+        android:id="@+id/lin_icon_and_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="77dp"
+        android:layout_marginTop="60dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.example.administrator.zhixueproject.view.CircleImageView
             android:id="@+id/iv_menu_head"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="25dp"
             android:background="@mipmap/img_left_menu_head" />
 
@@ -39,9 +39,9 @@
         android:id="@+id/tv_meun_sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/lin_icon_and_name"
         android:layout_marginLeft="33dp"
         android:layout_marginTop="13dp"
-        android:text="你的学校不不不不好"
         android:textColor="@color/color_999999"
         android:textSize="13sp" />
 
@@ -49,23 +49,17 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_college_name"
         android:layout_width="match_parent"
-        android:layout_height="460dp" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_meun_sign" />
 
+    <ImageView
+        android:id="@+id/img_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/down_arrow_gray"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
 
-    <RelativeLayout
-        android:id="@+id/rl_college_joined"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@mipmap/img_down_arrow"
-            android:rotation="90" />
-    </RelativeLayout>
-
-
-</LinearLayout>
+</RelativeLayout>

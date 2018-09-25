@@ -3,8 +3,11 @@ package com.example.administrator.zhixueproject.activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,10 +15,18 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.adapter.TabAdapter;
+import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.UserBean;
+import com.example.administrator.zhixueproject.http.HandlerConstant1;
+import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.ActivitysLifecycle;
 import com.example.administrator.zhixueproject.utils.EnumTAB;
 import com.example.administrator.zhixueproject.utils.EnumUtils;
+import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.example.administrator.zhixueproject.view.MyViewPager;
+
+import org.json.JSONObject;
 
 public class TabActivity extends BaseActivity implements View.OnClickListener {
 
@@ -83,6 +94,39 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
+
+    private Handler mHandler=new Handler(){
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            clearTask();
+            switch (msg.what){
+                //获取个人资料
+                case HandlerConstant1.GET_USER_INFO_SUCCESS:
+                    final String message=msg.obj.toString();
+                    if(TextUtils.isEmpty(message)){
+                        return;
+                    }
+                    try {
+                        final JSONObject jsonObject=new JSONObject(message);
+                        if(jsonObject.getBoolean("status")){
+                            final UserBean userBean= MyApplication.gson.fromJson(jsonObject.getString("data"),UserBean.class);
+                            if(null==userBean){
+                                return;
+                            }
+                            MyApplication.userInfo.getData().setUser(userBean);
+                            MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(MyApplication.userInfo));
+                            LogUtils.e(MyApplication.userInfo.getData().getUser().getUserId()+"+++++++++++");
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     @Override
     public void onClick(View v) {
         EnumTAB[] enumArr = EnumTAB.values();
@@ -124,4 +168,11 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
         return super.dispatchKeyEvent(event);
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final UserBean userBean= MyApplication.userInfo.getData().getUser();
+        HttpMethod1.getUserInfo(userBean.getUserId()+"",mHandler);
+    }
 }

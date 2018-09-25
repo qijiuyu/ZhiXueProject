@@ -18,4 +18,7 @@
     <color name="color_48c6ef">#48c6ef</color>
     <color name="color_aaa">#AAA</color>
     <color name="color_7fffffff">#7fFFFF</color>
+    <color name="color_cccccc">#cccccc</color>
+    <color name="color_000000">#000000</color>
+    <color name="color_FF5A6C">#FF5A6C</color>
 </resources>

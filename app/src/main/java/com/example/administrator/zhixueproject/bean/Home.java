@@ -17,7 +17,7 @@ public class Home extends BaseBean {
         this.data = data;
     }
 
-    public static class collegeBean{
+    public static class collegeBean implements Serializable{
 
         private HomeBean college;
 

@@ -15,8 +15,6 @@ import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
-import com.example.administrator.zhixueproject.utils.LogUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 

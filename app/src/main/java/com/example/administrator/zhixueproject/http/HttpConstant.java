@@ -24,4 +24,22 @@ public class HttpConstant {
 
     //修改密码
     public static final String UPDATE_PWD="user/updatePwdByMobile.do";
+
+    // 修改个人资料
+    public static final String MODIFY_USER_INFO ="user/update.do" ;
+
+    //查询个人资料
+    public static final String GET_USER_INFO="user/getInformation.do";
+
+    //获取邮箱验证码
+    public static final String GET_EMAIL_CODE="user/getEmailCode.do";
+
+    //上传文件
+    public static final String UPDATE_FILES="sys/uploadFiles.do";
+
+    //用户加入过的更多学院
+    public static final String GET_MORE_COLLEGE="user/getMoreUserCollege.do";
+
+    //修改密码
+    public static final String UPDATE_PWD2="user/updatePwd.do";
 }
