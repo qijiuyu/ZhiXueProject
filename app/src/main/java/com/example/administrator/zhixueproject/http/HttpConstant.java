@@ -42,4 +42,7 @@ public class HttpConstant {
 
     //修改密码
     public static final String UPDATE_PWD2="user/updatePwd.do";
+
+    //编辑学院
+    public static final String EDIT_COLLEGE="college/editCollege.do";
 }

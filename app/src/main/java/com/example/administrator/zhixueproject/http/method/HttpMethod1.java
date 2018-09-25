@@ -254,9 +254,9 @@ public class HttpMethod1  extends BaseRequst {
      * 获取加入过的更多学院
      * @param handler
      */
-    public static void getMoreCollege(String userId,final Handler handler) {
+    public static void getMoreCollege(String c,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("userId",userId);
+        map.put("c",c);
         Http.getRetrofit().create(HttpApi1.class).getMoreCollege(map).enqueue(new Callback<CollegeList>() {
             public void onResponse(Call<CollegeList> call, Response<CollegeList> response) {
                 try {
@@ -287,6 +287,54 @@ public class HttpMethod1  extends BaseRequst {
             public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
                 try {
                     sendMessage(handler, HandlerConstant1.UPDATE_PWD2_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 编辑学院
+     * @param c
+     * @param collegeId
+     * @param collegeName
+     * @param collegeUser
+     * @param collegeAccBankinfo
+     * @param collegeAccBank
+     * @param collegeBackimg
+     * @param scale
+     * @param collegeType
+     * @param collegePrice
+     * @param collegeDelYn
+     * @param collegeInfo
+     * @param handler
+     */
+    public static void editCollege(int c,int collegeId,String collegeName,String collegeUser,String collegeAccBankinfo,String collegeAccBank,String collegeBackimg,int scale,int collegeType,String collegePrice,int collegeDelYn,String collegeInfo,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("c",c+"");
+        map.put("collegeId",collegeId+"");
+        map.put("collegeName",collegeName);
+        map.put("collegeUser",collegeUser);
+        map.put("collegeAccBankinfo",collegeAccBankinfo);
+        map.put("collegeAccBank",collegeAccBank);
+        map.put("collegeBackimg",collegeBackimg);
+        map.put("scale",scale+"");
+        map.put("collegeType",collegeType+"");
+        map.put("collegePrice",collegePrice);
+        map.put("collegeDelYn",collegeDelYn+"");
+        map.put("collegeInfo",collegeInfo);
+        Http.getRetrofit().create(HttpApi1.class).editCollege(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.EDIT_COLLEGE_SUCCESS, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);

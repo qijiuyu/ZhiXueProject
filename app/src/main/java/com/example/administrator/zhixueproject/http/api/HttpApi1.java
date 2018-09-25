@@ -115,4 +115,14 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.UPDATE_PWD2)
     Call<BaseBean> updatePwd2(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 编辑学院
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.EDIT_COLLEGE)
+    Call<BaseBean> editCollege(@FieldMap Map<String, String> map);
 }
