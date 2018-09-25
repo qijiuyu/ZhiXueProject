@@ -7,6 +7,7 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
+import com.example.administrator.zhixueproject.bean.MemBerLevel;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Headers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -88,17 +90,20 @@ public class HttpMethod1  extends BaseRequst {
         Map<String, String> map = new HashMap<>();
         map.put("mobile",mobile);
         map.put("pwd",pwd);
-        Http.getRetrofit().create(HttpApi1.class).login(map).enqueue(new Callback<UserInfo>() {
-            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+        Http.getRetrofit().create(HttpApi1.class).login(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant1.LOGIN_SUCCESS, response.body());
+                    sendMessage(handler, HandlerConstant1.LOGIN_SUCCESS, response.body().string());
+                    //保存sessionId
+                    saveSessionId(response.headers());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
-            public void onFailure(Call<UserInfo> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -254,9 +259,9 @@ public class HttpMethod1  extends BaseRequst {
      * 获取加入过的更多学院
      * @param handler
      */
-    public static void getMoreCollege(String userId,final Handler handler) {
+    public static void getMoreCollege(String c,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("userId",userId);
+        map.put("c",c);
         Http.getRetrofit().create(HttpApi1.class).getMoreCollege(map).enqueue(new Callback<CollegeList>() {
             public void onResponse(Call<CollegeList> call, Response<CollegeList> response) {
                 try {
@@ -299,4 +304,79 @@ public class HttpMethod1  extends BaseRequst {
             }
         });
     }
+
+
+    /**
+     * 编辑学院
+     * @param c
+     * @param collegeId
+     * @param collegeName
+     * @param collegeUser
+     * @param collegeAccBankinfo
+     * @param collegeAccBank
+     * @param collegeBackimg
+     * @param scale
+     * @param collegeType
+     * @param collegePrice
+     * @param collegeDelYn
+     * @param collegeInfo
+     * @param handler
+     */
+    public static void editCollege(int c,int collegeId,String collegeName,String collegeUser,String collegeAccBankinfo,String collegeAccBank,String collegeBackimg,int scale,int collegeType,String collegePrice,int collegeDelYn,String collegeInfo,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("c",c+"");
+        map.put("collegeId",collegeId+"");
+        map.put("collegeName",collegeName);
+        map.put("collegeUser",collegeUser);
+        map.put("collegeAccBankinfo",collegeAccBankinfo);
+        map.put("collegeAccBank",collegeAccBank);
+        map.put("collegeBackimg",collegeBackimg);
+        map.put("scale",scale+"");
+        map.put("collegeType",collegeType+"");
+        map.put("collegePrice",collegePrice);
+        map.put("collegeDelYn",collegeDelYn+"");
+        map.put("collegeInfo",collegeInfo);
+        Http.getRetrofit().create(HttpApi1.class).editCollege(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.EDIT_COLLEGE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 会员等级设置
+     * @param handler
+     */
+    public static void settingMemberLevel(int c,int collegeId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("c",c+"");
+        map.put("collegeId",collegeId+"");
+        Http.getRetrofit().create(HttpApi1.class).settingMemberLevel(map).enqueue(new Callback<MemBerLevel>() {
+            public void onResponse(Call<MemBerLevel> call, Response<MemBerLevel> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.SETTING_MEMBER_LEVEL_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<MemBerLevel> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

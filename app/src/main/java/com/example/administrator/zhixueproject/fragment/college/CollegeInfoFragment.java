@@ -21,6 +21,7 @@ import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.DateUtil;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.OvalImageViews;
 
 /**
@@ -33,9 +34,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
     private OvalImageViews imgBJ;
     private ImageView imgEdit,imgGrade;
     private TextView tvName,tvTime,tvContent;
-    //fragment是否可见
-    private boolean isVisibleToUser=false;
-    private Home.HomeBean homeBean;
+    public static Home.HomeBean homeBean;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -51,8 +50,6 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
         tvTime=(TextView)view.findViewById(R.id.tv_expire_time);
         tvContent=(TextView)view.findViewById(R.id.tv_content);
         view.findViewById(R.id.iv_edit).setOnClickListener(this);
-        //查询首页信息
-        getHomeInfo();
         return view;
     }
 
@@ -105,18 +102,14 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
      * 查询首页信息
      */
     private void getHomeInfo(){
-        if(isVisibleToUser && view!=null){
-            final UserBean userBean= MyApplication.userInfo.getData().getUser();
-            HttpMethod1.getHomeInfo(userBean.getUserId()+"",mHandler);
-        }
+        final UserBean userBean= MyApplication.userInfo.getData().getUser();
+        HttpMethod1.getHomeInfo(userBean.getUserId()+"",mHandler);
     }
 
 
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        this.isVisibleToUser=isVisibleToUser;
-        //查询首页信息
+    @Override
+    public void onResume() {
+        super.onResume();
         getHomeInfo();
     }
-
 }

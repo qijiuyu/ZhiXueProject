@@ -2,6 +2,7 @@
     <string name="net_error">网络连接异常，请稍候重试</string>
     <string name="app_name">要学就学</string>
     <string name="main_title">学院管理系统</string>
+    <string name="loding">数据加载中</string>
     <!--登录注册-->
     <string name="login">登录</string>
     <string name="register">注册</string>

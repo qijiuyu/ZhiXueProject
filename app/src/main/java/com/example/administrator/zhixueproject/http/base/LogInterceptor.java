@@ -1,7 +1,10 @@
 package com.example.administrator.zhixueproject.http.base;
 
 
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.utils.SPUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,7 +61,7 @@ public class LogInterceptor implements Interceptor {
               bodyBuilder.addEncoded(key, requstMap.get(key));
         }
         formBody = bodyBuilder.build();
-        request = request.newBuilder().post(formBody).build();
+        request = request.newBuilder().post(formBody).addHeader("cookie", MyApplication.spUtil.getString(SPUtil.SESSION_ID)).build();
         return request;
     }
 

@@ -49,7 +49,7 @@ public class AddImageUtils {
     /**
      * 裁剪
      */
-    public static void cropPhoto(Context context) {
+    public static String cropPhoto(Context context) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(imageUri, "image/*");
         intent.putExtra("crop", "true");
@@ -63,6 +63,7 @@ public class AddImageUtils {
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         intent.putExtra("noFaceDetection", true);
         ((Activity) context).startActivityForResult(intent, REQUEST_PICTURE_CUT);
+        return outputUri;
     }
 
     /**

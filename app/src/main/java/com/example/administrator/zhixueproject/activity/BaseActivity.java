@@ -8,19 +8,22 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 public class BaseActivity extends FragmentActivity {
     protected Context mContext = this;
     private ProgressDialog progressDialog = null;
-
+    private PopupWindow mPopUpWindow;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         transparencyBar(this);
@@ -87,6 +90,28 @@ public class BaseActivity extends FragmentActivity {
             progressDialog.dismiss();
     }
 
+
+    /**
+     * popwindow中心弹出
+     * @param view
+     */
+    public void showPop(View view){
+        mPopUpWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        mPopUpWindow.setBackgroundDrawable(new BitmapDrawable());
+        mPopUpWindow.setOutsideTouchable(true);
+        mPopUpWindow.setFocusable(true);
+        mPopUpWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+    }
+
+
+    /**
+     * 关闭popwindow
+     */
+    public void closePop(){
+        if(null!=mPopUpWindow){
+            mPopUpWindow.dismiss();
+        }
+    }
 
     /**
      * 确保系统字体大小不会影响app中字体大小

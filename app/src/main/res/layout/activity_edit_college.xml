@@ -142,38 +142,6 @@
 
             <View style="@style/gray_line" />
 
-            <RelativeLayout style="@style/release_common_rl">
-
-                <ImageView
-                    android:id="@+id/iv_college_sort"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:background="@mipmap/college_sort" />
-
-                <TextView
-                    style="@style/release_common_tv"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/iv_college_sort"
-                    android:text="学院类别" />
-
-                <ImageView
-                    android:id="@+id/iv_right_college_sort"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@mipmap/right_arrow" />
-
-                <TextView
-                    android:id="@+id/et_college_sort"
-                    style="@style/release_common_tv_show"
-                    android:layout_toLeftOf="@+id/iv_right_college_sort" />
-            </RelativeLayout>
-
-            <View style="@style/gray_line" />
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -289,15 +257,13 @@
                 android:textColor="@color/color_333333"
                 android:textSize="15sp" />
 
-            <RadioGroup
-                android:id="@+id/rg_group_setting"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="21dp"
                 android:layout_marginLeft="19dp"
                 android:layout_marginTop="15dp"
-                android:orientation="horizontal"
-                android:textSize="15sp">
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/item_option1"
@@ -315,7 +281,7 @@
                     android:id="@+id/item_option2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="38dp"
+                    android:layout_marginLeft="68dp"
                     android:button="@null"
                     android:drawableLeft="@drawable/group_tab"
                     android:drawablePadding="6dp"
@@ -323,17 +289,15 @@
                     android:textColor="@color/color_333333"
                     android:textSize="14sp" />
 
-            </RadioGroup>
+            </LinearLayout>
 
-            <RadioGroup
-                android:id="@+id/rg_group_setting2"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="21dp"
                 android:layout_marginLeft="19dp"
                 android:layout_marginTop="15dp"
-                android:orientation="horizontal"
-                android:textSize="15sp">
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/item_option3"
@@ -346,18 +310,27 @@
                     android:textColor="@color/color_333333"
                     android:textSize="14sp" />
 
+                <TextView
+                    android:id="@+id/tv_aec_money"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/color_FFA287"
+                    android:textSize="14sp"
+                    android:layout_gravity="center"/>
+
                 <RadioButton
                     android:id="@+id/item_option4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="38dp"
+                    android:layout_marginLeft="8dp"
                     android:button="@null"
                     android:drawableLeft="@drawable/group_tab"
                     android:drawablePadding="6dp"
                     android:text="审核入群"
                     android:textColor="@color/color_333333"
                     android:textSize="14sp" />
-            </RadioGroup>
+            </LinearLayout>
 
             <View style="@style/gray_line" />
 
