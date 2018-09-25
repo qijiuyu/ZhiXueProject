@@ -13,18 +13,12 @@ import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
-import com.example.administrator.zhixueproject.bean.Colleges;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.CodeUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONObject;
-
-import java.util.List;
 
 /**
  * 登陆
@@ -65,19 +59,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         switch (v.getId()){
             //注册
             case R.id.tv_right:
-                 setClass(RegisterActivity.class);
-                 break;
+                setClass(RegisterActivity.class);
+                break;
             //刷新验证码
             case R.id.iv_get_code:
-                 imgCode.setImageBitmap(CodeUtils.getInstance().createBitmap());
-                 break;
+                imgCode.setImageBitmap(CodeUtils.getInstance().createBitmap());
+                break;
             //登陆
             case R.id.tv_login:
-                 String mobile=etMobile.getText().toString().trim();
-                 String pwd=etPwd.getText().toString().trim();
-                 String code=etCode.getText().toString().trim();
-                 String realCode = CodeUtils.getInstance().getCode();
-                 LogUtils.e(realCode+"+++++++++++++++++");
+                String mobile=etMobile.getText().toString().trim();
+                String pwd=etPwd.getText().toString().trim();
+                String code=etCode.getText().toString().trim();
+                String realCode = CodeUtils.getInstance().getCode();
+                LogUtils.e(realCode+"+++++++++++++++++");
                 if (TextUtils.isEmpty(mobile)){
                     showMsg(getString(R.string.login_phone));
                     return;
@@ -100,16 +94,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 }
                 showProgress("登陆中...");
                 HttpMethod1.login(mobile,pwd,mHandler);
-                 break;
+                break;
             //忘记密码
             case R.id.tv_forget_pwd:
-                 setClass(SettingPwdActivity.class);
-                 break;
+                setClass(SettingPwdActivity.class);
+                break;
             case R.id.lin_back:
-                 finish();
-                 break;
-                 default:
-                     break;
+                finish();
+                break;
+            default:
+                break;
         }
     }
 
@@ -122,42 +116,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             switch (msg.what){
                 //登陆回执
                 case HandlerConstant1.LOGIN_SUCCESS:
-                     final String message= (String) msg.obj;
-                     if(TextUtils.isEmpty(message)){
-                         return;
-                     }
-                     try {
-                         final JSONObject jsonObject=new JSONObject(message);
-                         if(jsonObject.getBoolean("status")){
-                             final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
-                             if(!TextUtils.isEmpty(jsonObject1.getString("colleges"))){
-                                 List<Colleges> colleges=MyApplication.gson.fromJson(jsonObject1.getString("colleges"), new TypeToken<List<Colleges>>(){}.getType());
-                             }
-
-                         }else{
-                             showMsg(jsonObject.getString("errorMsg"));
-                         }
-                     }catch (Exception e){
-                         e.printStackTrace();
-                     }
-                     final UserInfo userInfo= (UserInfo) msg.obj;
-                     if(null==userInfo){
-                         return;
-                     }
-                     if(userInfo.isStatus()){
-                         MyApplication.userInfo=userInfo;
-                         MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(userInfo));
-                         setClass(TabActivity.class);
-                         finish();
-                     }else{
-                         showMsg(userInfo.getErrorMsg());
-                     }
-                     break;
+                    final UserInfo login= (UserInfo) msg.obj;
+                    if(null==login){
+                        return;
+                    }
+                    if(login.isStatus()){
+                        MyApplication.userInfo=login;
+                        MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(login));
+                        setClass(TabActivity.class);
+                        finish();
+                    }else{
+                        showMsg(login.getErrorMsg());
+                    }
+                    break;
                 case HandlerConstant1.REQUST_ERROR:
-                     showMsg(getString(R.string.net_error));
-                     break;
-                     default:
-                         break;
+                    showMsg(getString(R.string.net_error));
+                    break;
+                default:
+                    break;
             }
         }
     };

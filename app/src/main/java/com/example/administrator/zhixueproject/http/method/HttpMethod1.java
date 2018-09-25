@@ -90,10 +90,10 @@ public class HttpMethod1  extends BaseRequst {
         Map<String, String> map = new HashMap<>();
         map.put("mobile",mobile);
         map.put("pwd",pwd);
-        Http.getRetrofit().create(HttpApi1.class).login(map).enqueue(new Callback<ResponseBody>() {
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+        Http.getRetrofit().create(HttpApi1.class).login(map).enqueue(new Callback<UserInfo>() {
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
                 try {
-                    sendMessage(handler, HandlerConstant1.LOGIN_SUCCESS, response.body().string());
+                    sendMessage(handler, HandlerConstant1.LOGIN_SUCCESS, response.body());
                     //保存sessionId
                     saveSessionId(response.headers());
                 }catch (Exception e){
@@ -102,7 +102,7 @@ public class HttpMethod1  extends BaseRequst {
                 }
             }
 
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<UserInfo> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
@@ -373,6 +373,32 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<MemBerLevel> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 判断验证码是否正确
+     * @param handler
+     */
+    public static void checkSmsCode(String account,String code,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("account",account);
+        map.put("code",code);
+        Http.getRetrofit().create(HttpApi1.class).checkSmsCode(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.CHECK_SMS_CODE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

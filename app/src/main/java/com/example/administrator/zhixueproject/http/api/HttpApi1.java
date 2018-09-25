@@ -45,7 +45,7 @@ public interface HttpApi1 {
      */
     @FormUrlEncoded
     @POST(HttpConstant.LOGIN)
-    Call<ResponseBody> login(@FieldMap Map<String, String> map);
+    Call<UserInfo> login(@FieldMap Map<String, String> map);
 
 
     /**
@@ -136,4 +136,14 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.MEMBER_LEVEL_SETTING)
     Call<MemBerLevel> settingMemberLevel(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 判断验证码是否正确
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.CHECK_SMS_CODE)
+    Call<BaseBean> checkSmsCode(@FieldMap Map<String, String> map);
 }

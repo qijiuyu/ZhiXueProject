@@ -65,6 +65,8 @@
         <activity android:name=".activity.userinfo.EditUserNameActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.userinfo.UpdatePwdActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.MemberLevelActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.userinfo.EditEmailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.userinfo.BindingEmailActivity" android:screenOrientation="portrait"/>
 
     </application>
 
