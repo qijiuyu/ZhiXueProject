@@ -178,7 +178,7 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
         HttpMethod1.getUserInfo(userBean.getUserId()+"",mHandler);
 
-        String a= userBean.getUserPhone()+userBean.getUserPassword()+"be07e7093fefeaaf95f54c2b350d7810";
+        String a= "15011224467123456be07e7093fefeaaf95f54c2b350d7810";
         try {
             String b=Encrypt.getSHA(a);
             String c=Encrypt.stringToAscii(b);
