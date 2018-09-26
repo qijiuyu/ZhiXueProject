@@ -60,4 +60,7 @@ public class HttpConstant {
 
     //获取勋章列表
     public static final String GET_MEDAL_LIST="medalType/getMedalType.do";
+
+    //编辑或保存勋章
+    public static final String SAVE_MEDAL="medalType/saveMedalType.do";
 }

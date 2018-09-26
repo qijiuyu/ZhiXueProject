@@ -497,4 +497,35 @@ public class HttpMethod1  extends BaseRequst {
         });
     }
 
+
+    /**
+     * 编辑或保存勋章
+     * @param c
+     * @param handler
+     */
+    public static void saveMedal(long c,long collegeId,long medalTypeId,String medalTypeName,String medalTypeInfo,String medalTypeMig,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("c",c+"");
+        map.put("collegeId",collegeId+"");
+        map.put("medalTypeId",medalTypeId+"");
+        map.put("medalTypeName",medalTypeName);
+        map.put("medalTypeInfo",medalTypeInfo);
+        map.put("medalTypeMig",medalTypeMig);
+        Http.getRetrofit().create(HttpApi1.class).saveMedal(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.SAVE_MEDAL_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

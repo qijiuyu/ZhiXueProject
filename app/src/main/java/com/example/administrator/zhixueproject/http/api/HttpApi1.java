@@ -175,4 +175,14 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_MEDAL_LIST)
     Call<Medal> getMedalList(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 编辑或保存勋章
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.SAVE_MEDAL)
+    Call<ResponseBody> saveMedal(@FieldMap Map<String, String> map);
 }

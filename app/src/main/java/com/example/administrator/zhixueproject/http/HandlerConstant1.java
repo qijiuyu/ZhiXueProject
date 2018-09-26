@@ -21,4 +21,5 @@ public class HandlerConstant1 {
     public static final int SAVE_VIP_GRADE_SUCCESS=1126;
     public static final int GET_MEDAL_LIST_SUCCESS=1127;
     public static final int GET_MEDAL_LIST_SUCCESS2=1128;
+    public static final int SAVE_MEDAL_SUCCESS=1129;
 }
