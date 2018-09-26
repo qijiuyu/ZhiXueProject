@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
@@ -84,7 +85,8 @@ public class EditSignActivity extends BaseActivity{
                          return;
                      }
                      if(baseBean.isStatus()){
-
+                         MyApplication.userInfo.getData().getUser().setUserIntro(etSign.getText().toString().trim());
+                         finish();
                      }else{
                          showMsg(baseBean.getErrorMsg());
                      }

@@ -16,4 +16,5 @@ public class HandlerConstant1 {
     public static final int UPDATE_PWD2_SUCCESS=1121;
     public static final int EDIT_COLLEGE_SUCCESS=1122;
     public static final int SETTING_MEMBER_LEVEL_SUCCESS=1123;
+    public static final int CHECK_SMS_CODE_SUCCESS=1124;
 }

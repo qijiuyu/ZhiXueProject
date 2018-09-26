@@ -48,4 +48,7 @@ public class HttpConstant {
 
     //会员等级设置
     public static final String MEMBER_LEVEL_SETTING="college/updateVipGrade.do";
+
+    //判断验证码是否正确
+    public static final String CHECK_SMS_CODE="user/checkCode.do";
 }

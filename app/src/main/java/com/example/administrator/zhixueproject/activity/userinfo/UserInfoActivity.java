@@ -100,6 +100,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 setClass(UpdatePhoneActivity.class);
                 break;
             case R.id.rl_modify_mailbox://修改绑定邮箱
+                 setClass(EditEmailActivity.class);
                 break;
             case R.id.rl_modify_pwd://修改密码
                 setClass(UpdatePwdActivity.class);
@@ -189,7 +190,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
      */
     private void showUserInfo(){
         final UserBean userBean=MyApplication.userInfo.getData().getUser();
-        Glide.with(mContext).load(userBean.getUserImg()).override(50,50).into(ivHeadIcon);
+        Glide.with(mContext).load(userBean.getUserImg()).override(50,50).error(R.mipmap.user_icon).into(ivHeadIcon);
         tvUserName.setText(userBean.getUserName());
         tvSign.setText(userBean.getUserIntro());
     }
