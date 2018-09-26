@@ -14,6 +14,7 @@ import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.Colleges;
+import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
@@ -127,30 +128,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                          return;
                      }
                      try {
-                         final JSONObject jsonObject=new JSONObject(message);
-                         if(jsonObject.getBoolean("status")){
-                             final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
-                             if(!TextUtils.isEmpty(jsonObject1.getString("colleges"))){
-                                 List<Colleges> colleges=MyApplication.gson.fromJson(jsonObject1.getString("colleges"), new TypeToken<List<Colleges>>(){}.getType());
-                             }
-
-                         }else{
-                             showMsg(jsonObject.getString("errorMsg"));
-                         }
+                         
                      }catch (Exception e){
                          e.printStackTrace();
-                     }
-                     final UserInfo userInfo= (UserInfo) msg.obj;
-                     if(null==userInfo){
-                         return;
-                     }
-                     if(userInfo.isStatus()){
-                         MyApplication.userInfo=userInfo;
-                         MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(userInfo));
-                         setClass(TabActivity.class);
-                         finish();
-                     }else{
-                         showMsg(userInfo.getErrorMsg());
                      }
                      break;
                 case HandlerConstant1.REQUST_ERROR:
