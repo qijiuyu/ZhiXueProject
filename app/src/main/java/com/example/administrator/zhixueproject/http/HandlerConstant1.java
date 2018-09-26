@@ -17,4 +17,9 @@ public class HandlerConstant1 {
     public static final int EDIT_COLLEGE_SUCCESS=1122;
     public static final int SETTING_MEMBER_LEVEL_SUCCESS=1123;
     public static final int CHECK_SMS_CODE_SUCCESS=1124;
+    public static final int AUTO_LOGIN_SUCCESS=1125;
+    public static final int SAVE_VIP_GRADE_SUCCESS=1126;
+    public static final int GET_MEDAL_LIST_SUCCESS=1127;
+    public static final int GET_MEDAL_LIST_SUCCESS2=1128;
+    public static final int SAVE_MEDAL_SUCCESS=1129;
 }

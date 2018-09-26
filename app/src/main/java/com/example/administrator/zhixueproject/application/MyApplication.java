@@ -3,6 +3,7 @@ package com.example.administrator.zhixueproject.application;
 import android.app.Application;
 import android.text.TextUtils;
 
+import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.utils.ActivitysLifecycle;
 import com.example.administrator.zhixueproject.utils.SPUtil;

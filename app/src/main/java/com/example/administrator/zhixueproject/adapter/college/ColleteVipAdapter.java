@@ -1,4 +1,4 @@
-package com.example.administrator.zhixueproject.adapter;
+package com.example.administrator.zhixueproject.adapter.college;
 
 import android.content.Context;
 import android.view.LayoutInflater;

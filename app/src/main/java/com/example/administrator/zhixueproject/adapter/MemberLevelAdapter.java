@@ -1,6 +1,9 @@
 package com.example.administrator.zhixueproject.adapter;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +12,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
+import com.example.administrator.zhixueproject.callback.MemberLevelCallBack;
+import com.example.administrator.zhixueproject.utils.LogUtils;
+
 import java.util.List;
 public class MemberLevelAdapter extends BaseAdapter{
 
     private Context context;
     private List<MemBerLevel.MemberLevelList> list;
     private MemBerLevel.MemberLevelList memberLevelList;
+    private MemberLevelCallBack memberLevelCallBack;
     public MemberLevelAdapter(Context context, List<MemBerLevel.MemberLevelList> list) {
         super();
         this.context = context;
@@ -51,6 +58,7 @@ public class MemberLevelAdapter extends BaseAdapter{
         memberLevelList=list.get(position);
         holder.tvName.setText(memberLevelList.getUserCollegegradeName());
         holder.etJiFen.setText(memberLevelList.getUserCollegegradePoints()+"");
+        holder.etJiFen.setTag(memberLevelList.getUserCollegegradeId());
         return view;
     }
 
@@ -58,5 +66,10 @@ public class MemberLevelAdapter extends BaseAdapter{
     private class ViewHolder{
         private TextView tvName;
         private EditText etJiFen;
+    }
+
+
+    public void setCallBack(MemberLevelCallBack memberLevelCallBack){
+        this.memberLevelCallBack=memberLevelCallBack;
     }
 }

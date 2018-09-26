@@ -10,11 +10,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
@@ -42,6 +42,9 @@ public class EditSignActivity extends BaseActivity{
         TextView tvHead=(TextView)findViewById(R.id.tv_title);
         tvHead.setText(getString(R.string.edit_sign));
         etSign=(EditText)findViewById(R.id.et_sign);
+        final UserBean userBean=MyApplication.userInfo.getData().getUser();
+        etSign.setText(userBean.getUserIntro());
+        etSign.setSelection(etSign.getText().toString().trim().length());
         tvLength=(TextView)findViewById(R.id.tv_sign_length);
         etSign.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

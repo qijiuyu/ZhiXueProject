@@ -57,7 +57,7 @@
         <activity android:name=".activity.login.LoginActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.CollegeHomeActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.userinfo.UserInfoActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.userinfo.UpdatePhoneActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.userinfo.EditPhoneActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.userinfo.EditSignActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.CollegeManageActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.MoreCollegeActivity" android:screenOrientation="portrait"/>
@@ -67,6 +67,7 @@
         <activity android:name=".activity.college.MemberLevelActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.userinfo.EditEmailActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.userinfo.BindingEmailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.college.MedalListActivity" android:screenOrientation="portrait"/>
 
     </application>
 

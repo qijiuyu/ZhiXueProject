@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.administrator.zhixueproject.R;
-import com.example.administrator.zhixueproject.adapter.ColleteVipAdapter;
+import com.example.administrator.zhixueproject.adapter.college.ColleteVipAdapter;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;

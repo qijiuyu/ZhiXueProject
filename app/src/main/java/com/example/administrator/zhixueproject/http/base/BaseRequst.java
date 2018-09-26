@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class BaseRequst {
         List cookies = headers.values("Set-Cookie");
         final String session = (String) cookies.get(0);
         final String sessionid = session.substring(0,session.indexOf(";"));
+        LogUtils.e("sessionId__________"+sessionid);
         MyApplication.spUtil.addString(SPUtil.SESSION_ID,sessionid);
     }
 }

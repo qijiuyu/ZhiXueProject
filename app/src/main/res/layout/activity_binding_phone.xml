@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    
     <include layout="@layout/head"/>
     
     <LinearLayout
@@ -20,43 +20,45 @@
             android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="54dp">
-
+            
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/mailbox_icon"/>
-
+                android:src="@mipmap/phone_info_icon"/>
+            
             <EditText
-                android:id="@+id/et_email"
+                android:id="@+id/et_tel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:inputType="textEmailAddress"
+                android:inputType="phone"
+                android:maxLength="11"
                 android:background="@null"
-                android:hint="@string/input_mailbox"
+                android:hint="@string/input_new_telphone"
                 android:textSize="15sp"
                 android:textColor="@color/color_333333"
                 android:textColorHint="@color/color_999999"/>
+            
         </LinearLayout>
-
+        
         <View
             style="@style/view_line"
             android:layout_marginLeft="37dp"
             android:layout_marginRight="37dp"/>
-
+        
         <RelativeLayout
             android:layout_marginLeft="37dp"
             android:layout_marginRight="37dp"
             android:layout_width="match_parent"
             android:layout_height="54dp">
-
+            
             <ImageView
                 android:id="@+id/iv_code_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/code_info_icon"/>
-
+            
             <TextView
                 android:id="@+id/tv_get_code"
                 android:layout_alignParentRight="true"
@@ -66,9 +68,9 @@
                 android:text="@string/get_code"
                 android:textColor="@color/color_666666"
                 android:textSize="14sp"/>
-
+            
             <EditText
-                android:id="@+id/et_email_code"
+                android:id="@+id/et_code"
                 android:layout_toRightOf="@+id/iv_code_icon"
                 android:layout_toLeftOf="@+id/tv_get_code"
                 android:layout_width="match_parent"
@@ -82,24 +84,27 @@
                 android:inputType="number"
                 android:textColor="@color/color_333333"
                 android:textColorHint="@color/color_999999"/>
+            
         </RelativeLayout>
+        
         <View
             style="@style/view_line"
             android:layout_marginLeft="37dp"
             android:layout_marginRight="37dp"/>
-
+        
         <com.example.administrator.zhixueproject.view.ClickTextView
-            android:id="@+id/tv_aup_next"
+            android:id="@+id/tv_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="31dp"
             android:layout_marginRight="31dp"
             android:background="@mipmap/bg_botton"
-            android:layout_marginTop="95dp"
+            android:layout_marginTop="@dimen/dm200"
             android:gravity="center"
-            android:text="下一步"
+            android:text="确认绑定"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/dm032"/>
+            android:textSize="15sp"/>
+
     </LinearLayout>
 
 </LinearLayout>

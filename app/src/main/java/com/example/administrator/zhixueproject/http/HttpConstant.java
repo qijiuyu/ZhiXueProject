@@ -51,4 +51,16 @@ public class HttpConstant {
 
     //判断验证码是否正确
     public static final String CHECK_SMS_CODE="user/checkCode.do";
+
+    //自动登录(会话保持)
+    public static final String AUTO_LOGIN="user/autoLogin.do";
+
+    //保存会员等级
+    public static final String SAVE_VIP_GRADE="college/saveVipGrade.do";
+
+    //获取勋章列表
+    public static final String GET_MEDAL_LIST="medalType/getMedalType.do";
+
+    //编辑或保存勋章
+    public static final String SAVE_MEDAL="medalType/saveMedalType.do";
 }

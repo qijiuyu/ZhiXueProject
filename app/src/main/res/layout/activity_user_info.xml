@@ -34,7 +34,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="19dp"
-                    android:src="@mipmap/user_icon" />
+                    android:src="@mipmap/head_bg" />
 
                 <TextView
                     android:id="@+id/tv_username"

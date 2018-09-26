@@ -7,6 +7,7 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
+import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserInfo;
@@ -399,6 +400,128 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 自动登陆保持回话
+     * @param handler
+     */
+    public static void autoLogin(String mobile,String pwd,String sign,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("mobile",mobile);
+        map.put("pwd",pwd);
+        map.put("sign",sign);
+        Http.getRetrofit().create(HttpApi1.class).autoLogin(map).enqueue(new Callback<UserInfo>() {
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.AUTO_LOGIN_SUCCESS, response.body());
+                    //保存sessionId
+                    saveSessionId(response.headers());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<UserInfo> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 保存会员等级
+     * @param handler
+     */
+    public static void saveVipGrade(int c,int collegeId,String userCollegegradeId,String userCollegegradeName,String userCollegegradePoints,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("c",c+"");
+        map.put("collegeId",collegeId+"");
+        map.put("userCollegegradeId",userCollegegradeId);
+        map.put("userCollegegradeName",userCollegegradeName);
+        map.put("userCollegegradePoints",userCollegegradePoints);
+        Http.getRetrofit().create(HttpApi1.class).saveVipGrade(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.SAVE_VIP_GRADE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 获取勋章列表
+     * @param c
+     * @param collegeId
+     * @param timestamp
+     * @param page
+     * @param handler
+     */
+    public static void getMedalList(int c,int collegeId,String timestamp,int page,int limit,final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("c",c+"");
+        map.put("collegeId",collegeId+"");
+        map.put("timestamp",timestamp);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        Http.getRetrofit().create(HttpApi1.class).getMedalList(map).enqueue(new Callback<Medal>() {
+            public void onResponse(Call<Medal> call, Response<Medal> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<Medal> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 编辑或保存勋章
+     * @param c
+     * @param handler
+     */
+    public static void saveMedal(long c,long collegeId,long medalTypeId,String medalTypeName,String medalTypeInfo,String medalTypeMig,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("c",c+"");
+        map.put("collegeId",collegeId+"");
+        map.put("medalTypeId",medalTypeId+"");
+        map.put("medalTypeName",medalTypeName);
+        map.put("medalTypeInfo",medalTypeInfo);
+        map.put("medalTypeMig",medalTypeMig);
+        Http.getRetrofit().create(HttpApi1.class).saveMedal(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.SAVE_MEDAL_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
