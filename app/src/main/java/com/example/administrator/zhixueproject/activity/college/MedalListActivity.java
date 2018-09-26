@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.college;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -50,6 +51,8 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
     private void initView(){
         TextView tvHead=(TextView)findViewById(R.id.tv_title);
         tvHead.setText(getString(R.string.medal_manage));
+        TextView tvRight=(TextView)findViewById(R.id.tv_right);
+        tvRight.setBackground(getResources().getDrawable(R.mipmap.add));
         mRefreshLayout=(MyRefreshLayout)findViewById(R.id.re_list);
         listView=(ListView)findViewById(R.id.listView);
         final View view = getLayoutInflater().inflate(R.layout.empty_view, null);
@@ -57,6 +60,19 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
         listView.setEmptyView(view);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
+        //添加勋章
+        tvRight.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent=new Intent(mContext,AddMedalActivity.class);
+                startActivityForResult(intent,1);
+            }
+        });
+        //返回
+        findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                MedalListActivity.this.finish();
+            }
+        });
     }
 
 
@@ -100,7 +116,7 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
             List<Medal.MedalList> list=medal.getData().getMedalTypeList();
             listAll.addAll(list);
             if(medalItemAdapter==null){
-                medalItemAdapter=new MedalItemAdapter(mContext,listAll);
+                medalItemAdapter=new MedalItemAdapter(this,listAll);
                 listView.setAdapter(medalItemAdapter);
             }else{
                 medalItemAdapter.notifyDataSetChanged();
@@ -134,5 +150,36 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
         final UserBean userBean=MyApplication.userInfo.getData().getUser();
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         HttpMethod1.getMedalList(userBean.getUserId(), CollegeInfoFragment.homeBean.getCollegeId(),simpleDateFormat.format(new Date()),page,limit,index,mHandler);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==1){
+            Medal.MedalList medalList= (Medal.MedalList) data.getSerializableExtra("medalList");
+            if(null==medalList){
+                return;
+            }
+            int index=-1;
+            for (int i=0;i<listAll.size();i++){
+                if(medalList.getMedalTypeId()==listAll.get(i).getMedalTypeId()){
+                    index=i;
+                    break;
+                }
+            }
+            if(index==-1){
+                listAll.add(0,medalList);
+            }else{
+                listAll.remove(index);
+                listAll.add(index,medalList);
+            }
+            if(medalItemAdapter==null){
+                medalItemAdapter=new MedalItemAdapter(this,listAll);
+                listView.setAdapter(medalItemAdapter);
+            }else{
+                medalItemAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }

@@ -6,104 +6,137 @@
     
     <include layout="@layout/head"/>
     
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
         
         <LinearLayout
-            android:layout_marginTop="19dp"
-            android:layout_marginLeft="37dp"
-            android:layout_marginRight="37dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="54dp">
+            android:layout_height="match_parent">
             
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/mailbox_icon"/>
-            
-            <EditText
-                android:id="@+id/et_email"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:inputType="textEmailAddress"
-                android:background="@null"
-                android:hint="@string/input_new_mailbox"
-                android:textSize="15sp"
-                android:textColor="@color/color_333333"
-                android:textColorHint="@color/color_999999"/>
+                android:layout_height="wrap_content">
+                
+                <TextView
+                    android:id="@+id/tv_add_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/add_title"
+                    android:textColor="@color/color_333333"
+                    android:textSize="15sp"/>
+                
+                <EditText
+                    android:id="@+id/et_medal_title"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/tv_add_title"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:hint="请添加勋章名称"
+                    android:textColorHint="@color/color_999999"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_999999"
+                    android:maxLength="20"
+                    android:singleLine="true"
+                    android:gravity="right" />
+                
+            </RelativeLayout>
             
-        </LinearLayout>
-        
-        <View
-            style="@style/view_line"
-            android:layout_marginLeft="37dp"
-            android:layout_marginRight="37dp"/>
-        
-        <RelativeLayout
-            android:layout_marginLeft="37dp"
-            android:layout_marginRight="37dp"
-            android:layout_width="match_parent"
-            android:layout_height="54dp">
-            
-            <ImageView
-                android:id="@+id/iv_code_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/code_info_icon"/>
+            <View
+                android:layout_marginTop="17dp"
+                style="@style/view_line"/>
             
             <TextView
-                android:id="@+id/tv_get_code"
-                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="@string/get_code"
-                android:textColor="@color/color_666666"
-                android:textSize="14sp"/>
-            
-            <EditText
-                android:id="@+id/et_code"
-                android:layout_toRightOf="@+id/iv_code_icon"
-                android:layout_toLeftOf="@+id/tv_get_code"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="19dp"
-                android:background="@null"
-                android:hint="@string/code"
-                android:textSize="15sp"
-                android:inputType="number"
+                android:text="上传勋章图片"
                 android:textColor="@color/color_333333"
-                android:textColorHint="@color/color_999999"/>
+                android:textSize="15sp"/>
             
-        </RelativeLayout>
-        
-        <View
-            style="@style/view_line"
-            android:layout_marginLeft="37dp"
-            android:layout_marginRight="37dp"/>
-        
-        <com.example.administrator.zhixueproject.view.ClickTextView
-            android:id="@+id/tv_submit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="31dp"
-            android:layout_marginRight="31dp"
-            android:background="@mipmap/bg_botton"
-            android:layout_marginTop="@dimen/dm200"
-            android:gravity="center"
-            android:text="确认绑定"
-            android:textColor="@android:color/white"
-            android:textSize="15sp"/>
+            <ImageView
+                android:id="@+id/iv_add_pic"
+                android:layout_width="91dp"
+                android:layout_height="91dp"
+                android:scaleType="fitXY"
+                android:layout_marginTop="@dimen/dm025"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/uploading_iv"/>
+            <View
+                android:layout_marginTop="@dimen/dm036"
+                style="@style/view_line"/>
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/medal_describe"
+                android:textColor="@color/color_333333"
+                android:textSize="15sp"/>
+            
+            <RelativeLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="81dp">
+                
+                <EditText
+                    android:id="@+id/et_medal_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:maxLength="30"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_999999"
+                    android:hint="@string/edit_medal_describe"
+                    android:textColorHint="@color/color_999999" />
+                
+                <TextView
+                    android:id="@+id/tv_medalInfo_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginRight="10dp"
+                    android:text="0/30"
+                    android:textColor="@color/color_999999"
+                    android:textSize="12sp"/>
+                
+                <View
+                    style="@style/view_line"/>
+                
+            </RelativeLayout>
 
-    </LinearLayout>
+            <com.example.administrator.zhixueproject.view.ClickTextView
+                android:id="@+id/tv_setting_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:background="@mipmap/bg_botton"
+                android:layout_marginTop="65dp"
+                android:gravity="center"
+                android:text="@string/save"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"/>
 
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <include layout="@layout/include_bottom"/>
 </LinearLayout>
