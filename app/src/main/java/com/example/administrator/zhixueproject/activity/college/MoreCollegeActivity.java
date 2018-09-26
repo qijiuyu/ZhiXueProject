@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
-import com.example.administrator.zhixueproject.adapter.CollegeItemAdapter;
+import com.example.administrator.zhixueproject.adapter.college.CollegeItemAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.Colleges;

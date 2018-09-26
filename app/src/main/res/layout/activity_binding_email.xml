@@ -91,7 +91,7 @@
             android:layout_marginLeft="37dp"
             android:layout_marginRight="37dp"/>
         
-        <TextView
+        <com.example.administrator.zhixueproject.view.ClickTextView
             android:id="@+id/tv_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

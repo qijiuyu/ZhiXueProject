@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,7 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.college.MoreCollegeActivity;
 import com.example.administrator.zhixueproject.activity.userinfo.UserInfoActivity;
-import com.example.administrator.zhixueproject.adapter.CollegeNameAdapter;
+import com.example.administrator.zhixueproject.adapter.college.CollegeNameAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.Colleges;
 import com.example.administrator.zhixueproject.bean.UserBean;
@@ -31,6 +30,8 @@ import java.util.List;
 
 public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
 
+    private CircleImageView imgHead;
+    private TextView tvName,tvSign;
     private CollegeNameAdapter mAdapter;
     private View view = null;
 
@@ -48,11 +49,11 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
      * 初始化
      */
     private void initView() {
-        CircleImageView imgHead = (CircleImageView) view.findViewById(R.id.iv_menu_head);
+        imgHead = (CircleImageView) view.findViewById(R.id.iv_menu_head);
         imgHead.setOnClickListener(this);
         view.findViewById(R.id.img_next).setOnClickListener(this);
-        TextView tvName = (TextView) view.findViewById(R.id.tv__menu_name);
-        TextView tvSign = (TextView) view.findViewById(R.id.tv_meun_sign);
+        tvName = (TextView) view.findViewById(R.id.tv__menu_name);
+        tvSign = (TextView) view.findViewById(R.id.tv_meun_sign);
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_college_name);
         LinearLayoutManager layout = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layout);
@@ -60,13 +61,6 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
         if (userInfo == null) {
             return;
         }
-        UserBean bean = userInfo.getData().getUser();
-        // 头像
-        Glide.with(MyApplication.application).load(bean.getUserImg()).override(60,60).into(imgHead);
-        // 昵称
-        tvName.setText(bean.getUserName());
-        // 简介
-        tvSign.setText(bean.getUserIntro());
         // adapter 数据
         List<Colleges> dataBean = userInfo.getData().getColleges();
         mAdapter = new CollegeNameAdapter(R.layout.joined_college_item, dataBean);
@@ -95,5 +89,18 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
             default:
                 break;
         }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final UserBean userBean=MyApplication.userInfo.getData().getUser();
+        // 头像
+        Glide.with(MyApplication.application).load(userBean.getUserImg()).error(R.mipmap.head_bg).override(60,60).into(imgHead);
+        // 昵称
+        tvName.setText(userBean.getUserName());
+        // 简介
+        tvSign.setText(userBean.getUserIntro());
     }
 }

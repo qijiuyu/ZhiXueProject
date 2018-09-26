@@ -1,4 +1,4 @@
-package com.example.administrator.zhixueproject.adapter;
+package com.example.administrator.zhixueproject.adapter.college;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;

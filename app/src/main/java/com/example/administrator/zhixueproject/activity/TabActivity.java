@@ -20,6 +20,7 @@ import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.ActivitysLifecycle;
+import com.example.administrator.zhixueproject.utils.Encrypt;
 import com.example.administrator.zhixueproject.utils.EnumTAB;
 import com.example.administrator.zhixueproject.utils.EnumUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
@@ -27,6 +28,8 @@ import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.example.administrator.zhixueproject.view.MyViewPager;
 
 import org.json.JSONObject;
+
+import java.security.NoSuchAlgorithmException;
 
 public class TabActivity extends BaseActivity implements View.OnClickListener {
 
@@ -174,5 +177,14 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
         super.onResume();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
         HttpMethod1.getUserInfo(userBean.getUserId()+"",mHandler);
+
+        String a= userBean.getUserPhone()+userBean.getUserPassword()+"be07e7093fefeaaf95f54c2b350d7810";
+        try {
+            String b=Encrypt.getSHA(a);
+            String c=Encrypt.stringToAscii(b);
+            HttpMethod1.autoLogin(userBean.getUserPhone(),userBean.getUserPassword(),c,mHandler);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

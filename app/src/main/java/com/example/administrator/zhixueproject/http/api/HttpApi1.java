@@ -4,6 +4,7 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
+import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HttpConstant;
@@ -146,4 +147,32 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.CHECK_SMS_CODE)
     Call<BaseBean> checkSmsCode(@FieldMap Map<String, String> map);
+
+    /**
+     * 自动登陆保持回话
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.AUTO_LOGIN)
+    Call<UserInfo> autoLogin(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 保存会员等级
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.SAVE_VIP_GRADE)
+    Call<BaseBean> saveVipGrade(@FieldMap Map<String, String> map);
+
+    /**
+     * 获取勋章列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_MEDAL_LIST)
+    Call<Medal> getMedalList(@FieldMap Map<String, String> map);
 }

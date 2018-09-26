@@ -1,4 +1,4 @@
-package com.example.administrator.zhixueproject.adapter;
+package com.example.administrator.zhixueproject.adapter.college;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,23 +9,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
-import com.example.administrator.zhixueproject.bean.Colleges;
+import com.example.administrator.zhixueproject.bean.Medal;
+
 import java.util.List;
 
-public class CollegeItemAdapter extends BaseAdapter{
+public class MedalItemAdapter extends BaseAdapter{
 
     private Context context;
-    private List<Colleges> listAll;
-    private Colleges colleges;
-    public CollegeItemAdapter(Context context, List<Colleges> listAll) {
+    private List<Medal.MedalList> list;
+    private Medal.MedalList medalList;
+    public MedalItemAdapter(Context context, List<Medal.MedalList> list) {
         super();
         this.context = context;
-        this.listAll=listAll;
+        this.list=list;
     }
 
     @Override
     public int getCount() {
-        return listAll==null ? 0 : listAll.size();
+        return list==null ? 0 : list.size();
     }
 
     @Override
@@ -43,26 +44,28 @@ public class CollegeItemAdapter extends BaseAdapter{
         ViewHolder holder = null;
         if(view==null){
             holder = new ViewHolder();
-            view = LayoutInflater.from(context).inflate(R.layout.college_item, null);
-            holder.imageView=(ImageView)view.findViewById(R.id.iv_college_img);
-            holder.tvName=(TextView)view.findViewById(R.id.tv_college_name);
+            view = LayoutInflater.from(context).inflate(R.layout.medal_list_item, null);
+            holder.imageView=(ImageView)view.findViewById(R.id.iv_medal_pic);
+            holder.tvName=(TextView)view.findViewById(R.id.tv_medal_name);
+            holder.tvDes=(TextView)view.findViewById(R.id.tv_medal_describe);
             view.setTag(holder);
         }else{
             holder=(ViewHolder)view.getTag();
         }
-        colleges=listAll.get(position);
-        String imgUrl=colleges.getCollegeLogo();
+        medalList=list.get(position);
+        String imgUrl=medalList.getMedalTypeMig();
         holder.imageView.setTag(R.id.imageid,imgUrl);
         if(holder.imageView.getTag(R.id.imageid)!=null && imgUrl==holder.imageView.getTag(R.id.imageid)){
-            Glide.with(context).load(imgUrl).override(60,44).centerCrop().into(holder.imageView);
+            Glide.with(context).load(imgUrl).override(17,10).centerCrop().into(holder.imageView);
         }
-        holder.tvName.setText(colleges.getCollegeName());
+        holder.tvName.setText(medalList.getMedalTypeName());
+        holder.tvDes.setText(medalList.getMedalTypeInfo());
         return view;
     }
 
 
     private class ViewHolder{
         ImageView imageView;
-        TextView tvName;
+        TextView tvName,tvDes;
     }
 }

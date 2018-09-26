@@ -15,7 +15,6 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
-import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,10 +25,9 @@ import java.util.TimerTask;
  * @author petergee
  * @date 2018/9/21
  */
-public class UpdatePhoneActivity extends BaseActivity implements View.OnClickListener {
+public class EditPhoneActivity extends BaseActivity implements View.OnClickListener {
 
-    private EditText etEmail;
-    private EditText etCode;
+    private EditText etEmail,etCode;
     private TextView tvGetCode;
     //计数器
     private Timer mTimer;
@@ -38,7 +36,6 @@ public class UpdatePhoneActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_phone);
         initView();
-        checkTime();
     }
 
     /**
@@ -65,7 +62,7 @@ public class UpdatePhoneActivity extends BaseActivity implements View.OnClickLis
                     showMsg(getString(R.string.input_mailbox));
                 } else {
                     showProgress(getString(R.string.get_code));
-                    HttpMethod1.getEmailCode(email, "1", mHandler);
+                    HttpMethod1.getEmailCode(email, "0", mHandler);
                 }
                 break;
             //下一步
@@ -77,7 +74,7 @@ public class UpdatePhoneActivity extends BaseActivity implements View.OnClickLis
                     showMsg(getString(R.string.print_certify_code));
                 }else{
                     showProgress(getString(R.string.loading));
-                    HttpMethod2.modifyUserInfo(null, null, email, code, null, mHandler);
+                    HttpMethod1.checkSmsCode(email,code,mHandler);
                 }
                 break;
             case R.id.lin_back:
@@ -123,12 +120,19 @@ public class UpdatePhoneActivity extends BaseActivity implements View.OnClickLis
                     tvGetCode.setText(getString(R.string.get_code));
                     MyApplication.spUtil.removeMessage(SPUtil.SMS_CODE_TIME);
                     break;
-                // 修改资料成功
-                case HandlerConstant2.MODIFY_USER_INFO_SUCCESS:
-                     clearTask();
-                    if (baseBean.status) {
-                    } else {
-                        showMsg(baseBean.errorMsg);
+                //下一步
+                case HandlerConstant1.CHECK_SMS_CODE_SUCCESS:
+                    clearTask();
+                    baseBean= (BaseBean) msg.obj;
+                    if(null==baseBean){
+                        return;
+                    }
+                    if(baseBean.isStatus()){
+                        MyApplication.spUtil.removeMessage(SPUtil.SMS_CODE_TIME);
+                        setClass(BindingEmailActivity.class);
+                        finish();
+                    }else{
+                        showMsg(baseBean.getErrorMsg());
                     }
                     break;
                 case HandlerConstant2.REQUST_ERROR:
@@ -158,19 +162,6 @@ public class UpdatePhoneActivity extends BaseActivity implements View.OnClickLis
         }, 0, 1000);
     }
 
-    /**
-     * 判断验证码秒数是否超过一分钟
-     */
-    private void checkTime() {
-        String stopTime = MyApplication.spUtil.getString(SPUtil.SMS_CODE_TIME);
-        if (!TextUtils.isEmpty(stopTime)) {
-            int t = (int) ((Double.parseDouble(stopTime) - System.currentTimeMillis()) / 1000);
-            if (t > 0) {
-                time = t;
-                startTime();
-            }
-        }
-    }
 
     @Override
     protected void onDestroy() {
