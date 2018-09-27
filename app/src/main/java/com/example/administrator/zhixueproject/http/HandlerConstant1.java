@@ -22,4 +22,8 @@ public class HandlerConstant1 {
     public static final int GET_MEDAL_LIST_SUCCESS=1127;
     public static final int GET_MEDAL_LIST_SUCCESS2=1128;
     public static final int SAVE_MEDAL_SUCCESS=1129;
+    public static final int DEL_MEDAL_SUCCESS=1130;
+    public static final int BUY_VIPS_SUCCESS=1131;
+    public static final int GET_VIP_DETAILS_SUCCESS=1132;
+    public static final int GET_VIP_DETAILS_SUCCESS2=1133;
 }

@@ -69,6 +69,8 @@
         <activity android:name=".activity.userinfo.BindingEmailActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.MedalListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.AddMedalActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.college.BuyVipActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.college.VipDetailsActivity" android:screenOrientation="portrait"/>
 
     </application>
 

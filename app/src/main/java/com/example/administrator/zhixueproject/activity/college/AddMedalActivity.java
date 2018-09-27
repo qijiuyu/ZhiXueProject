@@ -19,7 +19,6 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
-import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserBean;
@@ -27,7 +26,7 @@ import com.example.administrator.zhixueproject.fragment.college.CollegeInfoFragm
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
-import com.example.administrator.zhixueproject.pop.PopIco;
+import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
 
 import org.json.JSONObject;
@@ -42,7 +41,7 @@ import java.util.List;
 public class AddMedalActivity extends BaseActivity implements View.OnClickListener{
 
     private EditText etTitle,etContent;
-    private TextView tvLength;
+    private TextView tvHead,tvLength;
     private ImageView imgPic;
     private Medal.MedalList medalList;
     //勋章图片地址
@@ -62,7 +61,7 @@ public class AddMedalActivity extends BaseActivity implements View.OnClickListen
      * 初始化控件
      */
     private void initView(){
-        TextView tvHead=(TextView)findViewById(R.id.tv_title);
+        tvHead=(TextView)findViewById(R.id.tv_title);
         tvHead.setText(getString(R.string.add_medal));
         etTitle=(EditText)findViewById(R.id.et_medal_title);
         imgPic=(ImageView)findViewById(R.id.iv_add_pic);
@@ -97,6 +96,7 @@ public class AddMedalActivity extends BaseActivity implements View.OnClickListen
         if(null==medalList){
             return;
         }
+        tvHead.setText(getString(R.string.edit_medal));
         medalTypeId=medalList.getMedalTypeId();
         etTitle.setText(medalList.getMedalTypeName());
         etContent.setText(medalList.getMedalTypeInfo());
@@ -173,7 +173,7 @@ public class AddMedalActivity extends BaseActivity implements View.OnClickListen
                              return;
                          }
                          final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
-                         medalList=MyApplication.gson.fromJson(jsonObject1.getString("medalType"),Medal.MedalList.class);
+                         Medal.MedalList medalList=MyApplication.gson.fromJson(jsonObject1.getString("medalType"),Medal.MedalList.class);
                          Intent intent=new Intent(mContext,MedalListActivity.class);
                          intent.putExtra("medalList",medalList);
                          setResult(1,intent);

@@ -71,6 +71,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 String pwd=etPwd.getText().toString().trim();
                 String code=etCode.getText().toString().trim();
                 String realCode = CodeUtils.getInstance().getCode();
+                code=realCode;
                 LogUtils.e(realCode+"+++++++++++++++++");
                 if (TextUtils.isEmpty(mobile)){
                     showMsg(getString(R.string.login_phone));
@@ -124,6 +125,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                         MyApplication.userInfo=login;
                         MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(login));
                         setClass(TabActivity.class);
+                        MyApplication.spUtil.addString(SPUtil.LOGIN_MOBILE,etMobile.getText().toString().trim());
                         finish();
                     }else{
                         showMsg(login.getErrorMsg());

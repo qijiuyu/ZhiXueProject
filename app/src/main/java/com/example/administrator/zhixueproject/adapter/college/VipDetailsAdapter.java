@@ -5,18 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
-import com.example.administrator.zhixueproject.bean.ColleteVips;
+import com.example.administrator.zhixueproject.bean.VipDetails;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import java.util.List;
 
-public class ColleteVipAdapter extends BaseAdapter{
+public class VipDetailsAdapter extends BaseAdapter{
 
 	private Context context;
-	private List<ColleteVips.ColleteVipsBean.collegeGradeListBean> listAll;
-	private ColleteVips.ColleteVipsBean.collegeGradeListBean collegeGradeListBean;
-	public ColleteVipAdapter(Context context, List<ColleteVips.ColleteVipsBean.collegeGradeListBean> listAll) {
+	private List<VipDetails.VipDtailsList> listAll;
+	private VipDetails.VipDtailsList vipDtailsList;
+	public VipDetailsAdapter(Context context, List<VipDetails.VipDtailsList> listAll) {
 		super();
 		this.context = context;
 		this.listAll=listAll;
@@ -28,7 +28,7 @@ public class ColleteVipAdapter extends BaseAdapter{
 	}
 
 	@Override
-	public ColleteVips.ColleteVipsBean.collegeGradeListBean getItem(int position) {
+	public Object getItem(int position) {
 		return listAll.get(position);
 	}
 
@@ -42,35 +42,43 @@ public class ColleteVipAdapter extends BaseAdapter{
 		ViewHolder holder = null;
 		if(view==null){
 			holder = new ViewHolder(); 
-			view = LayoutInflater.from(context).inflate(R.layout.collete_vip_item, null);
-			holder.imgVip=(ImageView)view.findViewById(R.id.iv_vip_grade);
-			holder.tvIfLive=(TextView)view.findViewById(R.id.tv_if_live);
-			holder.tvLiveNum=(TextView)view.findViewById(R.id.tv_live_num);
-			holder.tvMonthMoney=(TextView)view.findViewById(R.id.tv_monthly_fee);
-			holder.tvYearMoney=(TextView)view.findViewById(R.id.tv_year_fee);
-			holder.tvPersonNum=(TextView)view.findViewById(R.id.tv_person_num);
-			holder.tvTopIc=(TextView)view.findViewById(R.id.tv_topic_num);
+			view = LayoutInflater.from(context).inflate(R.layout.vip_details_item, null);
+			holder.tvVipName=(TextView)view.findViewById(R.id.tv_vip_level);
+			holder.tvNum=(TextView)view.findViewById(R.id.tv_vip_deadline);
+			holder.tvState=(TextView)view.findViewById(R.id.tv_vip_state);
+			holder.tvType=(TextView)view.findViewById(R.id.tv_vip_type);
+			holder.tvTime=(TextView)view.findViewById(R.id.tv_vip_time);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
 		}
-		collegeGradeListBean=listAll.get(position);
-		if(collegeGradeListBean.getCollegeLivePostYn()==0){
-            holder.tvIfLive.setText("否");
-        }else{
-            holder.tvIfLive.setText("是");
-        }
-        holder.tvLiveNum.setText(collegeGradeListBean.getCollegeLiveNum()+"");
-        holder.tvMonthMoney.setText(collegeGradeListBean.getCollegeGradeMprice()+"");
-        holder.tvYearMoney.setText(collegeGradeListBean.getCollegeGradeYprice()+"");
-        holder.tvPersonNum.setText(collegeGradeListBean.getCollegeLimitStu()+"");
-        holder.tvTopIc.setText(collegeGradeListBean.getCollegeLimitTopic()+"");
+		vipDtailsList=listAll.get(position);
+		holder.tvVipName.setText(vipDtailsList.getVipGradeName());
+		holder.tvTime.setText(vipDtailsList.getCreateTime());
+		holder.tvNum.setText(vipDtailsList.getTime()+"");
+		if(vipDtailsList.getGradeType()==0){
+			holder.tvType.setText("按年");
+		}else{
+			holder.tvType.setText("按月");
+		}
+		switch (vipDtailsList.getStatus()){
+			case 0:
+				 holder.tvState.setText("购买中");
+				 break;
+			case 1:
+				 holder.tvState.setText("通过");
+				 break;
+			case 2:
+				 holder.tvState.setText("拒绝");
+				 break;
+				 default:
+				 	break;
+		}
 		return view;
 	}
 
 
 	 private class ViewHolder{
-	    ImageView imgVip;
-		TextView tvIfLive,tvLiveNum,tvMonthMoney,tvYearMoney,tvPersonNum,tvTopIc;
+		TextView tvVipName,tvNum,tvState,tvType,tvTime;
 	 }
 }

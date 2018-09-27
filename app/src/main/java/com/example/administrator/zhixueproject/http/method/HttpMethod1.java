@@ -11,6 +11,7 @@ import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserInfo;
+import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.api.HttpApi1;
 import com.example.administrator.zhixueproject.http.base.BaseRequst;
@@ -507,7 +508,9 @@ public class HttpMethod1  extends BaseRequst {
         Map<String, String> map = new HashMap<>();
         map.put("c",c+"");
         map.put("collegeId",collegeId+"");
-        map.put("medalTypeId",medalTypeId+"");
+        if(medalTypeId!=0){
+            map.put("medalTypeId",medalTypeId+"");
+        }
         map.put("medalTypeName",medalTypeName);
         map.put("medalTypeInfo",medalTypeInfo);
         map.put("medalTypeMig",medalTypeMig);
@@ -522,6 +525,97 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 删除勋章
+     * @param c
+     * @param collegeId
+     * @param medalTypeId
+     * @param handler
+     */
+    public static void delMedal(int c,int collegeId,long medalTypeId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("c",c+"");
+        map.put("collegeId",collegeId+"");
+        map.put("medalTypeId",medalTypeId+"");
+        Http.getRetrofit().create(HttpApi1.class).delMedal(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.DEL_MEDAL_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 购买学院vip
+     */
+    public static void buyVip(int collegeId,long gradeId,int gradeType,String gradeLimit,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("collegeId",collegeId+"");
+        map.put("gradeId",gradeId+"");
+        map.put("gradeType",gradeType+"");
+        map.put("gradeLimit",gradeLimit);
+        Http.getRetrofit().create(HttpApi1.class).buyVip(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.BUY_VIPS_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 查询VIP申请明细
+     * @param c
+     * @param collegeId
+     * @param timestamp
+     * @param page
+     * @param limit
+     * @param handler
+     */
+    public static void getVipDetails(int c,int collegeId,String timestamp,int page,int limit,final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("c",c+"");
+        map.put("collegeId",collegeId+"");
+        map.put("timestamp",timestamp);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        Http.getRetrofit().create(HttpApi1.class).getVipDetails(map).enqueue(new Callback<VipDetails>() {
+            public void onResponse(Call<VipDetails> call, Response<VipDetails> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<VipDetails> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
