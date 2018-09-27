@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.http.api;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
@@ -216,4 +217,24 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_VIP_DETAILS)
     Call<VipDetails> getVipDetails(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 友商购进列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.BUY_INESS_IN)
+    Call<BuyIness> buyInessIn(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 删除/取消代理友商
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DEL_BUY_INESS)
+    Call<BaseBean> delBuyIness(@FieldMap Map<String, String> map);
 }

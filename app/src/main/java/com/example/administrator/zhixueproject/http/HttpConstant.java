@@ -72,4 +72,10 @@ public class HttpConstant {
 
     //查询vip明细
     public static final String GET_VIP_DETAILS="college/getVipDetail.do";
+
+    //友商购进列表(
+    public static final String BUY_INESS_IN="buyTopic/getBuyInList.do";
+
+    //删除/取消代理友商
+    public static final String DEL_BUY_INESS="buyTopic/delBuyTopic.do";
 }

@@ -9,39 +9,43 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
-import com.example.administrator.zhixueproject.adapter.college.VipDetailsAdapter;
-import com.example.administrator.zhixueproject.application.MyApplication;
-import com.example.administrator.zhixueproject.bean.UserBean;
-import com.example.administrator.zhixueproject.bean.VipDetails;
+import com.example.administrator.zhixueproject.adapter.college.BuyInessInAdapter;
+import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.fragment.college.CollegeInfoFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * VIP申请明细
+ * 友商购进
  */
-public class VipDetailsActivity extends BaseActivity   implements MyRefreshLayoutListener {
+public class BuyInessInActivity extends BaseActivity  implements MyRefreshLayoutListener {
 
     private ListView listView;
     private MyRefreshLayout mRefreshLayout;
     private int page=1;
     private int limit=20;
-    private List<VipDetails.VipDtailsList> listAll=new ArrayList<>();
-    private VipDetailsAdapter vipDetailsAdapter;
+    private List<BuyIness.BusInessList> listAll=new ArrayList<>();
+    private BuyInessInAdapter buyInessInAdapter;
+    //友商购买id
+    private long buytopicId;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vip_details);
+        setContentView(R.layout.activity_business_in);
         initView();
         showProgress(getString(R.string.loding));
-        getData(HandlerConstant1.GET_VIP_DETAILS_SUCCESS);
+        getData(HandlerConstant1.BUY_INESS_IN_SUCCESS);
     }
 
 
@@ -50,7 +54,7 @@ public class VipDetailsActivity extends BaseActivity   implements MyRefreshLayou
      */
     private void initView() {
         TextView tvHead = (TextView) findViewById(R.id.tv_title);
-        tvHead.setText(getString(R.string.vip_apply));
+        tvHead.setText(getString(R.string.friendly_business_in));
         mRefreshLayout=(MyRefreshLayout)findViewById(R.id.re_list);
         listView=(ListView)findViewById(R.id.listView);
         final View view = getLayoutInflater().inflate(R.layout.empty_view, null);
@@ -58,32 +62,51 @@ public class VipDetailsActivity extends BaseActivity   implements MyRefreshLayou
         listView.setEmptyView(view);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
-        vipDetailsAdapter=new VipDetailsAdapter(mContext,listAll);
-        listView.setAdapter(vipDetailsAdapter);
+        buyInessInAdapter=new BuyInessInAdapter(BuyInessInActivity.this,listAll);
+        listView.setAdapter(buyInessInAdapter);
         findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                VipDetailsActivity.this.finish();
+                BuyInessInActivity.this.finish();
             }
         });
     }
+
 
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
-            VipDetails vipDetails;
+            BuyIness buyIness;
             switch (msg.what){
-                case HandlerConstant1.GET_VIP_DETAILS_SUCCESS:
+                case HandlerConstant1.BUY_INESS_IN_SUCCESS:
                     mRefreshLayout.refreshComplete();
-                    vipDetails= (VipDetails) msg.obj;
+                    buyIness= (BuyIness) msg.obj;
                     listAll.clear();
-                    refresh(vipDetails);
+                    refresh(buyIness);
                     break;
-                case HandlerConstant1.GET_VIP_DETAILS_SUCCESS2:
+                case HandlerConstant1.BUY_INESS_IN_SUCCESS2:
                     mRefreshLayout.loadMoreComplete();
-                    vipDetails= (VipDetails) msg.obj;
-                    refresh(vipDetails);
+                    buyIness= (BuyIness) msg.obj;
+                    refresh(buyIness);
                     break;
+                 //删除
+                case HandlerConstant1.DEL_BUY_INESS_SUCCESS:
+                    BaseBean baseBean= (BaseBean) msg.obj;
+                    if(null==baseBean){
+                        return;
+                    }
+                    if(baseBean.isStatus()){
+                        for (int i=0;i<listAll.size();i++){
+                            if(buytopicId==listAll.get(i).getBuytopicId()){
+                                listAll.remove(i);
+                                break;
+                            }
+                        }
+                        buyInessInAdapter.notifyDataSetChanged();
+                    }else{
+                        showMsg(baseBean.getErrorMsg());
+                    }
+                     break;
                 case HandlerConstant1.REQUST_ERROR:
                     clearTask();
                     showMsg(getString(R.string.net_error));
@@ -97,45 +120,53 @@ public class VipDetailsActivity extends BaseActivity   implements MyRefreshLayou
 
     /**
      * 刷新数据
-     * @param vipDetails
+     * @param buyIness
      */
-    private void refresh(VipDetails vipDetails){
-        if(null==vipDetails){
+    private void refresh(BuyIness buyIness){
+        if(null==buyIness){
             return;
         }
-        if(vipDetails.isStatus()){
-            List<VipDetails.VipDtailsList> list=vipDetails.getData().getVipDetailList();
+        if(buyIness.isStatus()){
+            List<BuyIness.BusInessList> list=buyIness.getData().getList();
             listAll.addAll(list);
-            vipDetailsAdapter.notifyDataSetChanged();
+            buyInessInAdapter.notifyDataSetChanged();
             if(list.size()<limit){
                 mRefreshLayout.setIsLoadingMoreEnabled(false);
             }
         }else{
-            showMsg(vipDetails.getErrorMsg());
+            showMsg(buyIness.getErrorMsg());
         }
     }
 
 
+    /**
+     * 删除
+     */
+    public void deleteBuyIness(BuyIness.BusInessList busInessList){
+        this.buytopicId=busInessList.getBuytopicId();
+        showProgress(getString(R.string.loding));
+        HttpMethod1.delBuyIness(buytopicId,mHandler);
+    }
 
     @Override
     public void onRefresh(View view) {
         page=1;
-        getData(HandlerConstant1.GET_VIP_DETAILS_SUCCESS);
+        getData(HandlerConstant1.BUY_INESS_IN_SUCCESS);
     }
 
     @Override
     public void onLoadMore(View view) {
         page++;
-        getData(HandlerConstant1.GET_VIP_DETAILS_SUCCESS2);
+        getData(HandlerConstant1.BUY_INESS_IN_SUCCESS2);
     }
 
 
     /**
      * 查询数据
+     * @param index
      */
     private void getData(int index){
-        final UserBean userBean= MyApplication.userInfo.getData().getUser();
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getVipDetails(userBean.getUserId(), CollegeInfoFragment.homeBean.getCollegeId(),simpleDateFormat.format(new Date()),page,limit,index,mHandler);
+        HttpMethod1.buyInessIn(CollegeInfoFragment.homeBean.getCollegeId(),simpleDateFormat.format(new Date()),page,limit,index,mHandler);
     }
 }

@@ -4,6 +4,7 @@ import android.os.Handler;
 
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
@@ -616,6 +617,65 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<VipDetails> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 友商购进列表
+     * @param collegeId
+     * @param timestamp
+     * @param page
+     * @param limit
+     * @param index
+     * @param handler
+     */
+    public static void buyInessIn(long collegeId,String timestamp,int page,int limit,final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("collegeId",collegeId+"");
+        map.put("timestamp",timestamp);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        Http.getRetrofit().create(HttpApi1.class).buyInessIn(map).enqueue(new Callback<BuyIness>() {
+            public void onResponse(Call<BuyIness> call, Response<BuyIness> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BuyIness> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 删除/取消代理友商
+     * @param buyTopicId
+     * @param handler
+     */
+    public static void delBuyIness(long buyTopicId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("buyTopicId",buyTopicId+"");
+        Http.getRetrofit().create(HttpApi1.class).delBuyIness(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.DEL_BUY_INESS_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

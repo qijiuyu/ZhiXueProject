@@ -26,4 +26,7 @@ public class HandlerConstant1 {
     public static final int BUY_VIPS_SUCCESS=1131;
     public static final int GET_VIP_DETAILS_SUCCESS=1132;
     public static final int GET_VIP_DETAILS_SUCCESS2=1133;
+    public static final int BUY_INESS_IN_SUCCESS=1132;
+    public static final int BUY_INESS_IN_SUCCESS2=1133;
+    public static final int DEL_BUY_INESS_SUCCESS=1134;
 }
