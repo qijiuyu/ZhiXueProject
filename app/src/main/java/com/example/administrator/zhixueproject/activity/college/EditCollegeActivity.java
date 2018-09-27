@@ -41,7 +41,6 @@ import java.util.List;
 
 public class EditCollegeActivity extends BaseActivity implements View.OnClickListener,SeekBar.OnSeekBarChangeListener{
 
-    private LinearLayout linearLayout;
     private EditText etName,etRegister,etBack,etCard,etDetails;
     private TextView tvMoney;
     private ImageView imgBJ;
@@ -70,7 +69,6 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
     private void initView(){
         TextView tvHead=(TextView)findViewById(R.id.tv_title);
         tvHead.setText("编辑学院");
-        linearLayout=(LinearLayout)findViewById(R.id.ll_edit_college);
         etName=(EditText)findViewById(R.id.et_college_name);
         etRegister=(EditText)findViewById(R.id.et_registrant);
         etBack=(EditText)findViewById(R.id.et_bank_name);
@@ -162,6 +160,9 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                          showMsg(baseBean.getErrorMsg());
                      }
                      break;
+                case HandlerConstant1.REQUST_ERROR:
+                    showMsg(getString(R.string.net_error));
+                    break;
                 default:
                     break;
             }
@@ -316,8 +317,8 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
      * 选择图片
      */
     private void addPic() {
-        PopIco popIco = new PopIco(imgBJ, this);
-        popIco.showAsDropDown(linearLayout);
+        PopIco popIco = new PopIco(this);
+        popIco.showAsDropDown();
         popIco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

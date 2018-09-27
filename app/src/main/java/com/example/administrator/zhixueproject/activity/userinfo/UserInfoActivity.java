@@ -37,7 +37,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 
     private ImageView ivHeadIcon;
     private TextView tvUserName,tvSign;
-    private RelativeLayout relHead;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
@@ -53,7 +52,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         ivHeadIcon = (ImageView) findViewById(R.id.iv_head_icon);
         tvUserName=(TextView)findViewById(R.id.tv_username);
         tvSign=(TextView)findViewById(R.id.tv_personal_sign);
-        relHead = (RelativeLayout) findViewById(R.id.rel_head);
         ivHeadIcon.setOnClickListener(this);
         findViewById(R.id.rl_modify_phone).setOnClickListener(this);
         findViewById(R.id.rl_modify_mailbox).setOnClickListener(this);
@@ -129,8 +127,8 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
      * 选择图片
      */
     private void addPic() {
-        PopIco popIco = new PopIco(ivHeadIcon, this);
-        popIco.showAsDropDown(relHead);
+        PopIco popIco = new PopIco(this);
+        popIco.showAsDropDown();
         popIco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

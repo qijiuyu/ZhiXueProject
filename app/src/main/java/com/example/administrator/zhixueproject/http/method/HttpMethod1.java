@@ -514,7 +514,7 @@ public class HttpMethod1  extends BaseRequst {
         Http.getRetrofit().create(HttpApi1.class).saveMedal(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant1.SAVE_MEDAL_SUCCESS, response.body());
+                    sendMessage(handler, HandlerConstant1.SAVE_MEDAL_SUCCESS, response.body().string());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);

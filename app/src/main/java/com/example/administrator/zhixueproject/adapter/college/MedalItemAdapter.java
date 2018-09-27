@@ -1,6 +1,8 @@
 package com.example.administrator.zhixueproject.adapter.college;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +11,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.college.AddMedalActivity;
 import com.example.administrator.zhixueproject.bean.Medal;
 
 import java.util.List;
 
 public class MedalItemAdapter extends BaseAdapter{
 
-    private Context context;
+    private Activity activity;
     private List<Medal.MedalList> list;
     private Medal.MedalList medalList;
-    public MedalItemAdapter(Context context, List<Medal.MedalList> list) {
+    public MedalItemAdapter(Activity activity, List<Medal.MedalList> list) {
         super();
-        this.context = context;
+        this.activity = activity;
         this.list=list;
     }
 
@@ -44,10 +47,11 @@ public class MedalItemAdapter extends BaseAdapter{
         ViewHolder holder = null;
         if(view==null){
             holder = new ViewHolder();
-            view = LayoutInflater.from(context).inflate(R.layout.medal_list_item, null);
+            view = LayoutInflater.from(activity).inflate(R.layout.medal_list_item, null);
             holder.imageView=(ImageView)view.findViewById(R.id.iv_medal_pic);
             holder.tvName=(TextView)view.findViewById(R.id.tv_medal_name);
             holder.tvDes=(TextView)view.findViewById(R.id.tv_medal_describe);
+            holder.tvEdit=(TextView)view.findViewById(R.id.tv_edit);
             view.setTag(holder);
         }else{
             holder=(ViewHolder)view.getTag();
@@ -56,16 +60,28 @@ public class MedalItemAdapter extends BaseAdapter{
         String imgUrl=medalList.getMedalTypeMig();
         holder.imageView.setTag(R.id.imageid,imgUrl);
         if(holder.imageView.getTag(R.id.imageid)!=null && imgUrl==holder.imageView.getTag(R.id.imageid)){
-            Glide.with(context).load(imgUrl).override(17,10).centerCrop().into(holder.imageView);
+            Glide.with(activity).load(imgUrl).override(17,10).centerCrop().into(holder.imageView);
         }
         holder.tvName.setText(medalList.getMedalTypeName());
         holder.tvDes.setText(medalList.getMedalTypeInfo());
+        holder.tvEdit.setTag(medalList);
+        holder.tvEdit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(null==v.getTag()){
+                    return;
+                }
+                final Medal.MedalList medalList= (Medal.MedalList) v.getTag();
+                Intent intent=new Intent(activity, AddMedalActivity.class);
+                intent.putExtra("medalList",medalList);
+                activity.startActivityForResult(intent,1);
+            }
+        });
         return view;
     }
 
 
     private class ViewHolder{
         ImageView imageView;
-        TextView tvName,tvDes;
+        TextView tvName,tvDes,tvEdit;
     }
 }
