@@ -79,22 +79,6 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
         //关闭手势滑动
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-            public void onDrawerStateChanged(int arg0) {
-            }
-
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                View content = mDrawerLayout.getChildAt(0);
-                int offset = (int) (drawerView.getWidth() * slideOffset);
-                content.setTranslationX(offset);
-            }
-
-            public void onDrawerOpened(View arg0) {
-            }
-
-            public void onDrawerClosed(View arg0) {
-            }
-        });
     }
 
 
@@ -154,7 +138,6 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
      */
     public static void openLeft() {
         mDrawerLayout.openDrawer(Gravity.LEFT);
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.LEFT);
     }
 
 

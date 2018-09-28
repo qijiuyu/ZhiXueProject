@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -185,6 +186,7 @@
                 android:layout_height="1dp"
                 android:background="@color/color_f0f0f0"/>
 
+
             <com.example.administrator.zhixueproject.view.ClickTextView
                 android:id="@+id/tv_setting_save"
                 android:layout_width="match_parent"
@@ -205,8 +207,8 @@
 
     <RelativeLayout
         android:id="@+id/left_menu"
-        android:layout_gravity="start"
-        android:layout_width="283dp"
+        android:layout_gravity="right"
+        android:layout_width="223dp"
         android:layout_height="match_parent">
 
         <fragment
@@ -214,7 +216,6 @@
             android:name="com.example.administrator.zhixueproject.fragment.college.TopicListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true" />
 
     </RelativeLayout>

@@ -10,7 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.callback.TopicCallBack;
 import com.example.administrator.zhixueproject.fragment.college.TopicListFragment;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 
 /**
  * 添加合作
@@ -19,7 +21,7 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
 
     private EditText etName,etTimeNum;
     private TextView tvTopic,tvTeacherName;
-    private TopicListFragment topicListFragment;
+    private TopicListFragment topicListFragment=new TopicListFragment();
     //侧滑菜单
     public static DrawerLayout mDrawerLayout;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
         switch (v.getId()){
             //所选话题
             case R.id.rl_add_topic:
-                 openRight();
+                 mDrawerLayout.openDrawer(Gravity.RIGHT);
                  break;
             //发布人
             case R.id.rl_choose_teacher:
@@ -66,14 +68,6 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
 
 
     /**
-     * 打开侧边栏
-     */
-    public static void openRight() {
-        mDrawerLayout.openDrawer(Gravity.RIGHT);
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.LEFT);
-    }
-
-    /**
      * 设置侧边栏
      */
     private void rightMenu() {
@@ -81,21 +75,16 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
         //关闭手势滑动
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-            public void onDrawerStateChanged(int arg0) {
-            }
-
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                View content = mDrawerLayout.getChildAt(0);
-                int offset = (int) (drawerView.getWidth() * slideOffset);
-                content.setTranslationX(offset);
-            }
-
-            public void onDrawerOpened(View arg0) {
-            }
-
-            public void onDrawerClosed(View arg0) {
-            }
-        });
+        topicListFragment.setCallBack(topicCallBack);
     }
+
+    TopicCallBack topicCallBack=new TopicCallBack() {
+        @Override
+        public void getTopicName(String name) {
+            LogUtils.e(name+"+++++++++++++++++++");
+            tvTopic.setText(name);
+            mDrawerLayout.closeDrawer(Gravity.RIGHT);
+        }
+
+    };
 }
