@@ -1,4 +1,4 @@
-package com.example.administrator.zhixueproject.pop;
+package com.example.administrator.zhixueproject.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,8 +18,6 @@ import com.example.administrator.zhixueproject.application.MyApplication;
 
 /**
  * 描述：通用设置
- *
- *
  */
 public class PopIco implements OnClickListener{
     private PopupWindow popupWindow;

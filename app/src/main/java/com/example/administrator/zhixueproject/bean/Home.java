@@ -43,7 +43,7 @@ public class Home extends BaseBean {
         private int collegeGrade;
         private String collegeGradeImg;
         private long collegeGradetime;
-        private int collegeId;
+        private long collegeId;
         private double collegeIncomes;
         private String collegeInfo;
         private String collegeLoginPwd;
@@ -165,11 +165,11 @@ public class Home extends BaseBean {
             this.collegeGradetime = collegeGradetime;
         }
 
-        public int getCollegeId() {
+        public long getCollegeId() {
             return collegeId;
         }
 
-        public void setCollegeId(int collegeId) {
+        public void setCollegeId(long collegeId) {
             this.collegeId = collegeId;
         }
 

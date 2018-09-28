@@ -13,10 +13,8 @@ import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.college.MedalItemAdapter;
-import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.Medal;
-import com.example.administrator.zhixueproject.bean.UserBean;
-import com.example.administrator.zhixueproject.fragment.college.CollegeInfoFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
@@ -37,10 +35,13 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
     private int limit=20;
     private MedalItemAdapter medalItemAdapter;
     private List<Medal.MedalList> listAll=new ArrayList<>();
+    //勋章id
+    private long medalTypeId;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medal);
         initView();
+        showProgress(getString(R.string.loding));
         getData(HandlerConstant1.GET_MEDAL_LIST_SUCCESS);
     }
 
@@ -60,6 +61,8 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
         listView.setEmptyView(view);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
+        medalItemAdapter=new MedalItemAdapter(this,listAll);
+        listView.setAdapter(medalItemAdapter);
         //添加勋章
         tvRight.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -93,6 +96,24 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
                      medal= (Medal) msg.obj;
                      refresh(medal);
                      break;
+                //删除勋章
+                case HandlerConstant1.DEL_MEDAL_SUCCESS:
+                     BaseBean baseBean= (BaseBean) msg.obj;
+                     if(null==baseBean){
+                         return;
+                     }
+                     if(baseBean.isStatus()){
+                         for (int i=0;i<listAll.size();i++){
+                              if(medalTypeId==listAll.get(i).getMedalTypeId()){
+                                  listAll.remove(i);
+                                  break;
+                              }
+                         }
+                         medalItemAdapter.notifyDataSetChanged();
+                     }else{
+                         showMsg(baseBean.getErrorMsg());
+                     }
+                     break;
                 case HandlerConstant1.REQUST_ERROR:
                     clearTask();
                     showMsg(getString(R.string.net_error));
@@ -115,12 +136,7 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
         if(medal.isStatus()){
             List<Medal.MedalList> list=medal.getData().getMedalTypeList();
             listAll.addAll(list);
-            if(medalItemAdapter==null){
-                medalItemAdapter=new MedalItemAdapter(this,listAll);
-                listView.setAdapter(medalItemAdapter);
-            }else{
-                medalItemAdapter.notifyDataSetChanged();
-            }
+            medalItemAdapter.notifyDataSetChanged();
             if(list.size()<limit){
                 mRefreshLayout.setIsLoadingMoreEnabled(false);
             }
@@ -146,10 +162,19 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
      * 查询数据
      */
     private void getData(int index){
-        showProgress(getString(R.string.loding));
-        final UserBean userBean=MyApplication.userInfo.getData().getUser();
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getMedalList(userBean.getUserId(), CollegeInfoFragment.homeBean.getCollegeId(),simpleDateFormat.format(new Date()),page,limit,index,mHandler);
+        HttpMethod1.getMedalList(simpleDateFormat.format(new Date()),page,limit,index,mHandler);
+    }
+
+
+    /**
+     * 删除勋章
+     * @param medalTypeId
+     */
+    public void deleteMedal(long medalTypeId){
+        this.medalTypeId=medalTypeId;
+        showProgress(getString(R.string.loding));
+        HttpMethod1.delMedal(medalTypeId,mHandler);
     }
 
 
@@ -174,12 +199,7 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
                 listAll.remove(index);
                 listAll.add(index,medalList);
             }
-            if(medalItemAdapter==null){
-                medalItemAdapter=new MedalItemAdapter(this,listAll);
-                listView.setAdapter(medalItemAdapter);
-            }else{
-                medalItemAdapter.notifyDataSetChanged();
-            }
+            medalItemAdapter.notifyDataSetChanged();
         }
     }
 }

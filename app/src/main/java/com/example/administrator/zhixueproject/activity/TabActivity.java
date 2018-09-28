@@ -176,7 +176,7 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
-        HttpMethod1.getUserInfo(userBean.getUserId()+"",mHandler);
+        HttpMethod1.getUserInfo(mHandler);
 
         String a= "15011224467123456be07e7093fefeaaf95f54c2b350d7810";
         try {

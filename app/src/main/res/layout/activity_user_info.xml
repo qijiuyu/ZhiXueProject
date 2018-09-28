@@ -185,7 +185,7 @@
 
                 </RelativeLayout>
 
-                <TextView
+                <com.example.administrator.zhixueproject.view.ClickTextView
                     android:id="@+id/tv_login_out"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

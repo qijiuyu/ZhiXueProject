@@ -135,7 +135,7 @@ public class EditPhoneActivity extends BaseActivity implements View.OnClickListe
                         showMsg(baseBean.getErrorMsg());
                     }
                     break;
-                case HandlerConstant2.REQUST_ERROR:
+                case HandlerConstant1.REQUST_ERROR:
                     clearTask();
                     showMsg(getString(R.string.net_error));
                     break;

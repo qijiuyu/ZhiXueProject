@@ -1,12 +1,14 @@
 package com.example.administrator.zhixueproject.http.api;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
 import com.example.administrator.zhixueproject.bean.UserInfo;
+import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 
 import java.util.Map;
@@ -185,4 +187,64 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.SAVE_MEDAL)
     Call<ResponseBody> saveMedal(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 删除勋章
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DEL_MEDAL)
+    Call<BaseBean> delMedal(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 购买学院vip
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.BUY_VIP)
+    Call<BaseBean> buyVip(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 查询VIP申请明细
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_VIP_DETAILS)
+    Call<VipDetails> getVipDetails(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 友商购进列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.BUY_INESS_IN)
+    Call<BuyIness> buyInessIn(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 删除/取消代理友商
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DEL_BUY_INESS)
+    Call<BaseBean> delBuyIness(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 友商售出列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.BUY_INESS_OUT)
+    Call<BuyIness> buyInessOut(@FieldMap Map<String, String> map);
 }

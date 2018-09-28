@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.college.AddMedalActivity;
+import com.example.administrator.zhixueproject.activity.college.MedalListActivity;
 import com.example.administrator.zhixueproject.bean.Medal;
 
 import java.util.List;
@@ -52,6 +53,7 @@ public class MedalItemAdapter extends BaseAdapter{
             holder.tvName=(TextView)view.findViewById(R.id.tv_medal_name);
             holder.tvDes=(TextView)view.findViewById(R.id.tv_medal_describe);
             holder.tvEdit=(TextView)view.findViewById(R.id.tv_edit);
+            holder.tvDel=(TextView)view.findViewById(R.id.tv_delete);
             view.setTag(holder);
         }else{
             holder=(ViewHolder)view.getTag();
@@ -65,6 +67,7 @@ public class MedalItemAdapter extends BaseAdapter{
         holder.tvName.setText(medalList.getMedalTypeName());
         holder.tvDes.setText(medalList.getMedalTypeInfo());
         holder.tvEdit.setTag(medalList);
+        holder.tvDel.setTag(medalList);
         holder.tvEdit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(null==v.getTag()){
@@ -76,12 +79,21 @@ public class MedalItemAdapter extends BaseAdapter{
                 activity.startActivityForResult(intent,1);
             }
         });
+        holder.tvDel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(null==v.getTag()){
+                    return;
+                }
+                final Medal.MedalList medalList= (Medal.MedalList) v.getTag();
+                ((MedalListActivity)activity).deleteMedal(medalList.getMedalTypeId());
+            }
+        });
         return view;
     }
 
 
     private class ViewHolder{
         ImageView imageView;
-        TextView tvName,tvDes,tvEdit;
+        TextView tvName,tvDes,tvEdit,tvDel;
     }
 }

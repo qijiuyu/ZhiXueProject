@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.adapter.topic.TopicListAdapter;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
+import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
@@ -35,14 +35,14 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
     private String TIMESTAMP = System.currentTimeMillis()+"";
     private RecyclerView mRecyclerView;
     private MyRefreshLayout mRefreshLayout;
+    //fragment是否可见
+    private boolean isVisibleToUser=false;
 
-
-    @Nullable
-    @Override
+    View view;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.topic_list, container, false);
-        initData();
+        view = inflater.inflate(R.layout.topic_list, container, false);
         initView(view);
+        initData();
         return view;
     }
 
@@ -58,8 +58,10 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
     }
 
     private void initData() {
-        showProgress(getString(R.string.loading));
-        getTopicList(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
+        if(isVisibleToUser && null!=view && listData.size()==0){
+            showProgress(getString(R.string.loading));
+            getTopicList(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
+        }
     }
 
     @Override
@@ -81,8 +83,7 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
      * @param index handler消息
      */
     private void getTopicList(int index) {
-        int c = MyApplication.spUtil.getInteger("c");
-        HttpMethod2.getTopicList(String.valueOf(c), "60", TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
+        HttpMethod2.getTopicList(TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
     }
 
     private Handler mHandler = new Handler() {
@@ -98,7 +99,7 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
                 case HandlerConstant2.GET_TOPIC_LIST_SUCCESS2:
                     loadMoreSuccess(bean);
                     break;
-                case HandlerConstant2.REQUST_ERROR:
+                case HandlerConstant1.REQUST_ERROR:
                     requestError();
                     break;
                 default:
@@ -158,6 +159,14 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
         mRefreshLayout.refreshComplete();
         mRefreshLayout.loadMoreComplete();
         showMsg(getString(R.string.load_failed));
+    }
+
+
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser=isVisibleToUser;
+        //查询话题列表
+        initData();
     }
 
 }

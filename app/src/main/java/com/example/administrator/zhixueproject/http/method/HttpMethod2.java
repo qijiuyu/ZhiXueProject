@@ -25,17 +25,13 @@ public class HttpMethod2 extends BaseRequst{
 
     /**
      * 获取话题列表
-     * @param c  用户id
-     * @param collegeId  学院id
      * @param timestamp  时间戳
      * @param page       页号
      * @param limit      每页显示的条数
      * @param handler
      */
-    public static void getTopicList(String c, String collegeId, String timestamp, String page, String limit, final int index, final Handler handler) {
+    public static void getTopicList(String timestamp, String page, String limit, final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("c", c);
-        map.put("collegeId", "60");
         map.put(TIME, timestamp);
         map.put(PAGE, page);
         map.put(LIMIT, limit);
@@ -45,12 +41,12 @@ public class HttpMethod2 extends BaseRequst{
                     sendMessage(handler, index, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
-                    sendMessage(handler, HandlerConstant2.REQUST_ERROR, null);
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             public void onFailure(Call<TopicsListBean> call, Throwable t) {
-                sendMessage(handler, HandlerConstant2.REQUST_ERROR, null);
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
     }
@@ -77,12 +73,12 @@ public class HttpMethod2 extends BaseRequst{
                     sendMessage(handler, HandlerConstant2.MODIFY_USER_INFO_SUCCESS, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
-                    sendMessage(handler, HandlerConstant2.REQUST_ERROR, null);
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             public void onFailure(Call<BaseBean> call, Throwable t) {
-                sendMessage(handler, HandlerConstant2.REQUST_ERROR, null);
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
     }

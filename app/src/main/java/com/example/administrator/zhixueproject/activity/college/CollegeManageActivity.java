@@ -30,6 +30,9 @@ public class CollegeManageActivity extends BaseActivity implements View.OnClickL
         findViewById(R.id.rl_member_level_setting).setOnClickListener(this);
         findViewById(R.id.rl_institution_manage).setOnClickListener(this);
         findViewById(R.id.rl_medal_manage).setOnClickListener(this);
+        findViewById(R.id.rl_vip_apply).setOnClickListener(this);
+        findViewById(R.id.rl_friendly_business_in).setOnClickListener(this);
+        findViewById(R.id.rl_friendly_business_out).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
@@ -50,6 +53,18 @@ public class CollegeManageActivity extends BaseActivity implements View.OnClickL
             //勋章管理
             case R.id.rl_medal_manage:
                  setClass(MedalListActivity.class);
+                 break;
+            //VIP申请明细
+            case R.id.rl_vip_apply:
+                 setClass(VipDetailsActivity.class);
+                 break;
+           //友商购进
+            case R.id.rl_friendly_business_in:
+                 setClass(BuyInessInActivity.class);
+                 break;
+            //友商售出
+            case R.id.rl_friendly_business_out:
+                 setClass(BuyInessOutActivity.class);
                  break;
             case R.id.lin_back:
                  finish();

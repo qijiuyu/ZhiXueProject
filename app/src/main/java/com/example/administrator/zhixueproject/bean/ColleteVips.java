@@ -32,7 +32,7 @@ public class ColleteVips extends BaseBean {
         public static class collegeGradeListBean implements Serializable{
             private int collegeDelyn;
 
-            private int collegeGradeId;
+            private long collegeGradeId;
 
             private String collegeGradeImg;
 
@@ -62,11 +62,11 @@ public class ColleteVips extends BaseBean {
                 this.collegeDelyn = collegeDelyn;
             }
 
-            public int getCollegeGradeId() {
+            public long getCollegeGradeId() {
                 return collegeGradeId;
             }
 
-            public void setCollegeGradeId(int collegeGradeId) {
+            public void setCollegeGradeId(long collegeGradeId) {
                 this.collegeGradeId = collegeGradeId;
             }
 

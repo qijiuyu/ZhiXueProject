@@ -12,22 +12,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.UploadFile;
-import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
-import com.example.administrator.zhixueproject.pop.PopIco;
+import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
 
 import java.io.File;
@@ -233,8 +230,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                     return;
                 }
                  showProgress("数据加载中...");
-                 final UserBean userBean= MyApplication.userInfo.getData().getUser();
-                 HttpMethod1.editCollege(userBean.getUserId(),homeBean.getCollegeId(),collegeName,registerName,backInfo,backCard,collegeBackimg,seekBar.getProgress(),collegeType,money,collegeDelYn,details,mHandler);
+                 HttpMethod1.editCollege(collegeName,registerName,backInfo,backCard,collegeBackimg,seekBar.getProgress(),collegeType,money,collegeDelYn,details,mHandler);
                  break;
             case R.id.tv_cancel:
             case R.id.lin_back:

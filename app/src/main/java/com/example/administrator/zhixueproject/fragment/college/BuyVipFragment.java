@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.fragment.college;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,14 +8,18 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.college.BuyVipActivity;
 import com.example.administrator.zhixueproject.adapter.college.ColleteVipAdapter;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.utils.LogUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +62,14 @@ public class BuyVipFragment extends BaseFragment{
                          list.addAll(colleteVips.getData().getCollegeGradeList());
                          colleteVipAdapter=new ColleteVipAdapter(getActivity(),list);
                          listView.setAdapter(colleteVipAdapter);
+                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                 ColleteVips.ColleteVipsBean.collegeGradeListBean collegeGradeListBean=list.get(position);
+                                 Intent intent=new Intent(mActivity, BuyVipActivity.class);
+                                 intent.putExtra("collegeGradeListBean",collegeGradeListBean);
+                                 mActivity.startActivity(intent);
+                             }
+                         });
                      }else{
                          showMsg(colleteVips.getErrorMsg());
                      }

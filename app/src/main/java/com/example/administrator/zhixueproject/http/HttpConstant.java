@@ -63,4 +63,23 @@ public class HttpConstant {
 
     //编辑或保存勋章
     public static final String SAVE_MEDAL="medalType/saveMedalType.do";
+
+    //删除勋章
+    public static final String DEL_MEDAL="medalType/delMedalType.do";
+
+    //购买vip
+    public static final String BUY_VIP="college/buyCollegeGrade.do";
+
+    //查询vip明细
+    public static final String GET_VIP_DETAILS="college/getVipDetail.do";
+
+    //友商购进列表(
+    public static final String BUY_INESS_IN="buyTopic/getBuyInList.do";
+
+    //删除/取消代理友商
+    public static final String DEL_BUY_INESS="buyTopic/delBuyTopic.do";
+
+    //友商售出列表
+    public static final String BUY_INESS_OUT="buyTopic/getBuyOutList.do";
+
 }

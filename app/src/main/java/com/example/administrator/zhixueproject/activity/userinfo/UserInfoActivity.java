@@ -9,19 +9,20 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.activity.login.LoginActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
-import com.example.administrator.zhixueproject.pop.PopIco;
+import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
+import com.example.administrator.zhixueproject.utils.SPUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -112,6 +113,11 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             case R.id.rl_personal_bg://个性背景
                 break;
             case R.id.tv_login_out://退出登录
+                MyApplication.spUtil.removeMessage(SPUtil.USER_INFO);
+                Intent logoutIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(logoutIntent);
+                finish();
                 break;
             case R.id.lin_back:
                  finish();
