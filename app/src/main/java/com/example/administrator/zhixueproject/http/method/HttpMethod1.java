@@ -141,9 +141,8 @@ public class HttpMethod1  extends BaseRequst {
      * 查询首页信息
      * @param handler
      */
-    public static void getHomeInfo(String c,final Handler handler) {
+    public static void getHomeInfo(final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("c",c);
         Http.getRetrofit().create(HttpApi1.class).getHomeInfo(map).enqueue(new Callback<Home>() {
             public void onResponse(Call<Home> call, Response<Home> response) {
                 try {
@@ -218,9 +217,8 @@ public class HttpMethod1  extends BaseRequst {
      * 获取个人资料
      * @param handler
      */
-    public static void getUserInfo(String c,final Handler handler) {
+    public static void getUserInfo(final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("c",c);
         Http.getRetrofit().create(HttpApi1.class).getUserInfo(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -262,9 +260,8 @@ public class HttpMethod1  extends BaseRequst {
      * 获取加入过的更多学院
      * @param handler
      */
-    public static void getMoreCollege(String c,final Handler handler) {
+    public static void getMoreCollege(final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("c",c);
         Http.getRetrofit().create(HttpApi1.class).getMoreCollege(map).enqueue(new Callback<CollegeList>() {
             public void onResponse(Call<CollegeList> call, Response<CollegeList> response) {
                 try {
@@ -311,8 +308,6 @@ public class HttpMethod1  extends BaseRequst {
 
     /**
      * 编辑学院
-     * @param c
-     * @param collegeId
      * @param collegeName
      * @param collegeUser
      * @param collegeAccBankinfo
@@ -325,10 +320,8 @@ public class HttpMethod1  extends BaseRequst {
      * @param collegeInfo
      * @param handler
      */
-    public static void editCollege(int c,int collegeId,String collegeName,String collegeUser,String collegeAccBankinfo,String collegeAccBank,String collegeBackimg,int scale,int collegeType,String collegePrice,int collegeDelYn,String collegeInfo,final Handler handler) {
+    public static void editCollege(String collegeName,String collegeUser,String collegeAccBankinfo,String collegeAccBank,String collegeBackimg,int scale,int collegeType,String collegePrice,int collegeDelYn,String collegeInfo,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("c",c+"");
-        map.put("collegeId",collegeId+"");
         map.put("collegeName",collegeName);
         map.put("collegeUser",collegeUser);
         map.put("collegeAccBankinfo",collegeAccBankinfo);
@@ -361,10 +354,8 @@ public class HttpMethod1  extends BaseRequst {
      * 会员等级设置
      * @param handler
      */
-    public static void settingMemberLevel(int c,int collegeId,final Handler handler) {
+    public static void settingMemberLevel(final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("c",c+"");
-        map.put("collegeId",collegeId+"");
         Http.getRetrofit().create(HttpApi1.class).settingMemberLevel(map).enqueue(new Callback<MemBerLevel>() {
             public void onResponse(Call<MemBerLevel> call, Response<MemBerLevel> response) {
                 try {
@@ -442,10 +433,8 @@ public class HttpMethod1  extends BaseRequst {
      * 保存会员等级
      * @param handler
      */
-    public static void saveVipGrade(int c,int collegeId,String userCollegegradeId,String userCollegegradeName,String userCollegegradePoints,final Handler handler) {
+    public static void saveVipGrade(String userCollegegradeId,String userCollegegradeName,String userCollegegradePoints,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("c",c+"");
-        map.put("collegeId",collegeId+"");
         map.put("userCollegegradeId",userCollegegradeId);
         map.put("userCollegegradeName",userCollegegradeName);
         map.put("userCollegegradePoints",userCollegegradePoints);
@@ -469,16 +458,12 @@ public class HttpMethod1  extends BaseRequst {
 
     /**
      * 获取勋章列表
-     * @param c
-     * @param collegeId
      * @param timestamp
      * @param page
      * @param handler
      */
-    public static void getMedalList(int c,int collegeId,String timestamp,int page,int limit,final int index,final Handler handler) {
+    public static void getMedalList(String timestamp,int page,int limit,final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("c",c+"");
-        map.put("collegeId",collegeId+"");
         map.put("timestamp",timestamp);
         map.put("page",page+"");
         map.put("limit",limit+"");
@@ -502,13 +487,10 @@ public class HttpMethod1  extends BaseRequst {
 
     /**
      * 编辑或保存勋章
-     * @param c
      * @param handler
      */
-    public static void saveMedal(long c,long collegeId,long medalTypeId,String medalTypeName,String medalTypeInfo,String medalTypeMig,final Handler handler) {
+    public static void saveMedal(long medalTypeId,String medalTypeName,String medalTypeInfo,String medalTypeMig,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("c",c+"");
-        map.put("collegeId",collegeId+"");
         if(medalTypeId!=0){
             map.put("medalTypeId",medalTypeId+"");
         }
@@ -535,15 +517,11 @@ public class HttpMethod1  extends BaseRequst {
 
     /**
      * 删除勋章
-     * @param c
-     * @param collegeId
      * @param medalTypeId
      * @param handler
      */
-    public static void delMedal(int c,int collegeId,long medalTypeId,final Handler handler) {
+    public static void delMedal(long medalTypeId,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("c",c+"");
-        map.put("collegeId",collegeId+"");
         map.put("medalTypeId",medalTypeId+"");
         Http.getRetrofit().create(HttpApi1.class).delMedal(map).enqueue(new Callback<BaseBean>() {
             public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
@@ -566,9 +544,8 @@ public class HttpMethod1  extends BaseRequst {
     /**
      * 购买学院vip
      */
-    public static void buyVip(int collegeId,long gradeId,int gradeType,String gradeLimit,final Handler handler) {
+    public static void buyVip(long gradeId,int gradeType,String gradeLimit,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("collegeId",collegeId+"");
         map.put("gradeId",gradeId+"");
         map.put("gradeType",gradeType+"");
         map.put("gradeLimit",gradeLimit);
@@ -592,17 +569,13 @@ public class HttpMethod1  extends BaseRequst {
 
     /**
      * 查询VIP申请明细
-     * @param c
-     * @param collegeId
      * @param timestamp
      * @param page
      * @param limit
      * @param handler
      */
-    public static void getVipDetails(int c,int collegeId,String timestamp,int page,int limit,final int index,final Handler handler) {
+    public static void getVipDetails(String timestamp,int page,int limit,final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("c",c+"");
-        map.put("collegeId",collegeId+"");
         map.put("timestamp",timestamp);
         map.put("page",page+"");
         map.put("limit",limit+"");
@@ -626,16 +599,14 @@ public class HttpMethod1  extends BaseRequst {
 
     /**
      * 友商购进列表
-     * @param collegeId
      * @param timestamp
      * @param page
      * @param limit
      * @param index
      * @param handler
      */
-    public static void buyInessIn(long collegeId,String timestamp,int page,int limit,final int index,final Handler handler) {
+    public static void buyInessIn(String timestamp,int page,int limit,final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("collegeId",collegeId+"");
         map.put("timestamp",timestamp);
         map.put("page",page+"");
         map.put("limit",limit+"");
@@ -676,6 +647,37 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 友商售出列表
+     * @param timestamp
+     * @param page
+     * @param limit
+     * @param index
+     * @param handler
+     */
+    public static void buyInessOut(String timestamp,int page,int limit,final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("timestamp",timestamp);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        Http.getRetrofit().create(HttpApi1.class).buyInessOut(map).enqueue(new Callback<BuyIness>() {
+            public void onResponse(Call<BuyIness> call, Response<BuyIness> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BuyIness> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

@@ -1,6 +1,5 @@
 package com.example.administrator.zhixueproject.activity.college;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,7 +13,6 @@ import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
-import com.example.administrator.zhixueproject.fragment.college.CollegeInfoFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 /**
@@ -55,7 +53,7 @@ public class BuyVipActivity extends BaseActivity implements RadioGroup.OnChecked
                         return;
                     }
                     showProgress(getString(R.string.loding));
-                    HttpMethod1.buyVip(CollegeInfoFragment.homeBean.getCollegeId(),collegeGradeListBean.getCollegeGradeId(),gradeType,number,mHandler);
+                    HttpMethod1.buyVip(collegeGradeListBean.getCollegeGradeId(),gradeType,number,mHandler);
                 }
             }
         });

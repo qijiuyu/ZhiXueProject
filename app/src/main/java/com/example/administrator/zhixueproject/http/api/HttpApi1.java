@@ -237,4 +237,14 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.DEL_BUY_INESS)
     Call<BaseBean> delBuyIness(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 友商售出列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.BUY_INESS_OUT)
+    Call<BuyIness> buyInessOut(@FieldMap Map<String, String> map);
 }

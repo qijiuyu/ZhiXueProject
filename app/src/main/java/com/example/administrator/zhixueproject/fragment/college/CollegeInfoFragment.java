@@ -14,14 +14,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.college.EditCollegeActivity;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.Home;
-import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.DateUtil;
-import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.OvalImageViews;
 
 /**
@@ -102,8 +99,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
      * 查询首页信息
      */
     private void getHomeInfo(){
-        final UserBean userBean= MyApplication.userInfo.getData().getUser();
-        HttpMethod1.getHomeInfo(userBean.getUserId()+"",mHandler);
+        HttpMethod1.getHomeInfo(mHandler);
     }
 
 

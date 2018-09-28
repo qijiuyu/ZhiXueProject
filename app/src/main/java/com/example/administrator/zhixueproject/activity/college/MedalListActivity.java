@@ -13,11 +13,8 @@ import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.college.MedalItemAdapter;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.Medal;
-import com.example.administrator.zhixueproject.bean.UserBean;
-import com.example.administrator.zhixueproject.fragment.college.CollegeInfoFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
@@ -165,9 +162,8 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
      * 查询数据
      */
     private void getData(int index){
-        final UserBean userBean=MyApplication.userInfo.getData().getUser();
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getMedalList(userBean.getUserId(), CollegeInfoFragment.homeBean.getCollegeId(),simpleDateFormat.format(new Date()),page,limit,index,mHandler);
+        HttpMethod1.getMedalList(simpleDateFormat.format(new Date()),page,limit,index,mHandler);
     }
 
 
@@ -178,8 +174,7 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
     public void deleteMedal(long medalTypeId){
         this.medalTypeId=medalTypeId;
         showProgress(getString(R.string.loding));
-        final UserBean userBean=MyApplication.userInfo.getData().getUser();
-        HttpMethod1.delMedal(userBean.getUserId(), CollegeInfoFragment.homeBean.getCollegeId(),medalTypeId,mHandler);
+        HttpMethod1.delMedal(medalTypeId,mHandler);
     }
 
 

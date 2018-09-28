@@ -7,14 +7,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.college.CollegeItemAdapter;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.Colleges;
-import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import java.util.ArrayList;
@@ -84,7 +81,6 @@ public class MoreCollegeActivity extends BaseActivity{
      */
     private void getData(){
         showProgress(getString(R.string.loading));
-        final UserBean userBean= MyApplication.userInfo.getData().getUser();
-        HttpMethod1.getMoreCollege(userBean.getUserId()+"",mHandler);
+        HttpMethod1.getMoreCollege(mHandler);
     }
 }

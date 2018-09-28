@@ -21,8 +21,6 @@ import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.UploadFile;
-import com.example.administrator.zhixueproject.bean.UserBean;
-import com.example.administrator.zhixueproject.fragment.college.CollegeInfoFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
@@ -130,8 +128,7 @@ public class AddMedalActivity extends BaseActivity implements View.OnClickListen
                     return;
                  }
                  showProgress(getString(R.string.loding));
-                 final UserBean userBean= MyApplication.userInfo.getData().getUser();
-                 HttpMethod1.saveMedal(userBean.getUserId(), CollegeInfoFragment.homeBean.getCollegeId(),medalTypeId,title,content,medalTypeMig,mHandler);
+                 HttpMethod1.saveMedal(medalTypeId,title,content,medalTypeMig,mHandler);
                  break;
             case R.id.lin_back:
                  finish();

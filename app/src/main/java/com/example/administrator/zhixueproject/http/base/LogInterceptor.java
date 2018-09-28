@@ -3,6 +3,7 @@ package com.example.administrator.zhixueproject.http.base;
 
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.utils.ParameterUtil;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 
 import org.json.JSONException;
@@ -55,10 +56,10 @@ public class LogInterceptor implements Interceptor {
                 LogUtils.e(request.url() + "参数:" + formBody.name(i) + "=" + formBody.value(i));
             }
         }
-//        requstMap = ParameterUtils.getInstance().getParameter(requstMap);
+        requstMap = ParameterUtil.getParamter(requstMap);
         //添加公共参数
         for (String key : requstMap.keySet()) {
-              bodyBuilder.addEncoded(key, requstMap.get(key));
+            bodyBuilder.addEncoded(key, requstMap.get(key));
         }
         formBody = bodyBuilder.build();
         request = request.newBuilder().post(formBody).addHeader("cookie", MyApplication.spUtil.getString(SPUtil.SESSION_ID)).build();

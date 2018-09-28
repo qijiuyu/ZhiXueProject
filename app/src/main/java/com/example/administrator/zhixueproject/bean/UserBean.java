@@ -12,7 +12,7 @@ public class UserBean{
     private String userEmail;
     private int userFansNum;
     private int userGiftPoints;
-    private int userId;
+    private long userId;
     private String userImg;
     private double userIncome;
     private String userIntro;
@@ -116,11 +116,11 @@ public class UserBean{
         this.userGiftPoints = userGiftPoints;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

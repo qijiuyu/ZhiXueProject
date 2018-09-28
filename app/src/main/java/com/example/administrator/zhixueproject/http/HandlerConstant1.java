@@ -29,4 +29,6 @@ public class HandlerConstant1 {
     public static final int BUY_INESS_IN_SUCCESS=1132;
     public static final int BUY_INESS_IN_SUCCESS2=1133;
     public static final int DEL_BUY_INESS_SUCCESS=1134;
+    public static final int BUY_INESS_OUT_SUCCESS=1135;
+    public static final int BUY_INESS_OUT_SUCCESS2=1136;
 }

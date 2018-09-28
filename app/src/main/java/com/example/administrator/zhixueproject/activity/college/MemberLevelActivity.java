@@ -11,12 +11,9 @@ import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.MemberLevelAdapter;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
-import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.callback.MemberLevelCallBack;
-import com.example.administrator.zhixueproject.fragment.college.CollegeInfoFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 
@@ -70,8 +67,7 @@ public class MemberLevelActivity extends BaseActivity implements View.OnClickLis
                  String levelNames = levelName.substring(0, levelName.length() - 1);
                  String levelPoints = levelPoint.substring(0, levelPoint.length() - 1);
                  showProgress(getString(R.string.loding));
-                 final UserBean userBean=MyApplication.userInfo.getData().getUser();
-                 HttpMethod1.saveVipGrade(userBean.getUserId(),CollegeInfoFragment.homeBean.getCollegeId(),levelIds,levelNames,levelPoints,mHandler);
+                 HttpMethod1.saveVipGrade(levelIds,levelNames,levelPoints,mHandler);
                  break;
             case R.id.lin_back:
                  finish();
@@ -136,8 +132,7 @@ public class MemberLevelActivity extends BaseActivity implements View.OnClickLis
      */
     private void getData(){
         showProgress(getString(R.string.loding));
-        final UserBean userBean= MyApplication.userInfo.getData().getUser();
-        HttpMethod1.settingMemberLevel(userBean.getUserId(), CollegeInfoFragment.homeBean.getCollegeId(),mHandler);
+        HttpMethod1.settingMemberLevel(mHandler);
     }
 
 }
