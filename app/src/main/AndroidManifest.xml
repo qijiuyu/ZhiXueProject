@@ -130,6 +130,9 @@
         <activity
             android:name=".activity.topic.AddTopicActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.topic.TopicItemActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
