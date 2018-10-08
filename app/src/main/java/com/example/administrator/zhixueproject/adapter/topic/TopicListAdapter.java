@@ -7,9 +7,9 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.zhixueproject.R;
-import com.example.administrator.zhixueproject.activity.GuideActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
+
 import java.util.List;
 
 
