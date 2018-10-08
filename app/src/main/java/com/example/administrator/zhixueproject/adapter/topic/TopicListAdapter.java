@@ -58,9 +58,9 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
         helper.setText(R.id.tv_topic_time, item.getCreationTime());
 
         if (mIsPostList) {
-            helper.setVisible(R.id.right, false);
-        }else {
-            helper.setVisible(R.id.right, true);
+            helper.setGone(R.id.menu_right, false);
+        } else {
+            helper.setVisible(R.id.menu_right, true);
             int topicUseyn = item.getTopicUseyn();//是否上架
             if (topicUseyn == 1) {
                 helper.setText(R.id.tv_added, "已上架");
