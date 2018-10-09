@@ -11,6 +11,7 @@ import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
 import com.example.administrator.zhixueproject.bean.RecentEarning;
+import com.example.administrator.zhixueproject.bean.TopicAccount;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.bean.VipDetails;
@@ -731,8 +732,8 @@ public class HttpMethod1  extends BaseRequst {
         map.put("page",page+"");
         map.put("limit",limit+"");
         map.put("timestamp",timestamp);
-        Http.getRetrofit().create(HttpApi1.class).getTopicAccount(map).enqueue(new Callback<ResponseBody>() {
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+        Http.getRetrofit().create(HttpApi1.class).getTopicAccount(map).enqueue(new Callback<TopicAccount>() {
+            public void onResponse(Call<TopicAccount> call, Response<TopicAccount> response) {
                 try {
                     sendMessage(handler, index, response.body());
                 }catch (Exception e){
@@ -741,7 +742,7 @@ public class HttpMethod1  extends BaseRequst {
                 }
             }
 
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<TopicAccount> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

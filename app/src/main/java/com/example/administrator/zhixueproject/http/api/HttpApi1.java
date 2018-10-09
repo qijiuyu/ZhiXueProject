@@ -8,6 +8,7 @@ import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
 import com.example.administrator.zhixueproject.bean.RecentEarning;
+import com.example.administrator.zhixueproject.bean.TopicAccount;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.http.HttpConstant;
@@ -267,5 +268,5 @@ public interface HttpApi1 {
      */
     @FormUrlEncoded
     @POST(HttpConstant.GET_TOPIC_ACCOUNT)
-    Call<ResponseBody> getTopicAccount(@FieldMap Map<String, String> map);
+    Call<TopicAccount> getTopicAccount(@FieldMap Map<String, String> map);
 }
