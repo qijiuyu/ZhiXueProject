@@ -10,6 +10,8 @@ import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
+import com.example.administrator.zhixueproject.bean.RecentEarning;
+import com.example.administrator.zhixueproject.bean.TopicAccount;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.bean.VipDetails;
@@ -678,6 +680,69 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<BuyIness> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 获取近期收益
+     * @param startDate
+     * @param endDate
+     * @param handler
+     */
+    public static void getAccount(String startDate,String endDate,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("startDate",startDate);
+        map.put("endDate",endDate);
+        Http.getRetrofit().create(HttpApi1.class).getAccount(map).enqueue(new Callback<RecentEarning>() {
+            public void onResponse(Call<RecentEarning> call, Response<RecentEarning> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_ACCOUNT_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<RecentEarning> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 获取话题收益明细
+     * @param startDate
+     * @param endDate
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param index
+     * @param handler
+     */
+    public static void getTopicAccount(String startDate, String endDate, int page, int limit, String timestamp, final int index, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("startDate",startDate);
+        map.put("endDate",endDate);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi1.class).getTopicAccount(map).enqueue(new Callback<TopicAccount>() {
+            public void onResponse(Call<TopicAccount> call, Response<TopicAccount> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<TopicAccount> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

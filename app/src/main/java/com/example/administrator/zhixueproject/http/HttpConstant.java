@@ -93,4 +93,10 @@ public class HttpConstant {
 
     //修改话题
     public static final String UPDATE_TOPIC = "topic/updateTopic.do";
+    //获取近期收益
+    public static final String GET_ACCOUNT="account/getAccount.do";
+
+    //获取话题收益明细
+    public static final String GET_TOPIC_ACCOUNT="account/getTopicAccount.do";
+
 }
