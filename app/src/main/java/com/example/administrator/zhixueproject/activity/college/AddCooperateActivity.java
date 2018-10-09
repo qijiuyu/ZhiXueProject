@@ -25,7 +25,7 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cooperate);
-        initView();
+//        initView();
         rightMenu();
     }
 
@@ -33,35 +33,35 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
     /**
      * 初始化控件
      */
-    private void initView(){
-        TextView tvHead = (TextView) findViewById(R.id.tv_title);
-        tvHead.setText(getString(R.string.add_cooperation));
-        etName=(EditText)findViewById(R.id.et_institution_name);
-        tvTopic=(TextView)findViewById(R.id.tv_topic_content);
-        tvTeacherName=(TextView)findViewById(R.id.tv_teacher_name);
-        etTimeNum=(EditText)findViewById(R.id.et_purchase_period);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        findViewById(R.id.rl_add_topic).setOnClickListener(this);
-        findViewById(R.id.rl_choose_teacher).setOnClickListener(this);
-        findViewById(R.id.tv_setting_save).setOnClickListener(this);
-    }
+//    private void initView(){
+//        TextView tvHead = (TextView) findViewById(R.id.tv_title);
+//        tvHead.setText(getString(R.string.add_cooperation));
+//        etName=(EditText)findViewById(R.id.et_institution_name);
+//        tvTopic=(TextView)findViewById(R.id.tv_topic_content);
+//        tvTeacherName=(TextView)findViewById(R.id.tv_teacher_name);
+//        etTimeNum=(EditText)findViewById(R.id.et_purchase_period);
+//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        findViewById(R.id.rl_add_topic).setOnClickListener(this);
+//        findViewById(R.id.rl_choose_teacher).setOnClickListener(this);
+//        findViewById(R.id.tv_setting_save).setOnClickListener(this);
+//    }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            //所选话题
-            case R.id.rl_add_topic:
-                 openRight();
-                 break;
-            //发布人
-            case R.id.rl_choose_teacher:
-                 break;
-            //保存
-            case R.id.tv_setting_save:
-                 break;
-             default:
-                 break;
-        }
+//        switch (v.getId()){
+//            //所选话题
+//            case R.id.rl_add_topic:
+//                 openRight();
+//                 break;
+//            //发布人
+//            case R.id.rl_choose_teacher:
+//                 break;
+//            //保存
+//            case R.id.tv_setting_save:
+//                 break;
+//             default:
+//                 break;
+//        }
     }
 
 
