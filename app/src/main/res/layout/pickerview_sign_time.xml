@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:id="@+id/timepicker"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="46dp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <com.example.administrator.zhixueproject.view.time.WheelView
+                    android:id="@+id/year"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            <com.example.administrator.zhixueproject.view.time.WheelView
+                    android:id="@+id/month"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            <com.example.administrator.zhixueproject.view.time.WheelView
+                    android:id="@+id/day"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            <com.example.administrator.zhixueproject.view.time.WheelView
+                    android:id="@+id/hour"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            <com.example.administrator.zhixueproject.view.time.WheelView
+                    android:id="@+id/min"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            <com.example.administrator.zhixueproject.view.time.WheelView
+                    android:id="@+id/second"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+        </LinearLayout>
+        <View
+                android:id="@+id/view_bg"
+                android:layout_above="@+id/timepicker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#66f7f7f7"/>
+        
+        <View
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="48dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_f0f0f0" />
+        
+        <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@android:color/white">
+            
+            <TextView
+                    android:id="@+id/tv_cancel"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="@color/color_666666"
+                    android:textSize="15sp" />
+            
+            <View
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_f0f0f0" />
+            
+            <TextView
+                    android:id="@+id/tv_finish"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="确定"
+                    android:textColor="@color/color_40c5f1"
+                    android:textSize="15sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

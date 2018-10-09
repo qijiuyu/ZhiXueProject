@@ -133,6 +133,9 @@
         <activity
             android:name=".activity.topic.TopicItemActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.RecentEarningActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

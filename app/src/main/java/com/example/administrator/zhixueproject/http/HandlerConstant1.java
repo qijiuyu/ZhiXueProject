@@ -31,4 +31,5 @@ public class HandlerConstant1 {
     public static final int DEL_BUY_INESS_SUCCESS=1134;
     public static final int BUY_INESS_OUT_SUCCESS=1135;
     public static final int BUY_INESS_OUT_SUCCESS2=1136;
+    public static final int GET_ACCOUNT_SUCCESS=1137;
 }
