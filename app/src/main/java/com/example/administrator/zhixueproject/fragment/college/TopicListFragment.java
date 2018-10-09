@@ -8,17 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.adapter.college.TopicNameAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
+import com.example.administrator.zhixueproject.callback.TopicCallBack;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
 import java.text.SimpleDateFormat;
@@ -32,13 +37,12 @@ import java.util.List;
 public class TopicListFragment  extends BaseFragment  implements MyRefreshLayoutListener {
 
     private ListView listView;
-    //fragment是否可见
-    private boolean isVisibleToUser=false;
     private MyRefreshLayout mRefreshLayout;
     private int page=1;
     private int limit=20;
     private List<TopicListBean> listAll=new ArrayList<>();
     private TopicNameAdapter topicNameAdapter;
+    private TopicCallBack topicCallBack;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -49,9 +53,9 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
         view = inflater.inflate(R.layout.fragment_topic_list, container, false);
         mRefreshLayout=(MyRefreshLayout)view.findViewById(R.id.re_list);
         listView=(ListView)view.findViewById(R.id.listView);
-        final View view = LayoutInflater.from(mActivity).inflate(R.layout.empty_view, null);
-        ((ViewGroup) listView.getParent()).addView(view, new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT));
-        listView.setEmptyView(view);
+//        final View view = LayoutInflater.from(mActivity).inflate(R.layout.empty_view, null);
+//        ((ViewGroup) listView.getParent()).addView(view, new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT));
+//        listView.setEmptyView(view);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
         topicNameAdapter=new TopicNameAdapter(mActivity,listAll);
@@ -102,6 +106,11 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
             List<TopicListBean> list=topicsListBean.getData().getTopicList();
             listAll.addAll(list);
             topicNameAdapter.notifyDataSetChanged();
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    topicCallBack.getTopicName(listAll.get(position).getTopicName());
+                }
+            });
             if(list.size()<limit){
                 mRefreshLayout.setIsLoadingMoreEnabled(false);
             }
@@ -129,17 +138,13 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
      * 查询话题列表
      */
     private void getData(int index){
-        if(isVisibleToUser && view!=null && listAll.size()==0){
-            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            HttpMethod2.getTopicList(simpleDateFormat.format(new Date()),page+"",limit+"",index,mHandler);
-        }
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        HttpMethod2.getTopicList(simpleDateFormat.format(new Date()),page+"",limit+"",index,mHandler);
     }
 
 
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        this.isVisibleToUser=isVisibleToUser;
-        //查询话题列表
-        getData(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
+    public void setCallBack(TopicCallBack topicCallBack){
+        this.topicCallBack=topicCallBack;
     }
+
 }

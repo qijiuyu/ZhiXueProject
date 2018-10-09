@@ -10,7 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.callback.TopicCallBack;
 import com.example.administrator.zhixueproject.fragment.college.TopicListFragment;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 
 /**
  * 添加合作
@@ -19,13 +21,13 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
 
     private EditText etName,etTimeNum;
     private TextView tvTopic,tvTeacherName;
-    private TopicListFragment topicListFragment;
+    private TopicListFragment topicListFragment=new TopicListFragment();
     //侧滑菜单
     public static DrawerLayout mDrawerLayout;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cooperate);
-//        initView();
+        initView();
         rightMenu();
     }
 
@@ -33,45 +35,37 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
     /**
      * 初始化控件
      */
-//    private void initView(){
-//        TextView tvHead = (TextView) findViewById(R.id.tv_title);
-//        tvHead.setText(getString(R.string.add_cooperation));
-//        etName=(EditText)findViewById(R.id.et_institution_name);
-//        tvTopic=(TextView)findViewById(R.id.tv_topic_content);
-//        tvTeacherName=(TextView)findViewById(R.id.tv_teacher_name);
-//        etTimeNum=(EditText)findViewById(R.id.et_purchase_period);
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        findViewById(R.id.rl_add_topic).setOnClickListener(this);
-//        findViewById(R.id.rl_choose_teacher).setOnClickListener(this);
-//        findViewById(R.id.tv_setting_save).setOnClickListener(this);
-//    }
+    private void initView(){
+        TextView tvHead = (TextView) findViewById(R.id.tv_title);
+        tvHead.setText(getString(R.string.add_cooperation));
+        etName=(EditText)findViewById(R.id.et_institution_name);
+        tvTopic=(TextView)findViewById(R.id.tv_topic_content);
+        tvTeacherName=(TextView)findViewById(R.id.tv_teacher_name);
+        etTimeNum=(EditText)findViewById(R.id.et_purchase_period);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        findViewById(R.id.rl_add_topic).setOnClickListener(this);
+        findViewById(R.id.rl_choose_teacher).setOnClickListener(this);
+        findViewById(R.id.tv_setting_save).setOnClickListener(this);
+    }
 
     @Override
     public void onClick(View v) {
-//        switch (v.getId()){
-//            //所选话题
-//            case R.id.rl_add_topic:
-//                 openRight();
-//                 break;
-//            //发布人
-//            case R.id.rl_choose_teacher:
-//                 break;
-//            //保存
-//            case R.id.tv_setting_save:
-//                 break;
-//             default:
-//                 break;
-//        }
+        switch (v.getId()){
+            //所选话题
+            case R.id.rl_add_topic:
+                 mDrawerLayout.openDrawer(Gravity.RIGHT);
+                 break;
+            //发布人
+            case R.id.rl_choose_teacher:
+                 break;
+            //保存
+            case R.id.tv_setting_save:
+                 break;
+             default:
+                 break;
+        }
     }
 
-
-    /**
-     * 打开侧边栏
-     */
-    public static void openRight() {
-        mDrawerLayout.openDrawer(Gravity.RIGHT);
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED, Gravity.LEFT);
-    }
 
     /**
      * 设置侧边栏
@@ -81,21 +75,16 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
         //关闭手势滑动
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-            public void onDrawerStateChanged(int arg0) {
-            }
-
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                View content = mDrawerLayout.getChildAt(0);
-                int offset = (int) (drawerView.getWidth() * slideOffset);
-                content.setTranslationX(offset);
-            }
-
-            public void onDrawerOpened(View arg0) {
-            }
-
-            public void onDrawerClosed(View arg0) {
-            }
-        });
+        topicListFragment.setCallBack(topicCallBack);
     }
+
+    TopicCallBack topicCallBack=new TopicCallBack() {
+        @Override
+        public void getTopicName(String name) {
+            LogUtils.e(name+"+++++++++++++++++++");
+            tvTopic.setText(name);
+            mDrawerLayout.closeDrawer(Gravity.RIGHT);
+        }
+
+    };
 }
