@@ -82,4 +82,15 @@ public class HttpConstant {
     //友商售出列表
     public static final String BUY_INESS_OUT="buyTopic/getBuyOutList.do";
 
+    // 话题上下架
+    public static final String IS_UP_OR_DOWN = "topic/isUpOrDown.do";
+
+    // 话题排序
+    public static final String UPDATE_SORT = "topic/updateSort.do";
+
+    // 添加话题
+    public static final String ADD_TOPIC = "topic/addTopic.do";
+
+    //修改话题
+    public static final String UPDATE_TOPIC = "topic/updateTopic.do";
 }

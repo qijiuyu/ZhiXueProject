@@ -52,6 +52,166 @@ public class HttpMethod2 extends BaseRequst{
     }
 
     /**
+     *  话题上下架
+     * @param topicId 话题id
+     * @param topicUseyn  是否上下架 （0否，1是）
+     * @param handler
+     */
+    public static void isUpOrDowm(String topicId, final String topicUseyn, final Handler handler){
+        Map<String,String> map=new HashMap<>();
+        map.put("topicId",topicId);
+        map.put("topicUseyn",topicUseyn);
+        Http.getRetrofit().create(HttpApi2.class).isUpOrDown(map).enqueue(new Callback<TopicsListBean>() {
+            @Override
+            public void onResponse(Call<TopicsListBean> call, Response<TopicsListBean> response) {
+                try {
+                    if (Integer.valueOf(topicUseyn)==1){
+                        // 上架
+                        sendMessage(handler, HandlerConstant2.IS_UP_OR_DOWN_SUCCESS, response.body());
+                    }else {
+                        // 下架
+                        sendMessage(handler, HandlerConstant2.IS_UP_OR_DOWN_SUCCESS2, response.body());
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopicsListBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     *  话题排序
+     * @param topicId1 话题id1
+     * @param topicId2  话题id1
+     * @param handler
+     */
+    public static void updateSort(String topicId1, String topicId2, final Handler handler){
+        Map<String,String> map=new HashMap<>();
+        map.put("topicId1",topicId1);
+        map.put("topicId2",topicId2);
+        Http.getRetrofit().create(HttpApi2.class).updateSort(map).enqueue(new Callback<TopicsListBean>() {
+            @Override
+            public void onResponse(Call<TopicsListBean> call, Response<TopicsListBean> response) {
+                try {
+                 sendMessage(handler, HandlerConstant2.UPDATE_SORT_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopicsListBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     * 添加话题
+     * @param collegeId
+     * @param topicName
+     * @param topicPayType
+     * @param topicIsTop
+     * @param topicType
+     * @param topicUseyn
+     * @param topicImg
+     * @param topicPrice
+     * @param topicVipName
+     * @param ids
+     * @param handler
+     */
+    public static void addTopic(String collegeId, String topicName, String topicPayType,String topicIsTop,
+                                String topicType,String topicUseyn,String topicImg,String topicPrice,String topicVipName,
+                                String ids,final Handler handler){
+        Map<String,String> map=new HashMap<>();
+        map.put("collegeId",collegeId);
+        map.put("topicName",topicName);
+        map.put("topicPayType",topicPayType);
+        map.put("topicIsTop",topicIsTop);
+        map.put("topicType",topicType);
+        map.put("topicUseyn",topicUseyn);
+        map.put("topicImg",topicImg);
+        map.put("topicPrice",topicPrice);
+        map.put("topicVipName",topicVipName);
+        map.put("ids",ids);
+
+        Http.getRetrofit().create(HttpApi2.class).addTopic(map).enqueue(new Callback<TopicsListBean>() {
+            @Override
+            public void onResponse(Call<TopicsListBean> call, Response<TopicsListBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.ADD_TOPIC_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopicsListBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     *   修改话题
+     * @param topicId
+     * @param topicName
+     * @param topicPayType
+     * @param topicIsTop
+     * @param topicType
+     * @param topicUseyn
+     * @param topicImg
+     * @param topicPrice
+     * @param topicVipName
+     * @param ids
+     * @param handler
+     */
+    public static void updateTopic(String topicId, String topicName, String topicPayType,String topicIsTop,
+                                String topicType,String topicUseyn,String topicImg,String topicPrice,String topicVipName,
+                                String ids,final Handler handler){
+        Map<String,String> map=new HashMap<>();
+        map.put("topicId",topicId);
+        map.put("topicName",topicName);
+        map.put("topicPayType",topicPayType);
+        map.put("topicIsTop",topicIsTop);
+        map.put("topicType",topicType);
+        map.put("topicUseyn",topicUseyn);
+        map.put("topicImg",topicImg);
+        map.put("topicPrice",topicPrice);
+        map.put("topicVipName",topicVipName);
+        map.put("ids",ids);
+
+        Http.getRetrofit().create(HttpApi2.class).updateTopic(map).enqueue(new Callback<TopicsListBean>() {
+            @Override
+            public void onResponse(Call<TopicsListBean> call, Response<TopicsListBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.UPDATE_TOPIC_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopicsListBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
      *  修改个人资料
      * @param userName  用户名
      * @param mobile  手机号

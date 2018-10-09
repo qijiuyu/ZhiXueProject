@@ -71,4 +71,6 @@ dependencies {
     compile files('libs/wechat-sdk-android-with-mta-1.0.2.jar')
     //Tab滑动
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    //EventBus
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

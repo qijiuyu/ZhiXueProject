@@ -108,6 +108,11 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
+    <style name="AnimUp" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+
     <declare-styleable name="SwitchButton">
         <attr name="sb_shadow_radius" format="reference|dimension" />
         <attr name="sb_shadow_offset" format="reference|dimension" />

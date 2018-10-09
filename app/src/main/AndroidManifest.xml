@@ -26,6 +26,7 @@
     <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".application.MyApplication"
@@ -132,6 +133,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.topic.TopicItemActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.topic.ChargePrivilegeActivity"
             android:screenOrientation="portrait" />
 
     </application>

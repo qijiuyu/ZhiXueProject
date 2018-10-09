@@ -5,4 +5,9 @@ public class HandlerConstant2 {
     public static final int GET_TOPIC_LIST_SUCCESS=2000;
     public static final int GET_TOPIC_LIST_SUCCESS2=2001;
     public static final int MODIFY_USER_INFO_SUCCESS = 2002;
+    public static final int IS_UP_OR_DOWN_SUCCESS = 2003;
+    public static final int IS_UP_OR_DOWN_SUCCESS2 = 2004;
+    public static final int UPDATE_SORT_SUCCESS = 2005;
+    public static final int ADD_TOPIC_SUCCESS = 2006;
+    public static final int UPDATE_TOPIC_SUCCESS = 2007;
 }
