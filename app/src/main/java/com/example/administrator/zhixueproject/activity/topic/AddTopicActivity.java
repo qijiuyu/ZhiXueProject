@@ -62,7 +62,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
     private TextView tvTopicType;
     private SwitchButton sbStick;
     private SwitchButton sbPutAway;
-    private int topicId;
+    private long topicId;
     private ImageView ivAddPic;
     private CustomPopWindow mTollModePop;
     private LinearLayout llAddTopic;

@@ -293,7 +293,7 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
             // 上架、下架
             case R.id.tv_menu_two:
                 this.itemCheckedPosition=position;
-                int topicId = listData.get(position).getTopicId();
+                long topicId = listData.get(position).getTopicId();
                 int topicUseyn = listData.get(position).getTopicUseyn();
                 if (topicUseyn == 0) {
                     //  "topicUseyn": 是否上架 (0否，1是),
@@ -325,8 +325,8 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
         holder.setBackgroundColor(R.id.content, Color.WHITE);
 
         int endPosition = pos;
-        int topicId1 = listData.get(startPosition).getTopicId();
-        int topicId2 = listData.get(endPosition).getTopicId();
+        long topicId1 = listData.get(startPosition).getTopicId();
+        long topicId2 = listData.get(endPosition).getTopicId();
 
         LogUtils.e("topicId1: " + topicId1 + "--" + topicId2);
         // 话题重新排序
