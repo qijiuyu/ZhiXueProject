@@ -132,7 +132,7 @@
             android:name=".activity.topic.AddTopicActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.topic.TopicItemActivity"
+            android:name=".activity.topic.TopicListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.college.RecentEarningActivity"
@@ -140,6 +140,24 @@
         <activity
             android:name=".activity.topic.ChargePrivilegeActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.topic.PostDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fragment.topic.PostDetailValueActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.topic.ReleasePostActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".activity.topic.ReleaseActionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".activity.topic.ReleaseVoteActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
 
     </application>
 

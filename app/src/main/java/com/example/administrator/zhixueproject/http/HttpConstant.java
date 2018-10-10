@@ -99,4 +99,6 @@ public class HttpConstant {
     //获取话题收益明细
     public static final String GET_TOPIC_ACCOUNT="account/getTopicAccount.do";
 
+    // 获取帖子列表
+    public static final String GET_POST_LIST = "post/getPostList.do";
 }

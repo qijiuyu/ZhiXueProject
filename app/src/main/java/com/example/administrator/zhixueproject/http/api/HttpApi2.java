@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.http.api;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import java.util.Map;
@@ -63,4 +64,13 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.UPDATE_SORT)
     Call<TopicsListBean> updateSort(@FieldMap Map<String,String> map);
+
+    /**
+     *  获取帖子列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_POST_LIST)
+    Call<PostsCourseBean> getPostList(@FieldMap Map<String,String> map);
 }

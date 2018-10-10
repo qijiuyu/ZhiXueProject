@@ -10,4 +10,8 @@ public class HandlerConstant2 {
     public static final int UPDATE_SORT_SUCCESS = 2005;
     public static final int ADD_TOPIC_SUCCESS = 2006;
     public static final int UPDATE_TOPIC_SUCCESS = 2007;
+    public static final int GET_POST_LIST_SUCCESS1 = 2008;
+    public static final int GET_POST_LIST_SUCCESS2 = 2009;
+    public static final int GET_POST_LIST_SEARCH_SUCCESS1 = 2010;
+    public static final int GET_POST_LIST_SEARCH_SUCCESS2 = 2011;
 }

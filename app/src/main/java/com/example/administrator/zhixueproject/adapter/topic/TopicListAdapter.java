@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.zhixueproject.R;
-import com.example.administrator.zhixueproject.activity.topic.TopicItemActivity;
+import com.example.administrator.zhixueproject.activity.topic.TopicListActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
 import com.example.administrator.zhixueproject.utils.LogUtils;
@@ -87,7 +87,7 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
                 LogUtils.e("topicItemClicked   id  is: "+item.getTopicId());
                 Intent intent=new Intent();
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setClass(mContext,TopicItemActivity.class);
+                intent.setClass(mContext,TopicListActivity.class);
                 intent.putExtra(TOPIC_ITEM_ID,item.getTopicId());
                 mContext.startActivity(intent);
             }

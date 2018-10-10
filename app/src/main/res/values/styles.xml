@@ -113,6 +113,11 @@
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
     </style>
 
+    <style name="post_appbar" parent="android:Widget">
+        <item name="elevation">0dp</item>
+        <item name="android:background">@color/color_ffffff</item>
+    </style>
+
     <declare-styleable name="SwitchButton">
         <attr name="sb_shadow_radius" format="reference|dimension" />
         <attr name="sb_shadow_offset" format="reference|dimension" />

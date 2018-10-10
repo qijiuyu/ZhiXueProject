@@ -27,4 +27,6 @@
     <color name="color_ff0000">#ff0000</color>
     <color name="color_ff212c">#ff212c</color>
     <color name="translete">#00000000</color>
+    <color name="color_5d5d5d">#5d5d5d</color>
+    <color name="color_888888">#888888</color>
 </resources>

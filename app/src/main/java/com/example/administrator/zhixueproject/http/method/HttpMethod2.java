@@ -3,6 +3,7 @@ package com.example.administrator.zhixueproject.http.method;
 import android.os.Handler;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
@@ -205,6 +206,46 @@ public class HttpMethod2 extends BaseRequst{
 
             @Override
             public void onFailure(Call<TopicsListBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     *  获取帖子列表
+     * @param type
+     * @param postType
+     * @param postTopicId
+     * @param key
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param handler
+     */
+    public static void getPostList(String type, String postType, String postTopicId, String key,
+                                   String page, String limit, String timestamp, final int index, final Handler handler){
+        Map<String,String> map=new HashMap<>();
+        map.put("type",type);
+        map.put("postType",postType);
+        map.put("postTopicId",postTopicId);
+        map.put("key",key);
+        map.put("page",page);
+        map.put("limit",limit);
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi2.class).getPostList(map).enqueue(new Callback<PostsCourseBean>() {
+            @Override
+            public void onResponse(Call<PostsCourseBean> call, Response<PostsCourseBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PostsCourseBean> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
