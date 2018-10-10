@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/color_ffffff"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_cost_list"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+       >
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/color_666666"
+            android:textSize="16sp"/>
+
+        <EditText
+            android:id="@+id/et_cost"
+            android:layout_width="101dp"
+            android:layout_height="40dp"
+            android:background="@drawable/action_neophyte_bg"
+            android:gravity="center"
+            android:hint="金额"
+            android:inputType="numberDecimal"
+            android:lines="1"
+            android:padding="10dp"
+            android:textColor="@color/color_999999"
+            android:textSize="15sp"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/color_48c6ef"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+</LinearLayout>

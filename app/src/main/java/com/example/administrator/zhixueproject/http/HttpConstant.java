@@ -91,4 +91,21 @@ public class HttpConstant {
     //添加友商售出
     public static final String ADD_COOPERTE="buyTopic/addBuyTopic.do";
 
+    // 话题上下架
+    public static final String IS_UP_OR_DOWN = "topic/isUpOrDown.do";
+
+    // 话题排序
+    public static final String UPDATE_SORT = "topic/updateSort.do";
+
+    // 添加话题
+    public static final String ADD_TOPIC = "topic/addTopic.do";
+
+    //修改话题
+    public static final String UPDATE_TOPIC = "topic/updateTopic.do";
+    //获取近期收益
+    public static final String GET_ACCOUNT="account/getAccount.do";
+
+    //获取话题收益明细
+    public static final String GET_TOPIC_ACCOUNT="account/getTopicAccount.do";
+
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/head" />
+
+    <TextView
+        android:id="@+id/tv_topic"
+        style="@style/topic_list_manage"
+        android:drawableLeft="@mipmap/topic_manage_iv"
+        android:text="@string/topic_list_manage" />
+
+    <View style="@style/gray_line" />
+
+    <TextView
+        android:id="@+id/tv_action"
+        style="@style/topic_list_manage"
+        android:drawableLeft="@mipmap/action_manage_iv"
+        android:text="@string/activity_manage" />
+
+    <View style="@style/gray_line" />
+
+
+    <TextView
+        android:id="@+id/tv_vote"
+        style="@style/topic_list_manage"
+        android:drawableLeft="@mipmap/vote_manage_iv"
+        android:text="@string/vote_manage" />
+
+    <View style="@style/gray_line" />
+
+
+</LinearLayout>

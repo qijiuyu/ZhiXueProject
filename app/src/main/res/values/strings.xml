@@ -266,6 +266,10 @@
     <string name="release_vote">发布投票</string>
     <string name="release_content">发布内容</string>
     <string name="default_file_name">My Recording</string>
+    <string name="topic_list_manage">话题列表管理</string>
+    <string name="activity_manage">活动管理</string>
+    <string name="is_up_success">上架成功</string>
+    <string name="is_dowm_success">下架成功</string>
 
     <array name="release_cost">
         <item>免费</item>

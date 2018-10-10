@@ -34,4 +34,7 @@ public class HandlerConstant1 {
     public static final int GET_TEACHER_LIST_SUCCESS=1137;
     public static final int GET_TEACHER_LIST_SUCCESS2=1138;
     public static final int ADD_COOPERATE_SUCCESS=1139;
+    public static final int GET_ACCOUNT_SUCCESS=1137;
+    public static final int GET_TOPIC_ACCOUNT_SUCCESS=1138;
+    public static final int GET_TOPIC_ACCOUNT_SUCCESS2=1139;
 }

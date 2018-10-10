@@ -95,6 +95,24 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <!--话题管理-->
+    <style name="topic_list_manage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">12dp</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:drawableRight">@mipmap/right_arrow</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="AnimUp" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+
     <declare-styleable name="SwitchButton">
         <attr name="sb_shadow_radius" format="reference|dimension" />
         <attr name="sb_shadow_offset" format="reference|dimension" />

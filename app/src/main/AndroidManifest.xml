@@ -26,6 +26,7 @@
     <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".application.MyApplication"
@@ -42,7 +43,9 @@
             android:name="design_height"
             android:value="1280"></meta-data>
 
-        <activity android:name=".activity.GuideActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".activity.GuideActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,31 +53,93 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.TabActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.WelcomeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.login.RegisterActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.login.SettingPwdActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.login.LoginActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.CollegeHomeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.userinfo.UserInfoActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.userinfo.EditPhoneActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.userinfo.EditSignActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.CollegeManageActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.MoreCollegeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.EditCollegeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.userinfo.EditUserNameActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.userinfo.UpdatePwdActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.MemberLevelActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.userinfo.EditEmailActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.userinfo.BindingEmailActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.MedalListActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.AddMedalActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.BuyVipActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.VipDetailsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.BuyInessInActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.BuyInessOutActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.AddCooperateActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.college.SelectTeacherActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.TabActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.SettingPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.CollegeHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.userinfo.UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.userinfo.EditPhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.userinfo.EditSignActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.CollegeManageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.MoreCollegeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.EditCollegeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.userinfo.EditUserNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.userinfo.UpdatePwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.MemberLevelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.userinfo.EditEmailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.userinfo.BindingEmailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.MedalListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.AddMedalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.BuyVipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.VipDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.BuyInessInActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.BuyInessOutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.AddCooperateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.topic.TopicListManageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.topic.AddTopicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.topic.TopicItemActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.RecentEarningActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.topic.ChargePrivilegeActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

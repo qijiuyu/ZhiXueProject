@@ -28,5 +28,39 @@ public interface HttpApi2 {
     @POST(HttpConstant.MODIFY_USER_INFO)
     Call<BaseBean> modifyUserInfo(@FieldMap Map<String,String> map);
 
+    /**
+     *  话题上下架
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.IS_UP_OR_DOWN)
+    Call<TopicsListBean> isUpOrDown(@FieldMap Map<String,String> map);
 
+    /**
+     *  添加话题
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_TOPIC)
+    Call<TopicsListBean> addTopic(@FieldMap Map<String,String> map);
+
+    /**
+     *  修改话题
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_TOPIC)
+    Call<TopicsListBean> updateTopic(@FieldMap Map<String,String> map);
+
+    /**
+     *  话题排序
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_SORT)
+    Call<TopicsListBean> updateSort(@FieldMap Map<String,String> map);
 }

@@ -8,6 +8,8 @@ import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
 import com.example.administrator.zhixueproject.bean.TeacherBean;
+import com.example.administrator.zhixueproject.bean.RecentEarning;
+import com.example.administrator.zhixueproject.bean.TopicAccount;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.http.HttpConstant;
@@ -269,4 +271,24 @@ public interface HttpApi1 {
     @POST(HttpConstant.ADD_COOPERTE)
     Call<ResponseBody> addCooPerate(@FieldMap Map<String, String> map);
 
+
+
+    /**
+     * 获取近期收益
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_ACCOUNT)
+    Call<RecentEarning> getAccount(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取话题收益明细
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_TOPIC_ACCOUNT)
+    Call<TopicAccount> getTopicAccount(@FieldMap Map<String, String> map);
 }
