@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/color_ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/head"/>
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="48dp"
+            android:layout_marginLeft="48dp"
+            android:background="@mipmap/search_lecture_bg">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/search" />
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:hint="请输入你想搜索的关键词"
+                android:textSize="12sp"
+                android:textColor="@color/color_666666"
+                android:textColorHint="@color/color_dbdbdb"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"/>
+        </LinearLayout>
+
+        <com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout
+            android:id="@+id/mrl_lecturer_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_lecturer_list"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+            </android.support.v7.widget.RecyclerView>
+        </com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout>
+    </LinearLayout>
+
+    <include layout="@layout/include_bottom"/>
+</LinearLayout>
