@@ -7,6 +7,7 @@ import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
+import com.example.administrator.zhixueproject.bean.TeacherBean;
 import com.example.administrator.zhixueproject.bean.RecentEarning;
 import com.example.administrator.zhixueproject.bean.TopicAccount;
 import com.example.administrator.zhixueproject.bean.UserInfo;
@@ -249,6 +250,27 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.BUY_INESS_OUT)
     Call<BuyIness> buyInessOut(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取讲师列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_TEACHER_LIST)
+    Call<TeacherBean> getTeacherList(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 添加友商售出
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_COOPERTE)
+    Call<ResponseBody> addCooPerate(@FieldMap Map<String, String> map);
+
 
 
     /**

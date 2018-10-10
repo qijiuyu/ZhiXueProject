@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.fragment.college;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,23 +8,17 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.adapter.college.TopicNameAdapter;
-import com.example.administrator.zhixueproject.application.MyApplication;
-import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
-import com.example.administrator.zhixueproject.callback.TopicCallBack;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
-import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
 import java.text.SimpleDateFormat;
@@ -42,7 +37,7 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
     private int limit=20;
     private List<TopicListBean> listAll=new ArrayList<>();
     private TopicNameAdapter topicNameAdapter;
-    private TopicCallBack topicCallBack;
+    public static final String ACTION_TOPIC_TITLE="com.admin.broadcast.action.topic.title";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -53,9 +48,6 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
         view = inflater.inflate(R.layout.fragment_topic_list, container, false);
         mRefreshLayout=(MyRefreshLayout)view.findViewById(R.id.re_list);
         listView=(ListView)view.findViewById(R.id.listView);
-//        final View view = LayoutInflater.from(mActivity).inflate(R.layout.empty_view, null);
-//        ((ViewGroup) listView.getParent()).addView(view, new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT));
-//        listView.setEmptyView(view);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
         topicNameAdapter=new TopicNameAdapter(mActivity,listAll);
@@ -108,7 +100,10 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
             topicNameAdapter.notifyDataSetChanged();
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    topicCallBack.getTopicName(listAll.get(position).getTopicName());
+                    final TopicListBean topicListBean=listAll.get(position);
+                    Intent intent=new Intent(ACTION_TOPIC_TITLE);
+                    intent.putExtra("topicListBean",topicListBean);
+                    mActivity.sendBroadcast(intent);
                 }
             });
             if(list.size()<limit){
@@ -140,11 +135,6 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
     private void getData(int index){
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         HttpMethod2.getTopicList(simpleDateFormat.format(new Date()),page+"",limit+"",index,mHandler);
-    }
-
-
-    public void setCallBack(TopicCallBack topicCallBack){
-        this.topicCallBack=topicCallBack;
     }
 
 }

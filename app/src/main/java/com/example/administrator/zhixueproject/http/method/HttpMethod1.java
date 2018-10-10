@@ -10,6 +10,7 @@ import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
+import com.example.administrator.zhixueproject.bean.TeacherBean;
 import com.example.administrator.zhixueproject.bean.RecentEarning;
 import com.example.administrator.zhixueproject.bean.TopicAccount;
 import com.example.administrator.zhixueproject.bean.UploadFile;
@@ -748,5 +749,69 @@ public class HttpMethod1  extends BaseRequst {
             }
         });
     }
+
+
+    /**
+     * 获取讲师列表
+     * @param key
+     * @param timestamp
+     * @param page
+     * @param limit
+     * @param index
+     * @param handler
+     */
+    public static void getTeacherList(String key,String timestamp,int page,int limit,final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("key",key);
+        map.put("timestamp",timestamp);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        Http.getRetrofit().create(HttpApi1.class).getTeacherList(map).enqueue(new Callback<TeacherBean>() {
+            public void onResponse(Call<TeacherBean> call, Response<TeacherBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<TeacherBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 添加友商售出
+     * @param topicId
+     * @param newWriterId
+     * @param Months
+     * @param handler
+     */
+    public static void addCooPerate(long topicId,long newWriterId,String Months,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("topicId",topicId+"");
+        map.put("newWriterId",newWriterId+"");
+        map.put("Months",Months);
+        Http.getRetrofit().create(HttpApi1.class).addCooPerate(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.ADD_COOPERATE_SUCCESS, response.body().string());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
 
 }
