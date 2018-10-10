@@ -74,6 +74,7 @@
         <activity android:name=".activity.college.BuyInessInActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.BuyInessOutActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.college.AddCooperateActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.college.SelectTeacherActivity" android:screenOrientation="portrait"/>
 
     </application>
 

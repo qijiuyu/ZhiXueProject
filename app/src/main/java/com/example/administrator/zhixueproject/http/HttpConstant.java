@@ -4,6 +4,9 @@ public class HttpConstant {
 
     public static final String IP="http://kooboss.imwork.net/risenb-client-web/";
 
+    //微信的appid
+    public static final String WX_APPID="wxf2413139ede45239";
+
     //获取短信验证码
     public static final String GET_SMS_CODE="user/getSmsCode.do";
 
@@ -81,5 +84,11 @@ public class HttpConstant {
 
     //友商售出列表
     public static final String BUY_INESS_OUT="buyTopic/getBuyOutList.do";
+
+    //获取讲师列表
+    public static final String GET_TEACHER_LIST="attendance/getTeacherList.do";
+
+    //添加友商售出
+    public static final String ADD_COOPERTE="buyTopic/addBuyTopic.do";
 
 }

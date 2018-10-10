@@ -1,18 +1,31 @@
 package com.example.administrator.zhixueproject.activity.college;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
-import com.example.administrator.zhixueproject.callback.TopicCallBack;
+import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.BuyIness;
+import com.example.administrator.zhixueproject.bean.Teacher;
+import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
 import com.example.administrator.zhixueproject.fragment.college.TopicListFragment;
-import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.http.HandlerConstant1;
+import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+
+import org.json.JSONObject;
 
 /**
  * 添加合作
@@ -21,14 +34,19 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
 
     private EditText etName,etTimeNum;
     private TextView tvTopic,tvTeacherName;
-    private TopicListFragment topicListFragment=new TopicListFragment();
     //侧滑菜单
     public static DrawerLayout mDrawerLayout;
+    //话题对象
+    private TopicListBean topicListBean;
+    //讲师对象
+    private Teacher teacher;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cooperate);
         initView();
         rightMenu();
+        //注册广播
+        registerReceiver();
     }
 
 
@@ -57,14 +75,71 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
                  break;
             //发布人
             case R.id.rl_choose_teacher:
+                 Intent intent=new Intent(mContext,SelectTeacherActivity.class);
+                 startActivityForResult(intent,1);
+                 overridePendingTransition(R.anim.activity_bottom_in, R.anim.alpha);
                  break;
             //保存
             case R.id.tv_setting_save:
+                 final String colleteName=etName.getText().toString().trim();
+                 final String month=etTimeNum.getText().toString().trim();
+                 if(TextUtils.isEmpty(colleteName)){
+                     showMsg("请输入学院名称！");
+                     return;
+                 }
+                 if(null==topicListBean){
+                     showMsg("请添加所属话题！");
+                     return;
+                 }
+                 if(null==teacher){
+                     showMsg("请添加发布人！");
+                     return;
+                 }
+                 if(TextUtils.isEmpty(month)){
+                     showMsg("请输入购买日期！");
+                     return;
+                 }
+                 showProgress(getString(R.string.loding));
+                HttpMethod1.addCooPerate(topicListBean.getTopicId(),teacher.getTeacherId(),month,mHandler);
                  break;
              default:
                  break;
         }
     }
+
+
+    private Handler mHandler=new Handler(){
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            clearTask();
+            switch (msg.what){
+                case HandlerConstant1.ADD_COOPERATE_SUCCESS:
+                    //BuyIness.BusInessList
+                     final String message= (String) msg.obj;
+                     if(TextUtils.isEmpty(message)){
+                         return;
+                     }
+                     try {
+                         final JSONObject jsonObject=new JSONObject(message);
+                         if(!jsonObject.getBoolean("status")){
+                             showMsg(jsonObject.getString("errorMsg"));
+                             return;
+                         }
+                         final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
+                         BuyIness.BusInessList busInessList= MyApplication.gson.fromJson(jsonObject1.getString("buyTopic"),BuyIness.BusInessList.class);
+
+                     }catch (Exception e){
+                         e.printStackTrace();
+                     }
+                     break;
+                case HandlerConstant1.REQUST_ERROR:
+                    showMsg(getString(R.string.net_error));
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
 
     /**
@@ -75,16 +150,49 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
         //关闭手势滑动
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        topicListFragment.setCallBack(topicCallBack);
     }
 
-    TopicCallBack topicCallBack=new TopicCallBack() {
-        @Override
-        public void getTopicName(String name) {
-            LogUtils.e(name+"+++++++++++++++++++");
-            tvTopic.setText(name);
-            mDrawerLayout.closeDrawer(Gravity.RIGHT);
-        }
 
+    /**
+     * 注册广播
+     */
+    private void registerReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(TopicListFragment.ACTION_TOPIC_TITLE);
+        // 注册广播监听
+        registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if(action.equals(TopicListFragment.ACTION_TOPIC_TITLE)){
+                topicListBean= (TopicListBean) intent.getSerializableExtra("topicListBean");
+                if(null==topicListBean){
+                    return;
+                }
+                tvTopic.setText(topicListBean.getTopicName());
+                mDrawerLayout.closeDrawer(Gravity.RIGHT);
+            }
+        }
     };
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==1){
+            teacher= (Teacher) data.getSerializableExtra("teacher");
+            if(teacher==null){
+                return;
+            }
+            tvTeacherName.setText(teacher.getUserName());
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mBroadcastReceiver);
+    }
 }
