@@ -6,6 +6,7 @@ public class HttpConstant {
 
     //微信的appid
     public static final String WX_APPID="wxf2413139ede45239";
+    public static final String WX_APPSECRET="8083f3007ecb2540b65538946e3d5724";
 
     //获取短信验证码
     public static final String GET_SMS_CODE="user/getSmsCode.do";
@@ -15,6 +16,9 @@ public class HttpConstant {
 
     //登陆
     public static final String LOGIN="user/login.do";
+
+    //微信登陆
+    public static final String WX_LOGIN="user/weChatLogin.do";
 
     //查询学院VIP数据
     public static final String GET_COLLETE_VIPS="college/getCollegeGradeList.do";

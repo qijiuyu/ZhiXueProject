@@ -121,6 +121,35 @@ public class HttpMethod1  extends BaseRequst {
     }
 
 
+
+    /**
+     * 微信登陆
+     * @param handler
+     */
+    public static void wxLogin(String opendId,String isRegister,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("opendId",opendId);
+        map.put("isRegister",isRegister);
+        Http.getRetrofit().create(HttpApi1.class).wxLogin(map).enqueue(new Callback<UserInfo>() {
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.LOGIN_SUCCESS, response.body());
+                    //保存sessionId
+                    saveSessionId(response.headers());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<UserInfo> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
     /**
      * 查询学院vip等级
      * @param handler

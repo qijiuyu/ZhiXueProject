@@ -60,6 +60,16 @@ public interface HttpApi1 {
 
 
     /**
+     * 微信登陆
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.WX_LOGIN)
+    Call<UserInfo> wxLogin(@FieldMap Map<String, String> map);
+
+
+    /**
      * 查询学院vip等级
      * @param map
      * @return
