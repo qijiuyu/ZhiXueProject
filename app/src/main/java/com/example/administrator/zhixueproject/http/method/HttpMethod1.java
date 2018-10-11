@@ -7,9 +7,14 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
+import com.example.administrator.zhixueproject.bean.EntryGroup;
+import com.example.administrator.zhixueproject.bean.GiveAccount;
+import com.example.administrator.zhixueproject.bean.GiveScalAccount;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
+import com.example.administrator.zhixueproject.bean.Post;
+import com.example.administrator.zhixueproject.bean.QuestionAccount;
 import com.example.administrator.zhixueproject.bean.TeacherBean;
 import com.example.administrator.zhixueproject.bean.RecentEarning;
 import com.example.administrator.zhixueproject.bean.TopicAccount;
@@ -813,5 +818,180 @@ public class HttpMethod1  extends BaseRequst {
         });
     }
 
+
+    /**
+     * 入群收益明细
+     * @param startDate
+     * @param endDate
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param index
+     * @param handler
+     */
+    public static void getEntryGroupAccount(String startDate, String endDate, int page, int limit, String timestamp, final int index, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("startDate",startDate);
+        map.put("endDate",endDate);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi1.class).getEntryGroupAccount(map).enqueue(new Callback<EntryGroup>() {
+            public void onResponse(Call<EntryGroup> call, Response<EntryGroup> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<EntryGroup> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 帖子收益明细
+     * @param startDate
+     * @param endDate
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param index
+     * @param handler
+     */
+    public static void getPostAccount(String startDate, String endDate, int page, int limit, String timestamp, final int index, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("startDate",startDate);
+        map.put("endDate",endDate);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi1.class).getPostAccount(map).enqueue(new Callback<Post>() {
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<Post> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 打赏收益明细
+     * @param startDate
+     * @param endDate
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param index
+     * @param handler
+     */
+    public static void getGiveAccount(String startDate, String endDate, int page, int limit, String timestamp, final int index, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("startDate",startDate);
+        map.put("endDate",endDate);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi1.class).getGiveAccount(map).enqueue(new Callback<GiveAccount>() {
+            public void onResponse(Call<GiveAccount> call, Response<GiveAccount> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<GiveAccount> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+
+    /**
+     * 打赏分成收益明细
+     * @param startDate
+     * @param endDate
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param index
+     * @param handler
+     */
+    public static void getGiveScalAccount(String startDate, String endDate, int page, int limit, String timestamp, final int index, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("startDate",startDate);
+        map.put("endDate",endDate);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi1.class).getGiveScalAccount(map).enqueue(new Callback<GiveScalAccount>() {
+            public void onResponse(Call<GiveScalAccount> call, Response<GiveScalAccount> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<GiveScalAccount> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 有偿提问收益
+     * @param startDate
+     * @param endDate
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param index
+     * @param handler
+     */
+    public static void getQuestionAccount(String startDate, String endDate, int page, int limit, String timestamp, final int index, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("startDate",startDate);
+        map.put("endDate",endDate);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi1.class).getQuestionAccount(map).enqueue(new Callback<QuestionAccount>() {
+            public void onResponse(Call<QuestionAccount> call, Response<QuestionAccount> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<QuestionAccount> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
 
 }

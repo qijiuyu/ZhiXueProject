@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.college;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.college.RecentEarningAdapter;
@@ -18,17 +21,13 @@ import com.example.administrator.zhixueproject.bean.RecentEarningList;
 import com.example.administrator.zhixueproject.fragment.college.SelectTimeFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
-import com.example.administrator.zhixueproject.utils.LogUtils;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * 近期收益
  */
-public class RecentEarningActivity extends BaseActivity implements View.OnClickListener,SelectTimeFragment.OnInquireTimeListener{
+public class RecentEarningActivity extends BaseActivity implements View.OnClickListener,SelectTimeFragment.OnInquireTimeListener, BaseQuickAdapter.OnItemClickListener{
 
     private TextView tvCount,tvTotalPrice,tvCollegeCount,tvBalance;
     private RecyclerView recyclerView;
@@ -43,8 +42,6 @@ public class RecentEarningActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.activity_recent_earning);
         initView();
         getData();
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getTopicAccount(startTime,endTime,1,20,simpleDateFormat.format(new Date()),0,null);
     }
 
 
@@ -120,6 +117,7 @@ public class RecentEarningActivity extends BaseActivity implements View.OnClickL
                          }
                          RecentEarningAdapter recentEarningAdapter=new RecentEarningAdapter(R.layout.recent_earning_item,list);
                          recyclerView.setAdapter(recentEarningAdapter);
+                         recentEarningAdapter.setOnItemClickListener(RecentEarningActivity.this);
                      }else{
                          showMsg(recentEarning.getErrorMsg());
                      }
@@ -170,5 +168,46 @@ public class RecentEarningActivity extends BaseActivity implements View.OnClickL
             return;
         }
         getData();
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+        Intent intent=new Intent();
+        intent.putExtra("startTime",startTime);
+        intent.putExtra("endTime",endTime);
+        switch (position){
+            //入群收益明细
+            case 0:
+                intent.setClass(mContext,EntryGroupAccountActivity.class);
+                startActivity(intent);
+                 break;
+            //话题收益明细
+            case 1:
+                intent.setClass(mContext,TopicAccountActivity.class);
+                startActivity(intent);
+                 break;
+            //帖子收益明细
+            case 2:
+                intent.setClass(mContext,PostAccountActivity.class);
+                startActivity(intent);
+                break;
+            //打赏收益明细
+            case 3:
+                intent.setClass(mContext,GiveAccountActivity.class);
+                startActivity(intent);
+                break;
+            //打赏分成收益明细
+            case 4:
+                intent.setClass(mContext,GiveScalAccountActivity.class);
+                startActivity(intent);
+                break;
+            //有偿提问收益明细
+            case 5:
+                intent.setClass(mContext,QuestionAccountActivity.class);
+                startActivity(intent);
+                break;
+                default:
+                    break;
+        }
     }
 }

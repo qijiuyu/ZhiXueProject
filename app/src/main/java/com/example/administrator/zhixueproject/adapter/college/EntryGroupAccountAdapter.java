@@ -7,15 +7,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
-import com.example.administrator.zhixueproject.bean.TopicAccount;
+import com.example.administrator.zhixueproject.bean.EntryGroup;
+
 import java.util.List;
 
-public class TopicAccountAdapter extends BaseAdapter{
+public class EntryGroupAccountAdapter extends BaseAdapter{
 
 	private Activity activity;
-	private List<TopicAccount.TopicAccountList> listAll;
-	private TopicAccount.TopicAccountList topicAccountList;
-	public TopicAccountAdapter(Activity activity, List<TopicAccount.TopicAccountList> listAll) {
+	private List<EntryGroup.EntryGroupList> listAll;
+	private EntryGroup.EntryGroupList entryGroupList;
+	public EntryGroupAccountAdapter(Activity activity, List<EntryGroup.EntryGroupList> listAll) {
 		super();
 		this.activity = activity;
 		this.listAll=listAll;
@@ -50,10 +51,10 @@ public class TopicAccountAdapter extends BaseAdapter{
 		}else{
 			holder=(ViewHolder)view.getTag();
 		}
-		topicAccountList=listAll.get(position);
-		holder.tvName.setText(topicAccountList.getTopicName());
-		holder.tvTime.setText(topicAccountList.getCreateDate());
-		holder.tvMoney.setText(topicAccountList.getSumCost()+"元");
+		entryGroupList=listAll.get(position);
+		holder.tvName.setText(entryGroupList.getUserName());
+		holder.tvTime.setText(entryGroupList.getCreateDate());
+		holder.tvMoney.setText(entryGroupList.getSumCost()+"元");
 		holder.tvDes.setText("收入金额");
 		return view;
 	}

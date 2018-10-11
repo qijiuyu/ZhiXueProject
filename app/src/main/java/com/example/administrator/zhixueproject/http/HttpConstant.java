@@ -110,4 +110,19 @@ public class HttpConstant {
 
     // 获取帖子列表
     public static final String GET_POST_LIST = "post/getPostList.do";
+
+    //入群收益明细
+    public static final String GET_ENTRY_GROUP_ACCOUNT="account/getCollegeAccount.do";
+
+    //帖子明细
+    public static final String GET_POST_ACCOUNT="account/getPostAccount.do";
+
+    //打赏收益
+    public static final String GET_GIVE_ACCOUNT="account/getGiveAccount.do";
+
+    //打赏分成收益
+    public static final String GET_GIVE_SCAL_ACCOUNT="account/getGiveScalAccount.do";
+
+    //有偿提问收益
+    public static final String GET_QUESTION_ACCOUNT="account/getYouChangAccount.do";
 }

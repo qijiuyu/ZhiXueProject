@@ -162,6 +162,33 @@
             android:name=".activity.topic.SelectLecturersActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.college.SelectTeacherActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.TopicAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.EntryGroupAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.PostAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.GiveAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.GiveScalAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.QuestionAccountActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

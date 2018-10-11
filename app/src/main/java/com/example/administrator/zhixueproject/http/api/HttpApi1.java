@@ -4,9 +4,14 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
+import com.example.administrator.zhixueproject.bean.EntryGroup;
+import com.example.administrator.zhixueproject.bean.GiveAccount;
+import com.example.administrator.zhixueproject.bean.GiveScalAccount;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
+import com.example.administrator.zhixueproject.bean.Post;
+import com.example.administrator.zhixueproject.bean.QuestionAccount;
 import com.example.administrator.zhixueproject.bean.TeacherBean;
 import com.example.administrator.zhixueproject.bean.RecentEarning;
 import com.example.administrator.zhixueproject.bean.TopicAccount;
@@ -291,4 +296,53 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_TOPIC_ACCOUNT)
     Call<TopicAccount> getTopicAccount(@FieldMap Map<String, String> map);
+
+    /**
+     * 入群收益明细
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_ENTRY_GROUP_ACCOUNT)
+    Call<EntryGroup> getEntryGroupAccount(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 帖子收益明细
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_POST_ACCOUNT)
+    Call<Post> getPostAccount(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 打赏收益明细
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_GIVE_ACCOUNT)
+    Call<GiveAccount> getGiveAccount(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 打赏分成收益明细
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_GIVE_SCAL_ACCOUNT)
+    Call<GiveScalAccount> getGiveScalAccount(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 有偿提问收益
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_QUESTION_ACCOUNT)
+    Call<QuestionAccount> getQuestionAccount(@FieldMap Map<String, String> map);
 }
