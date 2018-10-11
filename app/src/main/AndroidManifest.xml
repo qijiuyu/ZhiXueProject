@@ -166,6 +166,47 @@
             android:name=".activity.topic.ReleaseContentsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.college.SelectTeacherActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.TopicAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.EntryGroupAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.PostAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.GiveAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.GiveScalAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.QuestionAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.WithDrawListActivity"
+            android:screenOrientation="portrait" />
+
+
+
+        <!--注册微信回调 WXEntryActivity -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent" />
 
     </application>
 

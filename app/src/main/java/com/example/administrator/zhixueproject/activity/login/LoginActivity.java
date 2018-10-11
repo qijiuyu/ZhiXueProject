@@ -1,10 +1,15 @@
 package com.example.administrator.zhixueproject.activity.login;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,11 +19,14 @@ import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UserInfo;
+import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
+import com.example.administrator.zhixueproject.fragment.college.TopicListFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.CodeUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 /**
  * 登陆
@@ -26,10 +34,12 @@ import com.example.administrator.zhixueproject.utils.SPUtil;
 public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private EditText etMobile,etPwd,etCode;
     private ImageView imgCode;
+    public static final String ACTION_WEIXIN_LOGIN_OPENID="com.admin.broadcast.action.weixin_login_openid";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
+        registerReceiver();
     }
 
 
@@ -50,6 +60,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         findViewById(R.id.tv_login).setOnClickListener(this);
         findViewById(R.id.iv_get_code).setOnClickListener(this);
         findViewById(R.id.tv_forget_pwd).setOnClickListener(this);
+        findViewById(R.id.iv_weixin_login).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
         tvRegister.setOnClickListener(this);
     }
@@ -100,6 +111,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             case R.id.tv_forget_pwd:
                 setClass(SettingPwdActivity.class);
                 break;
+            //微信登陆
+            case R.id.iv_weixin_login:
+                 if (!MyApplication.api.isWXAppInstalled()) {
+                     showMsg("请先安装微信客户端!");
+                 }else{
+                     final SendAuth.Req req = new SendAuth.Req();
+                     req.scope = "snsapi_userinfo";
+                     req.state = "wechat_sdk_demo_test";
+                     MyApplication.api.sendReq(req);
+                 }
+                 break;
             case R.id.lin_back:
                 finish();
                 break;
@@ -141,10 +163,38 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     };
 
 
+    /**
+     * 注册广播
+     */
+    private void registerReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(ACTION_WEIXIN_LOGIN_OPENID);
+        // 注册广播监听
+        registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if(action.equals(ACTION_WEIXIN_LOGIN_OPENID)){
+                final String openId=intent.getStringExtra("openId");
+                HttpMethod1.wxLogin(openId,"0",mHandler);
+            }
+        }
+    };
+
+
     @Override
     protected void onResume() {
         super.onResume();
         final String mobile=MyApplication.spUtil.getString(SPUtil.LOGIN_MOBILE);
         etMobile.setText(mobile);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mBroadcastReceiver);
     }
 }

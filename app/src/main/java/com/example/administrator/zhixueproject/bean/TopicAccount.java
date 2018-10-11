@@ -31,7 +31,7 @@ public class TopicAccount extends BaseBean {
 
     public static class TopicAccountList implements Serializable{
         private String createDate;
-        private String sumCost;
+        private double sumCost;
         private String topicName;
 
         public String getCreateDate() {
@@ -42,11 +42,11 @@ public class TopicAccount extends BaseBean {
             this.createDate = createDate;
         }
 
-        public String getSumCost() {
+        public double getSumCost() {
             return sumCost;
         }
 
-        public void setSumCost(String sumCost) {
+        public void setSumCost(double sumCost) {
             this.sumCost = sumCost;
         }
 

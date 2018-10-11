@@ -11,8 +11,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
-import com.example.administrator.zhixueproject.adapter.college.TopicAccountAdapter;
-import com.example.administrator.zhixueproject.bean.TopicAccount;
+import com.example.administrator.zhixueproject.adapter.college.QuestionAccountAdapter;
+import com.example.administrator.zhixueproject.bean.QuestionAccount;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
@@ -23,16 +23,16 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 话题收益明细
+ * 有偿提问收益明细
  */
-public class TopicAccountActivity extends BaseActivity   implements MyRefreshLayoutListener {
+public class QuestionAccountActivity extends BaseActivity   implements MyRefreshLayoutListener {
 
     private ListView listView;
     private MyRefreshLayout mRefreshLayout;
     private int page=1;
     private int limit=20;
-    private List<TopicAccount.TopicAccountList> listAll=new ArrayList<>();
-    private TopicAccountAdapter topicAccountAdapter;
+    private List<QuestionAccount.QuestionList> listAll=new ArrayList<>();
+    private QuestionAccountAdapter questionAccountAdapter;
     private String startTime="",endTime="";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +41,7 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
         startTime=getIntent().getStringExtra("startTime");
         endTime=getIntent().getStringExtra("endTime");
         showProgress(getString(R.string.loding));
-        getData(HandlerConstant1.GET_TOPIC_ACCOUNT_SUCCESS);
+        getData(HandlerConstant1.GET_QUESTION_ACCOUNT_SUCCESS);
     }
 
 
@@ -50,7 +50,7 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
      */
     private void initView() {
         TextView tvHead = (TextView) findViewById(R.id.tv_title);
-        tvHead.setText(getString(R.string.income_topic));
+        tvHead.setText(getString(R.string.income_paid_question));
         mRefreshLayout=(MyRefreshLayout)findViewById(R.id.re_list);
         listView=(ListView)findViewById(R.id.listView);
         final View view = getLayoutInflater().inflate(R.layout.empty_view, null);
@@ -58,12 +58,12 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
         listView.setEmptyView(view);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
-        topicAccountAdapter=new TopicAccountAdapter(TopicAccountActivity.this,listAll);
-        listView.setAdapter(topicAccountAdapter);
+        questionAccountAdapter=new QuestionAccountAdapter(QuestionAccountActivity.this,listAll);
+        listView.setAdapter(questionAccountAdapter);
         //返回
         findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TopicAccountActivity.this.finish();
+                QuestionAccountActivity.this.finish();
             }
         });
     }
@@ -73,18 +73,18 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
-            TopicAccount topicAccount;
+            QuestionAccount questionAccount;
             switch (msg.what){
-                case HandlerConstant1.GET_TOPIC_ACCOUNT_SUCCESS:
+                case HandlerConstant1.GET_QUESTION_ACCOUNT_SUCCESS:
                     mRefreshLayout.refreshComplete();
-                    topicAccount= (TopicAccount) msg.obj;
+                    questionAccount= (QuestionAccount) msg.obj;
                     listAll.clear();
-                    refresh(topicAccount);
+                    refresh(questionAccount);
                     break;
-                case HandlerConstant1.GET_TOPIC_ACCOUNT_SUCCESS2:
+                case HandlerConstant1.GET_QUESTION_ACCOUNT_SUCCESS2:
                     mRefreshLayout.loadMoreComplete();
-                    topicAccount= (TopicAccount) msg.obj;
-                    refresh(topicAccount);
+                    questionAccount= (QuestionAccount) msg.obj;
+                    refresh(questionAccount);
                     break;
                 case HandlerConstant1.REQUST_ERROR:
                     showMsg(getString(R.string.net_error));
@@ -98,21 +98,21 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
 
     /**
      * 刷新数据
-     * @param topicAccount
+     * @param questionAccount
      */
-    private void refresh(TopicAccount topicAccount){
-        if(null==topicAccount){
+    private void refresh(QuestionAccount questionAccount){
+        if(null==questionAccount){
             return;
         }
-        if(topicAccount.isStatus()){
-            List<TopicAccount.TopicAccountList> list=topicAccount.getData().getTopicAccountList();
+        if(questionAccount.isStatus()){
+            List<QuestionAccount.QuestionList> list=questionAccount.getData().getYouChangAccountList();
             listAll.addAll(list);
-            topicAccountAdapter.notifyDataSetChanged();
+            questionAccountAdapter.notifyDataSetChanged();
             if(list.size()<limit){
                 mRefreshLayout.setIsLoadingMoreEnabled(false);
             }
         }else{
-            showMsg(topicAccount.getErrorMsg());
+            showMsg(questionAccount.getErrorMsg());
         }
     }
 
@@ -121,13 +121,13 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
     @Override
     public void onRefresh(View view) {
         page=1;
-        getData(HandlerConstant1.GET_TOPIC_ACCOUNT_SUCCESS);
+        getData(HandlerConstant1.GET_QUESTION_ACCOUNT_SUCCESS);
     }
 
     @Override
     public void onLoadMore(View view) {
         page++;
-        getData(HandlerConstant1.GET_TOPIC_ACCOUNT_SUCCESS2);
+        getData(HandlerConstant1.GET_QUESTION_ACCOUNT_SUCCESS2);
     }
 
 
@@ -137,6 +137,6 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
      */
     private void getData(int index){
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getTopicAccount(startTime,endTime,page,limit,simpleDateFormat.format(new Date()),index,mHandler);
+        HttpMethod1.getQuestionAccount(startTime,endTime,page,limit,simpleDateFormat.format(new Date()),index,mHandler);
     }
 }

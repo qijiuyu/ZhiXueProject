@@ -4,15 +4,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
-import com.example.administrator.zhixueproject.adapter.college.TopicAccountAdapter;
-import com.example.administrator.zhixueproject.bean.TopicAccount;
+import com.example.administrator.zhixueproject.adapter.college.WithDrawAdapter;
+import com.example.administrator.zhixueproject.bean.WithDraw;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
@@ -23,25 +25,22 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 话题收益明细
+ * 提现明细
  */
-public class TopicAccountActivity extends BaseActivity   implements MyRefreshLayoutListener {
+public class WithDrawListActivity extends BaseActivity   implements MyRefreshLayoutListener {
 
     private ListView listView;
     private MyRefreshLayout mRefreshLayout;
     private int page=1;
     private int limit=20;
-    private List<TopicAccount.TopicAccountList> listAll=new ArrayList<>();
-    private TopicAccountAdapter topicAccountAdapter;
-    private String startTime="",endTime="";
+    private List<WithDraw.WithDrawList> listAll=new ArrayList<>();
+    private WithDrawAdapter withDrawAdapter;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_in);
         initView();
-        startTime=getIntent().getStringExtra("startTime");
-        endTime=getIntent().getStringExtra("endTime");
         showProgress(getString(R.string.loding));
-        getData(HandlerConstant1.GET_TOPIC_ACCOUNT_SUCCESS);
+        getData(HandlerConstant1.GET_WITHDRAW_SUCCESS);
     }
 
 
@@ -50,7 +49,9 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
      */
     private void initView() {
         TextView tvHead = (TextView) findViewById(R.id.tv_title);
-        tvHead.setText(getString(R.string.income_topic));
+        tvHead.setText(getString(R.string.cash_details));
+        TextView tvRight=(TextView)findViewById(R.id.tv_right);
+        tvRight.setText(getString(R.string.cash));
         mRefreshLayout=(MyRefreshLayout)findViewById(R.id.re_list);
         listView=(ListView)findViewById(R.id.listView);
         final View view = getLayoutInflater().inflate(R.layout.empty_view, null);
@@ -58,12 +59,20 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
         listView.setEmptyView(view);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
-        topicAccountAdapter=new TopicAccountAdapter(TopicAccountActivity.this,listAll);
-        listView.setAdapter(topicAccountAdapter);
+        withDrawAdapter=new WithDrawAdapter(WithDrawListActivity.this,listAll);
+        listView.setAdapter(withDrawAdapter);
+
+        //提现
+        tvRight.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                View view1= LayoutInflater.from(mContext).inflate(R.layout.with_draw_pop,null);
+                dialogPop(view1,true);
+            }
+        });
         //返回
         findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                TopicAccountActivity.this.finish();
+                WithDrawListActivity.this.finish();
             }
         });
     }
@@ -73,18 +82,18 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
-            TopicAccount topicAccount;
+            WithDraw withDraw;
             switch (msg.what){
-                case HandlerConstant1.GET_TOPIC_ACCOUNT_SUCCESS:
+                case HandlerConstant1.GET_WITHDRAW_SUCCESS:
                     mRefreshLayout.refreshComplete();
-                    topicAccount= (TopicAccount) msg.obj;
+                    withDraw= (WithDraw) msg.obj;
                     listAll.clear();
-                    refresh(topicAccount);
+                    refresh(withDraw);
                     break;
-                case HandlerConstant1.GET_TOPIC_ACCOUNT_SUCCESS2:
+                case HandlerConstant1.GET_WITHDRAW_SUCCESS2:
                     mRefreshLayout.loadMoreComplete();
-                    topicAccount= (TopicAccount) msg.obj;
-                    refresh(topicAccount);
+                    withDraw= (WithDraw) msg.obj;
+                    refresh(withDraw);
                     break;
                 case HandlerConstant1.REQUST_ERROR:
                     showMsg(getString(R.string.net_error));
@@ -98,21 +107,21 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
 
     /**
      * 刷新数据
-     * @param topicAccount
+     * @param withDraw
      */
-    private void refresh(TopicAccount topicAccount){
-        if(null==topicAccount){
+    private void refresh(WithDraw withDraw){
+        if(null==withDraw){
             return;
         }
-        if(topicAccount.isStatus()){
-            List<TopicAccount.TopicAccountList> list=topicAccount.getData().getTopicAccountList();
+        if(withDraw.isStatus()){
+            List<WithDraw.WithDrawList> list=withDraw.getData().getCashRecordList();
             listAll.addAll(list);
-            topicAccountAdapter.notifyDataSetChanged();
+            withDrawAdapter.notifyDataSetChanged();
             if(list.size()<limit){
                 mRefreshLayout.setIsLoadingMoreEnabled(false);
             }
         }else{
-            showMsg(topicAccount.getErrorMsg());
+            showMsg(withDraw.getErrorMsg());
         }
     }
 
@@ -121,13 +130,13 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
     @Override
     public void onRefresh(View view) {
         page=1;
-        getData(HandlerConstant1.GET_TOPIC_ACCOUNT_SUCCESS);
+        getData(HandlerConstant1.GET_WITHDRAW_SUCCESS);
     }
 
     @Override
     public void onLoadMore(View view) {
         page++;
-        getData(HandlerConstant1.GET_TOPIC_ACCOUNT_SUCCESS2);
+        getData(HandlerConstant1.GET_WITHDRAW_SUCCESS2);
     }
 
 
@@ -137,6 +146,6 @@ public class TopicAccountActivity extends BaseActivity   implements MyRefreshLay
      */
     private void getData(int index){
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getTopicAccount(startTime,endTime,page,limit,simpleDateFormat.format(new Date()),index,mHandler);
+        HttpMethod1.getWithDraw(page,limit,simpleDateFormat.format(new Date()),index,mHandler);
     }
 }

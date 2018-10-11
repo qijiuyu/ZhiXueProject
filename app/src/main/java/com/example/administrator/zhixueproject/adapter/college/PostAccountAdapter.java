@@ -7,15 +7,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
-import com.example.administrator.zhixueproject.bean.TopicAccount;
+import com.example.administrator.zhixueproject.bean.Post;
+
 import java.util.List;
 
-public class TopicAccountAdapter extends BaseAdapter{
+public class PostAccountAdapter extends BaseAdapter{
 
 	private Activity activity;
-	private List<TopicAccount.TopicAccountList> listAll;
-	private TopicAccount.TopicAccountList topicAccountList;
-	public TopicAccountAdapter(Activity activity, List<TopicAccount.TopicAccountList> listAll) {
+	private List<Post.PostList> listAll;
+	private Post.PostList postList;
+	public PostAccountAdapter(Activity activity, List<Post.PostList> listAll) {
 		super();
 		this.activity = activity;
 		this.listAll=listAll;
@@ -41,25 +42,25 @@ public class TopicAccountAdapter extends BaseAdapter{
 		ViewHolder holder = null;
 		if(view==null){
 			holder = new ViewHolder(); 
-			view = LayoutInflater.from(activity).inflate(R.layout.topic_account_item, null);
-			holder.tvName=(TextView)view.findViewById(R.id.tv_tai_name);
-			holder.tvTime=(TextView)view.findViewById(R.id.tv_tai_time);
+			view = LayoutInflater.from(activity).inflate(R.layout.post_account_item, null);
+			holder.tvPostName=(TextView)view.findViewById(R.id.tv_post_name);
+			holder.tvTopicName=(TextView)view.findViewById(R.id.tv_topic_name);
 			holder.tvMoney=(TextView)view.findViewById(R.id.tv_tai_money);
-			holder.tvDes=(TextView) view.findViewById(R.id.tv_des);
+			holder.tvTime=(TextView)view.findViewById(R.id.tv_time);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
 		}
-		topicAccountList=listAll.get(position);
-		holder.tvName.setText(topicAccountList.getTopicName());
-		holder.tvTime.setText(topicAccountList.getCreateDate());
-		holder.tvMoney.setText(topicAccountList.getSumCost()+"元");
-		holder.tvDes.setText("收入金额");
+		postList=listAll.get(position);
+		holder.tvPostName.setText(postList.getPostName());
+		holder.tvTopicName.setText(postList.getTopicName());
+		holder.tvMoney.setText(postList.getSumCost()+"元");
+		holder.tvTime.setText(postList.getCreateDate());
 		return view;
 	}
 
 
 	 private class ViewHolder{
-		TextView tvName,tvTime,tvMoney,tvDes;
+		TextView tvPostName,tvTopicName,tvMoney,tvTime;
 	 }
 }

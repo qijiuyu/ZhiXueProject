@@ -37,4 +37,17 @@ public class HandlerConstant1 {
     public static final int GET_ACCOUNT_SUCCESS=1137;
     public static final int GET_TOPIC_ACCOUNT_SUCCESS=1138;
     public static final int GET_TOPIC_ACCOUNT_SUCCESS2=1139;
+    public static final int GET_ENTRY_GROUP_ACCOUNT_SUCCESS=1140;
+    public static final int GET_ENTRY_GROUP_ACCOUNT_SUCCESS2=1141;
+    public static final int GET_POST_ACCOUNT_SUCCESS=1142;
+    public static final int GET_POST_ACCOUNT_SUCCESS2=1143;
+    public static final int GET_GIVE_ACCOUNT_SUCCESS=1144;
+    public static final int GET_GIVE_ACCOUNT_SUCCESS2=1145;
+    public static final int GET_GIVE_SCAL_ACCOUNT_SUCCESS=1146;
+    public static final int GET_GIVE_SCAL_ACCOUNT_SUCCESS2=1147;
+    public static final int GET_QUESTION_ACCOUNT_SUCCESS=1148;
+    public static final int GET_QUESTION_ACCOUNT_SUCCESS2=1149;
+    public static final int GET_WX_ACCESS_TOKEN_SUCCESS=1150;
+    public static final int GET_WITHDRAW_SUCCESS=1151;
+    public static final int GET_WITHDRAW_SUCCESS2=1152;
 }

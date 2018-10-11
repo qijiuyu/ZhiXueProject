@@ -6,6 +6,7 @@ public class HttpConstant {
 
     //微信的appid
     public static final String WX_APPID="wxf2413139ede45239";
+    public static final String WX_APPSECRET="8083f3007ecb2540b65538946e3d5724";
 
     //获取短信验证码
     public static final String GET_SMS_CODE="user/getSmsCode.do";
@@ -15,6 +16,9 @@ public class HttpConstant {
 
     //登陆
     public static final String LOGIN="user/login.do";
+
+    //微信登陆
+    public static final String WX_LOGIN="user/weChatLogin.do";
 
     //查询学院VIP数据
     public static final String GET_COLLETE_VIPS="college/getCollegeGradeList.do";
@@ -110,6 +114,24 @@ public class HttpConstant {
 
     // 获取帖子列表
     public static final String GET_POST_LIST = "post/getPostList.do";
+
+    //入群收益明细
+    public static final String GET_ENTRY_GROUP_ACCOUNT="account/getCollegeAccount.do";
+
+    //帖子明细
+    public static final String GET_POST_ACCOUNT="account/getPostAccount.do";
+
+    //打赏收益
+    public static final String GET_GIVE_ACCOUNT="account/getGiveAccount.do";
+
+    //打赏分成收益
+    public static final String GET_GIVE_SCAL_ACCOUNT="account/getGiveScalAccount.do";
+
+    //有偿提问收益
+    public static final String GET_QUESTION_ACCOUNT="account/getYouChangAccount.do";
+
+    //获取提现明细列表
+    public static final String GET_WITHDRAW="cashRecord/getCashRecordList.do";
 
     //发布帖子
     public static final String ADD_POST = "post/addPost.do";

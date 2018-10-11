@@ -157,21 +157,6 @@ public class Http {
             if(TextUtils.isEmpty(url)){
                 return;
             }
-            Map<String, String> requstMap = new HashMap<>();
-//            requstMap = ParameterUtils.getInstance().getParameter(requstMap);
-            if(null==requstMap){
-                return;
-            }
-            StringBuffer stringBuffer=new StringBuffer();
-            Iterator entries = requstMap.entrySet().iterator();
-            while (entries.hasNext()) {
-                Map.Entry entry = (Map.Entry) entries.next();
-                String key = (String)entry.getKey();
-                String value = (String) entry.getValue();
-                stringBuffer.append("&"+key+"="+value);
-            }
-
-            url+=stringBuffer.toString();
             Request request = new Request.Builder().url(url).build();
             Call call = new OkHttpClient.Builder().readTimeout(60 * 5, TimeUnit.SECONDS).build().newCall(request);
             call.enqueue(new Callback() {

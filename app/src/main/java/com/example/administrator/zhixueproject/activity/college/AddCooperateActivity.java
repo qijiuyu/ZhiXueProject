@@ -64,6 +64,7 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
         findViewById(R.id.rl_add_topic).setOnClickListener(this);
         findViewById(R.id.rl_choose_teacher).setOnClickListener(this);
         findViewById(R.id.tv_setting_save).setOnClickListener(this);
+        findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
     @Override
@@ -100,7 +101,10 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
                      return;
                  }
                  showProgress(getString(R.string.loding));
-                HttpMethod1.addCooPerate(topicListBean.getTopicId(),teacher.getTeacherId(),month,mHandler);
+                 HttpMethod1.addCooPerate(topicListBean.getTopicId(),teacher.getTeacherId(),month,mHandler);
+                 break;
+            case R.id.lin_back:
+                 finish();
                  break;
              default:
                  break;

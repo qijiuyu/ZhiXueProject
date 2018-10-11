@@ -7,15 +7,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
-import com.example.administrator.zhixueproject.bean.TopicAccount;
+import com.example.administrator.zhixueproject.bean.QuestionAccount;
+
 import java.util.List;
 
-public class TopicAccountAdapter extends BaseAdapter{
+public class QuestionAccountAdapter extends BaseAdapter{
 
 	private Activity activity;
-	private List<TopicAccount.TopicAccountList> listAll;
-	private TopicAccount.TopicAccountList topicAccountList;
-	public TopicAccountAdapter(Activity activity, List<TopicAccount.TopicAccountList> listAll) {
+	private List<QuestionAccount.QuestionList> listAll;
+	private QuestionAccount.QuestionList questionList;
+	public QuestionAccountAdapter(Activity activity, List<QuestionAccount.QuestionList> listAll) {
 		super();
 		this.activity = activity;
 		this.listAll=listAll;
@@ -50,11 +51,11 @@ public class TopicAccountAdapter extends BaseAdapter{
 		}else{
 			holder=(ViewHolder)view.getTag();
 		}
-		topicAccountList=listAll.get(position);
-		holder.tvName.setText(topicAccountList.getTopicName());
-		holder.tvTime.setText(topicAccountList.getCreateDate());
-		holder.tvMoney.setText(topicAccountList.getSumCost()+"元");
-		holder.tvDes.setText("收入金额");
+		questionList=listAll.get(position);
+		holder.tvName.setText(questionList.getGiveToName());
+		holder.tvTime.setText(questionList.getCreateDate());
+		holder.tvMoney.setText(questionList.getYouChangMoney()+"元");
+		holder.tvDes.setText("答题分成收益金额");
 		return view;
 	}
 

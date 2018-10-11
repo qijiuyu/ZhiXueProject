@@ -6,16 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import com.example.administrator.zhixueproject.R;
-import com.example.administrator.zhixueproject.bean.TopicAccount;
+import com.example.administrator.zhixueproject.bean.GiveAccount;
+import com.example.administrator.zhixueproject.bean.GiveScalAccount;
+
 import java.util.List;
 
-public class TopicAccountAdapter extends BaseAdapter{
+public class GiveScalAccountAdapter extends BaseAdapter{
 
 	private Activity activity;
-	private List<TopicAccount.TopicAccountList> listAll;
-	private TopicAccount.TopicAccountList topicAccountList;
-	public TopicAccountAdapter(Activity activity, List<TopicAccount.TopicAccountList> listAll) {
+	private List<GiveScalAccount.GiveScalList> listAll;
+	private GiveScalAccount.GiveScalList giveList;
+	public GiveScalAccountAdapter(Activity activity, List<GiveScalAccount.GiveScalList> listAll) {
 		super();
 		this.activity = activity;
 		this.listAll=listAll;
@@ -50,11 +53,11 @@ public class TopicAccountAdapter extends BaseAdapter{
 		}else{
 			holder=(ViewHolder)view.getTag();
 		}
-		topicAccountList=listAll.get(position);
-		holder.tvName.setText(topicAccountList.getTopicName());
-		holder.tvTime.setText(topicAccountList.getCreateDate());
-		holder.tvMoney.setText(topicAccountList.getSumCost()+"元");
-		holder.tvDes.setText("收入金额");
+		giveList=listAll.get(position);
+		holder.tvName.setText(giveList.getGiveToName());
+		holder.tvTime.setText(giveList.getCreateDate());
+		holder.tvMoney.setText(giveList.getSumScalGive()+"元");
+		holder.tvDes.setText("礼物分成收益金额");
 		return view;
 	}
 
