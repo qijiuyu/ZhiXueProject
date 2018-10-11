@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/record_audio_cv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:background="@color/color_ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="vertical">
+
+        <Chronometer
+            android:visibility="gone"
+            android:layout_marginTop="25dp"
+            android:id="@+id/record_audio_chronometer_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-light"
+            android:textSize="32sp"
+            android:gravity="center"
+            android:textColor="@color/color_666666"/>
+
+        <TextView
+            android:id="@+id/tv_time_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:text="00:00:00"
+            android:layout_marginTop="25dp"
+            android:textSize="32sp"
+            android:gravity="center"
+            android:textColor="@color/color_666666" />
+
+        <RelativeLayout
+            android:layout_marginTop="37dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_record_start"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/record_audio"
+                android:text="录音"
+                android:textColor="@color/color_ffffff"
+                android:textSize="18sp"/>
+
+
+            <TextView
+                android:id="@+id/tv_record_delete"
+                android:layout_toLeftOf="@+id/tv_record_start"
+                android:layout_marginRight="40dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@mipmap/delete_iv"
+                android:drawablePadding="5dp"
+                android:text="删除"
+                android:textColor="@color/color_999999"
+                android:textSize="17sp" />
+
+
+            <TextView
+                android:id="@+id/tv_record_conform"
+                android:layout_toRightOf="@+id/tv_record_start"
+                android:layout_marginLeft="40dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@mipmap/conform_iv"
+                android:drawablePadding="5dp"
+                android:text="完成"
+                android:textColor="@color/color_48c6ef"
+                android:textSize="17sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

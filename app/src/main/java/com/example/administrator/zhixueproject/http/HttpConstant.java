@@ -110,4 +110,16 @@ public class HttpConstant {
 
     // 获取帖子列表
     public static final String GET_POST_LIST = "post/getPostList.do";
+
+    //发布帖子
+    public static final String ADD_POST = "post/addPost.do";
+
+    //修改帖子
+    public static final String UPDATE_POST = "post/updatePost.do";
+
+    // 添加活动
+    public static final String ADD_ACTIVITY = "activity/addActivity.do";
+
+    // 修改活动
+    public static final String UPDATE_ACTIVITY = "activity/updateActivity.do";
 }

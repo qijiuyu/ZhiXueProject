@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.topic;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,21 +16,19 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.CostsListAdapter;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
+import com.example.administrator.zhixueproject.bean.live.TeacherListBean;
 import com.example.administrator.zhixueproject.bean.topic.CostsListBean;
 import com.example.administrator.zhixueproject.utils.KeyboardUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.example.administrator.zhixueproject.view.SwitchButton;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,8 +86,9 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         tvIssuer = (TextView) findViewById(R.id.tv_issuer);
         findViewById(R.id.tv_confirm).setOnClickListener(this);
         findViewById(R.id.rl_cost).setOnClickListener(this);
+        TextView tvTitle= (TextView) findViewById(R.id.tv_title);
         if (TextUtils.isEmpty(postId)) {
-            setTitle(getResources().getString(R.string.release_post));
+            tvTitle.setText(getResources().getString(R.string.release_post));
         } else {
             setTitle(getResources().getString(R.string.update_post));
             if (!TextUtils.isEmpty(postName)) {
@@ -209,9 +209,9 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
                 showMsg("讲师不能为空");
                 return;
             }
-            // ReleaseContentsUI.start(this, String.valueOf(postType), postName, String.valueOf(postTopicId), String.valueOf(postWriterId), postIsFree, postPrice, postIsTop);
+            ReleaseContentsActivity.start(this, String.valueOf(postType), postName, String.valueOf(postTopicId), String.valueOf(postWriterId), postIsFree, postPrice, postIsTop);
         } else {
-            // ReleaseContentsUI.start(this, postId, postName, String.valueOf(postTopicId), postIsFree, postPrice, postIsTop);
+            ReleaseContentsActivity.start(this, postId, postName, String.valueOf(postTopicId), postIsFree, postPrice, postIsTop);
         }
     }
 
@@ -287,6 +287,19 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         };
         contentView.findViewById(R.id.tv_cancel).setOnClickListener(listener);
         contentView.findViewById(R.id.tv_confirm).setOnClickListener(listener);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == SelectLecturersActivity.REQUEST_CODE) {
+            TeacherListBean bean = (TeacherListBean) data.getSerializableExtra(SelectLecturersActivity.TEACHER_INFO);
+            tvIssuer.setText(bean.getUserName());
+            postWriterId = bean.getTeacherId();
+        }
     }
 
     @Override

@@ -55,9 +55,8 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
 
     private void initView() {
         StatusBarUtils.transparencyBar(this);
-        TextView tvTitle = (TextView) findViewById(R.id.tv_title);
-        tvTitle.setText(getResources().getString(R.string.posts_list));
-
+        TextView tvTitle = (TextView) findViewById(R.id.tv_title_topic);
+        tvTitle.setText(getString(R.string.posts_list));
         tabs = (SlidingTabLayout) findViewById(R.id.tab_posts);
         vpContent = (ViewPager) findViewById(R.id.vp_content);
         ivSearch = (ImageView) findViewById(R.id.iv_search);
@@ -69,7 +68,6 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
         findViewById(R.id.rl_back).setOnClickListener(this);
         findViewById(R.id.rl_search).setOnClickListener(this);
         findViewById(R.id.iv_close).setOnClickListener(this);
-
 
         postTopicId = getIntent().getIntExtra(TopicListAdapter.TOPIC_ITEM_ID, postTopicId);
         String[] titles = {"课程", "大家谈", "有偿提问"};
@@ -90,12 +88,10 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
         postsFragment3.setPostTopicId(String.valueOf(postTopicId));
         fragmentList.add(postsFragment3);
 
-
         tabs.setViewPager(vpContent, titles, this, fragmentList);
         vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
