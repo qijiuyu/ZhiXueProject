@@ -190,6 +190,10 @@
             android:name=".activity.college.QuestionAccountActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.college.WithDrawListActivity"
+            android:screenOrientation="portrait" />
+
 
 
         <!--注册微信回调 WXEntryActivity -->

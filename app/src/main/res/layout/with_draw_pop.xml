@@ -1,0 +1,151 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/translete">
+    
+    <LinearLayout
+        android:clickable="true"
+        android:orientation="vertical"
+        android:layout_marginLeft="26dp"
+        android:layout_marginRight="26dp"
+        android:background="@drawable/white_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+        
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="27dp"
+            android:layout_width="match_parent"
+            android:layout_height="36dp">
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/bound_bank"
+                android:textColor="@color/color_333333"
+                android:textSize="13.5sp"/>
+            
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/search_bg"
+                android:gravity="center_vertical"
+                android:text="中国银行"
+                android:textColor="@color/color_333333"
+                android:textSize="13.5sp"/>
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="36dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/cash_available"
+                android:textColor="@color/color_333333"
+                android:textSize="13.5sp"/>
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/search_bg"
+                android:gravity="center_vertical"
+                android:text="$1000.00"
+                android:textColor="@color/color_ff212c"
+                android:textSize="13.5sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="36dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/apply_cash"
+                android:textColor="@color/color_333333"
+                android:textSize="13.5sp"/>
+
+            <EditText
+                android:id="@+id/et_input_price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/search_bg"
+                android:gravity="center_vertical"
+                android:inputType="numberDecimal"
+                android:hint="@string/input_price"
+                android:textColorHint="@color/color_c0c0c0"
+                android:textColor="@color/color_333333"
+                android:textSize="13.5sp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="48dp"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:gravity="center_vertical"
+            android:text="@string/cash_notice"
+            android:textColor="@color/color_fd703e"
+            android:textSize="15dp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_height="57dp">
+
+            <TextView
+                android:id="@+id/tv_save"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@mipmap/bg_blue_botton"
+                android:text="@string/save"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tv_back"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@mipmap/bg_white_botton"
+                android:gravity="center"
+                android:text="@string/back"
+                android:textColor="@color/color_48c6ef"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

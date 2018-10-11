@@ -21,6 +21,7 @@ import com.example.administrator.zhixueproject.bean.TopicAccount;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.bean.VipDetails;
+import com.example.administrator.zhixueproject.bean.WithDraw;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.api.HttpApi1;
 import com.example.administrator.zhixueproject.http.base.BaseRequst;
@@ -1017,6 +1018,37 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<QuestionAccount> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 提现明细列表
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param index
+     * @param handler
+     */
+    public static void getWithDraw(int page, int limit, String timestamp, final int index, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi1.class).getWithDraw(map).enqueue(new Callback<WithDraw>() {
+            public void onResponse(Call<WithDraw> call, Response<WithDraw> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<WithDraw> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

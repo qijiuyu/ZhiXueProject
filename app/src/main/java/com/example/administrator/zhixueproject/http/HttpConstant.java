@@ -129,4 +129,7 @@ public class HttpConstant {
 
     //有偿提问收益
     public static final String GET_QUESTION_ACCOUNT="account/getYouChangAccount.do";
+
+    //获取提现明细列表
+    public static final String GET_WITHDRAW="cashRecord/getCashRecordList.do";
 }

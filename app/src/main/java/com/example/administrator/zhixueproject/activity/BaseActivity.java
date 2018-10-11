@@ -2,6 +2,7 @@ package com.example.administrator.zhixueproject.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,10 +23,13 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.example.administrator.zhixueproject.R;
+
 public class BaseActivity extends FragmentActivity {
     protected Context mContext = this;
     private ProgressDialog progressDialog = null;
     private PopupWindow mPopUpWindow;
+    public Dialog baseDialog;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         transparencyBar(this);
@@ -126,6 +130,30 @@ public class BaseActivity extends FragmentActivity {
         config.setToDefaults();
         res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
+    }
+
+
+    /**
+     * dialog弹框
+     *
+     * @param view
+     */
+    public Dialog dialogPop(View view, boolean b) {
+        baseDialog = new Dialog(this, R.style.ActionSheetDialogStyle);
+        baseDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        baseDialog.setTitle(null);
+        baseDialog.setCancelable(b);
+        baseDialog.setContentView(view);
+        Window window = baseDialog.getWindow();
+        window.setGravity(Gravity.CENTER);  //此处可以设置dialog显示的位置
+        window.setWindowAnimations(R.style.mystyle);  //添加动画
+        baseDialog.show();
+        return baseDialog;
+    }
+    public void closeDialog() {
+        if (baseDialog != null) {
+            baseDialog.dismiss();
+        }
     }
 
 

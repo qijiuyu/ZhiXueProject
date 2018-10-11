@@ -3,8 +3,8 @@
 
 
     <corners
-            android:topLeftRadius="@dimen/dm032" android:bottomLeftRadius="@dimen/dm032"
-            android:topRightRadius="@dimen/dm032" android:bottomRightRadius="@dimen/dm032"/><!--
+            android:topLeftRadius="15dp" android:bottomLeftRadius="15dp"
+            android:topRightRadius="15dp" android:bottomRightRadius="15dp"/><!--
              设置圆角半径 -->
 
     <solid

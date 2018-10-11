@@ -34,6 +34,7 @@ public class CollegeManageActivity extends BaseActivity implements View.OnClickL
         findViewById(R.id.rl_friendly_business_in).setOnClickListener(this);
         findViewById(R.id.rl_friendly_business_out).setOnClickListener(this);
         findViewById(R.id.rl_recent_earnings).setOnClickListener(this);
+        findViewById(R.id.rl_cash_details).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
@@ -70,6 +71,10 @@ public class CollegeManageActivity extends BaseActivity implements View.OnClickL
             //近期收益
             case R.id.rl_recent_earnings:
                  setClass(RecentEarningActivity.class);
+                 break;
+             //提现明细
+            case R.id.rl_cash_details:
+                 setClass(WithDrawListActivity.class);
                  break;
             case R.id.lin_back:
                  finish();
