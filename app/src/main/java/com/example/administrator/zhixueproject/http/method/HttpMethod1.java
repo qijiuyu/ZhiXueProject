@@ -8,6 +8,7 @@ import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.EntryGroup;
+import com.example.administrator.zhixueproject.bean.FeedBack;
 import com.example.administrator.zhixueproject.bean.GiveAccount;
 import com.example.administrator.zhixueproject.bean.GiveScalAccount;
 import com.example.administrator.zhixueproject.bean.Home;
@@ -1216,6 +1217,64 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 获取反馈列表
+     * @param key
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param handler
+     */
+    public static void getFeedBack(String key,int page,int limit,String timestamp,final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("key",key);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi1.class).getFeedBack(map).enqueue(new Callback<FeedBack>() {
+            public void onResponse(Call<FeedBack> call, Response<FeedBack> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<FeedBack> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 添加意见反馈
+     * @param adviceContent
+     * @param handler
+     */
+    public static void addFeedBack(String adviceContent,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("adviceContent",adviceContent);
+        Http.getRetrofit().create(HttpApi1.class).addFeedBack(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.ADD_FEEDBACK_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

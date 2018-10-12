@@ -162,4 +162,10 @@ public class HttpConstant {
 
     //修改公告
     public static final String UPDATE_NOTICE="notice/updateNotice.do";
+
+    //获取反馈列表
+    public static final String GET_FEEDBACK_LIST="advice/getAdviceList.do";
+
+    //添加意见反馈
+    public static final String ADD_FEEDBACK="advice/addAdvice.do";
 }

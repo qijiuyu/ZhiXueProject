@@ -58,5 +58,8 @@ public class HandlerConstant1 {
     public static final int DELETE_NOTICE_SUCCESS=1158;
     public static final int ADD_NOTICE_SUCCESS=1159;
     public static final int UPDATE_NOTICE_SUCCESS=1160;
+    public static final int GET_FEEDBACK_SUCCESS=1161;
+    public static final int GET_FEEDBACK_SUCCESS2=1162;
+    public static final int ADD_FEEDBACK_SUCCESS=1163;
 
 }

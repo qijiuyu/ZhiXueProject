@@ -206,6 +206,14 @@
             android:name=".activity.college.AddNoticeActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.college.FeedBackActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.AddFeedBackActivity"
+            android:screenOrientation="portrait" />
+
 
 
         <!--注册微信回调 WXEntryActivity -->

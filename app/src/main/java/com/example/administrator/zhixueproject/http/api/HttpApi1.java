@@ -5,6 +5,7 @@ import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.EntryGroup;
+import com.example.administrator.zhixueproject.bean.FeedBack;
 import com.example.administrator.zhixueproject.bean.GiveAccount;
 import com.example.administrator.zhixueproject.bean.GiveScalAccount;
 import com.example.administrator.zhixueproject.bean.Home;
@@ -428,4 +429,24 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.UPDATE_NOTICE)
     Call<ResponseBody> updateNotice(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取反馈列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_FEEDBACK_LIST)
+    Call<FeedBack> getFeedBack(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 添加意见反馈
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_FEEDBACK)
+    Call<BaseBean> addFeedBack(@FieldMap Map<String, String> map);
 }
