@@ -13,6 +13,7 @@ import com.example.administrator.zhixueproject.bean.GiveScalAccount;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
+import com.example.administrator.zhixueproject.bean.Notice;
 import com.example.administrator.zhixueproject.bean.Post;
 import com.example.administrator.zhixueproject.bean.QuestionAccount;
 import com.example.administrator.zhixueproject.bean.TeacherBean;
@@ -1100,6 +1101,121 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 获取公告列表
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param index
+     * @param handler
+     */
+    public static void getNoticeList(int page, int limit, String timestamp, final int index, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi1.class).getNoticeList(map).enqueue(new Callback<Notice>() {
+            public void onResponse(Call<Notice> call, Response<Notice> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<Notice> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 删除公告
+     * @param noticeId
+     * @param handler
+     */
+    public static void deleteNotice(long noticeId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("noticeId",noticeId+"");
+        Http.getRetrofit().create(HttpApi1.class).deleteNotice(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.DELETE_NOTICE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 添加公告
+     * @param noticeTitle
+     * @param noticeInfo
+     * @param handler
+     */
+    public static void addNotice(String noticeTitle,String noticeInfo,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("noticeTitle",noticeTitle);
+        map.put("noticeInfo",noticeInfo);
+        Http.getRetrofit().create(HttpApi1.class).addNotice(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.ADD_NOTICE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 修改公告
+     * @param noticeId
+     * @param noticeTitle
+     * @param noticeInfo
+     * @param handler
+     */
+    public static void updateNotice(long noticeId,String noticeTitle,String noticeInfo,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("noticeId",noticeId+"");
+        map.put("noticeTitle",noticeTitle);
+        map.put("noticeInfo",noticeInfo);
+        Http.getRetrofit().create(HttpApi1.class).updateNotice(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.UPDATE_NOTICE_SUCCESS, response.body().string());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

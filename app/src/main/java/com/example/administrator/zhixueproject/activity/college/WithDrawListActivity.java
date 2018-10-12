@@ -117,7 +117,7 @@ public class WithDrawListActivity extends BaseActivity   implements MyRefreshLay
                          return;
                      }
                      if(baseBean.isStatus()){
-                         
+
                      }else{
                          showMsg(baseBean.getErrorMsg());
                      }

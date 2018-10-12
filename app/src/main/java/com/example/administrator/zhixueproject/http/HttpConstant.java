@@ -150,4 +150,16 @@ public class HttpConstant {
 
     //申请提现
     public static final String ADD_WITHDRAW="cashRecord/addCashRecord.do";
+
+    //获取公告列表
+    public static final String GET_NOTICE_LIST="notice/getNoticeList.do";
+
+    //删除公告
+    public static final String DELETE_NOTICE_BYID="notice/delNotice.do";
+
+    //添加公告
+    public static final String ADD_NOTICE="notice/addNotice.do";
+
+    //修改公告
+    public static final String UPDATE_NOTICE="notice/updateNotice.do";
 }

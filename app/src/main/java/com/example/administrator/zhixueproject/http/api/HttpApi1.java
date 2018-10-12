@@ -10,6 +10,7 @@ import com.example.administrator.zhixueproject.bean.GiveScalAccount;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
+import com.example.administrator.zhixueproject.bean.Notice;
 import com.example.administrator.zhixueproject.bean.Post;
 import com.example.administrator.zhixueproject.bean.QuestionAccount;
 import com.example.administrator.zhixueproject.bean.TeacherBean;
@@ -387,4 +388,44 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.ADD_WITHDRAW)
     Call<BaseBean> addWithDraw(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取公告列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_NOTICE_LIST)
+    Call<Notice> getNoticeList(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 删除公告
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DELETE_NOTICE_BYID)
+    Call<BaseBean> deleteNotice(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 添加公告
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_NOTICE)
+    Call<BaseBean> addNotice(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 修改公告
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_NOTICE)
+    Call<ResponseBody> updateNotice(@FieldMap Map<String, String> map);
 }

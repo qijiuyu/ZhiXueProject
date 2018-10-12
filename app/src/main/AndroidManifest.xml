@@ -198,6 +198,14 @@
             android:name=".activity.college.WithDrawListActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.college.NoticeListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.AddNoticeActivity"
+            android:screenOrientation="portrait" />
+
 
 
         <!--注册微信回调 WXEntryActivity -->
