@@ -306,27 +306,6 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         });
     }
 
-    /**
-     * 上传图片
-     */
-    private void addPic() {
-        fileType = ReleaseContentsBean.IMG;
-        popIco = new PopIco(this);
-        popIco.showAsDropDown();
-        popIco.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.tv_pop_ico_camera:
-                        AddImageUtils.openCamera(ReleaseContentsActivity.this);
-                        break;
-                    case R.id.tv_pop_ico_photo:
-                        AddImageUtils.selectFromAlbum(ReleaseContentsActivity.this);
-                        break;
-                }
-            }
-        });
-    }
 
 
     //相机和相册选择图片的回调
@@ -375,6 +354,10 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
 
     public void onClick(View view) {
         switch (view.getId()) {
+            // emoji表情
+            case R.id.iv_expression:
+
+                break;
             case R.id.iv_picture:
                 addPic();
                 break;
@@ -417,6 +400,28 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
             default:
                 break;
         }
+    }
+
+    /**
+     * 上传图片
+     */
+    private void addPic() {
+        fileType = ReleaseContentsBean.IMG;
+        popIco = new PopIco(this);
+        popIco.showAsDropDown();
+        popIco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.tv_pop_ico_camera:
+                        AddImageUtils.openCamera(ReleaseContentsActivity.this);
+                        break;
+                    case R.id.tv_pop_ico_photo:
+                        AddImageUtils.selectFromAlbum(ReleaseContentsActivity.this);
+                        break;
+                }
+            }
+        });
     }
 
     private void showRecordPopWindow() {
