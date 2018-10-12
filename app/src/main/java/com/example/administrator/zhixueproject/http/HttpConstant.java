@@ -132,4 +132,16 @@ public class HttpConstant {
 
     //获取提现明细列表
     public static final String GET_WITHDRAW="cashRecord/getCashRecordList.do";
+
+    //发布帖子
+    public static final String ADD_POST = "post/addPost.do";
+
+    //修改帖子
+    public static final String UPDATE_POST = "post/updatePost.do";
+
+    // 添加活动
+    public static final String ADD_ACTIVITY = "activity/addActivity.do";
+
+    // 修改活动
+    public static final String UPDATE_ACTIVITY = "activity/updateActivity.do";
 }

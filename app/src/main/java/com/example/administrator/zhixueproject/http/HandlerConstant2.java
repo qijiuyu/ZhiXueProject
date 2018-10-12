@@ -14,4 +14,10 @@ public class HandlerConstant2 {
     public static final int GET_POST_LIST_SUCCESS2 = 2009;
     public static final int GET_POST_LIST_SEARCH_SUCCESS1 = 2010;
     public static final int GET_POST_LIST_SEARCH_SUCCESS2 = 2011;
+    public static final int GET_LECTURERS_LIST_SUCCESS1 = 2012;
+    public static final int GET_LECTURERS_LIST_SUCCESS2 = 2013;
+    public static final int ADD_POST_SUCCESS = 2014;
+    public static final int UPDATE_POST_SUCCESS = 2015;
+    public static final int ADD_ACTIVITY_SUCCESS = 2016;
+    public static final int UPDATE_ACTIVITY_SUCCESS = 2017;
 }

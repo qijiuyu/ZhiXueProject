@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import java.io.File;
@@ -20,10 +21,12 @@ import java.io.File;
 public class AddImageUtils {
     private static Uri imageUri;//原图保存地址
     public static String outputUri=FileUtils.getSdcardPath()+"crop.png";//裁剪后地址
+    public static Uri outputUriSmall;// 缩略图展示
     private static String imagePath;
     public static final int REQUEST_PICK_IMAGE = 1; //相册选取
     public static final int REQUEST_CAPTURE = 2;  //拍照
     public static final int REQUEST_PICTURE_CUT = 3;  //剪裁图片
+    public static final int REQUEST_PICTURE_CUT_SMALL = 4; // 发布帖子使用
 
     /**
      * 从相册选择
@@ -50,6 +53,9 @@ public class AddImageUtils {
      * 裁剪
      */
     public static String cropPhoto(Context context) {
+        File file = new FileStorage().createCropFile();
+        //缩略图保存地址
+        outputUri = Uri.fromFile(file).toString();
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(imageUri, "image/*");
         intent.putExtra("crop", "true");
@@ -66,6 +72,28 @@ public class AddImageUtils {
         return outputUri;
     }
 
+    /**
+     * 裁剪
+     */
+    public static Uri cropPhotoSmall(Context context) {
+            File file = new FileStorage().createCropFile();
+            //缩略图保存地址
+            outputUriSmall = Uri.fromFile(file);
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            intent.setDataAndType(imageUri, "image/*");
+            intent.putExtra("crop", "true");
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            intent.putExtra("outputX", 480);
+            intent.putExtra("outputY", 480);
+            intent.putExtra("scale", true);
+            intent.putExtra("return-data", false);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUriSmall);
+            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+            intent.putExtra("noFaceDetection", true);
+            ((Activity)context).startActivityForResult(intent, REQUEST_PICTURE_CUT_SMALL);
+            return outputUriSmall;
+    }
     /**
      * 从相册选择后的操作
      *

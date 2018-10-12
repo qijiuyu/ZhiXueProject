@@ -22,6 +22,7 @@ public class PostDetailActivity extends BaseActivity{
 
     public static void start(Context context, PostListBean postListBean) {
         Intent starter = new Intent(context, PostDetailActivity.class);
+        starter.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         starter.putExtra("postListBean", postListBean);
         context.startActivity(starter);
     }

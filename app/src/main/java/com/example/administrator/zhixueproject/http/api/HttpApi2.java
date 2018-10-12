@@ -1,6 +1,8 @@
 package com.example.administrator.zhixueproject.http.api;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.UploadFile;
+import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HttpConstant;
@@ -73,4 +75,49 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_POST_LIST)
     Call<PostsCourseBean> getPostList(@FieldMap Map<String,String> map);
+
+    /**
+     *  获取讲师列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_TEACHER_LIST)
+    Call<SelectLecturersBean> getLecturersList(@FieldMap Map<String,String> map);
+
+    /**
+     *  发布帖子
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_POST)
+    Call<UploadFile> addPost(@FieldMap Map<String,String> map);
+
+    /**
+     *  修改帖子
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_POST)
+    Call<UploadFile> updatePost(@FieldMap Map<String,String> map);
+
+    /**
+     *  添加活动
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_ACTIVITY)
+    Call<UploadFile> addActivity(@FieldMap Map<String,String> map);
+
+    /**
+     *  修改活动
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_ACTIVITY)
+    Call<UploadFile> updateActivity(@FieldMap Map<String,String> map);
 }

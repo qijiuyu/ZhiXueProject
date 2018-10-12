@@ -1,8 +1,11 @@
 package com.example.administrator.zhixueproject.http.method;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.UploadFile;
+import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
@@ -246,6 +249,225 @@ public class HttpMethod2 extends BaseRequst{
 
             @Override
             public void onFailure(Call<PostsCourseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     *  获取讲师列表
+     * @param collegeId
+     * @param key
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param handler
+     */
+    public static void getLecturersList(String collegeId, String key, String page, String limit,
+                                   String timestamp,final int index, final Handler handler){
+        Map<String,String> map=new HashMap<>();
+        map.put("collegeId",collegeId);
+        map.put("key",key);
+        map.put("page",page);
+        map.put("limit",limit);
+        map.put("page",page);
+        map.put("limit",limit);
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi2.class).getLecturersList(map).enqueue(new Callback<SelectLecturersBean>() {
+            @Override
+            public void onResponse(Call<SelectLecturersBean> call, Response<SelectLecturersBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SelectLecturersBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+
+    /**
+     *  添加帖子
+     * @param postType
+     * @param postName
+     * @param postTopicId
+     * @param postWriterId
+     * @param postIsFree  是否免费 1=免费；2=付费；
+     * @param postPrice
+     * @param postIsTop  是否置顶 0否，1是
+     * @param postContent
+     * @param handler
+     */
+    public static void addPost(String postType, String postName, String postTopicId, String postWriterId,
+                                        String postIsFree,String postPrice,String postIsTop,String postContent, final Handler handler){
+
+        if ("1".equals(postIsFree)) {
+            postPrice = "0";
+        }
+
+        if (TextUtils.isEmpty(postIsTop)) {
+            postIsTop = "0";
+        }
+
+        Map<String,String> map=new HashMap<>();
+        map.put("postType",postType);
+        map.put("postName",postName);
+        map.put("postTopicId",postTopicId);
+        map.put("postWriterId",postWriterId);
+        map.put("postIsFree",postIsFree);
+        map.put("postPrice",postPrice);
+        map.put("postIsTop",postIsTop);
+        map.put("postContent",postContent);
+        Http.getRetrofit().create(HttpApi2.class).addPost(map).enqueue(new Callback<UploadFile>() {
+            @Override
+            public void onResponse(Call<UploadFile> call, Response<UploadFile> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.ADD_POST_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadFile> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     * 更新帖子
+     * @param postId
+     * @param postName
+     * @param postIsFree
+     * @param postPrice
+     * @param postIsTop
+     * @param postContent
+     * @param handler
+     */
+    public static void updatePost(String postId, String postName,  String postIsFree,String postPrice,String postIsTop,String postContent, final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("postId",postId);
+        map.put("postName",postName);
+        map.put("postIsFree",postIsFree);
+        map.put("postPrice",postPrice);
+        map.put("postIsTop",postIsTop);
+        map.put("postContent",postContent);
+        Http.getRetrofit().create(HttpApi2.class).updatePost(map).enqueue(new Callback<UploadFile>() {
+            @Override
+            public void onResponse(Call<UploadFile> call, Response<UploadFile> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.UPDATE_POST_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadFile> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     *  添加活动
+     * @param topicId
+     * @param activityImg
+     * @param activityName
+     * @param activityType
+     * @param activityIsTop
+     * @param activityWriterId
+     * @param startTime
+     * @param endTime
+     * @param activityContent
+     * @param handler
+     */
+    public static void addActivity(String topicId, String activityImg,  String activityName,String activityType,String activityIsTop,
+                                   String activityWriterId,String startTime,String endTime,String activityContent, final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("topicId",topicId);
+        map.put("activityImg",activityImg);
+        map.put("activityName",activityName);
+        map.put("activityType",activityType);
+        map.put("activityIsTop",activityIsTop);
+        map.put("activityWriterId",activityWriterId);
+        map.put("startTime",startTime);
+        map.put("endTime",endTime);
+        map.put("activityContent",activityContent);
+        Http.getRetrofit().create(HttpApi2.class).addActivity(map).enqueue(new Callback<UploadFile>() {
+            @Override
+            public void onResponse(Call<UploadFile> call, Response<UploadFile> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.ADD_ACTIVITY_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadFile> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     *  修改活动
+     * @param topicId
+     * @param activityImg
+     * @param activityName
+     * @param activityType
+     * @param activityIsTop
+     * @param activityWriterId
+     * @param startTime
+     * @param endTime
+     * @param activityContent
+     * @param handler
+     */
+    public static void updateActivity(String topicId, String activityId,  String activityImg,String activityName,String activityType,
+                                   String activityIsTop,String activityWriterId,String startTime,String endTime,String activityContent, final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("topicId",topicId);
+        map.put("activityId",activityId);
+        map.put("activityImg",activityImg);
+        map.put("activityName",activityName);
+        map.put("activityType",activityType);
+        map.put("activityIsTop",activityIsTop);
+        map.put("activityWriterId",activityWriterId);
+        map.put("startTime",startTime);
+        map.put("endTime",endTime);
+        map.put("activityContent",activityContent);
+        Http.getRetrofit().create(HttpApi2.class).updateActivity(map).enqueue(new Callback<UploadFile>() {
+            @Override
+            public void onResponse(Call<UploadFile> call, Response<UploadFile> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.UPDATE_ACTIVITY_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadFile> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
