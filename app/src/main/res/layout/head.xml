@@ -31,14 +31,32 @@
         android:textColor="@android:color/white"
         android:layout_centerInParent="true"/>
 
-    <TextView
-        android:id="@+id/tv_right"
+
+    <LinearLayout
+        android:id="@+id/lin_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textColor="@android:color/white"
-       android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"/>
+        android:orientation="horizontal"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@android:color/white"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+        <ImageView
+            android:id="@+id/img_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

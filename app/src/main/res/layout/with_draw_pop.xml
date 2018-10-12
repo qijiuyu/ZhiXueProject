@@ -37,7 +37,6 @@
                 android:paddingLeft="10dp"
                 android:background="@drawable/search_bg"
                 android:gravity="center_vertical"
-                android:text="中国银行"
                 android:textColor="@color/color_333333"
                 android:textSize="13.5sp"/>
             
@@ -67,7 +66,6 @@
                 android:paddingLeft="10dp"
                 android:background="@drawable/search_bg"
                 android:gravity="center_vertical"
-                android:text="$1000.00"
                 android:textColor="@color/color_ff212c"
                 android:textSize="13.5sp"/>
 

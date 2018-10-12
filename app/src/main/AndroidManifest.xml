@@ -167,7 +167,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.college.SelectTeacherActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity
             android:name=".activity.college.TopicAccountActivity"
@@ -195,6 +196,22 @@
 
         <activity
             android:name=".activity.college.WithDrawListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.NoticeListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.AddNoticeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.FeedBackActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.college.AddFeedBackActivity"
             android:screenOrientation="portrait" />
 
 

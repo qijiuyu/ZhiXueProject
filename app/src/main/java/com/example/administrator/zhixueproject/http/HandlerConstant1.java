@@ -50,4 +50,16 @@ public class HandlerConstant1 {
     public static final int GET_WX_ACCESS_TOKEN_SUCCESS=1150;
     public static final int GET_WITHDRAW_SUCCESS=1151;
     public static final int GET_WITHDRAW_SUCCESS2=1152;
+    public static final int GET_WX_USER_SUCCESS=1153;
+    public static final int GET_WITHDRAW_INFO_SUCCESS=1154;
+    public static final int ADD_WITHDRAW_SUCCESS=1155;
+    public static final int GET_NOTICE_LIST_SUCCESS=1156;
+    public static final int GET_NOTICE_LIST_SUCCESS2=1157;
+    public static final int DELETE_NOTICE_SUCCESS=1158;
+    public static final int ADD_NOTICE_SUCCESS=1159;
+    public static final int UPDATE_NOTICE_SUCCESS=1160;
+    public static final int GET_FEEDBACK_SUCCESS=1161;
+    public static final int GET_FEEDBACK_SUCCESS2=1162;
+    public static final int ADD_FEEDBACK_SUCCESS=1163;
+
 }

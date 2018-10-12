@@ -5,11 +5,13 @@ import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.EntryGroup;
+import com.example.administrator.zhixueproject.bean.FeedBack;
 import com.example.administrator.zhixueproject.bean.GiveAccount;
 import com.example.administrator.zhixueproject.bean.GiveScalAccount;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
+import com.example.administrator.zhixueproject.bean.Notice;
 import com.example.administrator.zhixueproject.bean.Post;
 import com.example.administrator.zhixueproject.bean.QuestionAccount;
 import com.example.administrator.zhixueproject.bean.TeacherBean;
@@ -18,6 +20,7 @@ import com.example.administrator.zhixueproject.bean.TopicAccount;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.bean.WithDraw;
+import com.example.administrator.zhixueproject.bean.WithDrawInfo;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 
 import java.util.Map;
@@ -366,4 +369,84 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_WITHDRAW)
     Call<WithDraw> getWithDraw(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取提现页面相关信息
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_WITHDRAW_INFO)
+    Call<WithDrawInfo> getWithDrawInfo(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 申请提现
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_WITHDRAW)
+    Call<BaseBean> addWithDraw(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取公告列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_NOTICE_LIST)
+    Call<Notice> getNoticeList(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 删除公告
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DELETE_NOTICE_BYID)
+    Call<BaseBean> deleteNotice(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 添加公告
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_NOTICE)
+    Call<BaseBean> addNotice(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 修改公告
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_NOTICE)
+    Call<ResponseBody> updateNotice(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取反馈列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_FEEDBACK_LIST)
+    Call<FeedBack> getFeedBack(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 添加意见反馈
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_FEEDBACK)
+    Call<BaseBean> addFeedBack(@FieldMap Map<String, String> map);
 }
