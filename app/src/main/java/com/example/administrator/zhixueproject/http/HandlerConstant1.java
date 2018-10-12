@@ -50,4 +50,7 @@ public class HandlerConstant1 {
     public static final int GET_WX_ACCESS_TOKEN_SUCCESS=1150;
     public static final int GET_WITHDRAW_SUCCESS=1151;
     public static final int GET_WITHDRAW_SUCCESS2=1152;
+    public static final int GET_WX_USER_SUCCESS=1153;
+    public static final int GET_WITHDRAW_INFO_SUCCESS=1154;
+    public static final int ADD_WITHDRAW_SUCCESS=1155;
 }

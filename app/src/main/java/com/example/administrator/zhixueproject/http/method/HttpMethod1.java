@@ -22,6 +22,7 @@ import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.bean.WithDraw;
+import com.example.administrator.zhixueproject.bean.WithDrawInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.api.HttpApi1;
 import com.example.administrator.zhixueproject.http.base.BaseRequst;
@@ -1049,6 +1050,56 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<WithDraw> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 获取提现页面相关信息
+     * @param handler
+     */
+    public static void getWithDrawInfo(final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        Http.getRetrofit().create(HttpApi1.class).getWithDrawInfo(map).enqueue(new Callback<WithDrawInfo>() {
+            public void onResponse(Call<WithDrawInfo> call, Response<WithDrawInfo> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_WITHDRAW_INFO_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<WithDrawInfo> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 申请提现
+     * @param cashValue
+     * @param handler
+     */
+    public static void addWithDraw(String cashValue,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("cashValue",cashValue);
+        Http.getRetrofit().create(HttpApi1.class).addWithDraw(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.ADD_WITHDRAW_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

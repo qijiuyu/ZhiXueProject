@@ -67,26 +67,42 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     }
 
 
+    private String openId;
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            final String message=msg.obj.toString();
             switch (msg.what){
                 //获取openid accessToken值用于后期操作
                 case HandlerConstant1.GET_WX_ACCESS_TOKEN_SUCCESS:
-                     final String message=msg.obj.toString();
                      try {
                         JSONObject jsonObject = new JSONObject(message);
-                        String openid = jsonObject.getString("openid").toString().trim();
+                        openId = jsonObject.getString("openid").toString().trim();
                         String access_token = jsonObject.getString("access_token").toString().trim();
 
-                         LogUtils.e("openId="+openid);
-                        Intent intent=new Intent(LoginActivity.ACTION_WEIXIN_LOGIN_OPENID);
-                        intent.putExtra("openId",openid);
-                        sendBroadcast(intent);
+                        getUserMsg(access_token,openId);
                      } catch (JSONException e) {
                             e.printStackTrace();
                      }
                      break;
+                case HandlerConstant1.GET_WX_USER_SUCCESS:
+                    try {
+                        JSONObject jsonObject = new JSONObject(message);
+                        String nickname = jsonObject.getString("nickname");
+                        int sex = Integer.parseInt(jsonObject.get("sex").toString());
+                        String headimgurl = jsonObject.getString("headimgurl");
+                        LogUtils.e("nickname:" + nickname+"__________headimgurl:" + headimgurl);
+
+                        LogUtils.e("openId="+openId);
+                        Intent intent=new Intent(LoginActivity.ACTION_WEIXIN_LOGIN_OPENID);
+                        intent.putExtra("openId",openId);
+                        sendBroadcast(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                     break;
+                     default:
+                         break;
             }
         }
     };
@@ -99,6 +115,20 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     private void getAccess_token(final String code) {
         String url="https://api.weixin.qq.com/sns/oauth2/access_token?appid="+HttpConstant.WX_APPID+"&secret="+HttpConstant.WX_APPSECRET+"&code="+code+"&grant_type=authorization_code";
         Http.getMonth(url,mHandler,HandlerConstant1.GET_WX_ACCESS_TOKEN_SUCCESS);
+    }
+
+
+    /**
+     *  获取微信的个人信息
+     * @param access_token
+     * @param openid
+     */
+    private void getUserMsg(final String access_token, final String openid) {
+        String path = "https://api.weixin.qq.com/sns/userinfo?access_token="
+                + access_token
+                + "&openid="
+                + openid;
+        Http.getMonth(path,mHandler,HandlerConstant1.GET_WX_USER_SUCCESS);
     }
 
 

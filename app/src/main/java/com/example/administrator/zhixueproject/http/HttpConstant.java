@@ -144,4 +144,10 @@ public class HttpConstant {
 
     // 修改活动
     public static final String UPDATE_ACTIVITY = "activity/updateActivity.do";
+
+    //获取提现页面相关信息
+    public static final String GET_WITHDRAW_INFO="cashRecord/getCashInfo.do";
+
+    //申请提现
+    public static final String ADD_WITHDRAW="cashRecord/addCashRecord.do";
 }

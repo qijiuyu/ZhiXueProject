@@ -18,6 +18,7 @@ import com.example.administrator.zhixueproject.bean.TopicAccount;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.bean.WithDraw;
+import com.example.administrator.zhixueproject.bean.WithDrawInfo;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 
 import java.util.Map;
@@ -366,4 +367,24 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_WITHDRAW)
     Call<WithDraw> getWithDraw(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 获取提现页面相关信息
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_WITHDRAW_INFO)
+    Call<WithDrawInfo> getWithDrawInfo(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 申请提现
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_WITHDRAW)
+    Call<BaseBean> addWithDraw(@FieldMap Map<String, String> map);
 }
