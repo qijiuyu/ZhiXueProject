@@ -581,7 +581,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         if (mVoiceFile != null) {
                             FileStorage.deleteFile(mVoiceFile.getAbsolutePath());
                         }
-
+                        LogUtils.e("发布帖子成功");
                         //发布贴子成功
                         finish();
                         postEvent();
@@ -594,6 +594,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                     if (null == bean) {
                         return;
                     }
+                    LogUtils.e("修改帖子成功");
                     if (bean.status) {
                         showMsg("编辑成功");
                         finish();
@@ -607,6 +608,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                     if (null == bean) {
                         return;
                     }
+                    LogUtils.e("发布活动成功");
                     if (bean.status) {
                         showMsg("发布成功");
                         finish();
@@ -620,6 +622,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                     if (null == bean) {
                         return;
                     }
+                    LogUtils.e("修改活动成功");
                     if (bean.isStatus()) {
                         showMsg("编辑成功");
                         finish();

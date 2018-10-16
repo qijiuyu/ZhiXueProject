@@ -31,6 +31,7 @@ import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
+import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.example.administrator.zhixueproject.view.SwitchButton;
 import com.example.administrator.zhixueproject.view.time.TimePickerView;
@@ -81,6 +82,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+        StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.activity_release_action);
         initView();
         initData();
