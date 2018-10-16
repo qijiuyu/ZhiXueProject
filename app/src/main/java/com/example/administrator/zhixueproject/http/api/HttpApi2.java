@@ -120,4 +120,13 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.UPDATE_ACTIVITY)
     Call<UploadFile> updateActivity(@FieldMap Map<String,String> map);
+
+    /**
+     *  添加投票
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_VOTE)
+    Call<BaseBean> addVote(@FieldMap Map<String,String> map);
 }

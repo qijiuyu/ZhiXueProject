@@ -20,4 +20,5 @@ public class HandlerConstant2 {
     public static final int UPDATE_POST_SUCCESS = 2015;
     public static final int ADD_ACTIVITY_SUCCESS = 2016;
     public static final int UPDATE_ACTIVITY_SUCCESS = 2017;
+    public static final int ADD_VOTE_SUCCESS = 2018;
 }

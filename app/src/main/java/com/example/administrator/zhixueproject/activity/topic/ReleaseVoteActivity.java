@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,10 +23,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.AddVoteAdapter;
+import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.live.TeacherListBean;
 import com.example.administrator.zhixueproject.bean.topic.AddVoteBean;
 import com.example.administrator.zhixueproject.bean.topic.VoteListBean;
 import com.example.administrator.zhixueproject.fragment.topic.AddTopicFragment;
+import com.example.administrator.zhixueproject.http.HandlerConstant2;
+import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.KeyboardUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
@@ -188,14 +194,9 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     showMsg("请输入标题");
                     return;
                 }
-              /*  mReleaseVoteP.setReleaseVote(
-                        topicId,
-                        voteName,
-                        String.valueOf(topicType),
-                        mIsTop, String.valueOf(activityWriterId), mStartTime, mEndTime, JSON.toJSONString(list),
-                        mIsMultiple
-
-                );*/
+                showProgress(getString(R.string.loading));
+                HttpMethod2.addVote(topicId, voteName, String.valueOf(topicType), mIsTop, String.valueOf(activityWriterId)
+                        , mStartTime, mEndTime, MyApplication.gson.toJson(list), mIsMultiple, mHandler);
                 break;
             case R.id.rl_vote_type:
                 showVoteTypePop();
@@ -331,10 +332,9 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.tv_menu:
-//                makeText("删除");
-//                list.remove(position);
-//                mAdapter.notifyDataSetChanged();
-
+                showMsg("删除");
+                list.remove(position);
+                mAdapter.notifyDataSetChanged();
                 break;
             default:
                 break;
@@ -415,4 +415,28 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         tvTopic.setText(topicName);
         showTopicFragment(false);
     }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            clearTask();
+            switch (msg.what) {
+                case HandlerConstant2.ADD_VOTE_SUCCESS:
+                    BaseBean bean = (BaseBean) msg.obj;
+                    if (null == bean) {
+                        return;
+                    }
+                    if (bean.isStatus()) {
+                        showMsg("发布成功");
+                        finish();
+                    } else {
+                        showMsg(bean.errorMsg);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 }

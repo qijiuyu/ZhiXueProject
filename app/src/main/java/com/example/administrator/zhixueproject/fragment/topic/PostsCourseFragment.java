@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.topic.PostDetailActivity;
+import com.example.administrator.zhixueproject.activity.topic.PostDetailValueActivity;
 import com.example.administrator.zhixueproject.adapter.topic.PostsCourseAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
