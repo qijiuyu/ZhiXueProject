@@ -479,19 +479,14 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
 
             @Override
             public void recVoiceGrade(int grade) {
-                // voicLine.setVolume(grade);
             }
 
             @Override
             public void recStart(boolean init) {
-//                mIvPauseContinue.setImageResource(R.drawable.icon_pause);
-//                voicLine.setContinue();
             }
 
             @Override
             public void recPause(String str) {
-//                mIvPauseContinue.setImageResource(R.drawable.icon_continue);
-//                voicLine.setPause();
             }
 
 
