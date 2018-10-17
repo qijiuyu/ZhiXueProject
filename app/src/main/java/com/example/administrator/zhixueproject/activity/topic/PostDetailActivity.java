@@ -56,7 +56,6 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private int PAGE = 1;
     private String LIMIT = "10";
     private String TIMESTAMP = System.currentTimeMillis()+"";
-    private PostsDetailsBean contentBean;
     public String mFloorUserName;
     private String mFloorId;
     private PostListBean postListBean;
@@ -232,6 +231,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                     }
                     break;
                 case HandlerConstant2.COMMENT_REPLY_SUCCESS:
+                    bean = (BaseBean) msg.obj;
                     if (null == bean) {
                         return;
                     }
@@ -269,13 +269,13 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
      * @param postsDetailsBean
      */
     public void postsDetailsSuccess(PostsDetailsBean postsDetailsBean) {
-        contentBean = postsDetailsBean;
-        Glide.with(this).load(contentBean.getPostContent().getUserImg()).error(R.mipmap.unify_circle_head).into(ivHead);
-        tvNickName.setText(contentBean.getPostContent().getUserName());
-        tvAttentionNum.setText(contentBean.getPostContent().getAttentionNum() + "");
+        PostsDetailsBean.PostDetailBeanOuter data = postsDetailsBean.getData();
+        Glide.with(this).load(data.getPostContent().getUserImg()).error(R.mipmap.unify_circle_head).into(ivHead);
+        tvNickName.setText(data.getPostContent().getUserName());
+        tvAttentionNum.setText(data.getPostContent().getAttentionNum() + "");
 
         //帖子内容
-        String html = ToolUtils.imgStyleHtml(contentBean.getPostContent().getPostContent());
+        String html = ToolUtils.imgStyleHtml(data.getPostContent().getPostContent());
         wvPostContent.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -304,14 +304,14 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         switch (postEvent.getEventType()) {
             case PostEvent.REPLY_POST:
                 initFloorComment();
-                PostsDetailsBean.PostCommentListBean postData = (PostsDetailsBean.PostCommentListBean) postEvent.getData();
+                PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean postData = (PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean) postEvent.getData();
                 mFloorId = String.valueOf(postData.getFloorInfo().getFloorId());
                 mFloorUserName = postData.getFloorInfo().getUserName();
                 mFloorUserId = postData.getFloorInfo().getFloorUserId();
                 break;
             case PostEvent.REPLY_WORK:
                 initFloorComment();
-                PostsDetailsBean.WorkCommentListBean workData = (PostsDetailsBean.WorkCommentListBean) postEvent.getData();
+                PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean workData = (PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean) postEvent.getData();
                 mFloorId = String.valueOf(workData.getFloorInfo().getFloorId());
                 mFloorUserName = workData.getFloorInfo().getUserName();
                 mFloorUserId = workData.getFloorInfo().getFloorUserId();

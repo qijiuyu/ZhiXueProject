@@ -37,7 +37,7 @@ import java.util.List;
 
 public class WorksListDetailsFragment extends BaseFragment implements MyRefreshLayoutListener, BaseQuickAdapter.OnItemClickListener {
 
-    private List<PostsDetailsBean.WorkCommentListBean> listData = new ArrayList<>();
+    private List<PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean> listData = new ArrayList<>();
     private String postId;
     private int PAGE = 1;
     private String LIMIT = "10";
@@ -113,7 +113,7 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
                     if (null == detailsBean) {
                         return;
                     }
-                    TIMESTAMP = detailsBean.getTimestamp();
+                    TIMESTAMP = detailsBean.getData().getTimestamp();
                     if (detailsBean.isStatus()) {
                         getDetailSuccess(detailsBean);
                     } else {
@@ -124,7 +124,7 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
                     if (null == detailsBean) {
                         return;
                     }
-                    TIMESTAMP = detailsBean.getTimestamp();
+                    TIMESTAMP = detailsBean.getData().getTimestamp();
                     if (detailsBean.isStatus()) {
                         loadMoreSuccess(detailsBean);
                     } else {
@@ -141,7 +141,7 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
     private void getDetailSuccess(PostsDetailsBean bean) {
         mrlPostsTask.refreshComplete();
         listData.clear();
-        listData = bean.getWorkCommentList();
+        listData = bean.getData().getWorkCommentList();
         adapterView();
     }
 
@@ -154,11 +154,11 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
             return;
         }
         if (bean.isStatus()) {
-            if (bean.getPostCommentList().size() <= 0) {
+            if (bean.getData().getPostCommentList().size() <= 0) {
                 showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }
-            listData.addAll(bean.getWorkCommentList());
+            listData.addAll(bean.getData().getWorkCommentList());
             adapterView();
         } else {
             showMsg(bean.errorMsg);
@@ -193,7 +193,7 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        PostsDetailsBean.WorkCommentListBean item = (PostsDetailsBean.WorkCommentListBean) adapter.getData().get(position);
+        PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean item = (PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean) adapter.getData().get(position);
         //回复楼层贴子
         EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.REPLY_WORK).setData(item));
     }

@@ -9,12 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.adapter.topic.PostsTaskAdapter;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
-import com.example.administrator.zhixueproject.adapter.topic.PostsTaskAdapter;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
@@ -22,11 +21,8 @@ import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,7 +36,7 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
     private String LIMIT = "10";
     private String TIMESTAMP = System.currentTimeMillis()+"";
     private int type;//1讨论  2作业
-    private List<PostsDetailsBean.PostCommentListBean> listData;
+    private List<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean> listData;
     private MyRefreshLayout mrlPostsTask;
     private RecyclerView rvPostsTask;
     private PostsTaskAdapter mAdapter;
@@ -144,7 +140,7 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
 
     private void getDetailSuccess(PostsDetailsBean bean) {
         mrlPostsTask.refreshComplete();
-        listData = bean.getPostCommentList();
+        listData = bean.getData().getPostCommentList();
         adapterView();
     }
 
@@ -157,11 +153,11 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
             return;
         }
         if (bean.isStatus()) {
-            if (bean.getPostCommentList().size() <= 0) {
+            if (bean.getData().getPostCommentList().size() <= 0) {
                 showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }
-            listData.addAll(bean.getPostCommentList());
+            listData.addAll(bean.getData().getPostCommentList());
             adapterView();
         } else {
             showMsg(bean.errorMsg);
@@ -190,7 +186,7 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         //回复楼层贴子
-        PostsDetailsBean.PostCommentListBean item = (PostsDetailsBean.PostCommentListBean) adapter.getData().get(position);
+        PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean item = (PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean) adapter.getData().get(position);
         EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.REPLY_POST).setData(item));
     }
 

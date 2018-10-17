@@ -19,18 +19,18 @@ import java.util.List;
 
 
 
-public class PostCommentReplyAdapter extends BaseQuickAdapter<PostsDetailsBean.PostCommentListBean.TalkInfoBean, BaseViewHolder> {
+public class PostCommentReplyAdapter extends BaseQuickAdapter<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean.TalkInfoBean, BaseViewHolder> {
 
     private static int floorId;//贴子楼层ID
 
 
-    public PostCommentReplyAdapter(@LayoutRes int layoutResId, @Nullable List<PostsDetailsBean.PostCommentListBean.TalkInfoBean> data, int floorId) {
+    public PostCommentReplyAdapter(@LayoutRes int layoutResId, @Nullable List<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean.TalkInfoBean> data, int floorId) {
         super(layoutResId, data);
         this.floorId = floorId;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, final PostsDetailsBean.PostCommentListBean.TalkInfoBean item) {
+    protected void convert(BaseViewHolder helper, final PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean.TalkInfoBean item) {
 
         final String finalMFloorUserId = showReply(helper, item.getTalkStr(), floorId);
         helper.itemView.setOnClickListener(new View.OnClickListener() {

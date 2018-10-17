@@ -12,17 +12,17 @@ import java.util.List;
 
 
 
-public class WorkCommentReplyAdapter extends BaseQuickAdapter<PostsDetailsBean.WorkCommentListBean.TalkInfoBean, BaseViewHolder> {
+public class WorkCommentReplyAdapter extends BaseQuickAdapter<PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean.TalkInfoBean, BaseViewHolder> {
 
     private int floorId;
 
-    public WorkCommentReplyAdapter(@LayoutRes int layoutResId, @Nullable List<PostsDetailsBean.WorkCommentListBean.TalkInfoBean> data, int floorId) {
+    public WorkCommentReplyAdapter(@LayoutRes int layoutResId, @Nullable List<PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean.TalkInfoBean> data, int floorId) {
         super(layoutResId, data);
         this.floorId = floorId;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, PostsDetailsBean.WorkCommentListBean.TalkInfoBean item) {
+    protected void convert(BaseViewHolder helper, PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean.TalkInfoBean item) {
         final String finalMFloorUserId = PostCommentReplyAdapter.showReply(helper, item.getWorkTalkStr(), floorId);
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

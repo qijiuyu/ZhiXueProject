@@ -17,15 +17,15 @@ import java.util.List;
 
 
 
-public class PostsTaskAdapter extends BaseQuickAdapter<PostsDetailsBean.PostCommentListBean, BaseViewHolder> {
+public class PostsTaskAdapter extends BaseQuickAdapter<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean, BaseViewHolder> {
 
 
-    public PostsTaskAdapter(@LayoutRes int layoutResId, @Nullable List<PostsDetailsBean.PostCommentListBean> data) {
+    public PostsTaskAdapter(@LayoutRes int layoutResId, @Nullable List<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, final PostsDetailsBean.PostCommentListBean item) {
+    protected void convert(BaseViewHolder helper, final PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean item) {
         helper.setText(R.id.tv_nickname, item.getFloorInfo().getUserName());
         helper.setText(R.id.tv_time, item.getFloorInfo().getFloorCreationtime());
         Glide.with(mContext).load(item.getFloorInfo().getUserImg()).error(R.mipmap.unify_circle_head).into((ImageView) helper.getView(R.id.iv_head));

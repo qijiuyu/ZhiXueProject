@@ -14,15 +14,15 @@ import java.util.List;
 
 
 
-public class WorkCommentListAdapter extends BaseQuickAdapter<PostsDetailsBean.WorkCommentListBean, BaseViewHolder> {
+public class WorkCommentListAdapter extends BaseQuickAdapter<PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean, BaseViewHolder> {
 
 
-    public WorkCommentListAdapter(@LayoutRes int layoutResId, @Nullable List<PostsDetailsBean.WorkCommentListBean> data) {
+    public WorkCommentListAdapter(@LayoutRes int layoutResId, @Nullable List<PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, PostsDetailsBean.WorkCommentListBean item) {
+    protected void convert(BaseViewHolder helper, PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean item) {
 
         helper.setText(R.id.tv_nickname, item.getFloorInfo().getUserName());
         helper.setText(R.id.tv_time, item.getFloorInfo().getFloorCreationtime());
