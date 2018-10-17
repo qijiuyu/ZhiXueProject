@@ -1281,4 +1281,30 @@ public class HttpMethod1  extends BaseRequst {
         });
     }
 
+
+    /**
+     * 添加意见设置已读
+     * @param adviceId
+     * @param handler
+     */
+    public static void feedbackIsRead(int adviceId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("adviceId",adviceId+"");
+        Http.getRetrofit().create(HttpApi1.class).feedbackIsRead(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.SET_FEEDBACK_ISREAD_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

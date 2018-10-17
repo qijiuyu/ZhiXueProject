@@ -449,4 +449,14 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.ADD_FEEDBACK)
     Call<BaseBean> addFeedBack(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 添加意见设置已读
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.FEEDBACK_IS_READ)
+    Call<BaseBean> feedbackIsRead(@FieldMap Map<String, String> map);
 }

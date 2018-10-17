@@ -171,4 +171,7 @@ public class HttpConstant {
 
     // 添加投票
     public static final String ADD_VOTE = "vote/addVote.do";
+
+    //意见反馈设置已读
+    public static final String FEEDBACK_IS_READ="advice/isRead.do";
 }

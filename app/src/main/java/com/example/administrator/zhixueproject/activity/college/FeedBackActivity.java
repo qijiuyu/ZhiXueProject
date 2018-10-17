@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.college;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -18,6 +20,7 @@ import com.example.administrator.zhixueproject.adapter.college.FeedBackAdapter;
 import com.example.administrator.zhixueproject.bean.FeedBack;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
 import java.text.SimpleDateFormat;
@@ -230,6 +233,19 @@ public class FeedBackActivity extends BaseActivity   implements MyRefreshLayoutL
             if(list.size()<limit){
                 mRefreshLayout.setIsLoadingMoreEnabled(false);
             }
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    LogUtils.e(position+"++++++++++++++");
+                    FeedBack.FeedBackList feedBackList=listAll.get(position);
+                    Intent intent=new Intent(mContext,FeedBackDetailsActivity.class);
+                    intent.putExtra("feedBackList",feedBackList);
+                    startActivity(intent);
+
+                    //设置状态未已读
+                    listAll.get(position).setAdviceReadyn(1);
+                    feedBackAdapter.notifyDataSetChanged();
+                }
+            });
         }else{
             showMsg(feedBack.getErrorMsg());
         }
