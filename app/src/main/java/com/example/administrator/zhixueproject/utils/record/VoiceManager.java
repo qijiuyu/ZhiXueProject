@@ -12,6 +12,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.SeekBar;
 
+import com.example.administrator.zhixueproject.utils.LogUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -191,12 +193,11 @@ public class VoiceManager {
             stopRecorder(mMediaRecorder, true);
             mMediaRecorder = null;
             if (VoiceTimeUtils.timeSpanSecond(mRecTimeSum).mSpanSecond == 0) {
-//                Toast.makeText(mContext, "时间过短", Toast.LENGTH_SHORT).show();
             } else {
                 File file = getOutputVoiceFile(mRecList);
+                LogUtils.e("音频文件大小   "+file.length());
                 if (file != null && file.length() > 0) {
                     cleanFieArrayList(mRecList);
-                    //TODO 这里可以返回数据 setResult
                     final VoiceTimeUtils ts = VoiceTimeUtils.timeSpanSecond(mRecTimeSum);
                     //完成录音
                     if (voiceRecordCallBack != null) {
@@ -693,6 +694,7 @@ public class VoiceManager {
         if (mr == null) return null;
         try {
             String path = recAudioPath(recordFilePath);
+            LogUtils.e("path is === "+path);
             recFile = new File(path, VoiceTimeUtils.getTime() + ".amr");
             currentFilePath = recFile.getAbsolutePath();
             mr.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -701,6 +703,7 @@ public class VoiceManager {
             mr.setOutputFile(recFile.getAbsolutePath());
             mr.prepare();
             if (start) {
+                LogUtils.e("开始录音");
                 mr.start();
                 if (mThread == null) {
                     mThread = new ObtainDecibelThread();

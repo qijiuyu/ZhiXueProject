@@ -168,4 +168,7 @@ public class HttpConstant {
 
     //添加意见反馈
     public static final String ADD_FEEDBACK="advice/addAdvice.do";
+
+    // 添加投票
+    public static final String ADD_VOTE = "vote/addVote.do";
 }

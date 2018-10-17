@@ -475,6 +475,51 @@ public class HttpMethod2 extends BaseRequst{
     }
 
     /**
+     * 添加投票
+     * @param topicId
+     * @param voteName
+     * @param topicType  活动类型(1:包含课程 2：大家谈)
+     * @param voteIsTop   是否置顶(0否，1是)
+     * @param voteWriterId
+     * @param startTime
+     * @param endTime
+     * @param voteSecNames
+     * @param isMultipleChoice
+     * @param handler
+     */
+    public static void addVote(String topicId, String voteName,  String topicType,String voteIsTop,String voteWriterId,
+                                      String startTime,String endTime,String voteSecNames,boolean isMultipleChoice, final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("topicId",topicId);
+        map.put("voteName",voteName);
+        map.put("topicType",topicType);
+        map.put("voteIsTop",voteIsTop);
+        map.put("voteWriterId",voteWriterId);
+        map.put("startTime",startTime);
+        map.put("endTime",endTime);
+        map.put("voteSecNames",voteSecNames);
+        map.put("isMultipleChoice",String.valueOf(isMultipleChoice));
+        Http.getRetrofit().create(HttpApi2.class).addVote(map).enqueue(new Callback<BaseBean>() {
+            @Override
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.ADD_VOTE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
      *  修改个人资料
      * @param userName  用户名
      * @param mobile  手机号

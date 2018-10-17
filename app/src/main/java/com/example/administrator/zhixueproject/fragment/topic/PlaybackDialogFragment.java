@@ -27,7 +27,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 播放录音的 DialogFragment
- *
  */
 
 public class PlaybackDialogFragment extends DialogFragment {
@@ -35,8 +34,7 @@ public class PlaybackDialogFragment extends DialogFragment {
     private static final String LOG_TAG = "PlaybackFragment";
 
     private static final String ARG_ITEM = "recording_item";
-//    private RecordingItem item;
-
+    //    private RecordingItem item;
     private Handler mHandler = new Handler();
 
     private MediaPlayer mMediaPlayer = null;
@@ -70,7 +68,7 @@ public class PlaybackDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         item = getArguments().getParcelable(ARG_ITEM);
 
-        long itemDuration = item.getTimeLength()*1000;
+        long itemDuration = item.getTimeLength() * 1000;
         mFileLength = itemDuration;
         minutes = TimeUnit.MILLISECONDS.toMinutes(itemDuration);
         seconds = TimeUnit.MILLISECONDS.toSeconds(itemDuration)
@@ -104,14 +102,14 @@ public class PlaybackDialogFragment extends DialogFragment {
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(mMediaPlayer != null && fromUser) {
+                if (mMediaPlayer != null && fromUser) {
                     mMediaPlayer.seekTo(progress);
                     mHandler.removeCallbacks(mRunnable);
 
                     long minutes = TimeUnit.MILLISECONDS.toMinutes(mMediaPlayer.getCurrentPosition());
                     long seconds = TimeUnit.MILLISECONDS.toSeconds(mMediaPlayer.getCurrentPosition())
                             - TimeUnit.MINUTES.toSeconds(minutes);
-                    mCurrentProgressTextView.setText(String.format("%02d:%02d", minutes,seconds));
+                    mCurrentProgressTextView.setText(String.format("%02d:%02d", minutes, seconds));
 
                     updateSeekBar();
 
@@ -123,7 +121,7 @@ public class PlaybackDialogFragment extends DialogFragment {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                if(mMediaPlayer != null) {
+                if (mMediaPlayer != null) {
                     // remove message Handler from updating progress bar
                     mHandler.removeCallbacks(mRunnable);
                 }
@@ -138,7 +136,7 @@ public class PlaybackDialogFragment extends DialogFragment {
                     long minutes = TimeUnit.MILLISECONDS.toMinutes(mMediaPlayer.getCurrentPosition());
                     long seconds = TimeUnit.MILLISECONDS.toSeconds(mMediaPlayer.getCurrentPosition())
                             - TimeUnit.MINUTES.toSeconds(minutes);
-                    mCurrentProgressTextView.setText(String.format("%02d:%02d", minutes,seconds));
+                    mCurrentProgressTextView.setText(String.format("%02d:%02d", minutes, seconds));
                     updateSeekBar();
                 }
             }
@@ -154,7 +152,7 @@ public class PlaybackDialogFragment extends DialogFragment {
         });
 
 //        mFileNameTextView.setText(item.getName());
-        mFileLengthTextView.setText(String.format("%02d:%02d", minutes,seconds));
+        mFileLengthTextView.setText(String.format("%02d:%02d", minutes, seconds));
 
         builder.setView(view);
 
@@ -198,10 +196,10 @@ public class PlaybackDialogFragment extends DialogFragment {
     }
 
     // Play start/stop
-    private void onPlay(boolean isPlaying){
+    private void onPlay(boolean isPlaying) {
         if (!isPlaying) {
             //currently MediaPlayer is not playing audio
-            if(mMediaPlayer == null) {
+            if (mMediaPlayer == null) {
                 startPlaying(); //start from beginning
             } else {
                 resumePlaying(); //resume the currently paused MediaPlayer
@@ -215,10 +213,13 @@ public class PlaybackDialogFragment extends DialogFragment {
     private void startPlaying() {
         LogUtils.e("startPlaying");
         iv_record_play.setImageResource(R.mipmap.ic_media_pause);
-        mMediaPlayer = new MediaPlayer();
-
+        if (mMediaPlayer == null) {
+            mMediaPlayer = new MediaPlayer();
+        }
         try {
-            mMediaPlayer.setDataSource(item.getContent());
+
+            mMediaPlayer.setDataSource("http://" + item.getContent());
+            LogUtils.e("Content==" + "http://" + item.getContent());
             mMediaPlayer.prepare();
             mSeekBar.setMax(mMediaPlayer.getDuration());
 
@@ -226,10 +227,11 @@ public class PlaybackDialogFragment extends DialogFragment {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     mMediaPlayer.start();
+                    LogUtils.e("开始播放");
                 }
             });
         } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed");
+            Log.e(LOG_TAG, "prepare() failed  exception is: " + e.toString());
         }
 
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -247,11 +249,12 @@ public class PlaybackDialogFragment extends DialogFragment {
 
     private void prepareMediaPlayerFromPoint(int progress) {
         //set mediaPlayer to start from middle of the audio file
-
-        mMediaPlayer = new MediaPlayer();
+        if (mMediaPlayer == null) {
+            mMediaPlayer = new MediaPlayer();
+        }
 
         try {
-            mMediaPlayer.setDataSource(item.getContent());
+            mMediaPlayer.setDataSource("http://" + item.getContent());
             mMediaPlayer.prepare();
             mSeekBar.setMax(mMediaPlayer.getDuration());
             mMediaPlayer.seekTo(progress);
@@ -264,7 +267,7 @@ public class PlaybackDialogFragment extends DialogFragment {
             });
 
         } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed");
+            Log.e(LOG_TAG, "prepare() failed   exception is : " + e.toString());
         }
 
         //keep screen on while playing audio
@@ -306,7 +309,7 @@ public class PlaybackDialogFragment extends DialogFragment {
     private Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
-            if(mMediaPlayer != null){
+            if (mMediaPlayer != null) {
 
                 int mCurrentPosition = mMediaPlayer.getCurrentPosition();
                 mSeekBar.setProgress(mCurrentPosition);

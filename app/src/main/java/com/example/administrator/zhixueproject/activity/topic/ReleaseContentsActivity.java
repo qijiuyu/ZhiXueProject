@@ -306,27 +306,6 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         });
     }
 
-    /**
-     * 上传图片
-     */
-    private void addPic() {
-        fileType = ReleaseContentsBean.IMG;
-        popIco = new PopIco(this);
-        popIco.showAsDropDown();
-        popIco.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.tv_pop_ico_camera:
-                        AddImageUtils.openCamera(ReleaseContentsActivity.this);
-                        break;
-                    case R.id.tv_pop_ico_photo:
-                        AddImageUtils.selectFromAlbum(ReleaseContentsActivity.this);
-                        break;
-                }
-            }
-        });
-    }
 
 
     //相机和相册选择图片的回调
@@ -375,6 +354,10 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
 
     public void onClick(View view) {
         switch (view.getId()) {
+            // emoji表情
+            case R.id.iv_expression:
+
+                break;
             case R.id.iv_picture:
                 addPic();
                 break;
@@ -417,6 +400,28 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
             default:
                 break;
         }
+    }
+
+    /**
+     * 上传图片
+     */
+    private void addPic() {
+        fileType = ReleaseContentsBean.IMG;
+        popIco = new PopIco(this);
+        popIco.showAsDropDown();
+        popIco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.tv_pop_ico_camera:
+                        AddImageUtils.openCamera(ReleaseContentsActivity.this);
+                        break;
+                    case R.id.tv_pop_ico_photo:
+                        AddImageUtils.selectFromAlbum(ReleaseContentsActivity.this);
+                        break;
+                }
+            }
+        });
     }
 
     private void showRecordPopWindow() {
@@ -474,19 +479,14 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
 
             @Override
             public void recVoiceGrade(int grade) {
-                // voicLine.setVolume(grade);
             }
 
             @Override
             public void recStart(boolean init) {
-//                mIvPauseContinue.setImageResource(R.drawable.icon_pause);
-//                voicLine.setContinue();
             }
 
             @Override
             public void recPause(String str) {
-//                mIvPauseContinue.setImageResource(R.drawable.icon_continue);
-//                voicLine.setPause();
             }
 
 
@@ -581,7 +581,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         if (mVoiceFile != null) {
                             FileStorage.deleteFile(mVoiceFile.getAbsolutePath());
                         }
-
+                        LogUtils.e("发布帖子成功");
                         //发布贴子成功
                         finish();
                         postEvent();
@@ -594,6 +594,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                     if (null == bean) {
                         return;
                     }
+                    LogUtils.e("修改帖子成功");
                     if (bean.status) {
                         showMsg("编辑成功");
                         finish();
@@ -607,6 +608,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                     if (null == bean) {
                         return;
                     }
+                    LogUtils.e("发布活动成功");
                     if (bean.status) {
                         showMsg("发布成功");
                         finish();
@@ -620,6 +622,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                     if (null == bean) {
                         return;
                     }
+                    LogUtils.e("修改活动成功");
                     if (bean.isStatus()) {
                         showMsg("编辑成功");
                         finish();

@@ -25,7 +25,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -141,10 +140,10 @@
             android:name=".activity.topic.ChargePrivilegeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragment.topic.PostDetailActivity"
+            android:name=".activity.topic.PostDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".fragment.topic.PostDetailValueActivity"
+            android:name=".activity.topic.PostDetailValueActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.topic.ReleasePostActivity"
