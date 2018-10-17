@@ -180,4 +180,7 @@ public class HttpConstant {
 
     // 获取帖子详情
     public static final String GET_POST_DETAIL = "post/getPostDetail.do";
+
+    //意见反馈设置已读
+    public static final String FEEDBACK_IS_READ="advice/isRead.do";
 }

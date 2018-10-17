@@ -49,7 +49,6 @@ public class FeedBackAdapter extends BaseAdapter{
 			holder.tvPhone=(TextView)view.findViewById(R.id.tv_feedback_phone);
 			holder.tvEmail=(TextView)view.findViewById(R.id.tv_feedback_email);
 			holder.tvContent=(TextView)view.findViewById(R.id.tv_feedback_content);
-
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
