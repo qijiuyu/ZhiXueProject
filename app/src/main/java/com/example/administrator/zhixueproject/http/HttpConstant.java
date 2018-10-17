@@ -183,4 +183,7 @@ public class HttpConstant {
 
     //意见反馈设置已读
     public static final String FEEDBACK_IS_READ="advice/isRead.do";
+
+    //查询举报列表
+    public static final String GET_REPORT_LIST="complaint/getComplaint.do";
 }
