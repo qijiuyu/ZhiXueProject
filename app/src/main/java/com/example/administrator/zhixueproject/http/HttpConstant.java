@@ -171,4 +171,13 @@ public class HttpConstant {
 
     // 添加投票
     public static final String ADD_VOTE = "vote/addVote.do";
+
+    // 评论帖子
+    public static final String COMMENT_POST = "post/commentPost.do";
+
+    // 回复楼层
+    public static final String COMMENT_REPLY = "post/commentReply.do";
+
+    // 获取帖子详情
+    public static final String GET_POST_DETAIL = "post/getPostDetail.do";
 }

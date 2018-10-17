@@ -4,6 +4,7 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
+import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import java.util.Map;
@@ -129,4 +130,32 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.ADD_VOTE)
     Call<BaseBean> addVote(@FieldMap Map<String,String> map);
+
+
+    /**
+     * 评论帖子
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.COMMENT_POST)
+    Call<BaseBean> commentPost(@FieldMap Map<String,String> map);
+
+    /**
+     * 评论楼层
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.COMMENT_REPLY)
+    Call<BaseBean> commentReply(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取帖子详情
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_POST_DETAIL)
+    Call<PostsDetailsBean>getPostDetail(@FieldMap Map<String,String> map);
 }

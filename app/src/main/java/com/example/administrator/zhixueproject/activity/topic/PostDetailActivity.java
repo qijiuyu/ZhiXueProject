@@ -3,28 +3,45 @@ package com.example.administrator.zhixueproject.activity.topic;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.PostListBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
 import com.example.administrator.zhixueproject.fragment.topic.PostsDetailsTaskFragment;
 import com.example.administrator.zhixueproject.fragment.topic.WorksListDetailsFragment;
+import com.example.administrator.zhixueproject.http.HandlerConstant1;
+import com.example.administrator.zhixueproject.http.HandlerConstant2;
+import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.KeyboardUtils;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
+import com.example.administrator.zhixueproject.utils.ToolUtils;
+import com.example.administrator.zhixueproject.utils.Utils;
 import com.flyco.tablayout.SlidingTabLayout;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 
 /**
@@ -36,18 +53,16 @@ import java.util.ArrayList;
 public class PostDetailActivity extends BaseActivity implements View.OnClickListener {
 
     private boolean isShow = false;
-    // private PostsDetailsP postsDetailsP;
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = "";
+    private String TIMESTAMP = System.currentTimeMillis()+"";
     private PostsDetailsBean contentBean;
-    // public CommentPostP mCommentPostP;
-    // private ReplyCommentP mReplyCommentP;
     public String mFloorUserName;
     private String mFloorId;
     private PostListBean postListBean;
     private String postType;
     public String mFloorUserId;
+    private String commentUserId = MyApplication.userInfo.getData().getUser().getUserId() + "";
     private boolean isFloorComment;
     private TextView tvComment;
     private EditText etCommentContent;
@@ -130,6 +145,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
             }
         });
+        searchTopicDetail();
     }
 
     public static void start(Context context, PostListBean postListBean) {
@@ -138,6 +154,16 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         starter.putExtra("postListBean", postListBean);
         context.startActivity(starter);
     }
+
+    /**
+     * 查询帖子详情
+     */
+    private void searchTopicDetail() {
+        showProgress(getString(R.string.loading));
+        HttpMethod2.getPostDetail(String.valueOf(postListBean.getPostId()), PAGE + "", LIMIT,
+                TIMESTAMP,HandlerConstant2.GET_POST_DETAIL_SUCCESS, mHandler);
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -177,27 +203,112 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
         //回复贴子
         if (!isFloorComment) {
-            // mCommentPostP.setCommentPost(String.valueOf(postListBean.getPostId()), postType, commentContent);
+            HttpMethod2.commentPost(String.valueOf(postListBean.getPostId()), postType, commentContent, mHandler);
         } else {
             //回复楼层
-          /*  mReplyCommentP.setReplyComment(String.valueOf(postListBean.getPostId())
-                    , mFloorId, application.getC(), mFloorUserId, commentContent);*/
+            HttpMethod2.commentReply(String.valueOf(postListBean.getPostId()), mFloorId, commentUserId
+                    , mFloorUserId, commentContent, mHandler);
         }
     }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            clearTask();
+            BaseBean bean = null;
+            switch (msg.what) {
+                case HandlerConstant2.COMMENT_POST_SUCCESS:
+                    bean = (BaseBean) msg.obj;
+                    if (null == bean) {
+                        return;
+                    }
+                    if (bean.isStatus()) {
+                        LogUtils.e("评论帖子成功");
+                        EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.COMMENT_SUCCESS));
+                        initComment();
+                    } else {
+                        showMsg(bean.getErrorMsg());
+                    }
+                    break;
+                case HandlerConstant2.COMMENT_REPLY_SUCCESS:
+                    if (null == bean) {
+                        return;
+                    }
+                    if (bean.isStatus()) {
+                        LogUtils.e("回复楼层成功");
+                        EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.COMMENT_SUCCESS));
+                        initComment();
+                    } else {
+                        showMsg(bean.getErrorMsg());
+                    }
+                    break;
+                case HandlerConstant2.GET_POST_DETAIL_SUCCESS:
+                    PostsDetailsBean detailsBean = (PostsDetailsBean) msg.obj;
+                    if (null == detailsBean) {
+                        return;
+                    }
+                    if (detailsBean.isStatus()) {
+                        LogUtils.e("获取帖子详情成功");
+                        postsDetailsSuccess(detailsBean);
+                    } else {
+                        showMsg(detailsBean.getErrorMsg());
+                    }
+                    break;
+                case HandlerConstant1.REQUST_ERROR:
+                    showMsg(getString(R.string.net_error));
+                    break;
+            }
+
+        }
+    };
+
+    /**
+     * 帖子详情请求成功
+     *
+     * @param postsDetailsBean
+     */
+    public void postsDetailsSuccess(PostsDetailsBean postsDetailsBean) {
+        contentBean = postsDetailsBean;
+        Glide.with(this).load(contentBean.getPostContent().getUserImg()).error(R.mipmap.unify_circle_head).into(ivHead);
+        tvNickName.setText(contentBean.getPostContent().getUserName());
+        tvAttentionNum.setText(contentBean.getPostContent().getAttentionNum() + "");
+
+        //帖子内容
+        String html = ToolUtils.imgStyleHtml(contentBean.getPostContent().getPostContent());
+        wvPostContent.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return true;
+            }
+        });
+        WebSettings settings = wvPostContent.getSettings();
+        settings.setJavaScriptEnabled(true);
+        wvPostContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
+    }
+
+    /**
+     * 评论成功后初始化
+     */
+    private void initComment() {
+        llComment.setVisibility(View.GONE);
+        tvComment.setVisibility(View.VISIBLE);
+        etCommentContent.setText("");
+        mFloorUserId = "";
+        isFloorComment = false;
+        KeyboardUtils.hideKeyBoard(this, tvComment);
+    }
+
     @Subscribe
     public void replyCommentEvent(PostEvent postEvent) {
-
         switch (postEvent.getEventType()) {
             case PostEvent.REPLY_POST:
-
                 initFloorComment();
-
                 PostsDetailsBean.PostCommentListBean postData = (PostsDetailsBean.PostCommentListBean) postEvent.getData();
                 mFloorId = String.valueOf(postData.getFloorInfo().getFloorId());
                 mFloorUserName = postData.getFloorInfo().getUserName();
                 mFloorUserId = postData.getFloorInfo().getFloorUserId();
                 break;
-
             case PostEvent.REPLY_WORK:
                 initFloorComment();
                 PostsDetailsBean.WorkCommentListBean workData = (PostsDetailsBean.WorkCommentListBean) postEvent.getData();
@@ -205,7 +316,6 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                 mFloorUserName = workData.getFloorInfo().getUserName();
                 mFloorUserId = workData.getFloorInfo().getFloorUserId();
                 break;
-
             case PostEvent.REPLY_WORK_COMMENT:
                 initFloorComment();
                 String workDataSt = (String) postEvent.getData();
@@ -214,7 +324,6 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                 mFloorUserName = split[1];
                 mFloorId = split[2];
                 break;
-
             case PostEvent.REPLY_POST_COMMENT:
                 initFloorComment();
                 String postDataSt = (String) postEvent.getData();
@@ -233,5 +342,4 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         tvComment.setVisibility(View.GONE);
         etCommentContent.setText("");
     }
-
 }
