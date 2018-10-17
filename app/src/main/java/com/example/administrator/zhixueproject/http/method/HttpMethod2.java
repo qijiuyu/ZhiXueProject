@@ -7,6 +7,7 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
+import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
@@ -549,5 +550,109 @@ public class HttpMethod2 extends BaseRequst{
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
+    }
+
+    /**
+     *  评论帖子
+     * @param postId
+     * @param type  1.回复帖子 2.回复作业
+     * @param floorData
+     * @param handler
+     */
+    public static void commentPost(String postId, String type,  String floorData,final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("postId",postId);
+        map.put("type",type);
+        map.put("floorData",floorData);
+        Http.getRetrofit().create(HttpApi2.class).commentPost(map).enqueue(new Callback<BaseBean>() {
+            @Override
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.COMMENT_POST_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     *  回复楼层
+     * @param postId
+     * @param floorId
+     * @param commentUserId
+     * @param beCommentUserId
+     * @param talkInfo
+     * @param handler
+     */
+    public static void commentReply(String postId, String floorId,  String commentUserId,String beCommentUserId,
+                                    String talkInfo,final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("postId",postId);
+        map.put("floorId",floorId);
+        map.put("commentUserId",commentUserId);
+        map.put("beCommentUserId",beCommentUserId);
+        map.put("talkInfo",talkInfo);
+        Http.getRetrofit().create(HttpApi2.class).commentReply(map).enqueue(new Callback<BaseBean>() {
+            @Override
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.COMMENT_REPLY_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     * 获取帖子详情
+     * @param postId
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param handler
+     */
+    public static void getPostDetail(String postId, String page, String limit, String timestamp,
+                                     final int index, final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("postId",postId);
+        map.put("page",page);
+        map.put("limit",limit);
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi2.class).getPostDetail(map).enqueue(new Callback<PostsDetailsBean>() {
+            @Override
+            public void onResponse(Call<PostsDetailsBean> call, Response<PostsDetailsBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PostsDetailsBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
     }
 }

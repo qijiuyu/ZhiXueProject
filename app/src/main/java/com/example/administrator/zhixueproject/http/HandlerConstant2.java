@@ -21,4 +21,8 @@ public class HandlerConstant2 {
     public static final int ADD_ACTIVITY_SUCCESS = 2016;
     public static final int UPDATE_ACTIVITY_SUCCESS = 2017;
     public static final int ADD_VOTE_SUCCESS = 2018;
+    public static final int COMMENT_POST_SUCCESS = 2019;
+    public static final int COMMENT_REPLY_SUCCESS =2020 ;
+    public static final int GET_POST_DETAIL_SUCCESS = 2021;
+    public static final int GET_POST_DETAIL_SUCCESS2 = 2022;
 }

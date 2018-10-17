@@ -1,4 +1,5 @@
 <resources>
+    <string name="service_host_image">http://rajy.4pole.cn</string>
     <string name="net_error">网络连接异常，请稍候重试</string>
     <string name="app_name">要学就学</string>
     <string name="main_title">学院管理系统</string>
