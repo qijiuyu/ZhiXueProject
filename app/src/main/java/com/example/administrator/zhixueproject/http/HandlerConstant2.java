@@ -25,4 +25,5 @@ public class HandlerConstant2 {
     public static final int COMMENT_REPLY_SUCCESS =2020 ;
     public static final int GET_POST_DETAIL_SUCCESS = 2021;
     public static final int GET_POST_DETAIL_SUCCESS2 = 2022;
+    public static final int GET_YOU_CHANG_DETAIL_SUCCESS =2023 ;
 }

@@ -18,6 +18,7 @@ import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -31,7 +32,7 @@ import java.util.List;
  */
 
 public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshLayoutListener, BaseQuickAdapter.OnItemClickListener {
-    private String postId;
+    private String postId; // 帖子id
     private int PAGE = 1;
     private String LIMIT = "10";
     private String TIMESTAMP = System.currentTimeMillis()+"";
@@ -115,6 +116,7 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
                         return;
                     }
                     if (detailsBean.isStatus()) {
+                        LogUtils.e("讨论");
                         getDetailSuccess(detailsBean);
                     } else {
                         showMsg(detailsBean.getErrorMsg());

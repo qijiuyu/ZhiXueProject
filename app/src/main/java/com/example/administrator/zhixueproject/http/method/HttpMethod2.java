@@ -655,4 +655,40 @@ public class HttpMethod2 extends BaseRequst{
         });
 
     }
+
+    /**
+     *  获取有偿提问帖子详情
+     * @param postId
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param index
+     * @param handler
+     */
+    public static void getYouChangDetail(String postId, String page, String limit, String timestamp,
+                                     final int index, final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("postId",postId);
+        map.put("page",page);
+        map.put("limit",limit);
+        map.put("timestamp",timestamp);
+        Http.getRetrofit().create(HttpApi2.class).getYouChangDetail(map).enqueue(new Callback<PostsDetailsBean>() {
+            @Override
+            public void onResponse(Call<PostsDetailsBean> call, Response<PostsDetailsBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PostsDetailsBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
 }

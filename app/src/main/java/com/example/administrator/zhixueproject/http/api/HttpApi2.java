@@ -158,4 +158,13 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_POST_DETAIL)
     Call<PostsDetailsBean>getPostDetail(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取有偿提问帖子详情
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_YOUCHANG_DETAIL)
+    Call<PostsDetailsBean>getYouChangDetail(@FieldMap Map<String,String> map);
 }

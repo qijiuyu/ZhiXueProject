@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import java.util.List;
@@ -26,12 +27,14 @@ public class PostCommentReplyAdapter extends BaseQuickAdapter<PostsDetailsBean.P
 
     public PostCommentReplyAdapter(@LayoutRes int layoutResId, @Nullable List<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean.TalkInfoBean> data, int floorId) {
         super(layoutResId, data);
+        LogUtils.e("楼层回复adapter");
         this.floorId = floorId;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, final PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean.TalkInfoBean item) {
-
+        LogUtils.e("啦啦啦  convert");
+        helper.setText(R.id.tv_comment_reply,item.getTalkStr());
         final String finalMFloorUserId = showReply(helper, item.getTalkStr(), floorId);
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +54,7 @@ public class PostCommentReplyAdapter extends BaseQuickAdapter<PostsDetailsBean.P
      * @return
      */
     public static String showReply(BaseViewHolder helper, String talkStr , final int floorId) {
-
+        // "李洁老师:回复=talkId=668,commentUserId=80"
         String commentUserId = "";//回复者ID
         String beCommentUserId = "";//被回复者ID
         String mFloorUserId = "";

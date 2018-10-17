@@ -144,7 +144,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         if (PostEvent.RELEASE_SUCCESS == postEvent.getEventType()) {
             PAGE = 1;
             type = "1";
-            // postsCourseP.getPostList(postsCourseP.REFRESH, application.getC(), postTopicId, TIMESTAMP, PAGE + "", LIMIT, type, postType + "", key);
+            getPostList(HandlerConstant2.GET_POST_LIST_SUCCESS1);
         }
     }
 

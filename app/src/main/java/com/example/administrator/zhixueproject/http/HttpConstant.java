@@ -183,4 +183,7 @@ public class HttpConstant {
 
     //意见反馈设置已读
     public static final String FEEDBACK_IS_READ="advice/isRead.do";
+
+    //获取有偿提问帖子详情
+    public static final String GET_YOUCHANG_DETAIL = "post/getYouChangDetail.do";
 }

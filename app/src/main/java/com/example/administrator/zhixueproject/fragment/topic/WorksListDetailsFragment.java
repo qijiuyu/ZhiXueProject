@@ -21,6 +21,7 @@ import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -115,6 +116,7 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
                     }
                     TIMESTAMP = detailsBean.getData().getTimestamp();
                     if (detailsBean.isStatus()) {
+                        LogUtils.e("作业");
                         getDetailSuccess(detailsBean);
                     } else {
                         showMsg(detailsBean.getErrorMsg());
