@@ -5,5 +5,5 @@ package com.example.administrator.zhixueproject.callback;
  */
 public interface MemberLevelCallBack {
 
-    public void setData(int position,int data);
+    public void setData(int userCollegegradeId,int data);
 }

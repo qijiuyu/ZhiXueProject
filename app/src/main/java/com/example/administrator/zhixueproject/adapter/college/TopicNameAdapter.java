@@ -15,6 +15,7 @@ public class TopicNameAdapter extends BaseAdapter{
 	private Activity activity;
 	private List<TopicListBean> listAll;
 	private TopicListBean topicListBean;
+	private int index=-1;
 	public TopicNameAdapter(Activity activity, List<TopicListBean> listAll) {
 		super();
 		this.activity = activity;
@@ -49,11 +50,21 @@ public class TopicNameAdapter extends BaseAdapter{
 		}
 		topicListBean=listAll.get(position);
 		holder.tvName.setText(topicListBean.getTopicName());
+		if(position==index){
+            holder.tvName.setBackgroundColor(activity.getResources().getColor(R.color.color_f0f0f0));
+		}else{
+            holder.tvName.setBackgroundColor(activity.getResources().getColor(android.R.color.white));
+		}
 		return view;
 	}
 
 
 	 private class ViewHolder{
 		TextView tvName;
+	 }
+
+
+	 public void setIndex(int index){
+		this.index=index;
 	 }
 }

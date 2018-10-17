@@ -59,6 +59,18 @@ public class MemberLevelAdapter extends BaseAdapter{
         holder.tvName.setText(memberLevelList.getUserCollegegradeName());
         holder.etJiFen.setText(memberLevelList.getUserCollegegradePoints()+"");
         holder.etJiFen.setTag(memberLevelList.getUserCollegegradeId());
+        holder.etJiFen.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(null==v.getTag()){
+                        return;
+                    }
+                    final int userCollegegradeId=Integer.parseInt(v.getTag().toString());
+                    final int data=Integer.parseInt(((EditText)v).getText().toString().trim());
+                    memberLevelCallBack.setData(userCollegegradeId,data);
+                }
+            }
+        });
         return view;
     }
 

@@ -37,6 +37,7 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
     private int limit=20;
     private List<TopicListBean> listAll=new ArrayList<>();
     private TopicNameAdapter topicNameAdapter;
+    private TopicListBean topicListBean;
     public static final String ACTION_TOPIC_TITLE="com.admin.broadcast.action.topic.title";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,14 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
         mRefreshLayout.setMyRefreshLayoutListener(this);
         topicNameAdapter=new TopicNameAdapter(mActivity,listAll);
         listView.setAdapter(topicNameAdapter);
+        //确定
+        view.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent=new Intent(ACTION_TOPIC_TITLE);
+                intent.putExtra("topicListBean",topicListBean);
+                mActivity.sendBroadcast(intent);
+            }
+        });
         //查询话题列表
         getData(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
         return view;
@@ -100,10 +109,9 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
             topicNameAdapter.notifyDataSetChanged();
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    final TopicListBean topicListBean=listAll.get(position);
-                    Intent intent=new Intent(ACTION_TOPIC_TITLE);
-                    intent.putExtra("topicListBean",topicListBean);
-                    mActivity.sendBroadcast(intent);
+                    topicListBean=listAll.get(position);
+                    topicNameAdapter.setIndex(position);
+                    topicNameAdapter.notifyDataSetChanged();
                 }
             });
             if(list.size()<limit){

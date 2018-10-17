@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.fragment.college.CollegeInfoFragment;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 
 /**
  * 学院管理页面
@@ -29,6 +30,7 @@ public class CollegeManageActivity extends BaseActivity implements View.OnClickL
         tvHead.setText(getString(R.string.institution_manage));
         findViewById(R.id.rl_member_level_setting).setOnClickListener(this);
         findViewById(R.id.rl_institution_manage).setOnClickListener(this);
+        findViewById(R.id.rl_open_institution).setOnClickListener(this);
         findViewById(R.id.rl_medal_manage).setOnClickListener(this);
         findViewById(R.id.rl_vip_apply).setOnClickListener(this);
         findViewById(R.id.rl_friendly_business_in).setOnClickListener(this);
@@ -37,6 +39,7 @@ public class CollegeManageActivity extends BaseActivity implements View.OnClickL
         findViewById(R.id.rl_cash_details).setOnClickListener(this);
         findViewById(R.id.rl_announcement_edit).setOnClickListener(this);
         findViewById(R.id.rl_feedback).setOnClickListener(this);
+        findViewById(R.id.rl_about_platform).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
@@ -85,6 +88,10 @@ public class CollegeManageActivity extends BaseActivity implements View.OnClickL
             //意见反馈
             case R.id.rl_feedback:
                  setClass(FeedBackActivity.class);
+                 break;
+            //关于我们
+            case R.id.rl_about_platform:
+                 setClass(AboutActivity.class);
                  break;
             case R.id.lin_back:
                  finish();
