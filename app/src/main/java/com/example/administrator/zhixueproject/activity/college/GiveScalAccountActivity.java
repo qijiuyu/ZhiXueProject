@@ -140,7 +140,6 @@ public class GiveScalAccountActivity extends BaseActivity   implements MyRefresh
      * @param index
      */
     private void getData(int index){
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getGiveScalAccount(startTime,endTime,page,limit,simpleDateFormat.format(new Date()),index,mHandler);
+        HttpMethod1.getGiveScalAccount(startTime,endTime,page,limit,index,mHandler);
     }
 }

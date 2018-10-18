@@ -189,4 +189,7 @@ public class HttpConstant {
 
     //查询举报列表
     public static final String GET_REPORT_LIST="complaint/getComplaint.do";
+
+    //获取直播列表
+    public static final String GET_LIVE_LIST="postLive/getPostLiveList.do";
 }

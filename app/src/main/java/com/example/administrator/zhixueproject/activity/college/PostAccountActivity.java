@@ -140,7 +140,6 @@ public class PostAccountActivity extends BaseActivity   implements MyRefreshLayo
      * @param index
      */
     private void getData(int index){
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getPostAccount(startTime,endTime,page,limit,simpleDateFormat.format(new Date()),index,mHandler);
+        HttpMethod1.getPostAccount(startTime,endTime,page,limit,index,mHandler);
     }
 }

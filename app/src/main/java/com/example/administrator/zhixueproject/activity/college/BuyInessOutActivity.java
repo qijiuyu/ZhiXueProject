@@ -172,7 +172,6 @@ public class BuyInessOutActivity extends BaseActivity  implements MyRefreshLayou
      * @param index
      */
     private void getData(int index){
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.buyInessOut(simpleDateFormat.format(new Date()),page,limit,index,mHandler);
+        HttpMethod1.buyInessOut(page,limit,index,mHandler);
     }
 }

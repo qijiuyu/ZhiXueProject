@@ -4,6 +4,8 @@ import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.fragment.college.CollegeInfoFragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -22,6 +24,9 @@ public class ParameterUtil {
        if(null!= CollegeInfoFragment.homeBean){
            map.put("collegeId",String.valueOf(CollegeInfoFragment.homeBean.getCollegeId()));
        }
+
+       final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+       map.put("timestamp",simpleDateFormat.format(new Date()));
        return map;
    }
 }

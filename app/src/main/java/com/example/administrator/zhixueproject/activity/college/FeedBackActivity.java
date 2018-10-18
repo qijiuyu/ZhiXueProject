@@ -123,6 +123,9 @@ public class FeedBackActivity extends BaseActivity   implements MyRefreshLayoutL
         tvAll=(TextView)view.findViewById(R.id.tv_all);
         tvRed=(TextView)view.findViewById(R.id.tv_red);
         tvNoRed=(TextView)view.findViewById(R.id.tv_no_red);
+        tvAll.setText("全部");
+        tvRed.setText("已读");
+        tvNoRed.setText("未读");
         tvAll.setOnClickListener(this);
         tvRed.setOnClickListener(this);
         tvNoRed.setOnClickListener(this);
@@ -271,8 +274,7 @@ public class FeedBackActivity extends BaseActivity   implements MyRefreshLayoutL
      * @param index
      */
     private void getData(int index){
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getFeedBack(key,page,limit,simpleDateFormat.format(new Date()),index,mHandler);
+        HttpMethod1.getFeedBack(key,page,limit,index,mHandler);
     }
 
 }

@@ -9,26 +9,36 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
-import com.example.administrator.zhixueproject.fragment.college.CollegeFragment;
 import com.example.administrator.zhixueproject.fragment.college.FloorReportFragment;
 import com.example.administrator.zhixueproject.fragment.college.TopicReportFragment;
 import com.example.administrator.zhixueproject.view.PagerSlidingTabStrip;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 举报管理
  * Created by Administrator on 2018/10/17.
  */
 
-public class ReportManagerActivity extends BaseActivity {
+public class ReportManagerActivity extends BaseActivity implements View.OnClickListener{
 
+    private LinearLayout linearLayout;
+    private TextView tvRight,tvAll,tvTime,tvNum;
+    private ImageView imgRight;
     private PagerSlidingTabStrip tabs;
     private DisplayMetrics dm;
     private ViewPager pager;
+    public static String key="";
     private TopicReportFragment topicReportFragment=new TopicReportFragment();
     private FloorReportFragment floorReportFragment=new FloorReportFragment();
+    public final static String ACTION_SELECT_ORDERBY="net.zhixue.adminapp.ACTION_SELECT_ORDERBY";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_manager);
@@ -41,12 +51,20 @@ public class ReportManagerActivity extends BaseActivity {
      * 初始化控件
      */
     private void initView(){
+        linearLayout=(LinearLayout)findViewById(R.id.lin);
+        tvRight=(TextView)findViewById(R.id.tv_right);
+        tvRight.setText(getString(R.string.whole));
+        imgRight=(ImageView)findViewById(R.id.img_right);
+        imgRight.setVisibility(View.VISIBLE);
+        imgRight.setImageDrawable(getResources().getDrawable(R.mipmap.down_arrow_white));
         tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
         pager=(ViewPager)findViewById(R.id.pager);
         dm = getResources().getDisplayMetrics();
         pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         pager.setOffscreenPageLimit(2);
         tabs.setViewPager(pager);
+        findViewById(R.id.lin_right).setOnClickListener(this);
+        findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
 
@@ -76,6 +94,107 @@ public class ReportManagerActivity extends BaseActivity {
         tabs.setTabBackground(0);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.lin_right:
+                 if(linearLayout.getVisibility()==View.VISIBLE){
+                    linearLayout.setVisibility(View.GONE);
+                    imgRight.setImageDrawable(getResources().getDrawable(R.mipmap.down_arrow_white));
+                 }else{
+                    showSelectPop();
+                 }
+                 break;
+            case R.id.tv_all:
+                updateTextView(0);
+                break;
+            case R.id.tv_red:
+                updateTextView(1);
+                break;
+            case R.id.tv_no_red:
+                updateTextView(2);
+                break;
+            case R.id.lin_back:
+                 finish();
+                 break;
+        }
+    }
+
+
+    /**
+     * 弹出选择框
+     */
+    private void showSelectPop(){
+        imgRight.setImageDrawable(getResources().getDrawable(R.mipmap.up_arrow_white));
+        View view= LayoutInflater.from(mContext).inflate(R.layout.feedback_select_pop,null);
+        tvAll=(TextView)view.findViewById(R.id.tv_all);
+        tvTime=(TextView)view.findViewById(R.id.tv_red);
+        tvNum=(TextView)view.findViewById(R.id.tv_no_red);
+        tvAll.setText("排序");
+        tvTime.setText("时间");
+        tvNum.setText("人数");
+        tvAll.setOnClickListener(this);
+        tvTime.setOnClickListener(this);
+        tvNum.setOnClickListener(this);
+        switch (key){
+            case "":
+                updateColor(0);
+                break;
+            case "1":
+                updateColor(1);
+                break;
+            case "2":
+                updateColor(2);
+                break;
+        }
+        linearLayout.removeAllViews();
+        linearLayout.addView(view);
+        linearLayout.setVisibility(View.VISIBLE);
+    }
+
+
+    /**
+     * 修改选中的颜色
+     * @param index
+     */
+    private void updateColor(int index){
+        List<TextView> list=new ArrayList<>();
+        list.add(tvAll);
+        list.add(tvTime);
+        list.add(tvNum);
+        for (int i=0;i<list.size();i++){
+            if(i==index){
+                list.get(i).setTextColor(getResources().getColor(R.color.color_fd703e));
+                list.get(i).setBackgroundColor(getResources().getColor(R.color.color_f8f8f8));
+            }else{
+                list.get(i).setTextColor(getResources().getColor(R.color.color_666666));
+                list.get(i).setBackgroundColor(getResources().getColor(android.R.color.white));
+            }
+        }
+    }
+
+
+    /**
+     * 选择后关闭弹框并查询数据
+     */
+    private void updateTextView(int index){
+        linearLayout.setVisibility(View.GONE);
+        imgRight.setImageDrawable(getResources().getDrawable(R.mipmap.down_arrow_white));
+        switch (index){
+            case 0:
+                tvRight.setText("排序");
+                key="";
+                break;
+            case 1:
+                tvRight.setText("时间");
+                key="1";
+                break;
+            case 2:
+                tvRight.setText("人数");
+                key="2";
+                break;
+        }
+    }
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
 

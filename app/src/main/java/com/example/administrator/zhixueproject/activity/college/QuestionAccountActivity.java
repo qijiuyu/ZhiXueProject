@@ -136,7 +136,6 @@ public class QuestionAccountActivity extends BaseActivity   implements MyRefresh
      * @param index
      */
     private void getData(int index){
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getQuestionAccount(startTime,endTime,page,limit,simpleDateFormat.format(new Date()),index,mHandler);
+        HttpMethod1.getQuestionAccount(startTime,endTime,page,limit,index,mHandler);
     }
 }

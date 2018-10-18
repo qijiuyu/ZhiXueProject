@@ -176,7 +176,6 @@ public class SelectTeacherActivity extends BaseActivity   implements MyRefreshLa
      */
     private void getData(int index){
         final String keys=etKey.getText().toString().trim();
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getTeacherList(keys,simpleDateFormat.format(new Date()),page,limit,index,mHandler);
+        HttpMethod1.getTeacherList(keys,page,limit,index,mHandler);
     }
 }
