@@ -1,19 +1,15 @@
-package com.risenb.studyknowledge.adapter.topic;
+package com.example.administrator.zhixueproject.adapter.topic;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.risenb.studyknowledge.R;
-import com.risenb.studyknowledge.beans.topic.ActionNeophyteBean;
-import com.risenb.studyknowledge.beans.topic.ActivityUserListBean;
+import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.bean.topic.ActivityUserListBean;
 
 import java.util.List;
 
-/**
- * Created by zhuzh on 2017/9/22.
- */
+
 
 public class ActionNeophyteAdapter extends BaseQuickAdapter<ActivityUserListBean,BaseViewHolder> {
 

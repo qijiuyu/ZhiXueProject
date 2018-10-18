@@ -6,6 +6,9 @@ import android.text.TextUtils;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
+import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
+import com.example.administrator.zhixueproject.bean.topic.ActionNeophyteBean;
+import com.example.administrator.zhixueproject.bean.topic.ActivityListBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
@@ -686,6 +689,103 @@ public class HttpMethod2 extends BaseRequst{
 
             @Override
             public void onFailure(Call<PostsDetailsBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     * 获取活动列表
+     * @param page
+     * @param limit
+     * @param timestamp
+     * @param index
+     * @param handler
+     */
+    public static void getActivityList(String timestamp, String page, String limit,
+                                         final int index, final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("timestamp",timestamp);
+        map.put("page",page);
+        map.put("limit",limit);
+        Http.getRetrofit().create(HttpApi2.class).getActivityList(map).enqueue(new Callback<ActionManageBean>() {
+            @Override
+            public void onResponse(Call<ActionManageBean> call, Response<ActionManageBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ActionManageBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     * 删除活动
+     * @param activityId
+     * @param handler
+     */
+    public static void deleteActivity(String activityId,final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("activityId",activityId);
+        Http.getRetrofit().create(HttpApi2.class).deleteActivity(map).enqueue(new Callback<ActionManageBean>() {
+            @Override
+            public void onResponse(Call<ActionManageBean> call, Response<ActionManageBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.DELETE_ACTIVITY_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ActionManageBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     * 获取活动参与者列表
+     * @param timestamp
+     * @param page
+     * @param limit
+     * @param index
+     * @param handler
+     */
+    public static void getActivityUserList(String activityId,String timestamp, String page, String limit,
+                                       final int index, final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("activityId",activityId);
+        map.put("timestamp",timestamp);
+        map.put("page",page);
+        map.put("limit",limit);
+        Http.getRetrofit().create(HttpApi2.class).getActivityUserList(map).enqueue(new Callback<ActionNeophyteBean>() {
+            @Override
+            public void onResponse(Call<ActionNeophyteBean> call, Response<ActionNeophyteBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ActionNeophyteBean> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });

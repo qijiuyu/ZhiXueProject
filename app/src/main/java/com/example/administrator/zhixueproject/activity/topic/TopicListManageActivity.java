@@ -9,8 +9,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -36,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 话题管理Activity
+ * 话题列表管理Activity
  *
  * @author petergee
  * @date 2018/10/8
@@ -54,22 +56,23 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
     private int startPosition;
     public static final String TOPIC_INFO = "topic_info";
     public static final String TYPE = "type";
+    private LinearLayout linBack;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_list_manage);
         EventBus.getDefault().register(this);
-        initData();
         initView();
+        initData();
     }
 
     private void initView() {
         // 标题
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.topic_list));
-        findViewById(R.id.lin_back).setOnClickListener(this);
-
+        linBack = (LinearLayout) findViewById(R.id.lin_back);
+        linBack.setOnClickListener(this);
         TextView tvAdd = (TextView) findViewById(R.id.tv_right);
         tvAdd.setBackground(getResources().getDrawable(R.mipmap.add_title_iv));
         tvAdd.setOnClickListener(this);

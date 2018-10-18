@@ -8,19 +8,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/dm020">
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/iv_action_img"
-            android:layout_width="@dimen/dm220"
-            android:layout_height="@dimen/dm164"
+            android:layout_width="110dp"
+            android:layout_height="82dp"
             android:scaleType="centerCrop"
               />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dm026"
+            android:layout_marginLeft="13dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -35,23 +35,23 @@
                     android:layout_weight="1"
                     android:singleLine="true"
                     android:text="艺术博物馆管理"
-                    android:textColor="@color/gray_3"
-                    android:textSize="@dimen/dm030" />
+                    android:textColor="@color/color_333333"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="人数 "
-                    android:textColor="@color/gray_9"
-                    android:textSize="@dimen/dm024" />
+                    android:textColor="@color/color_999999"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_action_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/dm024" />
+                    android:textColor="@color/color_fd703e"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -59,15 +59,15 @@
                 android:id="@+id/tv_topic_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dm016"
+                android:layout_marginTop="8dp"
                 android:text="话题：你好啊啊"
-                android:textColor="@color/gray_6"
-                android:textSize="@dimen/dm026" />
+                android:textColor="@color/color_666666"
+                android:textSize="13sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dm012"
+                android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -79,26 +79,26 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dm010"
+                    android:layout_marginLeft="5dp"
                     android:text="开始："
-                    android:textColor="@color/blue"
-                    android:textSize="@dimen/dm026" />
+                    android:textColor="@color/color_48c6ef"
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tv_start_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dm010"
+                    android:layout_marginLeft="5dp"
                     android:text="2017-9-21 12:09:99"
-                    android:textColor="@color/gray_9"
-                    android:textSize="@dimen/dm022" />
+                    android:textColor="@color/color_999999"
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dm012"
+                android:layout_marginTop="6dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -110,19 +110,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dm010"
+                    android:layout_marginLeft="5dp"
                     android:text="结束："
-                    android:textColor="@color/red_checked"
-                    android:textSize="@dimen/dm026" />
+                    android:textColor="@color/color_ff212c"
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tv_end_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dm010"
+                    android:layout_marginLeft="5dp"
                     android:text="2017-9-21 12:09:99"
-                    android:textColor="@color/gray_9"
-                    android:textSize="@dimen/dm022" />
+                    android:textColor="@color/color_999999"
+                    android:textSize="11sp" />
 
             </LinearLayout>
 

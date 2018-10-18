@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.adapter.topic.PostsTaskAdapter;
@@ -183,6 +184,7 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
         rvPostsTask.setAdapter(mAdapter);
         //条目点击
         mAdapter.setOnItemClickListener(this);
+
     }
 
     @Override

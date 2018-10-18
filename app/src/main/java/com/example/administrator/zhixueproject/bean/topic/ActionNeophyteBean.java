@@ -1,14 +1,25 @@
-package com.risenb.studyknowledge.beans.topic;
+package com.example.administrator.zhixueproject.bean.topic;
 
-import com.risenb.studyknowledge.beans.NetBaseBean;
+
+import com.example.administrator.zhixueproject.bean.BaseBean;
 
 import java.util.List;
 
-/**
- * Created by zhuzh on 2017/9/22.
- */
 
-public class ActionNeophyteBean extends NetBaseBean {
+/**
+ * 活动参与者bean
+ */
+public class ActionNeophyteBean extends BaseBean {
+    private DataBean data;
+
+    public DataBean getData() {
+        return data;
+    }
+
+    public void setData(DataBean data) {
+        this.data = data;
+    }
+
     public static class DataBean {
         /**
          * totalPage : 1

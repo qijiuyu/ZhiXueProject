@@ -1,8 +1,6 @@
-package com.risenb.studyknowledge.beans.topic;
+package com.example.administrator.zhixueproject.bean.topic;
 
-/**
- * Created by zhuzh on 2017/11/23.
- */
+
 
 public class ActivityUserListBean {
 

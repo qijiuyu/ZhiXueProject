@@ -133,22 +133,22 @@
         <activity
             android:name=".activity.topic.TopicListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.college.RecentEarningActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.topic.ChargePrivilegeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.topic.PostDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.topic.PostDetailValueActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.topic.ReleasePostActivity"
             android:screenOrientation="portrait"
@@ -172,7 +172,7 @@
         <activity
             android:name=".activity.college.SelectTeacherActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".activity.college.TopicAccountActivity"
@@ -234,6 +234,12 @@
             android:name=".activity.live.AddLiveActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.topic.ActionManageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.topic.ActionNeophyteActivity"
+            android:screenOrientation="portrait" />
 
 
         <!--注册微信回调 WXEntryActivity -->

@@ -3,6 +3,8 @@ package com.example.administrator.zhixueproject.http.api;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
+import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
+import com.example.administrator.zhixueproject.bean.topic.ActionNeophyteBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
@@ -167,4 +169,32 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_YOUCHANG_DETAIL)
     Call<PostsDetailsBean>getYouChangDetail(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取活动列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_ACTIVITY_LIST)
+    Call<ActionManageBean>getActivityList(@FieldMap Map<String,String> map);
+
+
+    /**
+     * 获取活动列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DELETE_ACTIVITY)
+    Call<ActionManageBean>deleteActivity(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取活动参与者列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_ACTIVITY_USER_LIST)
+    Call<ActionNeophyteBean>getActivityUserList(@FieldMap Map<String,String> map);
 }

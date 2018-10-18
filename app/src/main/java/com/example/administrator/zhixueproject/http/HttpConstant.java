@@ -190,6 +190,15 @@ public class HttpConstant {
     //查询举报列表
     public static final String GET_REPORT_LIST="complaint/getComplaint.do";
 
+    // 查询活动列表
+    public static final String GET_ACTIVITY_LIST = "activity/getActivityList.do";
+
+    // 删除活动
+    public static final String DELETE_ACTIVITY = "activity/delActivity.do";
+
+    // 获取活动参与者列表
+    public static final String GET_ACTIVITY_USER_LIST ="activity/getActivityUserList.do" ;
+
     //获取直播列表
     public static final String GET_LIVE_LIST="postLive/getPostLiveList.do";
 }

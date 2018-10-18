@@ -9,44 +9,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@mipmap/action_person_bg"
-        android:layout_marginLeft="@dimen/dm010"
-        android:layout_marginRight="@dimen/dm010"
-        android:padding="@dimen/dm050">
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:padding="@dimen/dm005">-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv_action_name"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:singleLine="true"-->
-                <!--android:text="艺术博物馆管理"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:textSize="@dimen/dm030" />-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="报名人"-->
-                <!--android:textColor="@color/gray_text"-->
-                <!--android:textSize="@dimen/dm028" />-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="@dimen/dm020"-->
-                <!--android:text="天才小猪"-->
-                <!--android:textColor="@color/blue"-->
-                <!--android:textSize="@dimen/dm028" />-->
-
-        <!--</LinearLayout>-->
-
-
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="25dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -58,16 +23,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="报名人："
-                android:textColor="@color/gray_3"
-                android:textSize="@dimen/dm028" />
+                android:textColor="@color/color_333333"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="景小甜"
-                android:textColor="@color/gray_3"
-                android:textSize="@dimen/dm028" />
+                android:textColor="@color/color_333333"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -84,8 +49,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="联系方式：123455677888"
-                android:textColor="@color/gray_6"
-                android:textSize="@dimen/dm028" />
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -101,16 +66,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="参与时间："
-                android:textColor="@color/gray_6"
-                android:textSize="@dimen/dm028" />
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_join_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2017-9-21 12:09:99"
-                android:textColor="@color/coach_gray"
-                android:textSize="@dimen/dm028" />
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
 
         </LinearLayout>
     </LinearLayout>

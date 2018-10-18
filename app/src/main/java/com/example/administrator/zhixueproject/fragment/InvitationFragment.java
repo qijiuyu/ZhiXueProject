@@ -47,6 +47,7 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
     }
 
     private void initView(View view) {
+        view.findViewById(R.id.lin_back).setVisibility(View.GONE);
         mRefreshLayout = (MyRefreshLayout) view.findViewById(R.id.mrl_topic_list);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_topic_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

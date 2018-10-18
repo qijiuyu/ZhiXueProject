@@ -35,7 +35,6 @@ public class PostsTaskAdapter extends BaseQuickAdapter<PostsDetailsBean.PostDeta
         RecyclerView rvCommentReply = helper.getView(R.id.rv_comment_reply);
         rvCommentReply.setLayoutManager(new LinearLayoutManager(mContext));
 
-//        mAdapter.setData(item.getVoteOptionBean());
         rvCommentReply.setAdapter(mAdapter);
         rvCommentReply.setNestedScrollingEnabled(false);
     }
