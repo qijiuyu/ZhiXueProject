@@ -209,8 +209,7 @@ public class WithDrawListActivity extends BaseActivity   implements MyRefreshLay
      * @param index
      */
     private void getData(int index){
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getWithDraw(page,limit,simpleDateFormat.format(new Date()),index,mHandler);
+        HttpMethod1.getWithDraw(page,limit,index,mHandler);
     }
 
 

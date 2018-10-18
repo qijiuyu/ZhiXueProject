@@ -62,5 +62,9 @@ public class HandlerConstant1 {
     public static final int GET_FEEDBACK_SUCCESS2=1162;
     public static final int ADD_FEEDBACK_SUCCESS=1163;
     public static final int SET_FEEDBACK_ISREAD_SUCCESS=1164;
+    public static final int GET_REPORT_LIST_SUCCESS=1165;
+    public static final int GET_REPORT_LIST_SUCCESS2=1166;
+    public static final int GET_REPORT_LIST_SUCCESS3=1167;
+    public static final int GET_REPORT_LIST_SUCCESS4=1168;
 
 }

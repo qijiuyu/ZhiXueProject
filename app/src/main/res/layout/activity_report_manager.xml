@@ -136,5 +136,16 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/lin"
+        android:visibility="gone"
+        android:layout_below="@id/head"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#B3f7f7f7">
+
+    </LinearLayout>
+
 
 </RelativeLayout>

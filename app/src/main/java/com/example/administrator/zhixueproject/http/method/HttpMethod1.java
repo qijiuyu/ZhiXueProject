@@ -17,6 +17,7 @@ import com.example.administrator.zhixueproject.bean.MemBerLevel;
 import com.example.administrator.zhixueproject.bean.Notice;
 import com.example.administrator.zhixueproject.bean.Post;
 import com.example.administrator.zhixueproject.bean.QuestionAccount;
+import com.example.administrator.zhixueproject.bean.Report;
 import com.example.administrator.zhixueproject.bean.TeacherBean;
 import com.example.administrator.zhixueproject.bean.RecentEarning;
 import com.example.administrator.zhixueproject.bean.TopicAccount;
@@ -697,15 +698,13 @@ public class HttpMethod1  extends BaseRequst {
 
     /**
      * 友商售出列表
-     * @param timestamp
      * @param page
      * @param limit
      * @param index
      * @param handler
      */
-    public static void buyInessOut(String timestamp,int page,int limit,final int index,final Handler handler) {
+    public static void buyInessOut(int page,int limit,final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("timestamp",timestamp);
         map.put("page",page+"");
         map.put("limit",limit+"");
         Http.getRetrofit().create(HttpApi1.class).buyInessOut(map).enqueue(new Callback<BuyIness>() {
@@ -760,17 +759,15 @@ public class HttpMethod1  extends BaseRequst {
      * @param endDate
      * @param page
      * @param limit
-     * @param timestamp
      * @param index
      * @param handler
      */
-    public static void getTopicAccount(String startDate, String endDate, int page, int limit, String timestamp, final int index, final Handler handler) {
+    public static void getTopicAccount(String startDate, String endDate, int page, int limit, final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("startDate",startDate);
         map.put("endDate",endDate);
         map.put("page",page+"");
         map.put("limit",limit+"");
-        map.put("timestamp",timestamp);
         Http.getRetrofit().create(HttpApi1.class).getTopicAccount(map).enqueue(new Callback<TopicAccount>() {
             public void onResponse(Call<TopicAccount> call, Response<TopicAccount> response) {
                 try {
@@ -792,16 +789,14 @@ public class HttpMethod1  extends BaseRequst {
     /**
      * 获取讲师列表
      * @param key
-     * @param timestamp
      * @param page
      * @param limit
      * @param index
      * @param handler
      */
-    public static void getTeacherList(String key,String timestamp,int page,int limit,final int index,final Handler handler) {
+    public static void getTeacherList(String key,int page,int limit,final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("key",key);
-        map.put("timestamp",timestamp);
         map.put("page",page+"");
         map.put("limit",limit+"");
         Http.getRetrofit().create(HttpApi1.class).getTeacherList(map).enqueue(new Callback<TeacherBean>() {
@@ -858,17 +853,15 @@ public class HttpMethod1  extends BaseRequst {
      * @param endDate
      * @param page
      * @param limit
-     * @param timestamp
      * @param index
      * @param handler
      */
-    public static void getEntryGroupAccount(String startDate, String endDate, int page, int limit, String timestamp, final int index, final Handler handler) {
+    public static void getEntryGroupAccount(String startDate, String endDate, int page, int limit,final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("startDate",startDate);
         map.put("endDate",endDate);
         map.put("page",page+"");
         map.put("limit",limit+"");
-        map.put("timestamp",timestamp);
         Http.getRetrofit().create(HttpApi1.class).getEntryGroupAccount(map).enqueue(new Callback<EntryGroup>() {
             public void onResponse(Call<EntryGroup> call, Response<EntryGroup> response) {
                 try {
@@ -893,17 +886,15 @@ public class HttpMethod1  extends BaseRequst {
      * @param endDate
      * @param page
      * @param limit
-     * @param timestamp
      * @param index
      * @param handler
      */
-    public static void getPostAccount(String startDate, String endDate, int page, int limit, String timestamp, final int index, final Handler handler) {
+    public static void getPostAccount(String startDate, String endDate, int page, int limit,final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("startDate",startDate);
         map.put("endDate",endDate);
         map.put("page",page+"");
         map.put("limit",limit+"");
-        map.put("timestamp",timestamp);
         Http.getRetrofit().create(HttpApi1.class).getPostAccount(map).enqueue(new Callback<Post>() {
             public void onResponse(Call<Post> call, Response<Post> response) {
                 try {
@@ -928,17 +919,15 @@ public class HttpMethod1  extends BaseRequst {
      * @param endDate
      * @param page
      * @param limit
-     * @param timestamp
      * @param index
      * @param handler
      */
-    public static void getGiveAccount(String startDate, String endDate, int page, int limit, String timestamp, final int index, final Handler handler) {
+    public static void getGiveAccount(String startDate, String endDate, int page, int limit,final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("startDate",startDate);
         map.put("endDate",endDate);
         map.put("page",page+"");
         map.put("limit",limit+"");
-        map.put("timestamp",timestamp);
         Http.getRetrofit().create(HttpApi1.class).getGiveAccount(map).enqueue(new Callback<GiveAccount>() {
             public void onResponse(Call<GiveAccount> call, Response<GiveAccount> response) {
                 try {
@@ -964,17 +953,15 @@ public class HttpMethod1  extends BaseRequst {
      * @param endDate
      * @param page
      * @param limit
-     * @param timestamp
      * @param index
      * @param handler
      */
-    public static void getGiveScalAccount(String startDate, String endDate, int page, int limit, String timestamp, final int index, final Handler handler) {
+    public static void getGiveScalAccount(String startDate, String endDate, int page, int limit, final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("startDate",startDate);
         map.put("endDate",endDate);
         map.put("page",page+"");
         map.put("limit",limit+"");
-        map.put("timestamp",timestamp);
         Http.getRetrofit().create(HttpApi1.class).getGiveScalAccount(map).enqueue(new Callback<GiveScalAccount>() {
             public void onResponse(Call<GiveScalAccount> call, Response<GiveScalAccount> response) {
                 try {
@@ -999,17 +986,15 @@ public class HttpMethod1  extends BaseRequst {
      * @param endDate
      * @param page
      * @param limit
-     * @param timestamp
      * @param index
      * @param handler
      */
-    public static void getQuestionAccount(String startDate, String endDate, int page, int limit, String timestamp, final int index, final Handler handler) {
+    public static void getQuestionAccount(String startDate, String endDate, int page, int limit,final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("startDate",startDate);
         map.put("endDate",endDate);
         map.put("page",page+"");
         map.put("limit",limit+"");
-        map.put("timestamp",timestamp);
         Http.getRetrofit().create(HttpApi1.class).getQuestionAccount(map).enqueue(new Callback<QuestionAccount>() {
             public void onResponse(Call<QuestionAccount> call, Response<QuestionAccount> response) {
                 try {
@@ -1032,15 +1017,13 @@ public class HttpMethod1  extends BaseRequst {
      * 提现明细列表
      * @param page
      * @param limit
-     * @param timestamp
      * @param index
      * @param handler
      */
-    public static void getWithDraw(int page, int limit, String timestamp, final int index, final Handler handler) {
+    public static void getWithDraw(int page, int limit, final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("page",page+"");
         map.put("limit",limit+"");
-        map.put("timestamp",timestamp);
         Http.getRetrofit().create(HttpApi1.class).getWithDraw(map).enqueue(new Callback<WithDraw>() {
             public void onResponse(Call<WithDraw> call, Response<WithDraw> response) {
                 try {
@@ -1113,15 +1096,13 @@ public class HttpMethod1  extends BaseRequst {
      * 获取公告列表
      * @param page
      * @param limit
-     * @param timestamp
      * @param index
      * @param handler
      */
-    public static void getNoticeList(int page, int limit, String timestamp, final int index, final Handler handler) {
+    public static void getNoticeList(int page, int limit,final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("page",page+"");
         map.put("limit",limit+"");
-        map.put("timestamp",timestamp);
         Http.getRetrofit().create(HttpApi1.class).getNoticeList(map).enqueue(new Callback<Notice>() {
             public void onResponse(Call<Notice> call, Response<Notice> response) {
                 try {
@@ -1229,15 +1210,13 @@ public class HttpMethod1  extends BaseRequst {
      * @param key
      * @param page
      * @param limit
-     * @param timestamp
      * @param handler
      */
-    public static void getFeedBack(String key,int page,int limit,String timestamp,final int index,final Handler handler) {
+    public static void getFeedBack(String key,int page,int limit,final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("key",key);
         map.put("page",page+"");
         map.put("limit",limit+"");
-        map.put("timestamp",timestamp);
         Http.getRetrofit().create(HttpApi1.class).getFeedBack(map).enqueue(new Callback<FeedBack>() {
             public void onResponse(Call<FeedBack> call, Response<FeedBack> response) {
                 try {
@@ -1301,6 +1280,38 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 查询举报列表
+     * @param complaintType
+     * @param orderBy
+     * @param page
+     * @param limit
+     * @param handler
+     */
+    public static void getReportList(int complaintType,String orderBy,int page,int limit,final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("complaintType",complaintType+"");
+        map.put("orderBy",orderBy);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        Http.getRetrofit().create(HttpApi1.class).getReportList(map).enqueue(new Callback<Report>() {
+            public void onResponse(Call<Report> call, Response<Report> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<Report> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

@@ -136,7 +136,6 @@ public class EntryGroupAccountActivity extends BaseActivity   implements MyRefre
      * @param index
      */
     private void getData(int index){
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod1.getEntryGroupAccount(startTime,endTime,page,limit,simpleDateFormat.format(new Date()),index,mHandler);
+        HttpMethod1.getEntryGroupAccount(startTime,endTime,page,limit,index,mHandler);
     }
 }
