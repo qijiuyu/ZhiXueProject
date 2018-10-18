@@ -26,6 +26,7 @@ import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.bean.WithDraw;
 import com.example.administrator.zhixueproject.bean.WithDrawInfo;
+import com.example.administrator.zhixueproject.bean.live.Live;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.api.HttpApi1;
 import com.example.administrator.zhixueproject.http.base.BaseRequst;
@@ -1312,6 +1313,35 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<Report> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 查询直播列表
+     * @param page
+     * @param limit
+     * @param index
+     * @param handler
+     */
+    public static void getLiveList(int page,int limit,final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        Http.getRetrofit().create(HttpApi1.class).getLiveList(map).enqueue(new Callback<Live>() {
+            public void onResponse(Call<Live> call, Response<Live> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<Live> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

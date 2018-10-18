@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ListView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.college.ReportManagerActivity;
@@ -50,6 +51,9 @@ public class TopicReportFragment extends BaseFragment implements MyRefreshLayout
         view = inflater.inflate(R.layout.fragment_report, container, false);
         mRefreshLayout=(MyRefreshLayout)view.findViewById(R.id.re_list);
         listView=(ListView)view.findViewById(R.id.listView);
+        final View view = mActivity.getLayoutInflater().inflate(R.layout.empty_view, null);
+        ((ViewGroup) listView.getParent()).addView(view, new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT));
+        listView.setEmptyView(view);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
         reportListAdapter=new ReportListAdapter(mActivity,listAll);

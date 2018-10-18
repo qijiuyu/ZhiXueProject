@@ -22,6 +22,7 @@ import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.bean.WithDraw;
 import com.example.administrator.zhixueproject.bean.WithDrawInfo;
+import com.example.administrator.zhixueproject.bean.live.Live;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 
 import java.util.Map;
@@ -470,5 +471,15 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_REPORT_LIST)
     Call<Report> getReportList(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 查询直播列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_LIVE_LIST)
+    Call<Live> getLiveList(@FieldMap Map<String, String> map);
 
 }

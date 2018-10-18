@@ -66,5 +66,7 @@ public class HandlerConstant1 {
     public static final int GET_REPORT_LIST_SUCCESS2=1166;
     public static final int GET_REPORT_LIST_SUCCESS3=1167;
     public static final int GET_REPORT_LIST_SUCCESS4=1168;
+    public static final int GET_LIVE_LIST_SUCCESS=1169;
+    public static final int GET_LIVE_LIST_SUCCESS2=1170;
 
 }
