@@ -1,16 +1,15 @@
 package com.example.administrator.zhixueproject.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.topic.ActionManageActivity;
 import com.example.administrator.zhixueproject.activity.topic.TopicListManageActivity;
+import com.example.administrator.zhixueproject.activity.topic.VoteManageActivity;
 
 /**
  * 话题管理fragment
@@ -50,7 +49,7 @@ public class TopicFragment extends BaseFragment implements View.OnClickListener 
                 break;
             // 投票管理
             case R.id.tv_vote:
-
+                setClass(VoteManageActivity.class);
                 break;
             default:
                 break;

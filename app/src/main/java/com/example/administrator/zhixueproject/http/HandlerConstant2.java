@@ -31,4 +31,9 @@ public class HandlerConstant2 {
     public static final int DELETE_ACTIVITY_SUCCESS = 2026;
     public static final int GET_ACTIVITY_USER_LIST_SUCCESS = 2027;
     public static final int GET_ACTIVITY_USER_LIST_SUCCESS2 = 2028;
+    public static final int GET_VOTE_LIST_SUCCESS = 2029;
+    public static final int GET_VOTE_LIST_SUCCESS2 = 2030;
+    public static final int DELETE_VOTE_SUCCESS = 2031;
+    public static final int GET_VOTE_USER_LIST_SUCCESS = 2032;
+    public static final int GET_VOTE_USER_LIST_SUCCESS2 = 2033;
 }

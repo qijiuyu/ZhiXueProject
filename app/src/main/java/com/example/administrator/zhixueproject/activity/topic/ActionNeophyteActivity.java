@@ -19,6 +19,7 @@ import com.example.administrator.zhixueproject.bean.topic.ActivityUserListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class ActionNeophyteActivity extends BaseActivity implements MyRefreshLay
     }
 
     private void initView() {
+        StatusBarUtils.transparencyBar(this);
         activityId = getIntent().getStringExtra("activityId");
         TextView tvTitle= (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.action_neophyte));

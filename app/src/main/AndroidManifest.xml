@@ -240,6 +240,12 @@
         <activity
             android:name=".activity.topic.ActionNeophyteActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.topic.VoteManageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.topic.VoteNeophyteActivity"
+            android:screenOrientation="portrait" />
 
 
         <!--注册微信回调 WXEntryActivity -->

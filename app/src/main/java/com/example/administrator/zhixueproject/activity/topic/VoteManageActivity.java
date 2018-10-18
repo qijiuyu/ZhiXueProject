@@ -6,23 +6,17 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
-import com.example.administrator.zhixueproject.adapter.topic.ActionManageAdapter;
-import com.example.administrator.zhixueproject.adapter.topic.TopicListAdapter;
-import com.example.administrator.zhixueproject.application.MyApplication;
-import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
+import com.example.administrator.zhixueproject.adapter.topic.VoteManageAdapter;
 import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
-import com.example.administrator.zhixueproject.bean.topic.ActivityListBean;
-import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
+import com.example.administrator.zhixueproject.bean.topic.VoteListBean;
+import com.example.administrator.zhixueproject.bean.topic.VoteManageBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
@@ -30,58 +24,54 @@ import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
 
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 活动管理
+ * 投票管理
  *
  * @author PeterGee
  * @date 2018/10/18
  */
-public class ActionManageActivity extends BaseActivity implements View.OnClickListener, MyRefreshLayoutListener, BaseQuickAdapter.OnItemChildClickListener {
+public class VoteManageActivity extends BaseActivity implements View.OnClickListener, MyRefreshLayoutListener, BaseQuickAdapter.OnItemChildClickListener {
 
-    private ActionManageAdapter mAdapter;
-    private List<ActivityListBean> listData = new ArrayList<>();
+    private VoteManageAdapter mAdapter;
+    private List<VoteListBean> listData = new ArrayList<>();
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = System.currentTimeMillis() + "";
+    private String TIMESTAMP = System.currentTimeMillis()+"";
     private int mCurrentPosition;
-    private MyRefreshLayout mrlActionManage;
-    private RecyclerView rvActionManage;
+    private boolean isFirst = true;
+    private MyRefreshLayout mrlVoteManage;
+    private RecyclerView rvVoteManage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_action_manage);
+        setContentView(R.layout.activity_vote_manage);
         initView();
     }
 
     private void initView() {
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
-        tvTitle.setText(getString(R.string.action_manage));
+        tvTitle.setText(getString(R.string.vote_manage));
         findViewById(R.id.lin_back).setOnClickListener(this);
-        TextView tvRight = (TextView) findViewById(R.id.tv_right);
+        TextView tvRight= (TextView) findViewById(R.id.tv_right);
         tvRight.setBackground(getResources().getDrawable(R.mipmap.add_title_iv));
         tvRight.setOnClickListener(this);
-
-        mrlActionManage = (MyRefreshLayout) findViewById(R.id.mrl_action_manage);
-        rvActionManage = (RecyclerView) findViewById(R.id.rv_action_manage);
-        rvActionManage.setLayoutManager(new LinearLayoutManager(this));
+        mrlVoteManage = (MyRefreshLayout) findViewById(R.id.mrl_vote_manage);
+        rvVoteManage = (RecyclerView) findViewById(R.id.rv_vote_manage);
+        rvVoteManage.setLayoutManager(new LinearLayoutManager(this));
         //添加分隔线
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this, R.drawable.divider_activity_line, LinearLayoutManager.VERTICAL);
-        rvActionManage.addItemDecoration(itemDecoration);
-        mrlActionManage.setMyRefreshLayoutListener(this);//刷新加载
-        mAdapter = new ActionManageAdapter(R.layout.action_manage_item, listData);
-
-        getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS);
+        rvVoteManage.addItemDecoration(itemDecoration);
+        mrlVoteManage.setMyRefreshLayoutListener(this);
+        getVoteList(HandlerConstant2.GET_VOTE_LIST_SUCCESS);
     }
 
-    public void getActivityList(int index) {
+    private void getVoteList(int index) {
         showProgress(getString(R.string.loading));
-        HttpMethod2.getActivityList(TIMESTAMP, PAGE+"", LIMIT, index, mHandler);
+        HttpMethod2.getVoteList(TIMESTAMP, PAGE + "", LIMIT,index,mHandler);
     }
 
     @Override
@@ -91,7 +81,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.tv_right:
-                ReleaseActionActivity.start(this, null);
+                ReleaseVoteActivity.start(this, null);
                 break;
             default:
                 break;
@@ -100,33 +90,31 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onRefresh(View view) {
-        PAGE = 1;
-        getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS);
-
+        PAGE=1;
+        getVoteList(HandlerConstant2.GET_VOTE_LIST_SUCCESS);
     }
 
     @Override
     public void onLoadMore(View view) {
         PAGE++;
-        getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS2);
-
+        getVoteList(HandlerConstant2.GET_VOTE_LIST_SUCCESS2);
     }
 
-    private Handler mHandler = new Handler() {
+    private Handler mHandler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
-            ActionManageBean bean = (ActionManageBean) msg.obj;
+            VoteManageBean bean= (VoteManageBean) msg.obj;
             switch (msg.what) {
-                case HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS:
+                case HandlerConstant2.GET_VOTE_LIST_SUCCESS:
                     getDataSuccess(bean);
                     break;
-                case HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS2:
+                case HandlerConstant2.GET_VOTE_LIST_SUCCESS2:
                     loadMoreSuccess(bean);
                     break;
-                case HandlerConstant2.DELETE_ACTIVITY_SUCCESS:
-                    deleteActionSuccess();
+                case HandlerConstant2.DELETE_VOTE_SUCCESS:
+                    deleteVoteSuccess();
                     break;
                 case HandlerConstant1.REQUST_ERROR:
                     requestError();
@@ -141,14 +129,14 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
     /**
      * 加载数据
      */
-    private void getDataSuccess(ActionManageBean bean) {
-        mrlActionManage.refreshComplete();
+    private void getDataSuccess(VoteManageBean bean) {
+        mrlVoteManage.refreshComplete();
         if (null == bean) {
             return;
         }
         if (bean.isStatus()) {
-             ActionManageBean.DataBean dataBean = bean.getData();
-            listData = dataBean.getActivityList();
+            VoteManageBean.DataBean dataBean = bean.getData();
+            listData = dataBean.getVoteList();
             adapterView();
         } else {
             showMsg(bean.errorMsg);
@@ -159,18 +147,18 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
     /**
      * 加载更多
      */
-    private void loadMoreSuccess(ActionManageBean bean) {
-        mrlActionManage.loadMoreComplete();
+    private void loadMoreSuccess(VoteManageBean bean) {
+        mrlVoteManage.loadMoreComplete();
         if (null == bean) {
             return;
         }
         if (bean.isStatus()) {
-            ActionManageBean.DataBean dataBean = bean.getData();
-            if (dataBean.getActivityList().size() <= 0) {
+            VoteManageBean.DataBean dataBean = bean.getData();
+            if (dataBean.getVoteList().size() <= 0) {
                 showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }
-            listData.addAll(dataBean.getActivityList());
+            listData.addAll(dataBean.getVoteList());
             adapterView();
         } else {
             showMsg(bean.errorMsg);
@@ -180,7 +168,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
     /**
      * 删除活动成功
      */
-    public void deleteActionSuccess() {
+    public void deleteVoteSuccess() {
         showMsg("删除成功");
         listData.remove(mCurrentPosition);
         mAdapter.notifyDataSetChanged();
@@ -190,8 +178,8 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
      * 加载失败
      */
     private void requestError() {
-        mrlActionManage.refreshComplete();
-        mrlActionManage.loadMoreComplete();
+        mrlVoteManage.refreshComplete();
+        mrlVoteManage.loadMoreComplete();
         showMsg(getString(R.string.load_failed));
     }
 
@@ -199,35 +187,24 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
      * 设置adapter 数据
      */
     private void adapterView() {
-        rvActionManage.setAdapter(mAdapter);
-        mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) rvActionManage.getParent());
+        mAdapter = new VoteManageAdapter(R.layout.vote_manage_item, listData);
+        rvVoteManage.setAdapter(mAdapter);
+        mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) rvVoteManage.getParent());
         mAdapter.setOnItemChildClickListener(this);//侧滑菜单监听
     }
 
     @Override
-    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        this.mCurrentPosition = position;
+    public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
         switch (view.getId()) {
-            //编辑
             case R.id.tv_menu_one:
-                ActivityListBean activityListBean = listData.get(position);
-                ReleaseActionActivity.start(this, activityListBean);
+                ReleaseVoteActivity.start(this,listData.get(position));
                 break;
-            //删除
             case R.id.tv_menu_two:
-                HttpMethod2.deleteActivity(String.valueOf(listData.get(position).getActivityId()),mHandler);
+                this.mCurrentPosition = position;
+                HttpMethod2.deleteVote(String.valueOf(listData.get(position).getVoteId()),mHandler);
                 break;
             default:
                 break;
         }
     }
-
-    @Subscribe
-    public void postEvent(PostEvent postEvent) {
-        if (PostEvent.RELEASE_SUCCESS == postEvent.getEventType()) {
-            PAGE = 1;
-            getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS);
-        }
-    }
-
 }

@@ -201,4 +201,13 @@ public class HttpConstant {
 
     //获取直播列表
     public static final String GET_LIVE_LIST="postLive/getPostLiveList.do";
+
+    // 获取投票列表
+    public static final String GET_VOTE_LIST = "vote/getVoteList.do";
+
+    // 删除投票
+    public static final String DELETE_VOTE = "vote/delVote.do";
+
+    // 获取投票详情页
+    public static final String GET_VOTE_DETAIL ="vote/getVoteDetail.do" ;
 }

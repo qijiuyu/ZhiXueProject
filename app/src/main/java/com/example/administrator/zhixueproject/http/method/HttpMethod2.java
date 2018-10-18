@@ -12,6 +12,8 @@ import com.example.administrator.zhixueproject.bean.topic.ActivityListBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
+import com.example.administrator.zhixueproject.bean.topic.VoteManageBean;
+import com.example.administrator.zhixueproject.bean.topic.VoteNeophyteBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.api.HttpApi2;
@@ -786,6 +788,104 @@ public class HttpMethod2 extends BaseRequst{
 
             @Override
             public void onFailure(Call<ActionNeophyteBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     * 获取投票列表
+     * @param timestamp
+     * @param page
+     * @param limit
+     * @param index
+     * @param handler
+     */
+    public static void getVoteList(String timestamp, String page, String limit,
+                                       final int index, final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("timestamp",timestamp);
+        map.put("page",page);
+        map.put("limit",limit);
+        Http.getRetrofit().create(HttpApi2.class).getVoteList(map).enqueue(new Callback<VoteManageBean>() {
+            @Override
+            public void onResponse(Call<VoteManageBean> call, Response<VoteManageBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VoteManageBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     * 删除投票
+     * @param voteId
+     * @param handler
+     */
+    public static void deleteVote(String voteId,final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("voteId",voteId);
+        Http.getRetrofit().create(HttpApi2.class).deleteVote(map).enqueue(new Callback<VoteManageBean>() {
+            @Override
+            public void onResponse(Call<VoteManageBean> call, Response<VoteManageBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.DELETE_VOTE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VoteManageBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     * 获取投票详情页
+     * @param voteId
+     * @param timestamp
+     * @param page
+     * @param limit
+     * @param index
+     * @param handler
+     */
+    public static void getVoteUserList(String voteId,String timestamp, String page, String limit,
+                                           final int index, final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("postId",voteId);
+        map.put("timestamp",timestamp);
+        map.put("page",page);
+        map.put("limit",limit);
+        Http.getRetrofit().create(HttpApi2.class).getVoteDetail(map).enqueue(new Callback<VoteNeophyteBean>() {
+            @Override
+            public void onResponse(Call<VoteNeophyteBean> call, Response<VoteNeophyteBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VoteNeophyteBean> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
