@@ -42,6 +42,7 @@ public class MemberLevelActivity extends BaseActivity implements View.OnClickLis
         TextView tvHead=(TextView)findViewById(R.id.tv_title);
         tvHead.setText(getString(R.string.member_level_setting));
         listView=(ListView)findViewById(R.id.listView);
+        listView.setDividerHeight(0);
         findViewById(R.id.tv_save).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
@@ -121,9 +122,12 @@ public class MemberLevelActivity extends BaseActivity implements View.OnClickLis
 
 
     MemberLevelCallBack memberLevelCallBack=new MemberLevelCallBack() {
-        @Override
-        public void setData(int position, int data) {
-
+        public void setData(int userCollegegradeId, int data) {
+            for (int i=0;i<list.size();i++){
+                if(list.get(i).getUserCollegegradeId()==userCollegegradeId){
+                    list.get(i).setUserCollegegradePoints(data);
+                }
+            }
         }
     };
 

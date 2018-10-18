@@ -14,7 +14,7 @@ public class TopicListBean implements Serializable {
      * topicType : 1
      */
 
-    private int topicId;
+    private long topicId;
     private String creationTime;
     private String topicImg;
     private int topicUseyn;
@@ -54,11 +54,11 @@ public class TopicListBean implements Serializable {
     }
 
 
-    public int getTopicId() {
+    public long getTopicId() {
         return topicId;
     }
 
-    public void setTopicId(int topicId) {
+    public void setTopicId(long topicId) {
         this.topicId = topicId;
     }
 

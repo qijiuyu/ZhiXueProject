@@ -40,6 +40,7 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
     private TopicListBean topicListBean;
     //讲师对象
     private Teacher teacher;
+    private BuyIness.BusInessList busInessList;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cooperate);
@@ -66,6 +67,27 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
         findViewById(R.id.tv_setting_save).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
+
+
+    /**
+     * 展示要编辑的数据
+     */
+    private void showUpdateData(){
+        busInessList= (BuyIness.BusInessList) getIntent().getSerializableExtra("busInessList");
+        if(null==busInessList){
+            return;
+        }
+        etName.setText(busInessList.getCollegeName());
+        topicListBean=new TopicListBean();
+        topicListBean.setTopicId(busInessList.getBuytopicTopic());
+        tvTopic.setText(busInessList.getTopicName());
+        teacher=new Teacher();
+        teacher.setTeacherId(Long.parseLong(busInessList.getNewWriterId()));
+//        tvTeacherName.setText(busInessList);
+
+    }
+
+
 
     @Override
     public void onClick(View v) {

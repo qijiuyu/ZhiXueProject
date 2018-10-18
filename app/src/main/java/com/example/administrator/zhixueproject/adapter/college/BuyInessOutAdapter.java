@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.adapter.college;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.college.AddCooperateActivity;
 import com.example.administrator.zhixueproject.activity.college.BuyInessInActivity;
 import com.example.administrator.zhixueproject.activity.college.BuyInessOutActivity;
 import com.example.administrator.zhixueproject.bean.BuyIness;
@@ -89,6 +91,18 @@ public class BuyInessOutAdapter extends BaseAdapter{
 				}
 				final BuyIness.BusInessList busInessList= (BuyIness.BusInessList) v.getTag();
 				((BuyInessOutActivity)activity).deleteBuyIness(busInessList);
+			}
+		});
+		//编辑代理
+		holder.tvEdit.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if(null==v.getTag()){
+					return;
+				}
+				final BuyIness.BusInessList busInessList= (BuyIness.BusInessList) v.getTag();
+				Intent intent=new Intent(activity, AddCooperateActivity.class);
+				intent.putExtra("busInessList",busInessList);
+				activity.startActivityForResult(intent,1);
 			}
 		});
 		return view;

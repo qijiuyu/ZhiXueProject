@@ -186,4 +186,7 @@ public class HttpConstant {
 
     //获取有偿提问帖子详情
     public static final String GET_YOUCHANG_DETAIL = "post/getYouChangDetail.do";
+
+    //查询举报列表
+    public static final String GET_REPORT_LIST="complaint/getComplaint.do";
 }
