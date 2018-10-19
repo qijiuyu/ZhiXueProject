@@ -25,4 +25,15 @@ public class HandlerConstant2 {
     public static final int COMMENT_REPLY_SUCCESS =2020 ;
     public static final int GET_POST_DETAIL_SUCCESS = 2021;
     public static final int GET_POST_DETAIL_SUCCESS2 = 2022;
+    public static final int GET_YOU_CHANG_DETAIL_SUCCESS =2023 ;
+    public static final int GET_ACTIVITY_LIST_SUCCESS = 2024;
+    public static final int GET_ACTIVITY_LIST_SUCCESS2 = 2025;
+    public static final int DELETE_ACTIVITY_SUCCESS = 2026;
+    public static final int GET_ACTIVITY_USER_LIST_SUCCESS = 2027;
+    public static final int GET_ACTIVITY_USER_LIST_SUCCESS2 = 2028;
+    public static final int GET_VOTE_LIST_SUCCESS = 2029;
+    public static final int GET_VOTE_LIST_SUCCESS2 = 2030;
+    public static final int DELETE_VOTE_SUCCESS = 2031;
+    public static final int GET_VOTE_USER_LIST_SUCCESS = 2032;
+    public static final int GET_VOTE_USER_LIST_SUCCESS2 = 2033;
 }

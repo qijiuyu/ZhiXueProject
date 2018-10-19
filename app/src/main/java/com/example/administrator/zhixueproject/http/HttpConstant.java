@@ -184,12 +184,33 @@ public class HttpConstant {
     //意见反馈设置已读
     public static final String FEEDBACK_IS_READ="advice/isRead.do";
 
+    //获取有偿提问帖子详情
+    public static final String GET_YOUCHANG_DETAIL = "post/getYouChangDetail.do";
+
     //查询举报列表
     public static final String GET_REPORT_LIST="complaint/getComplaint.do";
+
+    // 查询活动列表
+    public static final String GET_ACTIVITY_LIST = "activity/getActivityList.do";
+
+    // 删除活动
+    public static final String DELETE_ACTIVITY = "activity/delActivity.do";
+
+    // 获取活动参与者列表
+    public static final String GET_ACTIVITY_USER_LIST ="activity/getActivityUserList.do" ;
 
     //获取直播列表
     public static final String GET_LIVE_LIST="postLive/getPostLiveList.do";
 
     //添加直播预告
     public static final String ADD_LIVE="postLive/addPostLive.do";
+
+    // 获取投票列表
+    public static final String GET_VOTE_LIST = "vote/getVoteList.do";
+
+    // 删除投票
+    public static final String DELETE_VOTE = "vote/delVote.do";
+
+    // 获取投票详情页
+    public static final String GET_VOTE_DETAIL ="vote/getVoteDetail.do" ;
 }

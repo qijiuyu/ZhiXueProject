@@ -6,9 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.topic.ActionManageActivity;
 import com.example.administrator.zhixueproject.activity.topic.TopicListManageActivity;
+import com.example.administrator.zhixueproject.activity.topic.VoteManageActivity;
 
 /**
  * 话题管理fragment
@@ -29,6 +30,7 @@ public class TopicFragment extends BaseFragment implements View.OnClickListener 
         tvActivityManage.setOnClickListener(this);
         TextView tvVoteManage = (TextView) view.findViewById(R.id.tv_vote);
         tvVoteManage.setOnClickListener(this);
+        view.findViewById(R.id.lin_back).setVisibility(View.GONE);
 
         return view;
     }
@@ -43,11 +45,11 @@ public class TopicFragment extends BaseFragment implements View.OnClickListener 
                 break;
             // 活动管理
             case R.id.tv_action:
-
+                setClass(ActionManageActivity.class);
                 break;
             // 投票管理
             case R.id.tv_vote:
-
+                setClass(VoteManageActivity.class);
                 break;
             default:
                 break;

@@ -144,11 +144,11 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
 
             mActivityId = mActivityListBean.getActivityId();
             tvActionTitle.setText(mActivityListBean.getActivityName());
-//            sb_stick.setChecked(mActivityListBean.);
             tvTopic.setText(mActivityListBean.getTopicName());
             tvStartTime.setText(mActivityListBean.getStartTime());
+            mStartTime=mActivityListBean.getStartTime();
             tvEndTime.setText(mActivityListBean.getEndTime());
-//            tv_issuer.setText(mActivityListBean.getActivityId());
+            mEndTime=mActivityListBean.getEndTime();
         }
     }
 

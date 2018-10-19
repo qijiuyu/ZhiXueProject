@@ -7,6 +7,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.bean.topic.AddVoteBean;
+import com.example.administrator.zhixueproject.utils.LogUtils;
+
 import java.util.List;
 
 /**
@@ -29,7 +31,6 @@ public class AddVoteAdapter extends BaseQuickAdapter<AddVoteBean, BaseViewHolder
 
     @Override
     protected void convert(final BaseViewHolder helper, final AddVoteBean item) {
-
         helper.setText(R.id.tv_vote_content, item.getContent());
 
         helper.getView(R.id.tv_menu).setOnClickListener(new View.OnClickListener() {

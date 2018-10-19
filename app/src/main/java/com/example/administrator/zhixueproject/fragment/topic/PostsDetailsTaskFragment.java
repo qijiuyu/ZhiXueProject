@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.adapter.topic.PostsTaskAdapter;
@@ -18,6 +19,7 @@ import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -31,7 +33,7 @@ import java.util.List;
  */
 
 public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshLayoutListener, BaseQuickAdapter.OnItemClickListener {
-    private String postId;
+    private String postId; // 帖子id
     private int PAGE = 1;
     private String LIMIT = "10";
     private String TIMESTAMP = System.currentTimeMillis()+"";
@@ -115,6 +117,7 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
                         return;
                     }
                     if (detailsBean.isStatus()) {
+                        LogUtils.e("讨论");
                         getDetailSuccess(detailsBean);
                     } else {
                         showMsg(detailsBean.getErrorMsg());
@@ -181,6 +184,7 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
         rvPostsTask.setAdapter(mAdapter);
         //条目点击
         mAdapter.setOnItemClickListener(this);
+
     }
 
     @Override

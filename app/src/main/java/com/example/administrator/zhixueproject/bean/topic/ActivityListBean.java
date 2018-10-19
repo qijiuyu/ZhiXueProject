@@ -1,12 +1,12 @@
 package com.example.administrator.zhixueproject.bean.topic;
 
+import com.example.administrator.zhixueproject.bean.BaseBean;
+
 import java.io.Serializable;
 
-/**
- * Created by zhuzh on 2017/11/23.
- */
 
-public class ActivityListBean implements Serializable {
+
+public class ActivityListBean extends BaseBean implements Serializable {
 
     /**
      * activityId : 1799

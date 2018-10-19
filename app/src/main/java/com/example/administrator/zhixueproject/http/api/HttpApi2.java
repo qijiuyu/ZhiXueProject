@@ -3,9 +3,13 @@ package com.example.administrator.zhixueproject.http.api;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
+import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
+import com.example.administrator.zhixueproject.bean.topic.ActionNeophyteBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
+import com.example.administrator.zhixueproject.bean.topic.VoteManageBean;
+import com.example.administrator.zhixueproject.bean.topic.VoteNeophyteBean;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import java.util.Map;
 import retrofit2.Call;
@@ -158,4 +162,68 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_POST_DETAIL)
     Call<PostsDetailsBean>getPostDetail(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取有偿提问帖子详情
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_YOUCHANG_DETAIL)
+    Call<PostsDetailsBean>getYouChangDetail(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取活动列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_ACTIVITY_LIST)
+    Call<ActionManageBean>getActivityList(@FieldMap Map<String,String> map);
+
+
+    /**
+     * 获取活动列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DELETE_ACTIVITY)
+    Call<ActionManageBean>deleteActivity(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取活动参与者列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_ACTIVITY_USER_LIST)
+    Call<ActionNeophyteBean>getActivityUserList(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取投票活动列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_VOTE_LIST)
+    Call<VoteManageBean>getVoteList(@FieldMap Map<String,String> map);
+
+    /**
+     * 删除投票活动
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DELETE_VOTE)
+    Call<VoteManageBean>deleteVote(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取投票详情页
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_VOTE_DETAIL)
+    Call<VoteNeophyteBean>getVoteDetail(@FieldMap Map<String,String> map);
 }

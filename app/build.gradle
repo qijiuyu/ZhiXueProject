@@ -60,7 +60,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
     compile 'com.zhy:autolayout:1.4.5'
-    compile 'com.android.support:recyclerview-v7:23.0.0'
+    compile 'com.android.support:recyclerview-v7:23.2.1'
     //刷新和加载
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
     //通用adapter

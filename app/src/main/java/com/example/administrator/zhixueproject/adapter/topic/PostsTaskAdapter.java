@@ -31,12 +31,12 @@ public class PostsTaskAdapter extends BaseQuickAdapter<PostsDetailsBean.PostDeta
         Glide.with(mContext).load(item.getFloorInfo().getUserImg()).error(R.mipmap.unify_circle_head).into((ImageView) helper.getView(R.id.iv_head));
         helper.setText(R.id.tv_comment_floor, item.getFloorInfo().getFloorData());
 
-        RecyclerView rv_comment_reply = helper.getView(R.id.rv_comment_reply);
         PostCommentReplyAdapter mAdapter = new PostCommentReplyAdapter(R.layout.post_comment_reply_item, item.getTalkInfo(),item.getFloorInfo().getFloorId());
-
-//        mAdapter.setData(item.getVoteOptionBean());
-        rv_comment_reply.setAdapter(mAdapter);
-        rv_comment_reply.setLayoutManager(new LinearLayoutManager(mContext));
-        rv_comment_reply.setNestedScrollingEnabled(false);
+        RecyclerView rvCommentReply = helper.getView(R.id.rv_comment_reply);
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(mContext);
+        layoutManager.setAutoMeasureEnabled(true);
+        rvCommentReply.setLayoutManager(layoutManager);
+        rvCommentReply.setAdapter(mAdapter);
+        rvCommentReply.setNestedScrollingEnabled(false);
     }
 }

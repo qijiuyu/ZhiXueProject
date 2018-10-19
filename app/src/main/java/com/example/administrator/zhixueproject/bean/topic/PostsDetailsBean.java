@@ -160,7 +160,6 @@ public class PostsDetailsBean extends BaseBean {
              * floorInfo : {"floorCreationtime":"2017-12-18","floorData":"你哪次你猜你猜你","floorId":720,"userImg":"就象训觉辛苦辛苦","userName":"几点到家时间"}
              * talkInfo : []
              */
-
             private FloorInfoBean floorInfo;
             private List<TalkInfoBean> talkInfo;
 
@@ -207,6 +206,7 @@ public class PostsDetailsBean extends BaseBean {
                 private String userImg;
                 private String userName;
                 private String floorUserId;
+
 
 
                 public String getFloorUserId() {
@@ -256,6 +256,7 @@ public class PostsDetailsBean extends BaseBean {
                 public void setUserName(String userName) {
                     this.userName = userName;
                 }
+
             }
         }
 

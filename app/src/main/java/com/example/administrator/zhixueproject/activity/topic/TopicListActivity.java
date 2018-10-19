@@ -69,7 +69,7 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
         findViewById(R.id.rl_search).setOnClickListener(this);
         findViewById(R.id.iv_close).setOnClickListener(this);
 
-        postTopicId = getIntent().getIntExtra(TopicListAdapter.TOPIC_ITEM_ID, postTopicId);
+        postTopicId = Integer.parseInt(getIntent().getLongExtra(TopicListAdapter.TOPIC_ITEM_ID, postTopicId)+"");
         String[] titles = {"课程", "大家谈", "有偿提问"};
         ArrayList<Fragment> fragmentList = new ArrayList<>();
 
