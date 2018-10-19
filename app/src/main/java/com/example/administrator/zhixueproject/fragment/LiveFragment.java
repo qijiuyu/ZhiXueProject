@@ -224,7 +224,7 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
         super.onResume();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
         Glide.with(mActivity).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
-        tvHead.setText(CollegeInfoFragment.homeBean.getCollegeName());
+        // tvHead.setText(CollegeInfoFragment.homeBean.getCollegeName());
     }
 
 }

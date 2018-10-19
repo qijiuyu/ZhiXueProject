@@ -146,7 +146,6 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
 
         //回复贴子
         if (!isFloorComment) {
-            //mCommentPostP.setCommentPost(String.valueOf(postListBean.getPostId()), postType, commentContent);
             HttpMethod2.commentPost(String.valueOf(postListBean.getPostId()), postType, commentContent, mHandler);
         } else {
             //回复楼层
