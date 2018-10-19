@@ -33,8 +33,9 @@ public class PostsTaskAdapter extends BaseQuickAdapter<PostsDetailsBean.PostDeta
 
         PostCommentReplyAdapter mAdapter = new PostCommentReplyAdapter(R.layout.post_comment_reply_item, item.getTalkInfo(),item.getFloorInfo().getFloorId());
         RecyclerView rvCommentReply = helper.getView(R.id.rv_comment_reply);
-        rvCommentReply.setLayoutManager(new LinearLayoutManager(mContext));
-
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(mContext);
+        layoutManager.setAutoMeasureEnabled(true);
+        rvCommentReply.setLayoutManager(layoutManager);
         rvCommentReply.setAdapter(mAdapter);
         rvCommentReply.setNestedScrollingEnabled(false);
     }

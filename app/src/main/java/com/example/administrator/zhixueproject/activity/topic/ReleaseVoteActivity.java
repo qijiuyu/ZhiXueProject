@@ -29,6 +29,7 @@ import com.example.administrator.zhixueproject.bean.live.TeacherListBean;
 import com.example.administrator.zhixueproject.bean.topic.AddVoteBean;
 import com.example.administrator.zhixueproject.bean.topic.VoteListBean;
 import com.example.administrator.zhixueproject.fragment.topic.AddTopicFragment;
+import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.KeyboardUtils;
@@ -36,8 +37,6 @@ import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.example.administrator.zhixueproject.view.SwitchButton;
 import com.example.administrator.zhixueproject.view.time.TimePickerView;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,7 +55,6 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private List<AddVoteBean> list = new ArrayList<>();
     private TimePickerView pvCustomTime;
     private CustomPopWindow mAddVotePop;
-    //  public ReleaseVoteP mReleaseVoteP;
     public String mIsTop = "1";
     private boolean mIsMultiple;
     private AddTopicFragment mAddTopicFragment;
@@ -112,8 +110,10 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         initCustomTimePicker();
         sbStick.setOnCheckedChangeListener(this);
         sbMultiSelect.setOnCheckedChangeListener(this);
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
+        layoutManager.setAutoMeasureEnabled(true);
+        rvVote.setLayoutManager(layoutManager);
         mAdapter = new AddVoteAdapter(R.layout.add_vote_item, list);
-        rvVote.setLayoutManager(new LinearLayoutManager(this));
         rvVote.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener(this);//侧滑菜单监听
     }
@@ -154,7 +154,6 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     /**
      * 显示话题弹窗
      *
-     * @param show
      */
     private void showTopicFragment(boolean show) {
         if (mAddTopicFragment == null) {
@@ -249,8 +248,6 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
 
     /**
      * 选择类型
-     *
-     * @param contentView
      */
     private void handleTopicType(View contentView) {
         View.OnClickListener listener = new View.OnClickListener() {
@@ -260,7 +257,6 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     mTopicTypePop.dissmiss();
                 }
                 switch (v.getId()) {
-
                     case R.id.tv_course:
                         tvVoteType.setText("课程");
                         topicType = 1;
@@ -433,6 +429,9 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     } else {
                         showMsg(bean.errorMsg);
                     }
+                    break;
+                case HandlerConstant1.REQUST_ERROR:
+                    showMsg(getString(R.string.net_error));
                     break;
                 default:
                     break;
