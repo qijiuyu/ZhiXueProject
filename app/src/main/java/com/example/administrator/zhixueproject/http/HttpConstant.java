@@ -189,4 +189,7 @@ public class HttpConstant {
 
     //获取直播列表
     public static final String GET_LIVE_LIST="postLive/getPostLiveList.do";
+
+    //添加直播预告
+    public static final String ADD_LIVE="postLive/addPostLive.do";
 }

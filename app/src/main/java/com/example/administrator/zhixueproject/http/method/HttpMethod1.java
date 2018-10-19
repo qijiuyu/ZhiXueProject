@@ -1348,4 +1348,46 @@ public class HttpMethod1  extends BaseRequst {
         });
     }
 
+
+    /**
+     * 添加直播预告
+     * @param postName
+     * @param postTopicId
+     * @param postWriterId
+     * @param postLivetime
+     * @param postIsFree
+     * @param postPrice
+     * @param postIsTop
+     * @param postInfo
+     * @param handler
+     */
+    public static void addLive(String postName,long postTopicId,long postWriterId,String postLivetime,int postIsFree,String postPrice,int postIsTop,String postInfo,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("postName",postName);
+        map.put("postTopicId",postTopicId+"");
+        map.put("postWriterId",postWriterId+"");
+        map.put("postLivetime",postLivetime);
+        map.put("postIsFree",postIsFree+"");
+        if(postIsFree==2){
+            map.put("postPrice",postPrice);
+        }
+        map.put("postIsTop",postIsTop+"");
+        map.put("postInfo",postInfo);
+        Http.getRetrofit().create(HttpApi1.class).addLive(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.ADD_LIVE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

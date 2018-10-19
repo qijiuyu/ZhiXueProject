@@ -52,8 +52,8 @@ public class LogInterceptor implements Interceptor {
             formBody = (FormBody) request.body();
             //把原来的参数添加到新的构造器，（因为没找到直接添加，所以就new新的）
             for (int i = 0; i < formBody.size(); i++) {
-                  requstMap.put(formBody.name(i), formBody.value(i).replace("+","").replace(" ",""));
-                LogUtils.e(request.url() + "参数:" + formBody.name(i) + "=" + formBody.value(i));
+                  requstMap.put(formBody.name(i), formBody.value(i));
+                  LogUtils.e(request.url() + "参数:" + formBody.name(i) + "=" + formBody.value(i));
             }
         }
         requstMap = ParameterUtil.getParamter(requstMap);

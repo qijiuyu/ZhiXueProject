@@ -109,7 +109,6 @@ public class SelectTimeFragment extends BaseFragment implements View.OnClickList
                         final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
                         TextView ivCancel = (TextView) v.findViewById(R.id.tv_cancel);
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
-                            @Override
                             public void onClick(View v) {
                                 pvCustomTime.returnData();
                                 pvCustomTime.dismiss();

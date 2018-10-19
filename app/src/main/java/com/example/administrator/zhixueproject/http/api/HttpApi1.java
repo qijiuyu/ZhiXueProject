@@ -482,4 +482,14 @@ public interface HttpApi1 {
     @POST(HttpConstant.GET_LIVE_LIST)
     Call<Live> getLiveList(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 添加直播预告
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.ADD_LIVE)
+    Call<BaseBean> addLive(@FieldMap Map<String, String> map);
+
 }

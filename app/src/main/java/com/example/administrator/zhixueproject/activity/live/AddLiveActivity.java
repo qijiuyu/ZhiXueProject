@@ -6,27 +6,54 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.college.SelectTeacherActivity;
+import com.example.administrator.zhixueproject.adapter.topic.CostsListAdapter;
+import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.bean.Teacher;
+import com.example.administrator.zhixueproject.bean.topic.CostsListBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
+import com.example.administrator.zhixueproject.callback.CustomListener;
 import com.example.administrator.zhixueproject.fragment.college.TopicListFragment;
+import com.example.administrator.zhixueproject.http.HandlerConstant1;
+import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.example.administrator.zhixueproject.view.SwitchButton;
+import com.example.administrator.zhixueproject.view.time.TimePickerView;
+
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 发布直播
  */
-public class AddLiveActivity extends BaseActivity implements View.OnClickListener{
+public class AddLiveActivity extends BaseActivity implements View.OnClickListener,BaseQuickAdapter.OnItemClickListener{
 
-    private EditText etTitle,etContent;
+    private LinearLayout linearLayout;
+    private EditText etTitle,etContent,etCost;
     private TextView tvTopicName,tvTeacher,tvTime,tvCost;
     private SwitchButton switchButton;
     //侧滑菜单
@@ -35,6 +62,12 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
     private TopicListBean topicListBean;
     //讲师对象
     private Teacher teacher;
+    private TimePickerView pvCustomTime;
+    private CustomPopWindow mCostPopWindow;
+    private List<CostsListBean> list;
+    private CostsListAdapter costsListAdapter;
+    private int postIsTop=0;//是否置顶
+    private int postIsFree=0;//是否付费
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_live);
@@ -42,6 +75,7 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
         rightMenu();
         //注册广播
         registerReceiver();
+        initCustomTimePicker();
     }
 
 
@@ -51,6 +85,7 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
     private void initView(){
         TextView tvHead = (TextView) findViewById(R.id.tv_title);
         tvHead.setText(getString(R.string.release_live));
+        linearLayout=(LinearLayout)findViewById(R.id.ll_release_live);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         etTitle=(EditText)findViewById(R.id.et_title);
         tvTopicName=(TextView)findViewById(R.id.tv_topic);
@@ -59,6 +94,17 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
         tvCost=(TextView)findViewById(R.id.tv_cost);
         switchButton=(SwitchButton)findViewById(R.id.sb_stick);
         etContent=(EditText)findViewById(R.id.et_live_detail);
+
+        //是否置顶
+        ((SwitchButton) findViewById(R.id.sb_stick)).setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                if(isChecked){
+                    postIsTop=1;
+                }else{
+                    postIsTop=0;
+                }
+            }
+        });
         findViewById(R.id.rl_topic).setOnClickListener(this);
         findViewById(R.id.rl_lecturer).setOnClickListener(this);
         findViewById(R.id.rl_live_time).setOnClickListener(this);
@@ -82,12 +128,47 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
                  break;
             //直播时间
             case R.id.rl_live_time:
+                 pvCustomTime.show();
                  break;
              //是否付费
             case R.id.rl_cost:
+                 showCostPopWindow();
                  break;
            //发布
             case R.id.tv_confirm:
+                 final String title=etTitle.getText().toString().trim();
+                 final String time=tvTime.getText().toString().trim();
+                 final String content=etContent.getText().toString().trim();
+                 final String cost=tvCost.getText().toString().trim().replace("¥","");
+                 if(TextUtils.isEmpty(title)){
+                     showMsg("请输入标题！");
+                     return;
+                 }
+                if(null==topicListBean){
+                    showMsg("请选择所属话题！");
+                    return;
+                }
+                if(null==teacher){
+                    showMsg("请选择讲师！");
+                    return;
+                }
+                if(TextUtils.isEmpty(time)){
+                     showMsg("请选择直播时间！");
+                     return;
+                }
+                if(postIsFree==0){
+                    showMsg("请选择是否付费！");
+                    return;
+                }
+                if(TextUtils.isEmpty(content)){
+                    showMsg("请输入预告简介！");
+                    return;
+                }
+                showProgress(getString(R.string.loding));
+                HttpMethod1.addLive(title,topicListBean.getTopicId(),teacher.getTeacherId(),time,postIsFree,cost,postIsTop,content,mHandler);
+                 break;
+            case R.id.tv_cancel:
+                 mCostPopWindow.dissmiss();
                  break;
             case R.id.lin_back:
                  finish();
@@ -96,6 +177,25 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
                  break;
         }
     }
+
+
+
+    private Handler mHandler=new Handler(){
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            clearTask();
+            switch (msg.what){
+                case HandlerConstant1.ADD_LIVE_SUCCESS:
+
+                    break;
+                case HandlerConstant1.REQUST_ERROR:
+                    showMsg(getString(R.string.net_error));
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
 
     /**
@@ -144,6 +244,119 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
             }
             tvTeacher.setText(teacher.getUserName());
         }
+    }
+
+
+    /**
+     * 是否付费的弹框
+     */
+    private void showCostPopWindow() {
+        View contentView = LayoutInflater.from(mContext).inflate(R.layout.pop_cost_menu, null);
+        etCost=(EditText)contentView.findViewById(R.id.et_cost);
+        mCostPopWindow = new CustomPopWindow.PopupWindowBuilder(mContext)
+                .setView(contentView)
+                .enableBackgroundDark(true)
+                .setBgDarkAlpha(0.7f)
+                .enableOutsideTouchableDissmiss(true)
+                .size(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setAnimationStyle(R.style.AnimUp)
+                .create();
+        mCostPopWindow.showAtLocation(linearLayout, Gravity.BOTTOM, 0, 0);
+        //获取显示内容
+        String[] costs = getResources().getStringArray(R.array.release_cost);
+        list=new ArrayList<>();
+        for (int i = 0; i < costs.length; i++) {
+            CostsListBean bean = new CostsListBean();
+            bean.setContent(costs[i]);
+            list.add(bean);
+        }
+        RecyclerView rv_cost_list = (RecyclerView) contentView.findViewById(R.id.rv_cost_list);
+        rv_cost_list.setLayoutManager(new LinearLayoutManager(mContext));
+        costsListAdapter = new CostsListAdapter(R.layout.cost_list_item, list);
+        rv_cost_list.setAdapter(costsListAdapter);
+        costsListAdapter.setOnItemClickListener(this);
+        contentView.findViewById(R.id.tv_cancel).setOnClickListener(this);
+        contentView.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(etCost.getVisibility()==View.GONE){
+                    postIsFree=1;
+                    mCostPopWindow.dissmiss();
+                    tvCost.setText("免费");
+                }else{
+                    postIsFree=2;
+                    final String money=etCost.getText().toString().trim();
+                    if(TextUtils.isEmpty(money)){
+                        showMsg("请输入金额！");
+                    }else{
+                        mCostPopWindow.dissmiss();
+                        tvCost.setText("¥"+money);
+                    }
+                }
+            }
+        });
+    }
+
+
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setChecked(false);
+        }
+        list.get(position).setChecked(true);
+        costsListAdapter.notifyDataSetChanged();
+        if(position==1){
+            etCost.setVisibility(View.VISIBLE);
+        }else{
+            etCost.setVisibility(View.GONE);
+        }
+    }
+
+
+    /**
+     * 初始化时间选择
+     */
+    private void initCustomTimePicker() {
+        Calendar selectedDate = Calendar.getInstance();//系统当前时间
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(2001, 1, 1);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2049, 2, 28);
+        //时间选择器 ，自定义布局
+        pvCustomTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+            public void onTimeSelect(Date date, View v) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                tvTime.setText(format.format(date));
+            }
+        })
+                .setDate(selectedDate)
+                .setRangDate(startDate, endDate)
+                .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {
+                    public void customLayout(View v) {
+                        final TextView tvSubmit = (TextView) v.findViewById(R.id.tv_finish);
+                        TextView ivCancel = (TextView) v.findViewById(R.id.tv_cancel);
+                        TextView v_bottom = (TextView) v.findViewById(R.id.v_bottom);
+                        if (v_bottom != null) {
+                            ViewGroup.MarginLayoutParams bottomParams = (ViewGroup.MarginLayoutParams) v_bottom.getLayoutParams();
+                            v_bottom.setLayoutParams(bottomParams);
+                        }
+                        tvSubmit.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                pvCustomTime.returnData();
+                                pvCustomTime.dismiss();
+                            }
+                        });
+                        ivCancel.setOnClickListener(new View.OnClickListener() {
+                            public void onClick(View v) {
+                                pvCustomTime.dismiss();
+                            }
+                        });
+                    }
+                })
+                .setType(new boolean[]{true, true, true, true, true, false})
+                .setLabel("年","月","日","时","分","")
+                .isCenterLabel(false)
+                .setDividerColor(getResources().getColor(R.color.color_dbdbdb))
+                .setTextColorCenter(getResources().getColor(R.color.color_333333))
+                .build();
     }
 
     @Override
