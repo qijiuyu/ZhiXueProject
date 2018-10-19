@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,8 +19,10 @@ import com.example.administrator.zhixueproject.activity.college.CollegeManageAct
 import com.example.administrator.zhixueproject.activity.live.AddLiveActivity;
 import com.example.administrator.zhixueproject.adapter.live.LiveListAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.live.Live;
+import com.example.administrator.zhixueproject.callback.LiveCallBack;
 import com.example.administrator.zhixueproject.fragment.college.CollegeInfoFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
@@ -47,6 +50,8 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
     //fragment是否可见
     private boolean isVisibleToUser=false;
     private List<Live.LiveList> listAll=new ArrayList<>();
+    //直播id
+    private long postId;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -66,6 +71,7 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
         mRefreshLayout.setMyRefreshLayoutListener(this);
         liveListAdapter=new LiveListAdapter(mActivity,listAll);
         listView.setAdapter(liveListAdapter);
+        liveListAdapter.setCallBack(liveCallBack);
         //查询举报数据
         getData(HandlerConstant1.GET_LIVE_LIST_SUCCESS);
         return view;
@@ -85,7 +91,8 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
                 break;
              //发布
             case R.id.ll_release:
-                 setClass(AddLiveActivity.class);
+                 Intent intent=new Intent(mActivity,AddLiveActivity.class);
+                 startActivityForResult(intent,1);
                  break;
             default:
                 break;
@@ -110,6 +117,24 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
                     live= (Live) msg.obj;
                     refresh(live);
                     break;
+                //删除直播预告
+                case HandlerConstant1.DELETE_LIVE_SUCEESSS:
+                     final BaseBean baseBean= (BaseBean) msg.obj;
+                     if(null==baseBean){
+                        return;
+                     }
+                     if(baseBean.isStatus()){
+                        for (int i=0;i<listAll.size();i++){
+                             if(postId==listAll.get(i).getPostId()){
+                                 listAll.remove(i);
+                                 break;
+                             }
+                        }
+                        liveListAdapter.notifyDataSetChanged();
+                     }else{
+                        showMsg(baseBean.getErrorMsg());
+                     }
+                     break;
                 case HandlerConstant1.REQUST_ERROR:
                     clearTask();
                     showMsg(getString(R.string.net_error));
@@ -145,13 +170,13 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
     @Override
     public void onRefresh(View view) {
         page=1;
-        getData(HandlerConstant1.GET_LIVE_LIST_SUCCESS);
+        HttpMethod1.getLiveList(page,limit,HandlerConstant1.GET_LIVE_LIST_SUCCESS,mHandler);
     }
 
     @Override
     public void onLoadMore(View view) {
         page++;
-        getData(HandlerConstant1.GET_LIVE_LIST_SUCCESS2);
+        HttpMethod1.getLiveList(page,limit,HandlerConstant1.GET_LIVE_LIST_SUCCESS2,mHandler);
     }
 
 
@@ -167,6 +192,25 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
 
 
 
+    private LiveCallBack liveCallBack=new LiveCallBack() {
+       //删除直播
+        public void deleteLive(long postId) {
+            LiveFragment.this.postId=postId;
+            showProgress("删除数据中...");
+            HttpMethod1.deleteLive(postId,mHandler);
+        }
+    };
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==1){
+            page=1;
+            HttpMethod1.getLiveList(page,limit,HandlerConstant1.GET_LIVE_LIST_SUCCESS,mHandler);
+        }
+    }
+
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser=isVisibleToUser;
@@ -180,7 +224,7 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
         super.onResume();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
         Glide.with(mActivity).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
-       // tvHead.setText(CollegeInfoFragment.homeBean.getCollegeName()+"");
+        tvHead.setText(CollegeInfoFragment.homeBean.getCollegeName());
     }
 
 }

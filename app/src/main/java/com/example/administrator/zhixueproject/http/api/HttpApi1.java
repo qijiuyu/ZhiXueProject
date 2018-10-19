@@ -492,4 +492,15 @@ public interface HttpApi1 {
     @POST(HttpConstant.ADD_LIVE)
     Call<BaseBean> addLive(@FieldMap Map<String, String> map);
 
+
+
+    /**
+     * 删除直播预告
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DELETE_LIVE)
+    Call<BaseBean> deleteLive(@FieldMap Map<String, String> map);
+
 }

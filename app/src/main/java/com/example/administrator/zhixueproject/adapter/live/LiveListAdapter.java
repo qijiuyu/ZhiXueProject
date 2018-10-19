@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.adapter.live;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.live.AddLiveActivity;
 import com.example.administrator.zhixueproject.bean.live.Live;
+import com.example.administrator.zhixueproject.callback.LiveCallBack;
+import com.example.administrator.zhixueproject.fragment.LiveFragment;
+
 import java.util.List;
 
 public class LiveListAdapter extends BaseAdapter{
@@ -17,6 +22,7 @@ public class LiveListAdapter extends BaseAdapter{
 	private Activity activity;
 	private List<Live.LiveList> listAll;
 	private Live.LiveList liveList;
+	private LiveCallBack liveCallBack;
 	public LiveListAdapter(Activity activity, List<Live.LiveList> listAll) {
 		super();
 		this.activity = activity;
@@ -67,7 +73,36 @@ public class LiveListAdapter extends BaseAdapter{
 		holder.tvTime.setText(liveList.getPostLivetime());
 		holder.tvTeacher.setText("讲师："+liveList.getUserName());
 		holder.tvContent.setText("预告："+liveList.getPostInfo());
+		holder.tvDel.setTag(liveList.getPostId());
+        holder.tvUpdate.setTag(liveList);
+		//删除
+		holder.tvDel.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if(null==v.getTag()){
+					return;
+				}
+				final long postId=Long.parseLong(v.getTag().toString());
+				liveCallBack.deleteLive(postId);
+			}
+		});
+        //编辑
+        holder.tvUpdate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(null==v.getTag()){
+                    return;
+                }
+                Live.LiveList liveList= (Live.LiveList) v.getTag();
+                Intent intent=new Intent(activity, AddLiveActivity.class);
+                intent.putExtra("liveList",liveList);
+                activity.startActivityForResult(intent,1);
+            }
+        });
 		return view;
+	}
+
+
+	public void setCallBack(LiveCallBack liveCallBack){
+		this.liveCallBack=liveCallBack;
 	}
 
 

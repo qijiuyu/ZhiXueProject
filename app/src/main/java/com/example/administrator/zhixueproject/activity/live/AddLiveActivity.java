@@ -27,8 +27,10 @@ import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.college.SelectTeacherActivity;
 import com.example.administrator.zhixueproject.adapter.topic.CostsListAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.bean.Teacher;
+import com.example.administrator.zhixueproject.bean.live.Live;
 import com.example.administrator.zhixueproject.bean.topic.CostsListBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
 import com.example.administrator.zhixueproject.callback.CustomListener;
@@ -68,10 +70,12 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
     private CostsListAdapter costsListAdapter;
     private int postIsTop=0;//是否置顶
     private int postIsFree=0;//是否付费
+    private Live.LiveList liveList;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_live);
         initView();
+        showData();
         rightMenu();
         //注册广播
         registerReceiver();
@@ -111,6 +115,26 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.rl_cost).setOnClickListener(this);
         findViewById(R.id.tv_confirm).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
+    }
+
+
+    /**
+     * 展示要编辑的数据
+     */
+    private void showData(){
+        liveList= (Live.LiveList) getIntent().getSerializableExtra("liveList");
+        if(null==liveList){
+            return;
+        }
+        etTitle.setText(liveList.getPostName());
+        topicListBean=new TopicListBean();
+        topicListBean.setTopicId(liveList.getTopicId());
+        tvTopicName.setText(liveList.getTopicName());
+        teacher=new Teacher();
+//        teacher.setTeacherId(liveList.ge);
+        tvTeacher.setText(liveList.getUserName());
+        tvTime.setText(liveList.getPostLivetime());
+        
     }
 
     @Override
@@ -186,7 +210,17 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
             clearTask();
             switch (msg.what){
                 case HandlerConstant1.ADD_LIVE_SUCCESS:
-
+                     final BaseBean baseBean= (BaseBean) msg.obj;
+                     if(null==baseBean){
+                         return;
+                     }
+                     if(baseBean.isStatus()){
+                         Intent intent=new Intent();
+                         setResult(1,intent);
+                         finish();
+                     }else{
+                         showMsg(baseBean.getErrorMsg());
+                     }
                     break;
                 case HandlerConstant1.REQUST_ERROR:
                     showMsg(getString(R.string.net_error));

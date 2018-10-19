@@ -213,4 +213,7 @@ public class HttpConstant {
 
     // 获取投票详情页
     public static final String GET_VOTE_DETAIL ="vote/getVoteDetail.do" ;
+
+    //删除直播预告
+    public static final String DELETE_LIVE="postLive/delPostLive.do";
 }

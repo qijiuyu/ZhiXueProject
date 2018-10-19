@@ -1390,4 +1390,30 @@ public class HttpMethod1  extends BaseRequst {
         });
     }
 
+
+    /**
+     * 删除直播预告
+     * @param postId
+     * @param handler
+     */
+    public static void deleteLive(long postId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("postId",postId+"");
+        Http.getRetrofit().create(HttpApi1.class).deleteLive(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.DELETE_LIVE_SUCEESSS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }
