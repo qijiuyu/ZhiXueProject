@@ -3,6 +3,7 @@ package com.example.administrator.zhixueproject.http.api;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
+import com.example.administrator.zhixueproject.bean.memberManage.MemberManagerBean;
 import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
 import com.example.administrator.zhixueproject.bean.topic.ActionNeophyteBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
@@ -226,4 +227,13 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_VOTE_DETAIL)
     Call<VoteNeophyteBean>getVoteDetail(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取c端会列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_VIP_LIST)
+    Call<MemberManagerBean>getVipList(@FieldMap Map<String,String> map);
 }

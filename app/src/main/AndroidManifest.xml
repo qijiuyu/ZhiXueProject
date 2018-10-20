@@ -246,6 +246,21 @@
         <activity
             android:name=".activity.topic.VoteNeophyteActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.memberManage.MemberManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.memberManage.MemberApplyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.memberManage.KickOutMemberActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.memberManage.BlacklistActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.memberManage.SignInManageActivity"
+            android:screenOrientation="portrait" />
 
 
         <!--注册微信回调 WXEntryActivity -->

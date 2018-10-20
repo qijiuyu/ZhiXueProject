@@ -42,6 +42,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 
 /**
@@ -55,7 +56,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private boolean isShow = false;
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = System.currentTimeMillis()+"";
+    private String TIMESTAMP = System.currentTimeMillis() + "";
     public String mFloorUserName;
     private String mFloorId;
     private PostListBean postListBean;
@@ -160,7 +161,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private void searchTopicDetail() {
         showProgress(getString(R.string.loading));
         HttpMethod2.getPostDetail(String.valueOf(postListBean.getPostId()), PAGE + "", LIMIT,
-                TIMESTAMP,HandlerConstant2.GET_POST_DETAIL_SUCCESS, mHandler);
+                TIMESTAMP, HandlerConstant2.GET_POST_DETAIL_SUCCESS, mHandler);
     }
 
 
@@ -184,6 +185,9 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                         String.valueOf(postListBean.getPostIsFree()),
                         postListBean.getPostReward(),
                         String.valueOf(postListBean.getPostIsTop()), postType);
+                break;
+            case R.id.lin_back:
+                finish();
                 break;
             default:
                 break;

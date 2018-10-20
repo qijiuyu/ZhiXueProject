@@ -80,7 +80,10 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
 
             helper.addOnClickListener(R.id.tv_menu_one).addOnClickListener(R.id.tv_menu_two).addOnClickListener(R.id.content);
         }
-
+        // 帖子列表页可以点击
+        if (!mIsPostList){
+            return;
+        }
         helper.getView(R.id.content).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
