@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_release_contents"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/ll_release_contents"
     android:orientation="vertical">
 
     <include layout="@layout/head" />
@@ -19,24 +20,17 @@
         android:layout_height="wrap_content"
         android:background="@color/color_ffffff"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/ll_edit"
-            android:layout_width="match_parent"
-            android:layout_height="80dp">
-
-            <EditText
+            <io.github.rockerhieu.emojicon.EmojiconEditText
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="top"
-                android:background="@null"
                 android:hint="请输入内容"
                 android:padding="15dp"
                 android:textColor="@color/color_666666"
                 android:textColorHint="@color/color_999999"
-                android:textSize="15sp" />
-        </LinearLayout>
+                android:textSize="15sp"
+                emojicon:emojiconSize="28sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +50,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="31dp"
-                android:background="@mipmap/picture_iv" />
+                android:background="@mipmap/picture_iv"
+                android:padding="5dp"/>
 
             <ImageView
                 android:id="@+id/iv_voice"
@@ -82,6 +77,12 @@
 
         </LinearLayout>
 
+        <FrameLayout
+            android:id="@+id/emojicons"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:visibility="gone" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -102,13 +103,13 @@
             android:textSize="16sp" />
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/ll_upload"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/color_48c6ef"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_upload"

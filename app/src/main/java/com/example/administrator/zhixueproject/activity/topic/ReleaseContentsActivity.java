@@ -18,18 +18,18 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.ReleaseContentsAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
-import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.ReleaseContentsBean;
@@ -48,13 +48,15 @@ import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.utils.record.RecordUtil;
 import com.example.administrator.zhixueproject.utils.record.VoiceManager;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import io.github.rockerhieu.emojicon.EmojiconEditText;
+import io.github.rockerhieu.emojicon.EmojiconGridFragment;
+import io.github.rockerhieu.emojicon.EmojiconsFragment;
+import io.github.rockerhieu.emojicon.emoji.Emojicon;
 
 /**
  * 发布内容
@@ -62,7 +64,7 @@ import java.util.List;
  * @author petergee
  * @date 2018/10/11
  */
-public class ReleaseContentsActivity extends BaseActivity implements View.OnClickListener {
+public class ReleaseContentsActivity extends BaseActivity implements View.OnClickListener, EmojiconGridFragment.OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener {
     private List<ReleaseContentsBean> listData = new ArrayList<>();//发布内容的Json数据
     private ReleaseContentsAdapter mAdapter;
     private boolean mIsFocus;
@@ -88,11 +90,14 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
     public File mVoiceFile;
     private String voiceStrLength;
     private String postId;
-    private EditText etContent;
+    private EmojiconEditText etContent;
     private RecyclerView rvReleaseContent;
     private LinearLayout llContent;
     private ImageView ivPicture;
     private LinearLayout llReleaseContents;
+    private FrameLayout flEmoji;
+    private LinearLayout llRelease;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +107,6 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
 
     private void initView() {
         EventBus.getDefault().register(this);
-
         StatusBarUtils.transparencyBar(this);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.release_content));
@@ -129,6 +133,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         findViewById(R.id.tv_release).setOnClickListener(this);
         findViewById(R.id.tv_confirm).setOnClickListener(this);
         llReleaseContents = (LinearLayout) findViewById(R.id.ll_release_contents);
+        llRelease = (LinearLayout) findViewById(R.id.ll_release);
         mAdapter = new ReleaseContentsAdapter(null);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvReleaseContent = (RecyclerView) findViewById(R.id.rv_release_content);
@@ -136,13 +141,32 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         rvReleaseContent.setLayoutManager(linearLayoutManager);
         institutionListener();
 
-        etContent = (EditText) findViewById(R.id.et_content);
+        etContent = (EmojiconEditText) findViewById(R.id.et_content);
         etContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean isFocus) {
                 mIsFocus = isFocus;
             }
         });
+        flEmoji = (FrameLayout) findViewById(R.id.emojicons);
+        setEmojiconFragment(false);
+    }
+
+    private void setEmojiconFragment(boolean useSystemDefault) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.emojicons, EmojiconsFragment.newInstance(useSystemDefault))
+                .commit();
+    }
+
+    @Override
+    public void onEmojiconClicked(Emojicon emojicon) {
+        EmojiconsFragment.input(etContent, emojicon);
+    }
+
+    @Override
+    public void onEmojiconBackspaceClicked(View v) {
+        EmojiconsFragment.backspace(etContent);
     }
 
     /**
@@ -307,7 +331,6 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
     }
 
 
-
     //相机和相册选择图片的回调
     @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
@@ -348,7 +371,6 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                     }
                     break;
             }
-
         }
     }
 
@@ -356,7 +378,16 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         switch (view.getId()) {
             // emoji表情
             case R.id.iv_expression:
-
+                if (flEmoji.getVisibility() == View.VISIBLE) {
+                    startAnim(flEmoji,1);
+                    flEmoji.setVisibility(View.GONE);
+                    llRelease.setVisibility(View.VISIBLE);
+                } else {
+                    startAnim(flEmoji,2);
+                    flEmoji.setVisibility(View.VISIBLE);
+                    // 隐藏发布按钮
+                    llRelease.setVisibility(View.GONE);
+                }
                 break;
             case R.id.iv_picture:
                 addPic();
@@ -399,6 +430,21 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * emoji动画
+     * @param flEmoji
+     * @param index
+     */
+    private void startAnim(FrameLayout flEmoji, int index) {
+        Animation animationIn= AnimationUtils.loadAnimation(this,R.anim.emoji_enter);
+        Animation animationOut= AnimationUtils.loadAnimation(this,R.anim.emoji_exit);
+        if (index==1){
+            flEmoji.startAnimation(animationOut);
+        }else {
+            flEmoji.startAnimation(animationIn);
         }
     }
 
@@ -493,7 +539,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
             @Override
             public void recFinish(long length, String strLength, String path) {
                 mVoiceFile = new File(path);
-                List<File>list=new ArrayList<>();
+                List<File> list = new ArrayList<>();
                 list.add(mVoiceFile);
                 HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
                 voiceStrLength = strLength;
