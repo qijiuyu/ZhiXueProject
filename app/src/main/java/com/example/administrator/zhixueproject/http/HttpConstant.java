@@ -219,4 +219,7 @@ public class HttpConstant {
 
     // 获取c端会员列表
     public static final String GET_VIP_LIST = "attendance/getVipList.do";
+
+    // 踢出会员
+    public static final String KICK_OUT_VIP = "attendance/kickOutVip.do";
 }

@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.memberManage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -31,6 +32,7 @@ import com.example.administrator.zhixueproject.utils.InputMethodUtils;
 import com.example.administrator.zhixueproject.utils.MaxTextLengthFilter;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,15 +42,15 @@ import java.util.List;
  * @date 2018/10/20
  */
 public class MemberManagerActivity extends BaseActivity implements View.OnClickListener, MyRefreshLayoutListener, BaseQuickAdapter.OnItemChildClickListener, MemberLevelFragment.OnMemberLevelListener {
-
+    public static final int REQUEST_CODE_EDIT = 0;
+    public static final int REQUEST_CODE_DETAIL = 1;
     private MemberManagerAdapter mMemberManagerAdapter;
     private boolean isShowLevel = false;
     private MemberLevelFragment mMemberLevelFragment;
     public static String LEVEL = "level";
     public static final String MEMBER_INFO = "member_info";
-    // private MemberManagerP mMemberManagerP;
-    private List<MemberLevelBean> mUserCollege;
-    private List<AttendanceBean> mAttendanceList;
+    private List<MemberLevelBean> mUserCollege = new ArrayList<>();
+    private List<AttendanceBean> mAttendanceList = new ArrayList<>();
     private int PAGE = 1;
     private String LIMIT = "10";
     private String TIMESTAMP = System.currentTimeMillis() + "";
@@ -60,6 +62,8 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
     private TextView tvMemberLevel;
     private ImageView ivDownArrow;
     private EditText etMemberSearch;
+    // 用于记录被踢出的会员position
+    private int mPosition;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,6 +109,7 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
         });
         //搜索内容超出20字提示
         etMemberSearch.setFilters(new InputFilter[]{new MaxTextLengthFilter(20, getResources().getString(R.string.et_length_tip))});
+        getVipList(HandlerConstant2.GET_VIP_LIST_SUCCESS1);
     }
 
     /**
@@ -114,7 +119,7 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
      */
     private void getVipList(int index) {
         showProgress(getString(R.string.loading));
-        HttpMethod2.getVipList(NAME, CollegeGradeId, TIMESTAMP, PAGE+"", LIMIT, index, mHandler);
+        HttpMethod2.getVipList(NAME, CollegeGradeId, TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
     }
 
     @Override
@@ -182,19 +187,20 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.tv_edit://编辑_跳转会员设置页面
                 this.itemCheckedPosition = position;
-                // Intent starter = new Intent(this,MemberSettingUI.class);
-                //starter.putExtra(MEMBER_INFO,mAttendanceList.get(position));
-                //startActivityForResult(starter,REQUEST_CODE_EDIT);
+                Intent starter = new Intent(this, MemberSettingActivity.class);
+                starter.putExtra(MEMBER_INFO, mAttendanceList.get(position));
+                startActivityForResult(starter, REQUEST_CODE_EDIT);
                 break;
             case R.id.tv_kick_out://踢出
-                // mMemberManagerP.kickOutVip(C,mAttendanceList.get(position).getAttendId()+"",CollegeId,position);
+                this.mPosition = position;
+                HttpMethod2.kickOutVip(mAttendanceList.get(position).getAttendId() + "", mHandler);
                 break;
             case R.id.content://条目点击事件
                 //跳转会员详情页面
                 this.itemCheckedPosition = position;
-                //Intent starter2 = new Intent(this,MemberDetailUI.class);
-                //starter2.putExtra(MEMBER_INFO,mAttendanceList.get(position));
-                //startActivityForResult(starter2,REQUEST_CODE_DETAIL);
+                Intent starter2 = new Intent(this, MemberDetailActivity.class);
+                starter2.putExtra(MEMBER_INFO, mAttendanceList.get(position));
+                startActivityForResult(starter2, REQUEST_CODE_DETAIL);
                 break;
             default:
                 break;
@@ -209,10 +215,16 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
             MemberManagerBean bean = (MemberManagerBean) msg.obj;
             switch (msg.what) {
                 case HandlerConstant2.GET_VIP_LIST_SUCCESS1:
+                    getVipListSuccess(bean);
                     break;
                 case HandlerConstant2.GET_VIP_LIST_SUCCESS2:
+                    loadMoreVipListSuccess(bean);
+                    break;
+                case HandlerConstant2.KICK_OUT_VIP_SUCCESS:
+                    kickOutSuccess(bean);
                     break;
                 case HandlerConstant1.REQUST_ERROR:
+                    requestError();
                     break;
                 default:
                     break;
@@ -221,16 +233,100 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
         }
     };
 
+
+    /**
+     * 加载数据成功
+     *
+     * @param bean
+     */
+    private void getVipListSuccess(MemberManagerBean bean) {
+        mRrefreshLayout.refreshComplete();
+        if (null == bean) {
+            return;
+        }
+        if (bean.isStatus()) {
+            mAttendanceList = bean.getData().getAttendanceList();
+            //会员等级列表
+            this.mUserCollege = bean.getData().getUserCollege();
+            mMemberManagerAdapter.setNewData(mAttendanceList);
+            mMemberManagerAdapter.notifyDataSetChanged();
+        } else {
+            showMsg(bean.getErrorMsg());
+        }
+    }
+
+    /**
+     * 加载更多
+     *
+     * @param bean
+     */
+    private void loadMoreVipListSuccess(MemberManagerBean bean) {
+        mRrefreshLayout.loadMoreComplete();
+        if (null == bean) {
+            return;
+        }
+        if (bean.isStatus()) {
+            if (bean.getData().getAttendanceList().size() <= 0) {
+                showMsg(getResources().getString(R.string.no_more_data));
+                return;
+            }
+            mAttendanceList.addAll(bean.getData().getAttendanceList());
+            mMemberManagerAdapter.notifyDataSetChanged();
+        } else {
+            showMsg(bean.getErrorMsg());
+        }
+    }
+
+    /**
+     * 踢出会员成功
+     *
+     * @param bean
+     */
+    private void kickOutSuccess(MemberManagerBean bean) {
+        if (null == bean) {
+            return;
+        }
+        if (bean.isStatus()) {
+            showMsg("踢出成功");
+            mAttendanceList.remove(mPosition);
+            mMemberManagerAdapter.notifyDataSetChanged();
+        } else {
+            showMsg(bean.getErrorMsg());
+        }
+    }
+
+    /**
+     * error
+     */
+    private void requestError() {
+        mRrefreshLayout.refreshComplete();
+        mRrefreshLayout.loadMoreComplete();
+        showMsg(getString(R.string.net_error));
+    }
+
     @Override
     public void closeLevelListListener(View view, int position) {
         String level = mUserCollege.get(position).getUserCollegegradeName();
         tvMemberLevel.setText(level);
-        isShowLevel=false;
+        isShowLevel = false;
         showFragment(isShowLevel);
-        MyApplication.spUtil.addString(LEVEL,position+"");
+        MyApplication.spUtil.addString(LEVEL, position + "");
         //选中会员等级的id
-        CollegeGradeId=mUserCollege.get(position).getUserCollegegradeId();
+        CollegeGradeId = mUserCollege.get(position).getUserCollegegradeId();
         //搜索显示选中等级的会员列表
         getVipList(HandlerConstant2.GET_VIP_LIST_SUCCESS1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == MemberSettingActivity.RESULT_CODE) {
+            if (requestCode == REQUEST_CODE_EDIT || requestCode == REQUEST_CODE_DETAIL) {
+                AttendanceBean mMemberInfoBean = data.getParcelableExtra(MEMBER_INFO);
+                mAttendanceList.set(itemCheckedPosition, mMemberInfoBean);
+                mMemberManagerAdapter.setNewData(mAttendanceList);
+                mMemberManagerAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }

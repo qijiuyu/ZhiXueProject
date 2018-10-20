@@ -25,7 +25,7 @@ import java.util.List;
 public class MemberLevelFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
     private List<MemberLevelBean> list;
     private MemberLevelAdapter mMemberLevelAdapter;
-    private RecyclerView rv_level_list;
+    private RecyclerView rvLevelList;
 
 
     @Nullable
@@ -38,23 +38,19 @@ public class MemberLevelFragment extends BaseFragment implements BaseQuickAdapte
     }
 
     private void initView(View view) {
-        rv_level_list = (RecyclerView) view.findViewById(R.id.rv_level_list);
+        rvLevelList = (RecyclerView) view.findViewById(R.id.rv_level_list);
         view.findViewById(R.id.rl_level_bg).setOnClickListener(this);
         //首选项中保存的选中level
         String position = MyApplication.spUtil.getString(MemberManagerActivity.LEVEL);
         if (!TextUtils.isEmpty(position)) {
             list.get(Integer.valueOf(position)).setChecked(true);
-        } else {
-            list.get(0).setChecked(true);
         }
-
-        mMemberLevelAdapter = new MemberLevelAdapter(R.layout.member_level_item, list);
+        mMemberLevelAdapter = new MemberLevelAdapter(R.layout.fragment_member_level_item, list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rv_level_list.setAdapter(mMemberLevelAdapter);
-        rv_level_list.setLayoutManager(linearLayoutManager);
+        rvLevelList.setAdapter(mMemberLevelAdapter);
+        rvLevelList.setLayoutManager(linearLayoutManager);
         mMemberLevelAdapter.setOnItemClickListener(this);
     }
-
 
 
     public void onClick(View view) {

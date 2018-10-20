@@ -930,4 +930,32 @@ public class HttpMethod2 extends BaseRequst{
         });
 
     }
+
+    /**
+     * 踢出会员
+     * @param attendId
+     * @param handler
+     */
+    public static void kickOutVip(String attendId,final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("attendId",attendId);
+        Http.getRetrofit().create(HttpApi2.class).kickOutVip(map).enqueue(new Callback<MemberManagerBean>() {
+            @Override
+            public void onResponse(Call<MemberManagerBean> call, Response<MemberManagerBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.KICK_OUT_VIP_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MemberManagerBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
 }

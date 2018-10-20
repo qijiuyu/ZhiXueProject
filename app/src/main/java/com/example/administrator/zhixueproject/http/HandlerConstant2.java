@@ -38,4 +38,5 @@ public class HandlerConstant2 {
     public static final int GET_VOTE_USER_LIST_SUCCESS2 = 2033;
     public static final int GET_VIP_LIST_SUCCESS1 = 2034;
     public static final int GET_VIP_LIST_SUCCESS2 = 2035;
+    public static final int KICK_OUT_VIP_SUCCESS = 2036;
 }

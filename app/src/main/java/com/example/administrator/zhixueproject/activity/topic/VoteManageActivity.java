@@ -114,7 +114,7 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
                     loadMoreSuccess(bean);
                     break;
                 case HandlerConstant2.DELETE_VOTE_SUCCESS:
-                    deleteVoteSuccess();
+                    deleteVoteSuccess(bean);
                     break;
                 case HandlerConstant1.REQUST_ERROR:
                     requestError();
@@ -167,11 +167,16 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
 
     /**
      * 删除活动成功
+     * @param bean
      */
-    public void deleteVoteSuccess() {
-        showMsg("删除成功");
-        listData.remove(mCurrentPosition);
-        mAdapter.notifyDataSetChanged();
+    public void deleteVoteSuccess(VoteManageBean bean) {
+        if (bean.isStatus()){
+            showMsg("删除成功");
+            listData.remove(mCurrentPosition);
+            mAdapter.notifyDataSetChanged();
+        }else {
+            showMsg(bean.getErrorMsg());
+        }
     }
 
     /**

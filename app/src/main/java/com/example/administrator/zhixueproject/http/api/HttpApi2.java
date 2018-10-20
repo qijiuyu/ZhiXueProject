@@ -236,4 +236,13 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_VIP_LIST)
     Call<MemberManagerBean>getVipList(@FieldMap Map<String,String> map);
+
+    /**
+     * 踢出会员
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.KICK_OUT_VIP)
+    Call<MemberManagerBean>kickOutVip(@FieldMap Map<String,String> map);
 }
