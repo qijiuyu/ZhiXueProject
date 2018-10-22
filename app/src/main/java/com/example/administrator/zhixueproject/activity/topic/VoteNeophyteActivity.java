@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.VoteNeophyteAdapter;
@@ -37,9 +36,9 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
     private VoteNeophyteAdapter mAdapter;
     private List<VoteDetailListBean> listData = new ArrayList<>();
     private String voteId;//投票ID
-    private int PAGE=1;
+    private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP=System.currentTimeMillis()+"";
+    private String TIMESTAMP = System.currentTimeMillis() + "";
     private MyRefreshLayout mrlVoteNeophyte;
     private RecyclerView rvVoteNeophyte;
 
@@ -67,7 +66,7 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
 
     private void getVoteUserList(int index) {
         showProgress(getString(R.string.loading));
-        HttpMethod2.getVoteUserList(voteId, TIMESTAMP,PAGE+"",LIMIT,index,mHandler);
+        HttpMethod2.getVoteUserList(voteId, TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
     }
 
     public static void start(Context context, String voteId) {
@@ -87,17 +86,17 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    private Handler mHandler=new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
-            VoteNeophyteBean bean= (VoteNeophyteBean) msg.obj;
+            VoteNeophyteBean bean = (VoteNeophyteBean) msg.obj;
             switch (msg.what) {
-                case HandlerConstant2.GET_ACTIVITY_USER_LIST_SUCCESS:
+                case HandlerConstant2.GET_VOTE_USER_LIST_SUCCESS:
                     getDataSuccess(bean);
                     break;
-                case HandlerConstant2.GET_ACTIVITY_USER_LIST_SUCCESS2:
+                case HandlerConstant2.GET_VOTE_USER_LIST_SUCCESS2:
                     loadMoreSuccess(bean);
                     break;
                 case HandlerConstant1.REQUST_ERROR:
@@ -121,6 +120,9 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
         if (bean.isStatus()) {
             VoteNeophyteBean.DataBean dataBean = bean.getData();
             listData = dataBean.getVoteDetailList();
+            if (dataBean.getVoteDetailList().size()==0){
+                return;
+            }
             adapterView();
         } else {
             showMsg(bean.errorMsg);
@@ -155,7 +157,7 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
     private void requestError() {
         mrlVoteNeophyte.refreshComplete();
         mrlVoteNeophyte.loadMoreComplete();
-        showMsg(getString(R.string.load_failed));
+        showMsg(getString(R.string.net_error));
     }
 
     /**
@@ -163,15 +165,14 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
      */
     private void adapterView() {
         mAdapter = new VoteNeophyteAdapter(R.layout.vote_neophyte_item, listData);
-        mAdapter.setEmptyView(R.layout.empty_view,(ViewGroup) rvVoteNeophyte.getParent());
         rvVoteNeophyte.setAdapter(mAdapter);
+        mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) rvVoteNeophyte.getParent());
     }
-
 
 
     @Override
     public void onRefresh(View view) {
-        PAGE=1;
+        PAGE = 1;
         getVoteUserList(HandlerConstant2.GET_VOTE_USER_LIST_SUCCESS);
     }
 

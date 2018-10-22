@@ -6,32 +6,23 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.ActionManageAdapter;
-import com.example.administrator.zhixueproject.adapter.topic.TopicListAdapter;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
 import com.example.administrator.zhixueproject.bean.topic.ActivityListBean;
-import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
-
 import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,8 +65,6 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this, R.drawable.divider_activity_line, LinearLayoutManager.VERTICAL);
         rvActionManage.addItemDecoration(itemDecoration);
         mrlActionManage.setMyRefreshLayoutListener(this);//刷新加载
-        mAdapter = new ActionManageAdapter(R.layout.action_manage_item, listData);
-
         getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS);
     }
 
@@ -199,6 +188,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
      * 设置adapter 数据
      */
     private void adapterView() {
+        mAdapter = new ActionManageAdapter(R.layout.action_manage_item, listData);
         rvActionManage.setAdapter(mAdapter);
         mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) rvActionManage.getParent());
         mAdapter.setOnItemChildClickListener(this);//侧滑菜单监听
