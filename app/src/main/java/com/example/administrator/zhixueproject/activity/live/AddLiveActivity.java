@@ -134,7 +134,7 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
 //        teacher.setTeacherId(liveList.ge);
         tvTeacher.setText(liveList.getUserName());
         tvTime.setText(liveList.getPostLivetime());
-        
+
     }
 
     @Override
