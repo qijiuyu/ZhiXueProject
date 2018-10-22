@@ -87,7 +87,8 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
 
     private void initView() {
         StatusBarUtils.transparencyBar(this);
-        setTitle(getResources().getString(R.string.add_topic));
+        TextView tvTitle= (TextView) findViewById(R.id.tv_title);
+        tvTitle.setText(getString(R.string.add_topic));
         findViewById(R.id.lin_back).setOnClickListener(this);
 
         llAddTopic = (LinearLayout) findViewById(R.id.ll_add_topic);

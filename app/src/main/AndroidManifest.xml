@@ -246,6 +246,28 @@
         <activity
             android:name=".activity.topic.VoteNeophyteActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.memberManage.MemberManagerActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".activity.memberManage.MemberApplyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.memberManage.KickOutMemberActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.memberManage.BlacklistActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.memberManage.SignInManageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.memberManage.MemberSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.memberManage.MemberDetailActivity"
+            android:screenOrientation="portrait" />
 
 
         <!--注册微信回调 WXEntryActivity -->

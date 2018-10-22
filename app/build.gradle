@@ -76,4 +76,6 @@ dependencies {
     //时间选择器
     compile 'com.contrarywind:Android-PickerView:3.2.6'
     compile 'com.android.support:design:23.0.0'
+    // emoji
+    compile 'io.github.rockerhieu:emojicon:1.4.1'
 }

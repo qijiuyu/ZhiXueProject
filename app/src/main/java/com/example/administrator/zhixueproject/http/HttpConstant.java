@@ -216,4 +216,10 @@ public class HttpConstant {
 
     //删除直播预告
     public static final String DELETE_LIVE="postLive/delPostLive.do";
+
+    // 获取c端会员列表
+    public static final String GET_VIP_LIST = "attendance/getVipList.do";
+
+    // 踢出会员
+    public static final String KICK_OUT_VIP = "attendance/kickOutVip.do";
 }

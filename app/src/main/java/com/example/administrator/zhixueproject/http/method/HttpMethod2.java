@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
+import com.example.administrator.zhixueproject.bean.memberManage.MemberManagerBean;
 import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
 import com.example.administrator.zhixueproject.bean.topic.ActionNeophyteBean;
 import com.example.administrator.zhixueproject.bean.topic.ActivityListBean;
@@ -886,6 +887,72 @@ public class HttpMethod2 extends BaseRequst{
 
             @Override
             public void onFailure(Call<VoteNeophyteBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     * 获取c端会员列表
+     * @param attendUsername
+     * @param userCollegegradeId
+     * @param timestamp
+     * @param page
+     * @param limit
+     * @param index
+     * @param handler
+     */
+    public static void getVipList(String attendUsername,String userCollegegradeId, String timestamp, String page,
+                                       String limit,final int index, final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("attendUsername",attendUsername);
+        map.put("userCollegegradeId",userCollegegradeId);
+        map.put("timestamp",timestamp);
+        map.put("page",page);
+        map.put("limit",limit);
+        Http.getRetrofit().create(HttpApi2.class).getVipList(map).enqueue(new Callback<MemberManagerBean>() {
+            @Override
+            public void onResponse(Call<MemberManagerBean> call, Response<MemberManagerBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MemberManagerBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
+     * 踢出会员
+     * @param attendId
+     * @param handler
+     */
+    public static void kickOutVip(String attendId,final Handler handler){
+
+        Map<String,String> map=new HashMap<>();
+        map.put("attendId",attendId);
+        Http.getRetrofit().create(HttpApi2.class).kickOutVip(map).enqueue(new Callback<MemberManagerBean>() {
+            @Override
+            public void onResponse(Call<MemberManagerBean> call, Response<MemberManagerBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.KICK_OUT_VIP_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MemberManagerBean> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });

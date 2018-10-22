@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/color_ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/head"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dm064">
+        <RelativeLayout
+            android:id="@+id/rl_member_level"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="80dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/iv_down_arrow"
+                android:src="@mipmap/down_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/tv_member_level"
+                android:layout_toLeftOf="@+id/iv_down_arrow"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/member_level"
+                android:textColor="@color/color_333333"
+                android:textSize="13sp"/>
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_toLeftOf="@+id/rl_member_level"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:background="@mipmap/search_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/search" />
+            <EditText
+                android:id="@+id/et_member_search"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:hint="@string/search_member_name"
+                android:textSize="12sp"
+                android:textColor="@color/color_333333"
+                android:textColorHint="@color/color_c5c5c5"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"/>
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_member_manager"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dm000">
+
+            </android.support.v7.widget.RecyclerView>
+        </com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout>
+        <FrameLayout
+            android:id="@+id/fl_contener"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/include_bottom"/>
+
+</LinearLayout>

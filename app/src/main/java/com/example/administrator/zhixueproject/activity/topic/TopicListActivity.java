@@ -25,7 +25,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import java.util.ArrayList;
 
 /**
- * 话题列表
+ * 帖子列表
  *
  * @author PeterGee
  * @date 2018/10/8

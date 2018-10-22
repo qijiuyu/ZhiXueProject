@@ -123,7 +123,10 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         if (mVoteListBean != null) {
             etTitle.setText(mVoteListBean.getVoteName());
             tvStartTime.setText(mVoteListBean.getStartTime());
+            mStartTime=mVoteListBean.getStartTime();
             tvEndTime.setText(mVoteListBean.getEndTime());
+            mEndTime=mVoteListBean.getEndTime();
+            topicId=mVoteListBean.getVoteId()+"";
         }
     }
 
@@ -191,6 +194,18 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                 String voteName = etTitle.getText().toString().trim();
                 if (TextUtils.isEmpty(voteName)) {
                     showMsg("请输入标题");
+                    return;
+                }
+                if (TextUtils.isEmpty(topicId)){
+                    showMsg("请输入话题");
+                    return;
+                }
+                if (TextUtils.isEmpty(mStartTime)){
+                    showMsg("请输入开始时间");
+                    return;
+                }
+                if (TextUtils.isEmpty(mEndTime)){
+                    showMsg("请输入结束时间");
                     return;
                 }
                 showProgress(getString(R.string.loading));
@@ -396,7 +411,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
     }
 

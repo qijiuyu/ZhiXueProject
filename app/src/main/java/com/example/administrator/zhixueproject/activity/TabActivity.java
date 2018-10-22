@@ -77,8 +77,29 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
     private void leftMenu() {
         // 设置遮盖主要内容的布颜色
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
-        //关闭手势滑动
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                View content = mDrawerLayout.getChildAt(0);
+                int offset = (int) (drawerView.getWidth() * slideOffset);
+                content.setTranslationX(offset);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
     }
 
 
