@@ -222,4 +222,7 @@ public class HttpConstant {
 
     // 踢出会员
     public static final String KICK_OUT_VIP = "attendance/kickOutVip.do";
+
+    // 获取会员详情
+    public static final String GET_VIP_INFO = "attendance/getVipInfo.do";
 }

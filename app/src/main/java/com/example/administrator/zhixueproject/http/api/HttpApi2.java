@@ -3,6 +3,7 @@ package com.example.administrator.zhixueproject.http.api;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
+import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberManagerBean;
 import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
 import com.example.administrator.zhixueproject.bean.topic.ActionNeophyteBean;
@@ -245,4 +246,13 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.KICK_OUT_VIP)
     Call<MemberManagerBean>kickOutVip(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取会员详情
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_VIP_INFO)
+    Call<MemberDetailBean>getVipInfo(@FieldMap Map<String,String> map);
 }
