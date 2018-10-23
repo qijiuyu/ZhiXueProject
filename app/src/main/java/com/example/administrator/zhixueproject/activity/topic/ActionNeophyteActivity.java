@@ -141,7 +141,7 @@ public class ActionNeophyteActivity extends BaseActivity implements MyRefreshLay
     private void requestError() {
         mrlActionNeophyte.refreshComplete();
         mrlActionNeophyte.loadMoreComplete();
-        showMsg(getString(R.string.load_failed));
+        showMsg(getString(R.string.net_error));
     }
 
     /**

@@ -9,12 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.VoteManageAdapter;
-import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
 import com.example.administrator.zhixueproject.bean.topic.VoteListBean;
 import com.example.administrator.zhixueproject.bean.topic.VoteManageBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
@@ -23,7 +21,6 @@ import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,6 +134,9 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
         if (bean.isStatus()) {
             VoteManageBean.DataBean dataBean = bean.getData();
             listData = dataBean.getVoteList();
+            if (dataBean.getVoteList().size()==0){
+                return;
+            }
             adapterView();
         } else {
             showMsg(bean.errorMsg);
@@ -185,7 +185,7 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
     private void requestError() {
         mrlVoteManage.refreshComplete();
         mrlVoteManage.loadMoreComplete();
-        showMsg(getString(R.string.load_failed));
+        showMsg(getString(R.string.net_error));
     }
 
     /**
