@@ -17,6 +17,7 @@ import com.example.administrator.zhixueproject.adapter.memberManage.MedalIconAda
 import com.example.administrator.zhixueproject.bean.memberManage.AttendanceBean;
 import com.example.administrator.zhixueproject.fragment.memberManage.PaidQuestionFragment;
 import com.example.administrator.zhixueproject.fragment.memberManage.TalkAboutFragment;
+import com.example.administrator.zhixueproject.utils.GlideCirclePictureUtil;
 import com.flyco.tablayout.SlidingTabLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
             return;
         }
         //头像
-        Glide.with(this).load(mMemberInfoBean.getUserImg()).error(R.mipmap.unify_circle_head).into(mIvHeadPic);
+        GlideCirclePictureUtil.setCircleImg(this,mMemberInfoBean.getUserImg(),mIvHeadPic);
         //昵称
         tvMemberName.setText(mMemberInfoBean.getAttendUsername());
         //会员等级图片

@@ -16,8 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
@@ -30,12 +28,11 @@ import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.GlideCirclePictureUtil;
 import com.example.administrator.zhixueproject.utils.KeyboardUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.utils.ToolUtils;
-import com.example.administrator.zhixueproject.utils.Utils;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -215,7 +212,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
     public void postsDetailsSuccess(PostsDetailsBean postsDetailsBean) {
         PostsDetailsBean.PostDetailBeanOuter data = postsDetailsBean.getData();
         PostsDetailsBean.PostDetailBeanOuter.PostContentBean postContent = data.getPostContent();
-        Glide.with(mContext).load(postContent.getUserImg()).error(R.mipmap.unify_circle_head).into(ivHead);
+        GlideCirclePictureUtil.setCircleImg(mContext,postContent.getUserImg(),ivHead);
         tvNickName.setText(postContent.getUserName());
         tvAttentionNum.setText(String.valueOf(postContent.getAttentionNum()));
         tvMoneyReward.setText("赏金" + postContent.getPostReward());
