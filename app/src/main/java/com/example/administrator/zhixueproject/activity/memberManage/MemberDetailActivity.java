@@ -26,6 +26,7 @@ import java.util.List;
  * @date 2018/10/20
  */
 public class MemberDetailActivity extends BaseActivity implements View.OnClickListener {
+    public static final int REQUEST_CODE=1;
     private MedalIconAdapter mMedalIconAdapter;
     public static final String ATTEND_ID="attendId";
     private AttendanceBean mMemberInfoBean;
@@ -41,10 +42,12 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_detail);
         initView();
-        initData();
+        initData(mMemberInfoBean);
     }
 
     private void initView() {
+        //会员基本信息
+        mMemberInfoBean = getIntent().getParcelableExtra(MemberManagerActivity.MEMBER_INFO);
         TextView tvTitle= (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.member_detail));
         findViewById(R.id.lin_back).setOnClickListener(this);
@@ -58,9 +61,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         mIvMemberLevel = (ImageView) findViewById(R.id.iv_member_level);
     }
 
-    private void initData() {
-        //会员基本信息
-        mMemberInfoBean = getIntent().getParcelableExtra(MemberManagerActivity.MEMBER_INFO);
+    private void initData(AttendanceBean mMemberInfoBean) {
         if (mMemberInfoBean==null){
             return;
         }
@@ -111,6 +112,15 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
                 setResult(MemberSettingActivity.RESULT_CODE,mIntent);
                 finish();
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==MemberSettingActivity.RESULT_CODE&&requestCode==REQUEST_CODE){
+            mMemberInfoBean = data.getParcelableExtra(MemberManagerActivity.MEMBER_INFO);
+            initData(mMemberInfoBean);
         }
     }
 }
