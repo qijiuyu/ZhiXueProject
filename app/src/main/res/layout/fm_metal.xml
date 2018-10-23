@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/member_medal_bg"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/bg_decoration"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.75"
+        android:background="@color/color_ffffff">
+
+        <com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout
+            android:id="@+id/mrl_refresh_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_decoration_list"
+                android:layout_width="match_parent"
+                android:layout_height="258dp" />
+
+        </com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout>
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:layout_below="@+id/mrl_refresh_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="85dp"
+            android:background="@mipmap/bg_orange"
+            android:gravity="center"
+            android:text="@string/confirm"
+            android:textColor="@color/color_ffffff"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="17dp"
+            android:background="@mipmap/title_down_bg" />
+    </RelativeLayout>
+
+</LinearLayout>

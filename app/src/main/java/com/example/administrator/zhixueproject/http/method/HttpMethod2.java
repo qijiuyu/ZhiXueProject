@@ -4,8 +4,10 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
+import com.example.administrator.zhixueproject.bean.memberManage.MedalBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberManagerBean;
 import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
@@ -18,6 +20,7 @@ import com.example.administrator.zhixueproject.bean.topic.VoteManageBean;
 import com.example.administrator.zhixueproject.bean.topic.VoteNeophyteBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
+import com.example.administrator.zhixueproject.http.api.HttpApi1;
 import com.example.administrator.zhixueproject.http.api.HttpApi2;
 import com.example.administrator.zhixueproject.http.base.BaseRequst;
 import com.example.administrator.zhixueproject.http.base.Http;
@@ -26,6 +29,7 @@ import com.example.administrator.zhixueproject.utils.LogUtils;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -1021,4 +1025,33 @@ public class HttpMethod2 extends BaseRequst {
         });
 
     }
+
+    /**
+     * 获取勋章列表
+     * @param timestamp
+     * @param page
+     * @param handler
+     */
+    public static void getMedalList(String timestamp,int page,int limit,final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("timestamp",timestamp);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        Http.getRetrofit().create(HttpApi2.class).getMedalList(map).enqueue(new Callback<MedalBean>() {
+            public void onResponse(Call<MedalBean> call, Response<MedalBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<MedalBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

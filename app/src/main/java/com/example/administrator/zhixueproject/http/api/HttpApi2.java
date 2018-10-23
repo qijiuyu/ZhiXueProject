@@ -1,8 +1,10 @@
 package com.example.administrator.zhixueproject.http.api;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
+import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
+import com.example.administrator.zhixueproject.bean.memberManage.MedalBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberManagerBean;
 import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
@@ -14,6 +16,8 @@ import com.example.administrator.zhixueproject.bean.topic.VoteManageBean;
 import com.example.administrator.zhixueproject.bean.topic.VoteNeophyteBean;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import java.util.Map;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -255,4 +259,15 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_VIP_INFO)
     Call<MemberDetailBean>getVipInfo(@FieldMap Map<String,String> map);
+
+    /**
+     * 获取勋章列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_MEDAL_LIST)
+    Call<MedalBean> getMedalList(@FieldMap Map<String, String> map);
+
+
 }

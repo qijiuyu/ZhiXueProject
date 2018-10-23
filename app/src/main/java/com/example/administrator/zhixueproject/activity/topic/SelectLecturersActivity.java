@@ -206,7 +206,7 @@ public class SelectLecturersActivity extends BaseActivity implements View.OnClic
     private void requestError() {
         mrlLectureList.refreshComplete();
         mrlLectureList.loadMoreComplete();
-        showMsg(getString(R.string.load_failed));
+        showMsg(getString(R.string.net_error));
     }
 
     /**

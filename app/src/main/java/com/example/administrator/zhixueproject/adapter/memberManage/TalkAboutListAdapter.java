@@ -36,7 +36,13 @@ public class TalkAboutListAdapter extends BaseQuickAdapter<MemberTopicListBean,B
         }
 
         helper.setText(R.id.tv_time,item.getPostCreationTime());//时间
-        helper.setText(R.id.tv_content, item.getPostContent());//话题内容
+        String content=item.getPostContent();
+        String s="";
+        // 截取文字内容
+        if (content.contains("p")){
+           s=content.substring(content.indexOf("p")+2,content.indexOf("/")-1);
+        }
+        helper.setText(R.id.tv_content, s);//话题内容
         int scanNum = item.getPostSeeNum();//浏览人数
         helper.setText(R.id.tv_scan_number, "浏览 "+scanNum);
         int commentNum = item.getPostTalkNum();//评论人数
