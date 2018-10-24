@@ -39,4 +39,6 @@ public class HandlerConstant2 {
     public static final int GET_VIP_LIST_SUCCESS1 = 2034;
     public static final int GET_VIP_LIST_SUCCESS2 = 2035;
     public static final int KICK_OUT_VIP_SUCCESS = 2036;
+    public static final int GET_VIP_INFO_SUCCESS = 2037;
+    public static final int GET_VIP_INFO_SUCCESS2 = 2038;
 }

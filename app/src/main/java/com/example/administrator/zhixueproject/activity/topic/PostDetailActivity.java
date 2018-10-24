@@ -32,6 +32,7 @@ import com.example.administrator.zhixueproject.fragment.topic.WorksListDetailsFr
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.GlideCirclePictureUtil;
 import com.example.administrator.zhixueproject.utils.KeyboardUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
@@ -274,7 +275,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
      */
     public void postsDetailsSuccess(PostsDetailsBean postsDetailsBean) {
         PostsDetailsBean.PostDetailBeanOuter data = postsDetailsBean.getData();
-        Glide.with(this).load(data.getPostContent().getUserImg()).error(R.mipmap.unify_circle_head).into(ivHead);
+        GlideCirclePictureUtil.setCircleImg(this,data.getPostContent().getUserImg(),ivHead);
         tvNickName.setText(data.getPostContent().getUserName());
         tvAttentionNum.setText(data.getPostContent().getAttentionNum() + "");
 
