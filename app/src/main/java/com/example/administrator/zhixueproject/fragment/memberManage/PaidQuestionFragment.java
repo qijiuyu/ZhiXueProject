@@ -18,6 +18,7 @@ import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
 import java.util.List;
@@ -31,7 +32,7 @@ public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayou
     private PaidQuestionListAdapter mPaitQuestionListAdapter;
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = System.currentTimeMillis() + "";
+    private String TIMESTAMP = "";
     private String attendId;
     private MyRefreshLayout refreshLayout;
     private RecyclerView rvMemberDetailList;
@@ -60,6 +61,7 @@ public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayou
      * @param index
      */
     private void getVipInfo(int index) {
+        TIMESTAMP= DateUtil.getTime();
         showProgress(getString(R.string.loading));
         HttpMethod2.getVipInfo(attendId, TYPE_PAY_QUESTION, TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
     }

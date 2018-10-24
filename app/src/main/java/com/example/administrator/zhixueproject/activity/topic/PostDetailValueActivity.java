@@ -28,6 +28,7 @@ import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.GlideCirclePictureUtil;
 import com.example.administrator.zhixueproject.utils.KeyboardUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
@@ -47,7 +48,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
     private String postId;
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = System.currentTimeMillis() + "";
+    private String TIMESTAMP = "";
     private String commentUserId = MyApplication.userInfo.getData().getUser().getUserId() + "";
     private PostListBean postListBean;
     public PostsTaskAdapter mAdapter;
@@ -104,6 +105,8 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
     }
 
     private void searchYouChangDetail(int index) {
+        TIMESTAMP= DateUtil.getTime();
+        showProgress(getString(R.string.loading));
         HttpMethod2.getYouChangDetail(postId, PAGE + "", LIMIT, TIMESTAMP, index, mHandler);
     }
 
@@ -236,7 +239,6 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         });
         wvPostContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
     }
-
 
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         //回复楼层贴子

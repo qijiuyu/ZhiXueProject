@@ -19,6 +19,7 @@ import com.example.administrator.zhixueproject.bean.topic.ActivityListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -38,7 +39,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
     private List<ActivityListBean> listData = new ArrayList<>();
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = System.currentTimeMillis() + "";
+    private String TIMESTAMP = "";
     private int mCurrentPosition;
     private MyRefreshLayout mrlActionManage;
     private RecyclerView rvActionManage;
@@ -69,6 +70,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void getActivityList(int index) {
+        TIMESTAMP= DateUtil.getTime();
         showProgress(getString(R.string.loading));
         HttpMethod2.getActivityList(TIMESTAMP, PAGE+"", LIMIT, index, mHandler);
     }

@@ -18,8 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
@@ -32,18 +30,15 @@ import com.example.administrator.zhixueproject.fragment.topic.WorksListDetailsFr
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.GlideCirclePictureUtil;
 import com.example.administrator.zhixueproject.utils.KeyboardUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.utils.ToolUtils;
-import com.example.administrator.zhixueproject.utils.Utils;
 import com.flyco.tablayout.SlidingTabLayout;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.text.BreakIterator;
 import java.util.ArrayList;
 
 /**
@@ -54,10 +49,9 @@ import java.util.ArrayList;
  */
 public class PostDetailActivity extends BaseActivity implements View.OnClickListener {
 
-    private boolean isShow = false;
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = System.currentTimeMillis() + "";
+    private String TIMESTAMP ="";
     public String mFloorUserName;
     private String mFloorId;
     private PostListBean postListBean;
@@ -160,6 +154,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
      * 查询帖子详情
      */
     private void searchTopicDetail() {
+        TIMESTAMP= DateUtil.getTime();
         showProgress(getString(R.string.loading));
         HttpMethod2.getPostDetail(String.valueOf(postListBean.getPostId()), PAGE + "", LIMIT,
                 TIMESTAMP, HandlerConstant2.GET_POST_DETAIL_SUCCESS, mHandler);

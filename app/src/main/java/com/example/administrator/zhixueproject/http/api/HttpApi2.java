@@ -7,6 +7,7 @@ import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MedalBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberManagerBean;
+import com.example.administrator.zhixueproject.bean.memberManage.MemberSettingBean;
 import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
 import com.example.administrator.zhixueproject.bean.topic.ActionNeophyteBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
@@ -268,6 +269,15 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_MEDAL_LIST)
     Call<MedalBean> getMedalList(@FieldMap Map<String, String> map);
+
+    /**
+     * 保存会员信息
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.SAVE_VIP)
+    Call<MemberSettingBean> saveVip(@FieldMap Map<String, String> map);
 
 
 }

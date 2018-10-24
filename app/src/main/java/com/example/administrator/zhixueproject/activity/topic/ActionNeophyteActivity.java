@@ -19,6 +19,7 @@ import com.example.administrator.zhixueproject.bean.topic.ActivityUserListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -37,7 +38,7 @@ public class ActionNeophyteActivity extends BaseActivity implements MyRefreshLay
     private String activityId;
     private int PAGE=1;
     private String LIMIT = "10";
-    private String TIMESTAMP=System.currentTimeMillis()+"";
+    private String TIMESTAMP="";
     private MyRefreshLayout mrlActionNeophyte;
     private RecyclerView rvActionNeophyte;
 
@@ -62,6 +63,7 @@ public class ActionNeophyteActivity extends BaseActivity implements MyRefreshLay
     }
 
     private void getActivityUserList(int index) {
+        TIMESTAMP= DateUtil.getTime();
         showProgress(getString(R.string.loading));
         HttpMethod2.getActivityUserList(activityId+"",TIMESTAMP,PAGE+"",LIMIT,index,mHandler);
     }
@@ -164,6 +166,4 @@ public class ActionNeophyteActivity extends BaseActivity implements MyRefreshLay
         PAGE++;
         getActivityUserList(HandlerConstant2.GET_ACTIVITY_USER_LIST_SUCCESS2);
     }
-
-
 }

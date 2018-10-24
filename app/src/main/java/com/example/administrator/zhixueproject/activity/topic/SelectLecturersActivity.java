@@ -9,33 +9,27 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.live.SelectLecturersAdapter;
-import com.example.administrator.zhixueproject.adapter.topic.TopicListAdapter;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
 import com.example.administrator.zhixueproject.bean.live.TeacherListBean;
-import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.InputMethodUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +43,9 @@ public class SelectLecturersActivity extends BaseActivity implements View.OnClic
     private SelectLecturersAdapter mAdapter;
     private List<TeacherListBean> listData = new ArrayList<>();
     private int PAGE=1;
-    private String LIMIT = "999";
+    private String LIMIT = "10";
     private String TIMESTAMP="";
-    private String CollegeId="58";
+    private String CollegeId="";
     private String key ="";
     private MyRefreshLayout mrlLectureList;
     private RecyclerView rvLecturerList;
@@ -112,6 +106,7 @@ public class SelectLecturersActivity extends BaseActivity implements View.OnClic
      * @param index handler消息
      */
     private void getLecturersList(int index) {
+        TIMESTAMP= DateUtil.getTime();
         showProgress(getString(R.string.loading));
         HttpMethod2.getLecturersList(CollegeId,key,PAGE+"",LIMIT,TIMESTAMP,index,mHandler);
     }
@@ -158,7 +153,6 @@ public class SelectLecturersActivity extends BaseActivity implements View.OnClic
             }
         }
     };
-
 
     /**
      * 加载数据

@@ -1,12 +1,13 @@
 package com.example.administrator.zhixueproject.utils;
 
+import android.text.TextUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 /**
  * 时间工具类
- * Created by lyn on 2017/3/7.
  */
 
 public class DateUtil {
@@ -19,7 +20,6 @@ public class DateUtil {
     public static String getDay(long time) {
         return new SimpleDateFormat("yyyy-MM-dd").format(time);
     }
-
 
     /**
      * 格式到天
@@ -82,5 +82,15 @@ public class DateUtil {
         Calendar c = Calendar.getInstance();
         c.setTime(today);
         return c.get(Calendar.DAY_OF_WEEK);
+    }
+
+    /**
+     *  获取格式化后时间
+     * @return
+     */
+    public static String getTime(){
+        Date date=new Date();
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return format.format(date);
     }
 }

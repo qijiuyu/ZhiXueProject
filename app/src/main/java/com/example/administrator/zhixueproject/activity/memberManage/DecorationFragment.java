@@ -18,6 +18,7 @@ import com.example.administrator.zhixueproject.bean.memberManage.MedalInfoBean;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class DecorationFragment extends BaseFragment implements BaseQuickAdapter
     private DecorationAdapter mDecorationAdapter;
     private int PAGE = 1;
     private int LIMIT = 10;
-    private String TIMESTAMP = System.currentTimeMillis() + "";
+    private String TIMESTAMP = "";
     private List<MedalInfoBean> medalList;
     private RecyclerView rvDecorationList;
     private MyRefreshLayout refreshLayout;
@@ -63,6 +64,7 @@ public class DecorationFragment extends BaseFragment implements BaseQuickAdapter
     }
 
     public void requestNet(int index) {
+        TIMESTAMP= DateUtil.getTime();
         showProgress(getString(R.string.loading));
         HttpMethod2.getMedalList(TIMESTAMP, PAGE, LIMIT, index, mHandler);
     }
@@ -83,7 +85,6 @@ public class DecorationFragment extends BaseFragment implements BaseQuickAdapter
                 break;
         }
     }
-
 
     /**
      * 勋章条目点击事件
@@ -136,12 +137,14 @@ public class DecorationFragment extends BaseFragment implements BaseQuickAdapter
 
     @Override
     public void onRefresh(View view) {
-
+        PAGE = 1;
+        requestNet(HandlerConstant1.GET_MEDAL_LIST_SUCCESS);
     }
 
     @Override
     public void onLoadMore(View view) {
-
+        PAGE++;
+        requestNet(HandlerConstant1.GET_MEDAL_LIST_SUCCESS2);
     }
 
     public interface OnDecorationListener {
@@ -172,7 +175,7 @@ public class DecorationFragment extends BaseFragment implements BaseQuickAdapter
                     loadMoreSuccess(bean);
                     break;
                 case HandlerConstant1.REQUST_ERROR:
-                     requestError();
+                    requestError();
                     break;
                 default:
                     break;
@@ -212,6 +215,4 @@ public class DecorationFragment extends BaseFragment implements BaseQuickAdapter
         refreshLayout.loadMoreComplete();
         showMsg(getString(R.string.net_error));
     }
-
-
 }

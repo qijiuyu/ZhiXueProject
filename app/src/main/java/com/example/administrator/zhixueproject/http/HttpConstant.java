@@ -225,4 +225,7 @@ public class HttpConstant {
 
     // 获取会员详情
     public static final String GET_VIP_INFO = "attendance/getVipInfo.do";
+
+    // 保存会员信息
+    public static final String SAVE_VIP = "attendance/saveVip.do";
 }
