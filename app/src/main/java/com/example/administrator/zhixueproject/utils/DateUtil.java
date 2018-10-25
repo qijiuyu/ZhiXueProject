@@ -83,4 +83,14 @@ public class DateUtil {
         c.setTime(today);
         return c.get(Calendar.DAY_OF_WEEK);
     }
+
+
+    /**
+     * 获得某个月最大天数
+     */
+    public static int getDaysOfMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
 }

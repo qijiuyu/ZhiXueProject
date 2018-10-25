@@ -23,6 +23,7 @@ import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.bean.WithDraw;
 import com.example.administrator.zhixueproject.bean.WithDrawInfo;
 import com.example.administrator.zhixueproject.bean.live.Live;
+import com.example.administrator.zhixueproject.bean.memberManage.SignIn;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 
 import java.util.Map;
@@ -502,5 +503,15 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.DELETE_LIVE)
     Call<BaseBean> deleteLive(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 签到管理
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_SIGNIN_LIST)
+    Call<SignIn> getSignList(@FieldMap Map<String, String> map);
 
 }

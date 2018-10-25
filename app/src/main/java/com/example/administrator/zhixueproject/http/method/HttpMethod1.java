@@ -27,6 +27,7 @@ import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.bean.WithDraw;
 import com.example.administrator.zhixueproject.bean.WithDrawInfo;
 import com.example.administrator.zhixueproject.bean.live.Live;
+import com.example.administrator.zhixueproject.bean.memberManage.SignIn;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.api.HttpApi1;
 import com.example.administrator.zhixueproject.http.base.BaseRequst;
@@ -1410,6 +1411,32 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 签到管理
+     * @param searchMonth
+     * @param handler
+     */
+    public static void getSignList(String searchMonth,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("searchMonth",searchMonth);
+        Http.getRetrofit().create(HttpApi1.class).getSignList(map).enqueue(new Callback<SignIn>() {
+            public void onResponse(Call<SignIn> call, Response<SignIn> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_SIGN_LIST_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<SignIn> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

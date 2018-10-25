@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/head"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <RelativeLayout
+            android:layout_marginTop="19dp"
+            android:layout_width="match_parent"
+            android:layout_height="216dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="209dp">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_y_intercept"
+                    android:layout_marginLeft="8.5dp"
+                    android:layout_width="28dp"
+                    android:layout_height="match_parent">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_dbdbdb"/>
+
+                <View
+                    android:layout_marginTop="208.5dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_dbdbdb"/>
+
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_data"
+                android:layout_marginLeft="47dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_x_intercept"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="46dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tv_show_date"
+            android:layout_marginTop="57.5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/color_fd703e"/>
+
+        <TextView
+            android:id="@+id/tv_change_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dm066"
+            android:layout_marginRight="@dimen/dm066"
+            android:background="@mipmap/bg_botton"
+            android:layout_marginTop="@dimen/dm020"
+            android:gravity="center"
+            android:text="点击更换"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/dm032"/>
+
+    </LinearLayout>
+
+</LinearLayout>
