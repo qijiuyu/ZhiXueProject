@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import java.io.File;
@@ -20,7 +21,7 @@ import java.io.File;
 
 public class AddImageUtils {
     private static Uri imageUri;//原图保存地址
-    public static String outputUri=FileUtils.getSdcardPath()+"crop.png";//裁剪后地址
+    public static String outputUri= FileUtils.getSdcardPath()+"crop.png";//裁剪后地址
     public static Uri outputUriSmall;// 缩略图展示
     private static String imagePath;
     public static final int REQUEST_PICK_IMAGE = 1; //相册选取
@@ -54,8 +55,6 @@ public class AddImageUtils {
      */
     public static String cropPhoto(Context context) {
         File file = new FileStorage().createCropFile();
-        //缩略图保存地址
-        outputUri = Uri.fromFile(file).toString();
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(imageUri, "image/*");
         intent.putExtra("crop", "true");

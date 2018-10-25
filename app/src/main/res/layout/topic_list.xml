@@ -20,6 +20,4 @@
 
     </com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout>
 
-    <include layout="@layout/bottom"/>
-
 </LinearLayout>

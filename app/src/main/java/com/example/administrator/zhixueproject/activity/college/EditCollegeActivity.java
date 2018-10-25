@@ -24,6 +24,7 @@ import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
 
@@ -342,24 +343,22 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                         } else {
                             AddImageUtils.handleImageBeforeKitKat(data, EditCollegeActivity.this);
                         }
-                        outputUri=AddImageUtils.cropPhoto(EditCollegeActivity.this);
+                        outputUri=AddImageUtils.cropPhoto(EditCollegeActivity.this).toString();
                     }
                     break;
                 case AddImageUtils.REQUEST_CAPTURE://拍照
                     outputUri=AddImageUtils.cropPhoto(EditCollegeActivity.this);
                     break;
                 case AddImageUtils.REQUEST_PICTURE_CUT://裁剪完成
-                    if (data != null) {
-                        final File file=new File(outputUri);
-                        if(!file.isFile()){
-                            return;
-                        }
-                        List<File> list=new ArrayList<>();
-                        list.add(file);
-                        showProgress("图片上传中");
-                        //上传图片
-                        HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES,list,mHandler);
+                    final File file=new File(outputUri);
+                    if(!file.isFile()){
+                        return;
                     }
+                    List<File> list=new ArrayList<>();
+                    list.add(file);
+                    showProgress("图片上传中");
+                    //上传图片
+                    HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES,list,mHandler);
                     break;
                 default:
                     break;
