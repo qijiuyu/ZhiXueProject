@@ -28,6 +28,7 @@ import com.example.administrator.zhixueproject.fragment.memberManage.MemberLevel
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.InputMethodUtils;
 import com.example.administrator.zhixueproject.utils.MaxTextLengthFilter;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
@@ -53,7 +54,7 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
     private List<AttendanceBean> mAttendanceList = new ArrayList<>();
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = System.currentTimeMillis() + "";
+    private String TIMESTAMP = "";
     private String NAME = "";
     private String CollegeGradeId = "";
     private int itemCheckedPosition;
@@ -118,6 +119,7 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
      * @param index
      */
     private void getVipList(int index) {
+        TIMESTAMP= DateUtil.getTime();
         showProgress(getString(R.string.loading));
         HttpMethod2.getVipList(NAME, CollegeGradeId, TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
     }
@@ -232,7 +234,6 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
             }
         }
     };
-
 
     /**
      * 加载数据成功

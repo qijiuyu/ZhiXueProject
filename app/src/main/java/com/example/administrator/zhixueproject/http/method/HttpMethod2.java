@@ -2,15 +2,15 @@ package com.example.administrator.zhixueproject.http.method;
 
 import android.os.Handler;
 import android.text.TextUtils;
-
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
+import com.example.administrator.zhixueproject.bean.memberManage.MedalBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberManagerBean;
+import com.example.administrator.zhixueproject.bean.memberManage.MemberSettingBean;
 import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
 import com.example.administrator.zhixueproject.bean.topic.ActionNeophyteBean;
-import com.example.administrator.zhixueproject.bean.topic.ActivityListBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
@@ -22,10 +22,8 @@ import com.example.administrator.zhixueproject.http.api.HttpApi2;
 import com.example.administrator.zhixueproject.http.base.BaseRequst;
 import com.example.administrator.zhixueproject.http.base.Http;
 import com.example.administrator.zhixueproject.utils.LogUtils;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -996,7 +994,6 @@ public class HttpMethod2 extends BaseRequst {
      * @param handler
      */
     public static void getVipInfo(String attendId, String postType, String timestamp, String page, String limit,final int index, final Handler handler) {
-
         Map<String, String> map = new HashMap<>();
         map.put("attendId", attendId);
         map.put("postType", postType);
@@ -1021,4 +1018,71 @@ public class HttpMethod2 extends BaseRequst {
         });
 
     }
+
+    /**
+     * 获取勋章列表
+     * @param timestamp
+     * @param page
+     * @param handler
+     */
+    public static void getMedalList(String timestamp,int page,int limit,final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("timestamp",timestamp);
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        Http.getRetrofit().create(HttpApi2.class).getMedalList(map).enqueue(new Callback<MedalBean>() {
+            public void onResponse(Call<MedalBean> call, Response<MedalBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<MedalBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+    /**
+     *  保存会员信息
+     * @param attendId   会员ID
+     * @param attendUsername  会员名称
+     * @param attendType  会员身份(0：学生、1：管理、2：老师、默认为0)
+     * @param attendAllowYn   是否拉黑(是否允许再加入：1：是、2：否)
+     * @param attendTalkLimit  是否禁言(0：否、1：是)
+     * @param attendTalkTime  禁言时间
+     * @param medalTypeIds   勋章类型ID
+     * @param handler
+     */
+    public static void saveVip(String attendId,String attendUsername,String attendType,String attendAllowYn,
+                              String attendTalkLimit, String attendTalkTime,String medalTypeIds,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("attendId",attendId);
+        map.put("attendUsername",attendUsername);
+        map.put("attendType",attendType);
+        map.put("attendAllowYn",attendAllowYn);
+        map.put("attendTalkLimit",attendTalkLimit);
+        map.put("attendTalkTime",attendTalkTime);
+        map.put("medalTypeIds",medalTypeIds);
+        Http.getRetrofit().create(HttpApi2.class).saveVip(map).enqueue(new Callback<MemberSettingBean>() {
+            public void onResponse(Call<MemberSettingBean> call, Response<MemberSettingBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.SAVE_VIP_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<MemberSettingBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
 }

@@ -19,6 +19,7 @@ import com.example.administrator.zhixueproject.bean.topic.VoteNeophyteBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -38,7 +39,7 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
     private String voteId;//投票ID
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = System.currentTimeMillis() + "";
+    private String TIMESTAMP = "";
     private MyRefreshLayout mrlVoteNeophyte;
     private RecyclerView rvVoteNeophyte;
 
@@ -65,6 +66,7 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void getVoteUserList(int index) {
+        TIMESTAMP= DateUtil.getTime();
         showProgress(getString(R.string.loading));
         HttpMethod2.getVoteUserList(voteId, TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
     }
@@ -104,7 +106,6 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
                     break;
                 default:
                     break;
-
             }
         }
     };
@@ -126,7 +127,6 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
             adapterView();
         } else {
             showMsg(bean.errorMsg);
-
         }
     }
 

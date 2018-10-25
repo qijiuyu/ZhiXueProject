@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -27,6 +26,7 @@ import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.VibratorUtil;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
@@ -48,7 +48,7 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
     private List<TopicListBean> listData = new ArrayList<>();
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = System.currentTimeMillis() + "";
+    private String TIMESTAMP = "";
     private RecyclerView mRecyclerView;
     private MyRefreshLayout mRefreshLayout;
     private int itemCheckedPosition;
@@ -133,6 +133,7 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
      * @param index handler消息
      */
     private void getTopicList(int index) {
+        TIMESTAMP= DateUtil.getTime();
         HttpMethod2.getTopicList(TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
     }
 
@@ -326,11 +327,9 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
     public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
         BaseViewHolder holder = ((BaseViewHolder) viewHolder);
         holder.setBackgroundColor(R.id.content, Color.WHITE);
-
         int endPosition = pos;
         long topicId1 = listData.get(startPosition).getTopicId();
         long topicId2 = listData.get(endPosition).getTopicId();
-
         LogUtils.e("topicId1: " + topicId1 + "--" + topicId2);
         // 话题重新排序
         HttpMethod2.updateSort(topicId1 + "", topicId2 + "", mHandler);

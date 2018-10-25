@@ -9,6 +9,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.live.TeacherListBean;
+import com.example.administrator.zhixueproject.utils.GlideCirclePictureUtil;
+
 import java.util.List;
 
 
@@ -24,7 +26,7 @@ public class SelectLecturersAdapter extends BaseQuickAdapter<TeacherListBean, Ba
 
         helper.setText(R.id.tv_name, item.getUserName());
         ImageView ivHeadImg = helper.getView(R.id.iv_head_img);
-        Glide.with(MyApplication.application).load(item.getUserImg()).error(R.mipmap.unify_circle_head).into(ivHeadImg);
+        GlideCirclePictureUtil.setCircleImg(mContext,item.getUserImg(),ivHeadImg);
         helper.setText(R.id.tv_id, "ID："+item.getTeacherId());
     }
 }

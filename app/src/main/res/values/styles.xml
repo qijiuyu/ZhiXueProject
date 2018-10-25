@@ -7,11 +7,31 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="view_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:background">@color/color_f0f0f0</item>
+    </style>
+    <!-- dialog样式 -->
+    <style name="custom_dialog_style" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+    </style>
+
+    <style name="custom_dialog_style_new">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="TabLayoutTextStyle">
@@ -19,12 +39,12 @@
     </style>
 
     <declare-styleable name="VerifyCode">
-        <attr name="codeTextSize" format="dimension"/>
-        <attr name="codeBackground" format="color"/>
-        <attr name="codeLength" format="integer"/>
-        <attr name="isContainChar" format="boolean"/>
-        <attr name="pointNum" format="integer"/>
-        <attr name="linNum" format="integer"/>
+        <attr name="codeTextSize" format="dimension" />
+        <attr name="codeBackground" format="color" />
+        <attr name="codeLength" format="integer" />
+        <attr name="isContainChar" format="boolean" />
+        <attr name="pointNum" format="integer" />
+        <attr name="linNum" format="integer" />
     </declare-styleable>
 
     <!-- 底端tab -->

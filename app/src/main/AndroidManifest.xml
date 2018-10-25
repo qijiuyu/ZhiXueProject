@@ -264,10 +264,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.memberManage.MemberSettingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.memberManage.MemberDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+           />
 
        <!--注册微信回调 WXEntryActivity -->
         <activity

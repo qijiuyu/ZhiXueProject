@@ -228,4 +228,7 @@ public class HttpConstant {
 
     //签到管理
     public static final String GET_SIGNIN_LIST="signin/getSignin.do";
+
+    // 保存会员信息
+    public static final String SAVE_VIP = "attendance/saveVip.do";
 }

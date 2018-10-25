@@ -18,6 +18,7 @@ import com.example.administrator.zhixueproject.bean.topic.VoteManageBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -36,9 +37,8 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
     private List<VoteListBean> listData = new ArrayList<>();
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = System.currentTimeMillis()+"";
+    private String TIMESTAMP ="";
     private int mCurrentPosition;
-    private boolean isFirst = true;
     private MyRefreshLayout mrlVoteManage;
     private RecyclerView rvVoteManage;
 
@@ -67,6 +67,7 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
     }
 
     private void getVoteList(int index) {
+        TIMESTAMP= DateUtil.getTime();
         showProgress(getString(R.string.loading));
         HttpMethod2.getVoteList(TIMESTAMP, PAGE + "", LIMIT,index,mHandler);
     }
@@ -118,7 +119,6 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
                     break;
                 default:
                     break;
-
             }
         }
     };
@@ -140,7 +140,6 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
             adapterView();
         } else {
             showMsg(bean.errorMsg);
-
         }
     }
 
