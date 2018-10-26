@@ -6,6 +6,7 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MedalBean;
+import com.example.administrator.zhixueproject.bean.memberManage.MemberApplyBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberManagerBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberSettingBean;
@@ -132,7 +133,6 @@ public class HttpMethod2 extends BaseRequst {
     /**
      * 添加话题
      *
-     * @param collegeId
      * @param topicName
      * @param topicPayType
      * @param topicIsTop
@@ -144,11 +144,10 @@ public class HttpMethod2 extends BaseRequst {
      * @param ids
      * @param handler
      */
-    public static void addTopic(String collegeId, String topicName, String topicPayType, String topicIsTop,
+    public static void addTopic( String topicName, String topicPayType, String topicIsTop,
                                 String topicType, String topicUseyn, String topicImg, String topicPrice, String topicVipName,
                                 String ids, final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("collegeId", collegeId);
         map.put("topicName", topicName);
         map.put("topicPayType", topicPayType);
         map.put("topicIsTop", topicIsTop);
@@ -271,17 +270,15 @@ public class HttpMethod2 extends BaseRequst {
     /**
      * 获取讲师列表
      *
-     * @param collegeId
      * @param key
      * @param page
      * @param limit
      * @param timestamp
      * @param handler
      */
-    public static void getLecturersList(String collegeId, String key, String page, String limit,
+    public static void getLecturersList( String key, String page, String limit,
                                         String timestamp, final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("collegeId", collegeId);
         map.put("key", key);
         map.put("page", page);
         map.put("limit", limit);
@@ -1080,6 +1077,61 @@ public class HttpMethod2 extends BaseRequst {
 
             public void onFailure(Call<MemberSettingBean> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+    /**
+     * 获取会员申请列表
+     * @param page
+     * @param limit
+     * @param index
+     * @param handler
+     */
+    public static void getApplyVipList(int page, String limit,
+                                       final int index, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("page",page+"");
+        map.put("limit",limit);
+        Http.getRetrofit().create(HttpApi2.class).getApplyVipList(map).enqueue(new Callback<MemberApplyBean>() {
+            public void onResponse(Call<MemberApplyBean> call, Response<MemberApplyBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<MemberApplyBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+    /**
+     * 拒绝/通过会员申请
+     * @param attendIds
+     * @param attendPassYn
+     * @param index
+     * @param handler
+     */
+    public static void applyVipPass(String attendIds, String attendPassYn, final int index, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("attendIds",attendIds);
+        map.put("attendPassYn",attendPassYn+"");
+        Http.getRetrofit().create(HttpApi2.class).applyVipPass(map).enqueue(new Callback<MemberApplyBean>() {
+            public void onResponse(Call<MemberApplyBean> call, Response<MemberApplyBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<MemberApplyBean> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });

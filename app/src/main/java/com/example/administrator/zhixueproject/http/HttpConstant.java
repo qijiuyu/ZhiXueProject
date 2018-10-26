@@ -231,4 +231,10 @@ public class HttpConstant {
 
     // 保存会员信息
     public static final String SAVE_VIP = "attendance/saveVip.do";
+
+    // 获取会员申请列表
+    public static final String GET_APPLY_VIP_LIST = "attendance/getApplyVipList.do";
+
+    // 同意或者拒绝会员申请
+    public static final String APPLY_VIP_PASS = "attendance/applyVipPass.do";
 }

@@ -31,6 +31,7 @@ public class PersonalManagerFragment extends BaseFragment implements View.OnClic
     }
 
     private void initView(View view) {
+        view.findViewById(R.id.lin_back).setVisibility(View.GONE);
         // 会员管理
         view.findViewById(R.id.rl_member_manager).setOnClickListener(this);
         view.findViewById(R.id.rl_member_application).setOnClickListener(this);

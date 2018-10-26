@@ -42,4 +42,7 @@ public class HandlerConstant2 {
     public static final int GET_VIP_INFO_SUCCESS = 2037;
     public static final int GET_VIP_INFO_SUCCESS2 = 2038;
     public static final int SAVE_VIP_SUCCESS = 2039;
+    public static final int GET_APPLY_VIP_LIST_SUCCESS = 2040;
+    public static final int GET_APPLY_VIP_LIST_SUCCESS2 = 2041;
+    public static final int APPLY_REFUSE_SUCCESS = 2042;
 }

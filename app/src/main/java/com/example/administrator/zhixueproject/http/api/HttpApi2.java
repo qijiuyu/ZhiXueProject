@@ -5,6 +5,7 @@ import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MedalBean;
+import com.example.administrator.zhixueproject.bean.memberManage.MemberApplyBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberManagerBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberSettingBean;
@@ -278,6 +279,24 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.SAVE_VIP)
     Call<MemberSettingBean> saveVip(@FieldMap Map<String, String> map);
+
+    /**
+     * 获取申请会员列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_APPLY_VIP_LIST)
+    Call<MemberApplyBean> getApplyVipList(@FieldMap Map<String, String> map);
+
+    /**
+     * 拒绝/同意会员申请
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.APPLY_VIP_PASS)
+    Call<MemberApplyBean> applyVipPass(@FieldMap Map<String, String> map);
 
 
 }

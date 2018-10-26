@@ -45,7 +45,6 @@ public class SelectLecturersActivity extends BaseActivity implements View.OnClic
     private int PAGE=1;
     private String LIMIT = "10";
     private String TIMESTAMP="";
-    private String CollegeId="";
     private String key ="";
     private MyRefreshLayout mrlLectureList;
     private RecyclerView rvLecturerList;
@@ -108,7 +107,7 @@ public class SelectLecturersActivity extends BaseActivity implements View.OnClic
     private void getLecturersList(int index) {
         TIMESTAMP= DateUtil.getTime();
         showProgress(getString(R.string.loading));
-        HttpMethod2.getLecturersList(CollegeId,key,PAGE+"",LIMIT,TIMESTAMP,index,mHandler);
+        HttpMethod2.getLecturersList(key,PAGE+"",LIMIT,TIMESTAMP,index,mHandler);
     }
 
     @Override

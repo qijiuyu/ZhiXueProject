@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
@@ -19,17 +20,20 @@ import com.example.administrator.zhixueproject.fragment.memberManage.PaidQuestio
 import com.example.administrator.zhixueproject.fragment.memberManage.TalkAboutFragment;
 import com.example.administrator.zhixueproject.utils.GlideCirclePictureUtil;
 import com.flyco.tablayout.SlidingTabLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/** 会员详情
+/**
+ * 会员详情
+ *
  * @author PeterGee
  * @date 2018/10/20
  */
 public class MemberDetailActivity extends BaseActivity implements View.OnClickListener {
-    public static final int REQUEST_CODE=1;
+    public static final int REQUEST_CODE = 1;
     private MedalIconAdapter mMedalIconAdapter;
-    public static final String ATTEND_ID="attendId";
+    public static final String ATTEND_ID = "attendId";
     private AttendanceBean mMemberInfoBean;
     private SlidingTabLayout mTabTopic;
     private ViewPager mVpTopic;
@@ -49,11 +53,12 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     private void initView() {
         //会员基本信息
         mMemberInfoBean = getIntent().getParcelableExtra(MemberManagerActivity.MEMBER_INFO);
-        TextView tvTitle= (TextView) findViewById(R.id.tv_title);
+        TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.member_detail));
         findViewById(R.id.lin_back).setOnClickListener(this);
-        TextView tvRight= (TextView) findViewById(R.id.tv_right);
+        TextView tvRight = (TextView) findViewById(R.id.tv_right);
         tvRight.setBackgroundResource(R.mipmap.edit);
+        tvRight.setOnClickListener(this);
         mTabTopic = (SlidingTabLayout) findViewById(R.id.tab_topic);
         mVpTopic = (ViewPager) findViewById(R.id.vp_topic);
         mRvMedal = (RecyclerView) findViewById(R.id.rv_medal);
@@ -63,11 +68,11 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initData(AttendanceBean mMemberInfoBean) {
-        if (mMemberInfoBean==null){
+        if (mMemberInfoBean == null) {
             return;
         }
         //头像
-        GlideCirclePictureUtil.setCircleImg(this,mMemberInfoBean.getUserImg(),mIvHeadPic);
+        GlideCirclePictureUtil.setCircleImg(this, mMemberInfoBean.getUserImg(), mIvHeadPic);
         //昵称
         tvMemberName.setText(mMemberInfoBean.getAttendUsername());
         //会员等级图片
@@ -85,8 +90,8 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     /**
      * 初始化大家谈、有偿提问fm
      */
-    public void initFragment(){
-        ArrayList<Fragment> fmList=new ArrayList<>();
+    public void initFragment() {
+        ArrayList<Fragment> fmList = new ArrayList<>();
         //初始化各fragment
         TalkAboutFragment talkAboutFragment = new TalkAboutFragment();
         PaidQuestionFragment paidQuestionFragment = new PaidQuestionFragment();
@@ -96,30 +101,38 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         //将名称加载tab名字列表
         String[] titles = {getResources().getString(R.string.talk_about),
                 getResources().getString(R.string.paid_question)};
-        mTabTopic.setViewPager(mVpTopic,titles,this,fmList);
+        mTabTopic.setViewPager(mVpTopic, titles, this, fmList);
         // fragment中添加数据
         Bundle bundle = new Bundle();
-        bundle.putString(ATTEND_ID, mMemberInfoBean.getAttendId()+"");
+        bundle.putString(ATTEND_ID, mMemberInfoBean.getAttendId() + "");
         talkAboutFragment.setArguments(bundle);
         paidQuestionFragment.setArguments(bundle);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.lin_back:
                 Intent mIntent = new Intent();
-                mIntent.putExtra(MemberManagerActivity.MEMBER_INFO,mMemberInfoBean);
-                setResult(MemberSettingActivity.RESULT_CODE,mIntent);
+                mIntent.putExtra(MemberManagerActivity.MEMBER_INFO, mMemberInfoBean);
+                setResult(MemberSettingActivity.RESULT_CODE, mIntent);
                 finish();
                 break;
+            case R.id.tv_right:
+                Intent starter = new Intent(this,MemberSettingActivity.class);
+                starter.putExtra(MemberManagerActivity.MEMBER_INFO,mMemberInfoBean);
+                startActivityForResult(starter,REQUEST_CODE);
+                break;
+            default:
+                break;
+
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==MemberSettingActivity.RESULT_CODE&&requestCode==REQUEST_CODE){
+        if (resultCode == MemberSettingActivity.RESULT_CODE && requestCode == REQUEST_CODE) {
             mMemberInfoBean = data.getParcelableExtra(MemberManagerActivity.MEMBER_INFO);
             initData(mMemberInfoBean);
         }

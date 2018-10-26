@@ -56,7 +56,6 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
     private int topicType;// 话题类型
     private String type;   //1 添加 2 编辑
     private TopicListBean bean;
-    private String CollegeId = "69";
     private EditText etTitle;
     private TextView tvTollMode;
     private TextView tvTopicType;
@@ -392,11 +391,11 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
 
         if (type.equals(FLAG_ADD)) {
             if (payType == 1) {
-                HttpMethod2.addTopic(CollegeId, topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", "", "",mHandler);
+                HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", "", "",mHandler);
             } else if (payType == 2) {
-                HttpMethod2.addTopic(CollegeId, topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, tollMode, "", "",mHandler);
+                HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, tollMode, "", "",mHandler);
             } else if (payType == 3) {
-                HttpMethod2.addTopic(CollegeId, topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", tollMode, "",mHandler);
+                HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", tollMode, "",mHandler);
             }
         } else if (type.equals(FLAG_EDIT)) {
             if (payType == 1) {

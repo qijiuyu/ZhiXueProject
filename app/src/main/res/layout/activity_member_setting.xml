@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
         <include layout="@layout/head"/>
         <RelativeLayout
-            android:layout_marginTop="@dimen/dm133"
+            android:layout_marginTop="67dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ScrollView
@@ -64,14 +64,6 @@
                             android:text="@string/member_identity"
                             android:textColor="@color/color_333333"
                             android:textSize="15sp"/>
-                        <!--<ImageView-->
-                        <!--android:id="@+id/iv_show_identity"-->
-                        <!--android:layout_alignParentRight="true"-->
-                        <!--android:layout_marginRight="@dimen/dm020"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:src="@mipmap/right_arrow"/>-->
                         <TextView
                             android:id="@+id/tv_identity"
                             android:layout_alignParentRight="true"
