@@ -45,4 +45,10 @@ public class HandlerConstant2 {
     public static final int GET_APPLY_VIP_LIST_SUCCESS = 2040;
     public static final int GET_APPLY_VIP_LIST_SUCCESS2 = 2041;
     public static final int APPLY_REFUSE_SUCCESS = 2042;
+    public static final int GET_DELYN_VIP_LIST_SUCCESS =2043 ;
+    public static final int GET_DELYN_VIP_LIST_SUCCESS2 = 2044;
+    public static final int DELYN_VIP_INVITE_SUCCESS = 2045;
+    public static final int REMOVE_BLACK_LIST_SUCCESS = 2046;
+    public static final int GET_BLACK_LIST_SUCCESS = 2047;
+    public static final int GET_BLACK_LIST_SUCCESS2 = 2048;
 }

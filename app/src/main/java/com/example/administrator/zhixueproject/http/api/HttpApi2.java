@@ -4,6 +4,8 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
+import com.example.administrator.zhixueproject.bean.memberManage.BlackListBean;
+import com.example.administrator.zhixueproject.bean.memberManage.KickOutMemberBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MedalBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberApplyBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
@@ -297,6 +299,42 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.APPLY_VIP_PASS)
     Call<MemberApplyBean> applyVipPass(@FieldMap Map<String, String> map);
+
+    /**
+     * 获取踢出的会员列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_DELYN_VIP_LIST)
+    Call<KickOutMemberBean> getDelynVipList(@FieldMap Map<String, String> map);
+
+    /**
+     * 邀请会员
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DELYN_VIP_INVITE)
+    Call<KickOutMemberBean> delynVipInvite(@FieldMap Map<String, String> map);
+
+    /**
+     *  获取黑名单
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_BLACK_LIST)
+    Call<BlackListBean> getBlackList(@FieldMap Map<String, String> map);
+
+    /**
+     *  移除黑名单
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.REMOVE_BLACK_LIST)
+    Call<BlackListBean> removeBlackList(@FieldMap Map<String, String> map);
 
 
 }

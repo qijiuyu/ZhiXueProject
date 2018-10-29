@@ -237,4 +237,16 @@ public class HttpConstant {
 
     // 同意或者拒绝会员申请
     public static final String APPLY_VIP_PASS = "attendance/applyVipPass.do";
+
+    // 获取踢出的会员列表
+    public static final String GET_DELYN_VIP_LIST = "attendance/getDelynVipList.do";
+
+    // 邀请会员
+    public static final String DELYN_VIP_INVITE = "attendance/delynVipInvite.do";
+
+    // 获取黑名单
+    public static final String GET_BLACK_LIST = "attendance/getBlackList.do";
+
+    // 移除黑名单
+    public static final String REMOVE_BLACK_LIST = "attendance/removeBlackList.do";
 }

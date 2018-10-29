@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.SelectLecturersBean;
+import com.example.administrator.zhixueproject.bean.memberManage.BlackListBean;
+import com.example.administrator.zhixueproject.bean.memberManage.KickOutMemberBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MedalBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberApplyBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
@@ -1137,4 +1139,105 @@ public class HttpMethod2 extends BaseRequst {
         });
     }
 
+    /**
+     *  获取被踢出的会员成功
+     * @param page
+     * @param limit
+     * @param index
+     * @param handler
+     */
+    public static void getDelynVipList(String page, String limit, final int index, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("page",page);
+        map.put("limit",limit);
+        Http.getRetrofit().create(HttpApi2.class).getDelynVipList(map).enqueue(new Callback<KickOutMemberBean>() {
+            public void onResponse(Call<KickOutMemberBean> call, Response<KickOutMemberBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<KickOutMemberBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+    /**
+     * 邀请会员
+     * @param attendId
+     * @param handler
+     */
+    public static void delynVipInvite(String attendId,  final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("attendId",attendId);
+        Http.getRetrofit().create(HttpApi2.class).delynVipInvite(map).enqueue(new Callback<KickOutMemberBean>() {
+            public void onResponse(Call<KickOutMemberBean> call, Response<KickOutMemberBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.DELYN_VIP_INVITE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<KickOutMemberBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+    /**
+     * 获取黑名单
+     * @param page
+     * @param limit
+     * @param index
+     * @param handler
+     */
+    public static void getBlackList(String page, String limit, final int index, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("page",page);
+        map.put("limit",limit);
+        Http.getRetrofit().create(HttpApi2.class).getBlackList(map).enqueue(new Callback<BlackListBean>() {
+            public void onResponse(Call<BlackListBean> call, Response<BlackListBean> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BlackListBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+    /**
+     * 移除黑名单
+     * @param attendId  申请id
+     * @param handler
+     */
+    public static void removeBlackList(String attendId,  final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("attendId",attendId);
+        Http.getRetrofit().create(HttpApi2.class).removeBlackList(map).enqueue(new Callback<BlackListBean>() {
+            public void onResponse(Call<BlackListBean> call, Response<BlackListBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.REMOVE_BLACK_LIST_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BlackListBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
 }
