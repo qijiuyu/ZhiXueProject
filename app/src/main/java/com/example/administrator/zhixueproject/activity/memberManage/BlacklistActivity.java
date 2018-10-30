@@ -34,7 +34,6 @@ public class BlacklistActivity extends BaseActivity implements View.OnClickListe
     private String LIMIT = "10";
     private List<AttendanceBean> mBlackList;
     private int mPosition;
-
     private MyRefreshLayout refreshLayout;
 
     @Override
