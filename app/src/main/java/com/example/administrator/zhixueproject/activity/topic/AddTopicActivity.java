@@ -426,7 +426,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
             etCost.setVisibility(View.VISIBLE);
             etCost.setHint("VIP1-7");
         } else if (mCost.equals(costs[3])) {
-            setClass(ChargePrivilegeActivity.class);
+            ChargePrivilegeActivity.start(this);
         }
         mAdapter.notifyDataSetChanged();
     }
