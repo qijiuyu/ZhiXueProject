@@ -50,10 +50,10 @@ public class Home extends BaseBean {
         private String collegeLogo;
         private String collegeName;
         private String collegePhone;
-        private int collegePrice;
+        private double collegePrice;
         private int collegeType;
         private String collegeUser;
-        private int collegeZxScale;
+        private double collegeZxScale;
         private int scale;
         private int sort;
         private String updatetime;
@@ -221,11 +221,11 @@ public class Home extends BaseBean {
             this.collegePhone = collegePhone;
         }
 
-        public int getCollegePrice() {
+        public double getCollegePrice() {
             return collegePrice;
         }
 
-        public void setCollegePrice(int collegePrice) {
+        public void setCollegePrice(double collegePrice) {
             this.collegePrice = collegePrice;
         }
 
@@ -245,11 +245,11 @@ public class Home extends BaseBean {
             this.collegeUser = collegeUser;
         }
 
-        public int getCollegeZxScale() {
+        public double getCollegeZxScale() {
             return collegeZxScale;
         }
 
-        public void setCollegeZxScale(int collegeZxScale) {
+        public void setCollegeZxScale(double collegeZxScale) {
             this.collegeZxScale = collegeZxScale;
         }
 
