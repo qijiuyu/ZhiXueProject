@@ -62,7 +62,7 @@ public class EditPhoneActivity extends BaseActivity implements View.OnClickListe
                     showMsg(getString(R.string.input_mailbox));
                 } else {
                     showProgress(getString(R.string.get_code));
-                    HttpMethod1.getEmailCode(email, "0", mHandler);
+                    HttpMethod1.getEmailCode(email, "1", mHandler);
                 }
                 break;
             //下一步
@@ -129,7 +129,7 @@ public class EditPhoneActivity extends BaseActivity implements View.OnClickListe
                     }
                     if(baseBean.isStatus()){
                         MyApplication.spUtil.removeMessage(SPUtil.SMS_CODE_TIME);
-                        setClass(BindingEmailActivity.class);
+                        setClass(BindingPhoneActivity.class);
                         finish();
                     }else{
                         showMsg(baseBean.getErrorMsg());

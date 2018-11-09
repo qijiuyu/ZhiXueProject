@@ -71,5 +71,5 @@ public class HandlerConstant1 {
     public static final int ADD_LIVE_SUCCESS=1171;
     public static final int DELETE_LIVE_SUCEESSS=1172;
     public static final int GET_SIGN_LIST_SUCCESS=1173;
-
+    public static final int WEIXIN_LOGIN_SUCCESS=1174;
 }

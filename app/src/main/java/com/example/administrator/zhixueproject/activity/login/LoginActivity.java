@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.login;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +10,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,14 +19,13 @@ import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UserInfo;
-import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
-import com.example.administrator.zhixueproject.fragment.college.TopicListFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.CodeUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import org.json.JSONObject;
 
 /**
  * 登陆
@@ -35,6 +34,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private EditText etMobile,etPwd,etCode;
     private ImageView imgCode;
     public static final String ACTION_WEIXIN_LOGIN_OPENID="com.admin.broadcast.action.weixin_login_openid";
+    //微信的openId
+    private String openId;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -82,8 +83,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 String pwd=etPwd.getText().toString().trim();
                 String code=etCode.getText().toString().trim();
                 String realCode = CodeUtils.getInstance().getCode();
-                code=realCode;
-                LogUtils.e(realCode+"+++++++++++++++++");
                 if (TextUtils.isEmpty(mobile)){
                     showMsg(getString(R.string.login_phone));
                     return;
@@ -131,8 +130,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
-        @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
@@ -146,13 +145,41 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     if(login.isStatus()){
                         MyApplication.userInfo=login;
                         MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(login));
-                        setClass(TabActivity.class);
                         MyApplication.spUtil.addString(SPUtil.LOGIN_MOBILE,etMobile.getText().toString().trim());
+                        setClass(TabActivity.class);
                         finish();
                     }else{
                         showMsg(login.getErrorMsg());
                     }
                     break;
+                //微信登陆回执
+                case HandlerConstant1.WEIXIN_LOGIN_SUCCESS:
+                      final String message= (String) msg.obj;
+                      if(TextUtils.isEmpty(message)){
+                          return;
+                      }
+                      try {
+                          final JSONObject jsonObject=new JSONObject(message);
+                          if(jsonObject.getBoolean("status")){
+                              final UserInfo userInfo=MyApplication.gson.fromJson(message,UserInfo.class);
+                              MyApplication.userInfo=userInfo;
+                              MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(userInfo));
+                              setClass(TabActivity.class);
+                              finish();
+
+                          }else{
+                              if(jsonObject.getString("errorCode").equals("200203")){
+                                  Intent intent=new Intent(mContext,RegisterActivity.class);
+                                  intent.putExtra("openId",openId);
+                                  startActivity(intent);
+                              }else{
+                                  showMsg(jsonObject.getString("errorMsg"));
+                              }
+                          }
+                      }catch (Exception e){
+                          e.printStackTrace();
+                      }
+                      break;
                 case HandlerConstant1.REQUST_ERROR:
                     showMsg(getString(R.string.net_error));
                     break;
@@ -177,8 +204,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
             if(action.equals(ACTION_WEIXIN_LOGIN_OPENID)){
-                final String openId=intent.getStringExtra("openId");
-                HttpMethod1.wxLogin(openId,"0",mHandler);
+                openId=intent.getStringExtra("openId");
+                showProgress("微信登陆中");
+                HttpMethod1.wxLogin(openId,"0",null,null,null,mHandler);
             }
         }
     };

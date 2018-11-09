@@ -49,7 +49,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 SendAuth.Resp sendResp = (SendAuth.Resp) resp;
                 if (sendResp != null) {
                     String code = sendResp.code;
-                    LogUtils.e(code+"++++++++++++++++");
                     getAccess_token(code);
                 }
                 break;
@@ -91,9 +90,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         String nickname = jsonObject.getString("nickname");
                         int sex = Integer.parseInt(jsonObject.get("sex").toString());
                         String headimgurl = jsonObject.getString("headimgurl");
-                        LogUtils.e("nickname:" + nickname+"__________headimgurl:" + headimgurl);
-
-                        LogUtils.e("openId="+openId);
                         Intent intent=new Intent(LoginActivity.ACTION_WEIXIN_LOGIN_OPENID);
                         intent.putExtra("openId",openId);
                         sendBroadcast(intent);

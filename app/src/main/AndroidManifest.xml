@@ -68,6 +68,9 @@
             android:name=".activity.login.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.userinfo.BindingPhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.college.CollegeHomeActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -122,7 +122,7 @@ public class BindingEmailActivity extends BaseActivity implements View.OnClickLi
                     return;
                 }
                 showProgress(getString(R.string.get_code));
-                HttpMethod1.getEmailCode(email,"1",mHandler);
+                HttpMethod1.getEmailCode(email,"0",mHandler);
                 break;
             //绑定
             case R.id.tv_next:

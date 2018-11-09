@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.http.method;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
@@ -133,23 +134,31 @@ public class HttpMethod1  extends BaseRequst {
      * 微信登陆
      * @param handler
      */
-    public static void wxLogin(String opendId,String isRegister,final Handler handler) {
+    public static void wxLogin(String opendId,String isRegister,String mobile,String code,String pwd,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("opendId",opendId);
         map.put("isRegister",isRegister);
-        Http.getRetrofit().create(HttpApi1.class).wxLogin(map).enqueue(new Callback<UserInfo>() {
-            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+        if(!TextUtils.isEmpty(mobile)){
+            map.put("mobile",mobile);
+        }
+        if(!TextUtils.isEmpty(code)){
+            map.put("code",code);
+        }
+        if(!TextUtils.isEmpty(pwd)){
+            map.put("pwd",pwd);
+        }
+        Http.getRetrofit().create(HttpApi1.class).wxLogin(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant1.LOGIN_SUCCESS, response.body());
-                    //保存sessionId
-                    saveSessionId(response.headers());
+                    sendMessage(handler, HandlerConstant1.WEIXIN_LOGIN_SUCCESS, response.body().string());
                 }catch (Exception e){
                     e.printStackTrace();
+                    LogUtils.e("111111111111111111111111");
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
-            public void onFailure(Call<UserInfo> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

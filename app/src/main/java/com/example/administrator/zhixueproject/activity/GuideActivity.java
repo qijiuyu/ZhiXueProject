@@ -27,7 +27,8 @@ public class GuideActivity extends BaseActivity {
     private int[] images = new int[]{
             R.mipmap.guide1,
             R.mipmap.guide2,
-            R.mipmap.guide3
+            R.mipmap.guide3,
+            R.mipmap.guide4
     };
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +89,7 @@ public class GuideActivity extends BaseActivity {
             container.addView(iv);
             iv.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if(position==2){
+                    if(position==3){
                         setClass(WelcomeActivity.class);
                         MyApplication.spUtil.addBoolean(SPUtil.IS_FIRST_OPEN,true);
                         finish();

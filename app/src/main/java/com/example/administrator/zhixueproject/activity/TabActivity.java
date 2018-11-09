@@ -60,7 +60,7 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
             enumArr[i].getRadioButton().setOnClickListener(this);
             enumArr[i].getRadioButton().setText(enumArr[i].getTitle());
             drawable = getResources().getDrawable(enumArr[i].getDrawable());
-            drawable.setBounds(0, 0, 30, 30);
+            drawable.setBounds(0, 0, 58, 58);
             enumArr[i].getRadioButton().setCompoundDrawables(null, drawable, null, null);
         }
         tabAdapter = new TabAdapter(getSupportFragmentManager());

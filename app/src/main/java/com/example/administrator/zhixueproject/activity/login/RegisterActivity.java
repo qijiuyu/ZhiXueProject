@@ -1,5 +1,7 @@
 package com.example.administrator.zhixueproject.activity.login;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,9 +18,12 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.FileUtils;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.example.administrator.zhixueproject.utils.Utils;
 import com.example.administrator.zhixueproject.view.ClickTextView;
+
+import org.json.JSONObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,6 +38,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     //计数器
     private Timer mTimer;
     private int time = 0;
+    //微信的openId
+    private String openId;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -56,9 +63,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         tvCode.setOnClickListener(this);
         findViewById(R.id.tv_register).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
+
+        //获取微信的openId
+        openId=getIntent().getStringExtra("openId");
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -106,6 +117,26 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         showMsg(baseBean.getErrorMsg());
                      }
                      break;
+                //微信登陆回执
+                case HandlerConstant1.WEIXIN_LOGIN_SUCCESS:
+                    clearTask();
+                    final String message= (String) msg.obj;
+                    if(TextUtils.isEmpty(message)){
+                        return;
+                    }
+                    try {
+                        final JSONObject jsonObject=new JSONObject(message);
+                        if(jsonObject.getBoolean("status")){
+                            MyApplication.spUtil.addString(SPUtil.LOGIN_MOBILE,etMobile.getText().toString().trim());
+                            showMsg(getString(R.string.register_success));
+                            finish();
+                        }else{
+                            showMsg(jsonObject.getString("errorMsg"));
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                      break;
                 case HandlerConstant1.REQUST_ERROR:
                      clearTask();
                      showMsg(getString(R.string.net_error));
@@ -164,7 +195,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     return;
                 }
                 showProgress("注册中...");
-                HttpMethod1.register(mobile,pwd,smsCode,mHandler);
+                if(TextUtils.isEmpty(openId)){
+                    HttpMethod1.register(mobile,pwd,smsCode,mHandler);
+                }else{
+                    HttpMethod1.wxLogin(openId,"1",mobile,smsCode,pwd,mHandler);
+                }
                 break;
             case R.id.lin_back:
                  finish();

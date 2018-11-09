@@ -73,7 +73,7 @@ public interface HttpApi1 {
      */
     @FormUrlEncoded
     @POST(HttpConstant.WX_LOGIN)
-    Call<UserInfo> wxLogin(@FieldMap Map<String, String> map);
+    Call<ResponseBody> wxLogin(@FieldMap Map<String, String> map);
 
 
     /**

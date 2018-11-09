@@ -6,7 +6,6 @@ public class UserBean{
     private double useBalance;
     private int useYn;
     private String userCardPw;
-    private int userCollegeId;
     private int userConcensNum;
     private long userCreattime;
     private String userEmail;
@@ -66,14 +65,6 @@ public class UserBean{
 
     public void setUserCardPw(String userCardPw) {
         this.userCardPw = userCardPw;
-    }
-
-    public int getUserCollegeId() {
-        return userCollegeId;
-    }
-
-    public void setUserCollegeId(int userCollegeId) {
-        this.userCollegeId = userCollegeId;
     }
 
     public int getUserConcensNum() {
