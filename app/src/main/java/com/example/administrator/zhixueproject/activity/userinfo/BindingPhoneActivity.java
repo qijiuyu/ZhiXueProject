@@ -122,7 +122,7 @@ public class BindingPhoneActivity extends BaseActivity implements View.OnClickLi
                     return;
                 }
                 showProgress(getString(R.string.get_code));
-                HttpMethod1.getSmsCode(mobile,"1",mHandler);
+                HttpMethod1.getSmsCode(mobile,"0",mHandler);
                 break;
             //绑定
             case R.id.tv_next:
@@ -136,7 +136,7 @@ public class BindingPhoneActivity extends BaseActivity implements View.OnClickLi
                     return;
                 }
                 showProgress(getString(R.string.loding));
-                HttpMethod2.modifyUserInfo("", mobile, "", code, "", mHandler);
+                HttpMethod2.modifyUserInfo(null, mobile, null, code, null,null, mHandler);
                 break;
             case R.id.lin_back:
                 finish();

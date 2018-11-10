@@ -65,7 +65,7 @@ public class EditSignActivity extends BaseActivity{
                     showMsg(getString(R.string.sign_empty));
                 }else{
                     showProgress(getString(R.string.loading));
-                    HttpMethod2.modifyUserInfo("", "", "", "", strSign, mHandler);
+                    HttpMethod2.modifyUserInfo(null, null, null, null, strSign,null, mHandler);
                 }
             }
         });

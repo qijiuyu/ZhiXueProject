@@ -49,7 +49,7 @@ public class EditUserNameActivity extends BaseActivity {
                     showMsg("请输入用户名!");
                 }else{
                     showProgress(getString(R.string.loading));
-                    HttpMethod2.modifyUserInfo(userName, "", "", "", "", mHandler);
+                    HttpMethod2.modifyUserInfo(userName, null, null, null, null,null, mHandler);
                 }
             }
         });

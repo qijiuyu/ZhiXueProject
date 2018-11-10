@@ -136,7 +136,7 @@ public class BindingEmailActivity extends BaseActivity implements View.OnClickLi
                     return;
                 }
                 showProgress(getString(R.string.loding));
-                HttpMethod2.modifyUserInfo("", "", email, code, "", mHandler);
+                HttpMethod2.modifyUserInfo(null, null, email, code, null,null, mHandler);
                 break;
             case R.id.lin_back:
                 finish();

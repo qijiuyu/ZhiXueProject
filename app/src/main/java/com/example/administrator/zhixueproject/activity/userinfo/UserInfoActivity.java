@@ -15,11 +15,14 @@ import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.login.LoginActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
+import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
@@ -65,6 +68,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
 
+    private String userImg;
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -77,12 +81,26 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                          return;
                      }
                      if(uploadFile.isStatus()){
-                         MyApplication.userInfo.getData().getUser().setUserImg(uploadFile.getData().getUrl());
-                         showUserInfo();
+                         //修改用户头像
+                         userImg=uploadFile.getData().getUrl();
+                         editUserImg();
                      }else{
                          showMsg(uploadFile.getErrorMsg());
                      }
                      break;
+                //修改头像成功
+                case HandlerConstant2.MODIFY_USER_INFO_SUCCESS:
+                     BaseBean baseBean= (BaseBean) msg.obj;
+                    if(null==baseBean){
+                        return;
+                    }
+                    if(baseBean.isStatus()){
+                        MyApplication.userInfo.getData().getUser().setUserImg(userImg);
+                        showUserInfo();
+                    }else{
+                        showMsg(baseBean.getErrorMsg());
+                    }
+                    break;
                 default:
                     break;
             }
@@ -197,6 +215,15 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         Glide.with(mContext).load(userBean.getUserImg()).override(50,50).error(R.mipmap.head_bg).into(ivHeadIcon);
         tvUserName.setText(userBean.getUserName());
         tvSign.setText(userBean.getUserIntro());
+    }
+
+
+    /**
+     * 修改用户头像
+     */
+    private void editUserImg(){
+        showProgress(getString(R.string.loding));
+        HttpMethod2.modifyUserInfo(null, null, null, null, null,userImg, mHandler);
     }
 
 

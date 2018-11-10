@@ -547,13 +547,26 @@ public class HttpMethod2 extends BaseRequst {
      * @param userIntro 个人简介
      * @param handler
      */
-    public static void modifyUserInfo(String userName, String mobile, String email, String code, String userIntro, final Handler handler) {
+    public static void modifyUserInfo(String userName, String mobile, String email, String code, String userIntro,String userImg, final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("userName", userName);
-        map.put("mobile", mobile);
-        map.put("email", email);
-        map.put("code", code);
-        map.put("userIntro", userIntro);
+        if(!TextUtils.isEmpty(userName)){
+            map.put("userName", userName);
+        }
+        if(!TextUtils.isEmpty(mobile)){
+            map.put("mobile", mobile);
+        }
+        if(!TextUtils.isEmpty(email)){
+            map.put("email", email);
+        }
+        if(!TextUtils.isEmpty(code)){
+            map.put("code", code);
+        }
+        if(!TextUtils.isEmpty(userIntro)){
+            map.put("userIntro", userIntro);
+        }
+        if(!TextUtils.isEmpty(userImg)){
+            map.put("userImg", userImg);
+        }
         Http.getRetrofit().create(HttpApi2.class).modifyUserInfo(map).enqueue(new Callback<BaseBean>() {
             public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
                 try {
