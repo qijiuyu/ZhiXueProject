@@ -169,10 +169,10 @@ public class AddMedalActivity extends BaseActivity implements View.OnClickListen
                              showMsg(jsonObject.getString("errorMsg"));
                              return;
                          }
-                         final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
-                         Medal.MedalList medalList=MyApplication.gson.fromJson(jsonObject1.getString("medalType"),Medal.MedalList.class);
+//                         final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
+//                         Medal.MedalList medalList=MyApplication.gson.fromJson(jsonObject1.getString("medalType"),Medal.MedalList.class);
                          Intent intent=new Intent(mContext,MedalListActivity.class);
-                         intent.putExtra("medalList",medalList);
+//                         intent.putExtra("medalList",medalList);
                          setResult(1,intent);
                          finish();
                      }catch (Exception e){

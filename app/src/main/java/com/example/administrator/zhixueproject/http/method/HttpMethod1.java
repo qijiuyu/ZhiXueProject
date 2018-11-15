@@ -313,8 +313,9 @@ public class HttpMethod1  extends BaseRequst {
      * 获取加入过的更多学院
      * @param handler
      */
-    public static void getMoreCollege(final Handler handler) {
+    public static void getMoreCollege(String userId,final Handler handler) {
         Map<String, String> map = new HashMap<>();
+        map.put("userId",userId);
         Http.getRetrofit().create(HttpApi1.class).getMoreCollege(map).enqueue(new Callback<CollegeList>() {
             public void onResponse(Call<CollegeList> call, Response<CollegeList> response) {
                 try {

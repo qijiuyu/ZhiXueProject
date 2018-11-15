@@ -182,24 +182,26 @@ public class MedalListActivity extends BaseActivity  implements MyRefreshLayoutL
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==1){
-            Medal.MedalList medalList= (Medal.MedalList) data.getSerializableExtra("medalList");
-            if(null==medalList){
-                return;
-            }
-            int index=-1;
-            for (int i=0;i<listAll.size();i++){
-                if(medalList.getMedalTypeId()==listAll.get(i).getMedalTypeId()){
-                    index=i;
-                    break;
-                }
-            }
-            if(index==-1){
-                listAll.add(0,medalList);
-            }else{
-                listAll.remove(index);
-                listAll.add(index,medalList);
-            }
-            medalItemAdapter.notifyDataSetChanged();
+            page=1;
+            getData(HandlerConstant1.GET_MEDAL_LIST_SUCCESS);
+//            Medal.MedalList medalList= (Medal.MedalList) data.getSerializableExtra("medalList");
+//            if(null==medalList){
+//                return;
+//            }
+//            int index=-1;
+//            for (int i=0;i<listAll.size();i++){
+//                if(medalList.getMedalTypeId()==listAll.get(i).getMedalTypeId()){
+//                    index=i;
+//                    break;
+//                }
+//            }
+//            if(index==-1){
+//                listAll.add(0,medalList);
+//            }else{
+//                listAll.remove(index);
+//                listAll.add(index,medalList);
+//            }
+//            medalItemAdapter.notifyDataSetChanged();
         }
     }
 }
