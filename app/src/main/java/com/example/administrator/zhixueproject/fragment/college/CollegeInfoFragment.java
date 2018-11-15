@@ -64,7 +64,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
                          if(null==homeBean){
                              return;
                          }
-                         Glide.with(mActivity).load(homeBean.getCollegeBackimg()).override(337,192).centerCrop().into(imgBJ);
+                         Glide.with(mActivity).load(homeBean.getCollegeBackimg()).override(337,192).centerCrop().error(R.mipmap.not_img).into(imgBJ);
                          tvName.setText(homeBean.getCollegeName());
                          tvTime.setText(DateUtil.getDay(homeBean.getCollegeCreationTime())+"到期");
                          tvContent.setText(homeBean.getCollegeInfo());

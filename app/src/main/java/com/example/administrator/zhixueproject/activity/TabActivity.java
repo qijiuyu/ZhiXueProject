@@ -123,7 +123,6 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
                             }
                             MyApplication.userInfo.getData().setUser(userBean);
                             MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(MyApplication.userInfo));
-                            LogUtils.e(MyApplication.userInfo.getData().getUser().getUserId()+"+++++++++++");
                         }
                     }catch (Exception e){
                         e.printStackTrace();

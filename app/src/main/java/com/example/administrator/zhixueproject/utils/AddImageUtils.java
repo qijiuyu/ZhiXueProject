@@ -23,7 +23,6 @@ public class AddImageUtils {
     private static Uri imageUri;//原图保存地址
     public static String outputUri= FileUtils.getSdcardPath()+"crop.png";//裁剪后地址
     public static Uri outputUriSmall;// 缩略图展示
-    private static String imagePath;
     public static final int REQUEST_PICK_IMAGE = 1; //相册选取
     public static final int REQUEST_CAPTURE = 2;  //拍照
     public static final int REQUEST_PICTURE_CUT = 3;  //剪裁图片
@@ -54,7 +53,10 @@ public class AddImageUtils {
      * 裁剪
      */
     public static String cropPhoto(Context context) {
-        File file = new FileStorage().createCropFile();
+        File file = new File(outputUri);
+        if(file.isFile()){
+            file.delete();
+        }
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(imageUri, "image/*");
         intent.putExtra("crop", "true");
@@ -100,7 +102,6 @@ public class AddImageUtils {
      */
     @TargetApi(19)
     public static void handleImageOnKitKat(Intent data, Context context) {
-        imagePath = null;
         imageUri = data.getData();
 
         if (DocumentsContract.isDocumentUri(context, imageUri)) {
@@ -109,26 +110,19 @@ public class AddImageUtils {
             if ("com.android.providers.media.documents".equals(imageUri.getAuthority())) {
                 String id = docId.split(":")[1];//解析出数字格式的id
                 String selection = MediaStore.Images.Media._ID + "=" + id;
-                imagePath = getImagePath(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        selection);
             } else if ("com.android.downloads.documents".equals(imageUri.getAuthority())) {
                 Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
-                imagePath = getImagePath(context, contentUri, null);
             }
         } else if ("content".equalsIgnoreCase(imageUri.getScheme())) {
             //如果是content类型的Uri，则使用普通方式处理
-            imagePath = getImagePath(context, imageUri, null);
         } else if ("file".equalsIgnoreCase(imageUri.getScheme())) {
             //如果是file类型的Uri,直接获取图片路径即可
-            imagePath = imageUri.getPath();
         }
 
     }
 
     public static void handleImageBeforeKitKat(Intent intent, Context context) {
         imageUri = intent.getData();
-        imagePath = getImagePath(context, imageUri, null);
-
     }
 
     private static String getImagePath(Context context, Uri uri, String selection) {
