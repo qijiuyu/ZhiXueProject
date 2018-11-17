@@ -68,7 +68,7 @@ public class NoticeListAdapter extends BaseAdapter{
 				Notice.NoticeList noticeList= (Notice.NoticeList) v.getTag();
 				Intent intent=new Intent(activity, AddNoticeActivity.class);
 				intent.putExtra("noticeList",noticeList);
-				activity.startActivityForResult(intent,1);
+				activity.startActivityForResult(intent,2);
             }
         });
 		//删除

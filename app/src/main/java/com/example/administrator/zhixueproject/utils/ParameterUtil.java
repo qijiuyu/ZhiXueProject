@@ -23,6 +23,7 @@ public class ParameterUtil {
        //学院id
        if(null!= CollegeInfoFragment.homeBean){
            map.put("collegeId",String.valueOf(CollegeInfoFragment.homeBean.getCollegeId()));
+           map.put("collegeId","62");
        }
 
        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

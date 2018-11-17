@@ -249,4 +249,6 @@ public class HttpConstant {
 
     // 移除黑名单
     public static final String REMOVE_BLACK_LIST = "attendance/removeBlackList.do";
+
+    public static final String UPDATE_BUY_TOPIC="buyTopic/updateBuyTopic.do";
 }

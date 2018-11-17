@@ -28,9 +28,12 @@ import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.bean.WithDraw;
 import com.example.administrator.zhixueproject.bean.WithDrawInfo;
 import com.example.administrator.zhixueproject.bean.live.Live;
+import com.example.administrator.zhixueproject.bean.memberManage.BlackListBean;
 import com.example.administrator.zhixueproject.bean.memberManage.SignIn;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
+import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.api.HttpApi1;
+import com.example.administrator.zhixueproject.http.api.HttpApi2;
 import com.example.administrator.zhixueproject.http.base.BaseRequst;
 import com.example.administrator.zhixueproject.http.base.Http;
 import com.example.administrator.zhixueproject.utils.LogUtils;
@@ -113,8 +116,6 @@ public class HttpMethod1  extends BaseRequst {
             public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
                 try {
                     sendMessage(handler, HandlerConstant1.LOGIN_SUCCESS, response.body());
-                    //保存sessionId
-                    saveSessionId(response.headers());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
@@ -467,8 +468,6 @@ public class HttpMethod1  extends BaseRequst {
             public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
                 try {
                     sendMessage(handler, HandlerConstant1.AUTO_LOGIN_SUCCESS, response.body());
-                    //保存sessionId
-                    saveSessionId(response.headers());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
@@ -840,7 +839,7 @@ public class HttpMethod1  extends BaseRequst {
         Map<String, String> map = new HashMap<>();
         map.put("topicId",topicId+"");
         map.put("newWriterId",newWriterId+"");
-        map.put("Months",Months);
+        map.put("months",Months);
         Http.getRetrofit().create(HttpApi1.class).addCooPerate(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -1453,4 +1452,30 @@ public class HttpMethod1  extends BaseRequst {
         });
     }
 
+
+    /**
+     * 修改友商售出,B端目前只能修改售出时间(*)
+     * @param buyTopicId
+     * @param months
+     * @param handler
+     */
+    public static void updateBuyTopic(String buyTopicId, String months, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("buyTopicId",buyTopicId);
+        map.put("months",months);
+        Http.getRetrofit().create(HttpApi1.class).updateBuyTopic(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.UPDATE_BUY_TOPIC_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
 }

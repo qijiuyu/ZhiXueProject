@@ -146,6 +146,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                         MyApplication.userInfo=login;
                         MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(login));
                         MyApplication.spUtil.addString(SPUtil.LOGIN_MOBILE,etMobile.getText().toString().trim());
+                        //保存token
+                        MyApplication.spUtil.addString(SPUtil.TOKEN,login.getData().getToken());
                         setClass(TabActivity.class);
                         finish();
                     }else{
@@ -164,6 +166,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                               final UserInfo userInfo=MyApplication.gson.fromJson(message,UserInfo.class);
                               MyApplication.userInfo=userInfo;
                               MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(userInfo));
+                              //保存token
+                              MyApplication.spUtil.addString(SPUtil.TOKEN,userInfo.getData().getToken());
                               setClass(TabActivity.class);
                               finish();
 

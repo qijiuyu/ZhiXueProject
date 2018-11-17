@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import java.util.List;
@@ -65,6 +67,7 @@ public class ColleteVipAdapter extends BaseAdapter{
         holder.tvYearMoney.setText(collegeGradeListBean.getCollegeGradeYprice()+"");
         holder.tvPersonNum.setText(collegeGradeListBean.getCollegeLimitStu()+"");
         holder.tvTopIc.setText(collegeGradeListBean.getCollegeLimitTopic()+"");
+		Glide.with(context).load(collegeGradeListBean.getCollegeGradeImg()).override(35,12).centerCrop().into(holder.imgVip);
 		return view;
 	}
 

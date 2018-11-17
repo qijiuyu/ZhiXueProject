@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.bean.Teacher;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
@@ -48,6 +49,7 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
         rightMenu();
         //注册广播
         registerReceiver();
+        showUpdateData();
     }
 
 
@@ -77,14 +79,10 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
         if(null==busInessList){
             return;
         }
-        etName.setText(busInessList.getCollegeName());
-        topicListBean=new TopicListBean();
-        topicListBean.setTopicId(busInessList.getBuytopicTopic());
-        tvTopic.setText(busInessList.getTopicName());
-        teacher=new Teacher();
-        teacher.setTeacherId(Long.parseLong(busInessList.getNewWriterId()));
-//        tvTeacherName.setText(busInessList);
-
+        etName.setClickable(false);
+        findViewById(R.id.rl_add_topic).setClickable(false);
+        findViewById(R.id.rl_choose_teacher).setClickable(false);
+        etTimeNum.setText(busInessList.getBuytopicMonths()+"");
     }
 
 
@@ -106,15 +104,15 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
             case R.id.tv_setting_save:
                  final String colleteName=etName.getText().toString().trim();
                  final String month=etTimeNum.getText().toString().trim();
-                 if(TextUtils.isEmpty(colleteName)){
+                 if(TextUtils.isEmpty(colleteName) && busInessList==null){
                      showMsg("请输入学院名称！");
                      return;
                  }
-                 if(null==topicListBean){
+                 if(null==topicListBean && busInessList==null){
                      showMsg("请添加所属话题！");
                      return;
                  }
-                 if(null==teacher){
+                 if(null==teacher && busInessList==null){
                      showMsg("请添加发布人！");
                      return;
                  }
@@ -123,7 +121,11 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
                      return;
                  }
                  showProgress(getString(R.string.loding));
-                 HttpMethod1.addCooPerate(topicListBean.getTopicId(),teacher.getTeacherId(),month,mHandler);
+                 if(busInessList==null){
+                     HttpMethod1.addCooPerate(topicListBean.getTopicId(),teacher.getTeacherId(),month,mHandler);
+                 }else{
+                     HttpMethod1.updateBuyTopic(busInessList.getBuytopicId()+"",month,mHandler);
+                 }
                  break;
             case R.id.lin_back:
                  finish();
@@ -140,7 +142,6 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
             clearTask();
             switch (msg.what){
                 case HandlerConstant1.ADD_COOPERATE_SUCCESS:
-                    //BuyIness.BusInessList
                      final String message= (String) msg.obj;
                      if(TextUtils.isEmpty(message)){
                          return;
@@ -153,9 +154,29 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
                          }
                          final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
                          BuyIness.BusInessList busInessList= MyApplication.gson.fromJson(jsonObject1.getString("buyTopic"),BuyIness.BusInessList.class);
-
+                         Intent intent=new Intent();
+                         intent.putExtra("busInessList",busInessList);
+                         setResult(1,intent);
+                         finish();
                      }catch (Exception e){
                          e.printStackTrace();
+                     }
+                     break;
+                //编辑成功
+                case HandlerConstant1.UPDATE_BUY_TOPIC_SUCCESS:
+                     final BaseBean baseBean= (BaseBean) msg.obj;
+                     if(null==baseBean){
+                         return;
+                     }
+                     if(baseBean.isStatus()){
+                         final String month=etTimeNum.getText().toString().trim();
+                         busInessList.setBuytopicMonths(Integer.parseInt(month));
+                         Intent intent=new Intent();
+                         intent.putExtra("busInessList",busInessList);
+                         setResult(2,intent);
+                         finish();
+                     }else{
+                         showMsg(baseBean.getErrorMsg());
                      }
                      break;
                 case HandlerConstant1.REQUST_ERROR:

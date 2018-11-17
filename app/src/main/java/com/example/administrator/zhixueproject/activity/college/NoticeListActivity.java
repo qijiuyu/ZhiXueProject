@@ -66,7 +66,8 @@ public class NoticeListActivity extends BaseActivity  implements MyRefreshLayout
         //新增
         tvRight.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setClass(AddNoticeActivity.class);
+                Intent intent=new Intent(mContext,AddNoticeActivity.class);
+                startActivityForResult(intent,1);
             }
         });
         //返回
@@ -180,22 +181,20 @@ public class NoticeListActivity extends BaseActivity  implements MyRefreshLayout
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==1){
+            page=1;
+            getData(HandlerConstant1.GET_NOTICE_LIST_SUCCESS);
+        }
+        if(resultCode==2){
             Notice.NoticeList noticeList= (Notice.NoticeList) data.getSerializableExtra("noticeList");
             if(null==noticeList){
                 return;
             }
-            int index=-1;
             for (int i=0;i<listAll.size();i++){
                 if(noticeList.getNoticeId()==listAll.get(i).getNoticeId()){
-                    index=i;
+                    listAll.remove(i);
+                    listAll.add(i,noticeList);
                     break;
                 }
-            }
-            if(index==-1){
-                listAll.add(0,noticeList);
-            }else{
-                listAll.remove(index);
-                listAll.add(index,noticeList);
             }
             noticeListAdapter.notifyDataSetChanged();
         }

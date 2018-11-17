@@ -102,7 +102,7 @@ public class BuyInessOutAdapter extends BaseAdapter{
 				final BuyIness.BusInessList busInessList= (BuyIness.BusInessList) v.getTag();
 				Intent intent=new Intent(activity, AddCooperateActivity.class);
 				intent.putExtra("busInessList",busInessList);
-				activity.startActivityForResult(intent,1);
+				activity.startActivityForResult(intent,2);
 			}
 		});
 		return view;

@@ -94,6 +94,8 @@ public class AddNoticeActivity extends BaseActivity implements View.OnClickListe
                          return;
                      }
                      if(baseBean.isStatus()){
+                         Intent intent=new Intent(mContext,NoticeListActivity.class);
+                         setResult(1,intent);
                          finish();
                      }else{
                          showMsg(baseBean.getErrorMsg());
@@ -115,7 +117,7 @@ public class AddNoticeActivity extends BaseActivity implements View.OnClickListe
                              }
                              Intent intent=new Intent(mContext,NoticeListActivity.class);
                              intent.putExtra("noticeList",noticeList);
-                             setResult(1,intent);
+                             setResult(2,intent);
                              finish();
                          }else{
                              showMsg(jsonObject.getString("errorMsg"));

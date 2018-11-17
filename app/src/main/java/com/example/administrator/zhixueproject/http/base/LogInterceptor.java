@@ -62,7 +62,7 @@ public class LogInterceptor implements Interceptor {
             bodyBuilder.addEncoded(key, requstMap.get(key));
         }
         formBody = bodyBuilder.build();
-        request = request.newBuilder().post(formBody).addHeader("cookie", MyApplication.spUtil.getString(SPUtil.SESSION_ID)).build();
+        request = request.newBuilder().post(formBody).addHeader("Authentication", MyApplication.spUtil.getString(SPUtil.TOKEN)).build();
         return request;
     }
 

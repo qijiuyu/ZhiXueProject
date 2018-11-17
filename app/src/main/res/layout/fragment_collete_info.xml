@@ -60,10 +60,9 @@
 
             <ImageView
                 android:id="@+id/iv_grade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:background="@mipmap/vip_iv" />
+                android:layout_width="55dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="5dp" />
 
             <TextView
                 android:id="@+id/tv_expire_time"

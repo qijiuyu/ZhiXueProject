@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.college;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -67,7 +68,8 @@ public class BuyInessOutActivity extends BaseActivity  implements MyRefreshLayou
         //添加合作
         tvRight.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setClass(AddCooperateActivity.class);
+                Intent intent=new Intent(mContext,AddCooperateActivity.class);
+                startActivityForResult(intent,1);
             }
         });
         //返回
@@ -173,5 +175,26 @@ public class BuyInessOutActivity extends BaseActivity  implements MyRefreshLayou
      */
     private void getData(int index){
         HttpMethod1.buyInessOut(page,limit,index,mHandler);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==1){
+            BuyIness.BusInessList busInessList= (BuyIness.BusInessList) data.getSerializableExtra("busInessList");
+            listAll.add(0,busInessList);
+            buyInessOutAdapter.notifyDataSetChanged();
+        }
+        if(resultCode==2){
+            BuyIness.BusInessList busInessList= (BuyIness.BusInessList) data.getSerializableExtra("busInessList");
+            for(int i=0;i<listAll.size();i++){
+                if(busInessList.getBuytopicId()==listAll.get(i).getBuytopicId()){
+                    listAll.get(i).setBuytopicMonths(busInessList.getBuytopicMonths());
+                    break;
+                }
+            }
+            buyInessOutAdapter.notifyDataSetChanged();
+        }
     }
 }

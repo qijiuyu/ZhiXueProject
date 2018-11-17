@@ -19,9 +19,8 @@
             <ImageView
                 android:id="@+id/iv_vip_grade"
                 android:layout_centerInParent="true"
-                android:src="@mipmap/vip_iv"
-                android:layout_width="35dp"
-                android:layout_height="11.5dp" />
+                android:layout_width="55dp"
+                android:layout_height="17dp" />
 
         </RelativeLayout>
 

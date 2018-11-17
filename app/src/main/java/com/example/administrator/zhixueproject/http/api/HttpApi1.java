@@ -514,4 +514,14 @@ public interface HttpApi1 {
     @POST(HttpConstant.GET_SIGNIN_LIST)
     Call<SignIn> getSignList(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 修改友商售出,B端目前只能修改售出时间(*)
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_BUY_TOPIC)
+    Call<BaseBean> updateBuyTopic(@FieldMap Map<String, String> map);
+
 }

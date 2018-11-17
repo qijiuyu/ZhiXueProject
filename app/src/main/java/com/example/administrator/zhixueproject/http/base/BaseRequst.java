@@ -27,16 +27,4 @@ public class BaseRequst {
         handler.sendMessage(message);
     }
 
-
-    /**
-     * 保存sessionId
-     * @param headers
-     */
-    public static void saveSessionId(Headers headers){
-        List cookies = headers.values("Set-Cookie");
-        final String session = (String) cookies.get(0);
-        final String sessionid = session.substring(0,session.indexOf(";"));
-        LogUtils.e("sessionId__________"+sessionid);
-        MyApplication.spUtil.addString(SPUtil.SESSION_ID,sessionid);
-    }
 }

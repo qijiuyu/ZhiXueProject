@@ -19,6 +19,7 @@ import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.DateUtil;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.OvalImageViews;
 
 /**
@@ -66,6 +67,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
                          }
                          Glide.with(mActivity).load(homeBean.getCollegeBackimg()).override(337,192).centerCrop().error(R.mipmap.not_img).into(imgBJ);
                          tvName.setText(homeBean.getCollegeName());
+                         Glide.with(mActivity).load(homeBean.getCollegeGradeImg()).override(55,18).centerCrop().into(imgGrade);
                          tvTime.setText(DateUtil.getDay(homeBean.getCollegeCreationTime())+"到期");
                          tvContent.setText(homeBean.getCollegeInfo());
                      }else{

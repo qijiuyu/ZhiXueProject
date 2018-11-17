@@ -20,6 +20,8 @@ public class SPUtil {
     public static final String USER_INFO="user_info";
     //回话id
     public static final String SESSION_ID="session_Id";
+    //登录的token
+    public static final String TOKEN="token";
     private static SPUtil sharUtil = null;
     private SPUtil(Context context, String sharname) {
         shar = context.getSharedPreferences(sharname, Context.MODE_PRIVATE + Context.MODE_APPEND);

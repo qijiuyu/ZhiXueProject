@@ -26,6 +26,8 @@ public class UserInfo extends BaseBean {
 
         public boolean status;
 
+        private String token;
+
         public List<Colleges> getColleges() {
             return colleges;
         }
@@ -48,6 +50,14 @@ public class UserInfo extends BaseBean {
 
         public void setStatus(boolean status) {
             this.status = status;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
         }
     }
 }
