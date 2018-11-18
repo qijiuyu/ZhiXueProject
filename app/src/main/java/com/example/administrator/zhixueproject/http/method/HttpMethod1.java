@@ -19,6 +19,7 @@ import com.example.administrator.zhixueproject.bean.Notice;
 import com.example.administrator.zhixueproject.bean.Post;
 import com.example.administrator.zhixueproject.bean.QuestionAccount;
 import com.example.administrator.zhixueproject.bean.Report;
+import com.example.administrator.zhixueproject.bean.ReportDetails;
 import com.example.administrator.zhixueproject.bean.TeacherBean;
 import com.example.administrator.zhixueproject.bean.RecentEarning;
 import com.example.administrator.zhixueproject.bean.TopicAccount;
@@ -1474,6 +1475,63 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 删除举报内容
+     * @param complaintType
+     * @param complaintId
+     * @param handler
+     */
+    public static void deleteReport(String complaintType, String complaintId, final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("complaintType",complaintType);
+        map.put("complaintToId",complaintId);
+        Http.getRetrofit().create(HttpApi1.class).deleteReport(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.DELETE_REPORT_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 查询举报明细
+     * @param complaintToId
+     * @param page
+     * @param index
+     * @param handler
+     */
+    public static void getReportDetails(int complaintType,long complaintToId, int page, final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("complaintType",complaintType+"");
+        map.put("complaintToId",complaintToId+"");
+        map.put("page",page+"");
+        map.put("limit","20");
+        Http.getRetrofit().create(HttpApi1.class).getReportDetails(map).enqueue(new Callback<ReportDetails>() {
+            public void onResponse(Call<ReportDetails> call, Response<ReportDetails> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<ReportDetails> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });

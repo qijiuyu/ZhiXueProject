@@ -251,4 +251,8 @@ public class HttpConstant {
     public static final String REMOVE_BLACK_LIST = "attendance/removeBlackList.do";
 
     public static final String UPDATE_BUY_TOPIC="buyTopic/updateBuyTopic.do";
+
+    public static final String DELETE_REPORT="complaint/delComplaint.do";
+
+    public static final String GET_REPORT_DETAILS="complaint/getComplaintInfo.do";
 }

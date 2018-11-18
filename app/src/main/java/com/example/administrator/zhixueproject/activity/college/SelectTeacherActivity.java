@@ -74,6 +74,11 @@ public class SelectTeacherActivity extends BaseActivity   implements MyRefreshLa
         mRefreshLayout.setMyRefreshLayoutListener(this);
         selectTeacherAdapter=new SelectTeacherAdapter(this,listAll);
         listView.setAdapter(selectTeacherAdapter);
+        findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SelectTeacherActivity.this.finish();
+            }
+        });
     }
 
 

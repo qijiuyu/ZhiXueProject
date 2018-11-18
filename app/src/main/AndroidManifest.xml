@@ -271,8 +271,10 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.memberManage.MemberDetailActivity"
-            android:screenOrientation="portrait"
-           />
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.college.ReportDetailsActivity"
+            android:screenOrientation="portrait" />
 
        <!--注册微信回调 WXEntryActivity -->
         <activity

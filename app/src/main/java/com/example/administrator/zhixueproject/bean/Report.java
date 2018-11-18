@@ -31,7 +31,6 @@ public class Report extends BaseBean {
 
 
     public static class ReportList implements Serializable{
-        private long complaintId;
         private long complaintToId;
         private String postName;
         private String postWriterId;
@@ -39,14 +38,6 @@ public class Report extends BaseBean {
         private String topicImg;
         private int complaintCount;
         private String complaintCreationTime;
-
-        public long getComplaintId() {
-            return complaintId;
-        }
-
-        public void setComplaintId(long complaintId) {
-            this.complaintId = complaintId;
-        }
 
         public long getComplaintToId() {
             return complaintToId;

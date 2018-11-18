@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <include layout="@layout/head"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -91,7 +92,6 @@
                 android:ellipsize="end"
                 android:lineSpacingExtra="2.5dp"
                 android:maxLines="2"
-                android:text="@string/introduction"
                 android:textColor="@color/color_5d5d5d"
                 android:textSize="14sp"/>
 
@@ -99,6 +99,13 @@
 
     </LinearLayout>
 
-    <View
-        style="@style/view_line"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <include layout="@layout/listview" />
+
+    </RelativeLayout>
+
 </LinearLayout>

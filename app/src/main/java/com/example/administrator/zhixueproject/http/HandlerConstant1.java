@@ -73,4 +73,7 @@ public class HandlerConstant1 {
     public static final int GET_SIGN_LIST_SUCCESS=1173;
     public static final int WEIXIN_LOGIN_SUCCESS=1174;
     public static final int UPDATE_BUY_TOPIC_SUCCESS=2049;
+    public static final int DELETE_REPORT_SUCCESS=2050;
+    public static final int GET_REPORT_DETAILS_SUCCESS=2051;
+    public static final int GET_REPORT_DETAILS_SUCCESS2=2052;
 }

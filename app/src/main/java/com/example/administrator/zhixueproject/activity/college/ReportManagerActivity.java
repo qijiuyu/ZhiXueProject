@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.college;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.fragment.college.FloorReportFragment;
 import com.example.administrator.zhixueproject.fragment.college.TopicReportFragment;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.PagerSlidingTabStrip;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,16 @@ public class ReportManagerActivity extends BaseActivity implements View.OnClickL
     private TopicReportFragment topicReportFragment=new TopicReportFragment();
     private FloorReportFragment floorReportFragment=new FloorReportFragment();
     public final static String ACTION_SELECT_ORDERBY="net.zhixue.adminapp.ACTION_SELECT_ORDERBY";
+    //多选广播
+    public final static String ACTION_DUO_XUAN="net.zhixue.adminapp.ACTION_DUO_XUAN";
+    //全部删除广播
+    public final static String ACTION_QUAN_BU_SHAN_CHU="net.zhixue.adminapp.ACTION_QUAN_BU_SHAN_CHU";
+    //全选广播
+    public final static String ACTION_QUAN_XUAN="net.zhixue.adminapp.ACTION_QUAN_XUAN";
+    //删除广播
+    public final static String ACTION_SHAN_CHU="net.zhixue.adminapp.ACTION_SHAN_CHU";
+    //取消广播
+    public final static String ACTION_QU_XIAO="net.zhixue.adminapp.ACTION_QU_XIAO";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_manager);
@@ -51,6 +63,8 @@ public class ReportManagerActivity extends BaseActivity implements View.OnClickL
      * 初始化控件
      */
     private void initView(){
+        TextView tvHead=(TextView)findViewById(R.id.tv_title);
+        tvHead.setText("举报管理");
         linearLayout=(LinearLayout)findViewById(R.id.lin);
         tvRight=(TextView)findViewById(R.id.tv_right);
         tvRight.setText(getString(R.string.whole));
@@ -64,6 +78,11 @@ public class ReportManagerActivity extends BaseActivity implements View.OnClickL
         pager.setOffscreenPageLimit(2);
         tabs.setViewPager(pager);
         findViewById(R.id.lin_right).setOnClickListener(this);
+        findViewById(R.id.tv_delete_multiSelect).setOnClickListener(this);
+        findViewById(R.id.tv_delete_all).setOnClickListener(this);
+        findViewById(R.id.ll_all_check).setOnClickListener(this);
+        findViewById(R.id.ll_delete).setOnClickListener(this);
+        findViewById(R.id.ll_cancel).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
@@ -96,6 +115,7 @@ public class ReportManagerActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+        Intent intent=new Intent();
         switch (v.getId()){
             case R.id.lin_right:
                  if(linearLayout.getVisibility()==View.VISIBLE){
@@ -114,10 +134,38 @@ public class ReportManagerActivity extends BaseActivity implements View.OnClickL
             case R.id.tv_no_red:
                 updateTextView(2);
                 break;
+            //多选删除
+            case R.id.tv_delete_multiSelect:
+                 findViewById(R.id.ll_bottom_choose).setVisibility(View.VISIBLE);
+                 findViewById(R.id.ll_bottom_delete).setVisibility(View.GONE);
+                 intent.setAction(ACTION_DUO_XUAN);
+                 break;
+            case R.id.tv_delete_all:
+                 intent.setAction(ACTION_QUAN_BU_SHAN_CHU);
+                 break;
+            //全选
+            case R.id.ll_all_check:
+                 ImageView imageView=(ImageView)findViewById(R.id.iv_all_checked);
+                 imageView.setImageDrawable(getResources().getDrawable(R.mipmap.checked_blue_report));
+                 intent.setAction(ACTION_QUAN_XUAN);
+                 break;
+            //删除
+            case R.id.ll_delete:
+                 intent.setAction(ACTION_SHAN_CHU);
+                 break;
+            //取消
+            case R.id.ll_cancel:
+                 ImageView imageView2=(ImageView)findViewById(R.id.iv_all_checked);
+                 imageView2.setImageDrawable(getResources().getDrawable(R.mipmap.unchecked_gray_report));
+                 findViewById(R.id.ll_bottom_choose).setVisibility(View.GONE);
+                 findViewById(R.id.ll_bottom_delete).setVisibility(View.VISIBLE);
+                 intent.setAction(ACTION_QU_XIAO);
+                 break;
             case R.id.lin_back:
                  finish();
                  break;
         }
+        sendBroadcast(intent);
     }
 
 
@@ -194,6 +242,8 @@ public class ReportManagerActivity extends BaseActivity implements View.OnClickL
                 key="2";
                 break;
         }
+        Intent intent=new Intent(ACTION_SELECT_ORDERBY);
+        sendBroadcast(intent);
     }
 
     public class MyPagerAdapter extends FragmentPagerAdapter {

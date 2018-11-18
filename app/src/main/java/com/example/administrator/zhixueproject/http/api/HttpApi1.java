@@ -15,6 +15,7 @@ import com.example.administrator.zhixueproject.bean.Notice;
 import com.example.administrator.zhixueproject.bean.Post;
 import com.example.administrator.zhixueproject.bean.QuestionAccount;
 import com.example.administrator.zhixueproject.bean.Report;
+import com.example.administrator.zhixueproject.bean.ReportDetails;
 import com.example.administrator.zhixueproject.bean.TeacherBean;
 import com.example.administrator.zhixueproject.bean.RecentEarning;
 import com.example.administrator.zhixueproject.bean.TopicAccount;
@@ -523,5 +524,25 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.UPDATE_BUY_TOPIC)
     Call<BaseBean> updateBuyTopic(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 删除举报内容
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DELETE_REPORT)
+    Call<BaseBean> deleteReport(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 查询举报明细
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_REPORT_DETAILS)
+    Call<ReportDetails> getReportDetails(@FieldMap Map<String, String> map);
 
 }
