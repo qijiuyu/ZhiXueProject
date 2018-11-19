@@ -545,4 +545,14 @@ public interface HttpApi1 {
     @POST(HttpConstant.GET_REPORT_DETAILS)
     Call<ReportDetails> getReportDetails(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 修改直播预告
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_LIVE)
+    Call<BaseBean> updateLive(@FieldMap Map<String, String> map);
+
 }

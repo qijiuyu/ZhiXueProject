@@ -255,4 +255,8 @@ public class HttpConstant {
     public static final String DELETE_REPORT="complaint/delComplaint.do";
 
     public static final String GET_REPORT_DETAILS="complaint/getComplaintInfo.do";
+
+    public static final String UPDATE_LIVE="postLive/updatePostLive.do";
+
+
 }

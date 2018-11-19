@@ -34,13 +34,18 @@ public class Live extends BaseBean {
 
     public static class LiveList implements Serializable{
         private String userImg;
-        private String postLivetime;
+        private long postLivetime;
         private String postInfo;
         private String postName;
         private String topicName;
         private long postId;
         private String userName;
-        private long topicId;
+        private long postTopicId;
+        private int postIsLive;
+        private int postIsTop;
+        private long postWriterId;
+        private int postIsFree;
+        private double postPrice;
 
         public String getUserImg() {
             return userImg;
@@ -50,11 +55,11 @@ public class Live extends BaseBean {
             this.userImg = userImg;
         }
 
-        public String getPostLivetime() {
+        public long getPostLivetime() {
             return postLivetime;
         }
 
-        public void setPostLivetime(String postLivetime) {
+        public void setPostLivetime(long postLivetime) {
             this.postLivetime = postLivetime;
         }
 
@@ -98,12 +103,52 @@ public class Live extends BaseBean {
             this.userName = userName;
         }
 
-        public long getTopicId() {
-            return topicId;
+        public long getPostTopicId() {
+            return postTopicId;
         }
 
-        public void setTopicId(long topicId) {
-            this.topicId = topicId;
+        public void setPostTopicId(long postTopicId) {
+            this.postTopicId = postTopicId;
+        }
+
+        public int getPostIsLive() {
+            return postIsLive;
+        }
+
+        public void setPostIsLive(int postIsLive) {
+            this.postIsLive = postIsLive;
+        }
+
+        public int getPostIsTop() {
+            return postIsTop;
+        }
+
+        public void setPostIsTop(int postIsTop) {
+            this.postIsTop = postIsTop;
+        }
+
+        public long getPostWriterId() {
+            return postWriterId;
+        }
+
+        public void setPostWriterId(long postWriterId) {
+            this.postWriterId = postWriterId;
+        }
+
+        public int getPostIsFree() {
+            return postIsFree;
+        }
+
+        public void setPostIsFree(int postIsFree) {
+            this.postIsFree = postIsFree;
+        }
+
+        public double getPostPrice() {
+            return postPrice;
+        }
+
+        public void setPostPrice(double postPrice) {
+            this.postPrice = postPrice;
         }
     }
 }

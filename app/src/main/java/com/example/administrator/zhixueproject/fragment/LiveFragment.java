@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -100,6 +101,7 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

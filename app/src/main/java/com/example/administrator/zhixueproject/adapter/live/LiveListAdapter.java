@@ -14,6 +14,7 @@ import com.example.administrator.zhixueproject.activity.live.AddLiveActivity;
 import com.example.administrator.zhixueproject.bean.live.Live;
 import com.example.administrator.zhixueproject.callback.LiveCallBack;
 import com.example.administrator.zhixueproject.fragment.LiveFragment;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class LiveListAdapter extends BaseAdapter{
 		}
 		holder.tvName.setText(liveList.getPostName());
 		holder.tvTopicName.setText("话题："+liveList.getTopicName());
-		holder.tvTime.setText(liveList.getPostLivetime());
+		holder.tvTime.setText(DateUtil.gethour(liveList.getPostLivetime()));
 		holder.tvTeacher.setText("讲师："+liveList.getUserName());
 		holder.tvContent.setText("预告："+liveList.getPostInfo());
 		holder.tvDel.setTag(liveList.getPostId());

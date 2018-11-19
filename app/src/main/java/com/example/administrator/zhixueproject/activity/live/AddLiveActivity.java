@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.live;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import com.example.administrator.zhixueproject.callback.CustomListener;
 import com.example.administrator.zhixueproject.fragment.college.TopicListFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.example.administrator.zhixueproject.view.SwitchButton;
 import com.example.administrator.zhixueproject.view.time.TimePickerView;
@@ -128,13 +130,22 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
         }
         etTitle.setText(liveList.getPostName());
         topicListBean=new TopicListBean();
-        topicListBean.setTopicId(liveList.getTopicId());
+        topicListBean.setTopicId(liveList.getPostTopicId());
         tvTopicName.setText(liveList.getTopicName());
         teacher=new Teacher();
-//        teacher.setTeacherId(liveList.ge);
+        teacher.setTeacherId(liveList.getPostWriterId());
         tvTeacher.setText(liveList.getUserName());
-        tvTime.setText(liveList.getPostLivetime());
+        tvTime.setText(DateUtil.gethour(liveList.getPostLivetime()));
+        postIsFree=liveList.getPostIsFree();
+        if(postIsFree==1){
+            tvCost.setText("免费");
+        }else{
+            tvCost.setText("¥"+liveList.getPostPrice());
+        }
 
+        postIsTop=liveList.getPostIsTop();
+        ((SwitchButton) findViewById(R.id.sb_stick)).setChecked(true);
+        etContent.setText(liveList.getPostInfo());
     }
 
     @Override
@@ -189,7 +200,11 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
                     return;
                 }
                 showProgress(getString(R.string.loding));
-                HttpMethod1.addLive(title,topicListBean.getTopicId(),teacher.getTeacherId(),time,postIsFree,cost,postIsTop,content,mHandler);
+                 if(null==liveList){
+                     HttpMethod1.addLive(title,topicListBean.getTopicId(),teacher.getTeacherId(),time,postIsFree,cost,postIsTop,content,mHandler);
+                 }else{
+                     HttpMethod1.updateLive(title,liveList.getPostId(),topicListBean.getTopicId(),teacher.getTeacherId(),time,postIsFree,cost,postIsTop,content,mHandler);
+                 }
                  break;
             case R.id.tv_cancel:
                  mCostPopWindow.dissmiss();
@@ -204,6 +219,7 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
 
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
