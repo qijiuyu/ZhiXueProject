@@ -64,6 +64,7 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
         imgHead=(CircleImageView)view.findViewById(R.id.img_fc_head);
         imgHead.setOnClickListener(this);
         tvHead=(TextView)view.findViewById(R.id.tv_head);
+        tvHead.setText("直播预告");
         mRefreshLayout=(MyRefreshLayout)view.findViewById(R.id.re_list);
         view.findViewById(R.id.iv_college).setOnClickListener(this);
         view.findViewById(R.id.ll_release).setOnClickListener(this);

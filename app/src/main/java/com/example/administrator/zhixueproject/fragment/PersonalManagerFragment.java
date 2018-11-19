@@ -6,13 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.TabActivity;
+import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
 import com.example.administrator.zhixueproject.activity.memberManage.BlacklistActivity;
 import com.example.administrator.zhixueproject.activity.memberManage.KickOutMemberActivity;
 import com.example.administrator.zhixueproject.activity.memberManage.MemberApplyActivity;
 import com.example.administrator.zhixueproject.activity.memberManage.MemberManagerActivity;
 import com.example.administrator.zhixueproject.activity.memberManage.SignInManageActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.UserBean;
+import com.example.administrator.zhixueproject.view.CircleImageView;
 
 /**
  * 人员管理fragment
@@ -22,6 +29,8 @@ import com.example.administrator.zhixueproject.activity.memberManage.SignInManag
 public class PersonalManagerFragment extends BaseFragment implements View.OnClickListener {
 
     View view=null;
+    private CircleImageView imgHead;
+    private TextView tvHead;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,8 +40,12 @@ public class PersonalManagerFragment extends BaseFragment implements View.OnClic
     }
 
     private void initView(View view) {
-        view.findViewById(R.id.lin_back).setVisibility(View.GONE);
+        imgHead=(CircleImageView)view.findViewById(R.id.img_fc_head);
+        imgHead.setOnClickListener(this);
+        tvHead=(TextView)view.findViewById(R.id.tv_head);
+        tvHead.setText("人员管理");
         // 会员管理
+        view.findViewById(R.id.iv_college).setOnClickListener(this);
         view.findViewById(R.id.rl_member_manager).setOnClickListener(this);
         view.findViewById(R.id.rl_member_application).setOnClickListener(this);
         view.findViewById(R.id.rl_kick_out_member).setOnClickListener(this);
@@ -42,6 +55,14 @@ public class PersonalManagerFragment extends BaseFragment implements View.OnClic
 
     public void onClick(View view){
         switch (view.getId()){
+            //点击头像
+            case R.id.img_fc_head:
+                TabActivity.openLeft();
+                break;
+            //点击设置
+            case R.id.iv_college:
+                setClass(CollegeManageActivity.class);
+                break;
             case R.id.rl_member_manager://C端会员管理
                 setClass(MemberManagerActivity.class);
                 break;
@@ -60,5 +81,13 @@ public class PersonalManagerFragment extends BaseFragment implements View.OnClic
             default:
                 break;
         }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        final UserBean userBean= MyApplication.userInfo.getData().getUser();
+        Glide.with(mActivity).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
     }
 }

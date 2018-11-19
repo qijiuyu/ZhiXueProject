@@ -11,16 +11,18 @@
         android:layout_height="96dp">
 
         <RelativeLayout
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="15dp"
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <TextView
                 android:id="@+id/iv_vip_grade"
                 android:layout_centerInParent="true"
-                android:layout_width="55dp"
-                android:layout_height="17dp" />
+                android:textSize="14sp"
+                android:textColor="#C15656"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 

@@ -45,7 +45,7 @@ public class ColleteVipAdapter extends BaseAdapter{
 		if(view==null){
 			holder = new ViewHolder(); 
 			view = LayoutInflater.from(context).inflate(R.layout.collete_vip_item, null);
-			holder.imgVip=(ImageView)view.findViewById(R.id.iv_vip_grade);
+			holder.tvVip=(TextView) view.findViewById(R.id.iv_vip_grade);
 			holder.tvIfLive=(TextView)view.findViewById(R.id.tv_if_live);
 			holder.tvLiveNum=(TextView)view.findViewById(R.id.tv_live_num);
 			holder.tvMonthMoney=(TextView)view.findViewById(R.id.tv_monthly_fee);
@@ -57,6 +57,7 @@ public class ColleteVipAdapter extends BaseAdapter{
 			holder=(ViewHolder)view.getTag();
 		}
 		collegeGradeListBean=listAll.get(position);
+		holder.tvVip.setText(collegeGradeListBean.getCollegeGradeName());
 		if(collegeGradeListBean.getCollegeLivePostYn()==0){
             holder.tvIfLive.setText("否");
         }else{
@@ -67,13 +68,11 @@ public class ColleteVipAdapter extends BaseAdapter{
         holder.tvYearMoney.setText(collegeGradeListBean.getCollegeGradeYprice()+"");
         holder.tvPersonNum.setText(collegeGradeListBean.getCollegeLimitStu()+"");
         holder.tvTopIc.setText(collegeGradeListBean.getCollegeLimitTopic()+"");
-		Glide.with(context).load(collegeGradeListBean.getCollegeGradeImg()).override(35,12).centerCrop().into(holder.imgVip);
 		return view;
 	}
 
 
 	 private class ViewHolder{
-	    ImageView imgVip;
-		TextView tvIfLive,tvLiveNum,tvMonthMoney,tvYearMoney,tvPersonNum,tvTopIc;
+		TextView tvVip,tvIfLive,tvLiveNum,tvMonthMoney,tvYearMoney,tvPersonNum,tvTopIc;
 	 }
 }
