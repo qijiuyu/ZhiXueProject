@@ -65,7 +65,27 @@
             </RelativeLayout>
 
             <View style="@style/gray_line" />
+            <RelativeLayout
+                android:id="@+id/rl_stick"
+                style="@style/release_common_rl">
 
+                <TextView
+                    style="@style/release_common_tv"
+                    android:text="是否置顶" />
+
+                <com.example.administrator.zhixueproject.view.SwitchButton
+                    android:id="@+id/sb_stick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    app:sb_background="@color/color_dbdbdb"
+                    app:sb_checked_color="@color/color_fd703e"
+                    app:sb_show_indicator="false" />
+
+            </RelativeLayout>
+
+            <View style="@style/gray_line" />
             <RelativeLayout
                 android:id="@+id/rl_topic_type"
                 style="@style/release_common_rl">
@@ -86,28 +106,6 @@
                     android:id="@+id/tv_topic_type"
                     style="@style/release_common_tv_show"
                     android:layout_toLeftOf="@+id/iv_right" />
-
-            </RelativeLayout>
-
-            <View style="@style/gray_line" />
-
-            <RelativeLayout
-                android:id="@+id/rl_stick"
-                style="@style/release_common_rl">
-
-                <TextView
-                    style="@style/release_common_tv"
-                    android:text="是否置顶" />
-
-                <com.example.administrator.zhixueproject.view.SwitchButton
-                    android:id="@+id/sb_stick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    app:sb_background="@color/color_dbdbdb"
-                    app:sb_checked_color="@color/color_fd703e"
-                    app:sb_show_indicator="false" />
 
             </RelativeLayout>
 
