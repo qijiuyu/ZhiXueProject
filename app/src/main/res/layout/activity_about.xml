@@ -27,7 +27,148 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="19dp"
-                android:text="@string/introduction"
+                android:text="要学就学（www.1x9x.cn）创立于2016年6月，是一家专注于将学习资源和学习者链接在一起，从互联到互教互学和无界限交流的创新科技企业，由IBM背景的资深教育专家，国家网络机构的尖端技术架构师，国内一线互联网巨头的前沿市场专家组建。"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="要学就学致力于打造人人可以参与的开放式学习服务平台，让想要分享的人能够分享，想要学习的人随时可学，使学习融入人们的生活和工作。让每个人都能更高效、更智能、更精准地找到自己所需的学习资源，为机构、老师及学生提供更广泛的交流渠道、多种增值服务和学习工具，全力创建一个专业、简单、智能、安全的高品质学习服务的第三方平台，让学习变成一种生活方式。同时，要学就学也在全力打造更富活力、更加健康的教育生态圈，以实现全行业乃至全产业链的共赢。"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="愿景"
+                android:textStyle="bold"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="让人人参与分享，让学习近在指尖，让知识创造财富"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="使命"
+                android:textStyle="bold"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="创造‘要学就学’，让学习融入每个人生活的环境"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="“让互联网学习能够以果为终”是要学就学的使命。"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="价值观"
+                android:textStyle="bold"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="我们会秉持“诚信、开放、简单、创新”的八字核心价值观，与您一起，共同学习，快速成长！"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="“零”成本：免费构建群空间"
+                android:textStyle="bold"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="完全的“零”成本投入，我们承诺：在你赚到钱之前，你真的不需付出一分钱！
+打造专属于您的群组空间，轻松实现在线学习，论坛，投票，报名、签到、关注、打赏、付费问答等功能（未完持续，只要你想要，告诉我！）；"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="“易”维护：尊享AI自助服务"
+                android:textStyle="bold"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="还在为微信群找内容，爬楼，苦恼吧？！
+好内容错过了，无法保存，苦恼吧？！
+粉丝多，多个微信群，难管理，苦恼吧？！
+原创微信助手7*24小时服务，随时呼出群空间，自动回答群内问题，让你的内容、群组一键维护。"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="“强”引流：社群经济时代，流量才是你的财富！"
+                android:textStyle="bold"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="跨越微信群500人的限制，打造同一目标团体的网络根据地。
+打通各个空间，实现流量共享，当你我他的粉丝流转起来……你懂得！"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="“自”经营：最潮的“自媒体”+“社群经济”，关注到新媒体时代背后的商机！"
+                android:textStyle="bold"
+                android:textColor="@color/color_333333"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="打造属于您的专属空间，语音直播，图文直播，视频直播（即将呈现），将“自媒体”进行到底！
+运作您的专属空间，引流方式多样，不但可以将空间，课题，课程多平台无缝分享，我们还提供了空间专属二维码，让您的粉丝“一扫了知”！"
                 android:textColor="@color/color_333333"
                 android:textSize="14sp"/>
 
