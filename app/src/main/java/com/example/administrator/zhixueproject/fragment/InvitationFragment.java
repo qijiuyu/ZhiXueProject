@@ -16,6 +16,7 @@ import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -32,7 +33,7 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
     private List<TopicListBean> listData = new ArrayList<>();
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = System.currentTimeMillis()+"";
+    private String TIMESTAMP = DateUtil.getTime();;
     private RecyclerView mRecyclerView;
     private MyRefreshLayout mRefreshLayout;
     //fragment是否可见
@@ -159,7 +160,7 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
     private void requestError() {
         mRefreshLayout.refreshComplete();
         mRefreshLayout.loadMoreComplete();
-        showMsg(getString(R.string.load_failed));
+        showMsg(getString(R.string.net_error));
     }
 
 

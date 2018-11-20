@@ -443,6 +443,11 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                         showMsg(bean.getErrorMsg());
                     }
                     break;
+                case HandlerConstant1.REQUST_ERROR:
+                    showMsg(getString(R.string.net_error));
+                    break;
+                default:
+                    break;
             }
         }
 

@@ -243,7 +243,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
     private void requestError() {
         mrlPostsCourse.refreshComplete();
         mrlPostsCourse.loadMoreComplete();
-        showMsg(getString(R.string.load_failed));
+        showMsg(getString(R.string.net_error));
     }
 
     /**

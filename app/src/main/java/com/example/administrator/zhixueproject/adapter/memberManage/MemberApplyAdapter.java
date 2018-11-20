@@ -1,4 +1,4 @@
-package com.example.administrator.zhixueproject.activity.memberManage;
+package com.example.administrator.zhixueproject.adapter.memberManage;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;

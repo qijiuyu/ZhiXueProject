@@ -255,7 +255,7 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
     private void requestError() {
         mRefreshLayout.refreshComplete();
         mRefreshLayout.loadMoreComplete();
-        showMsg(getString(R.string.load_failed));
+        showMsg(getString(R.string.net_error));
     }
 
     /**

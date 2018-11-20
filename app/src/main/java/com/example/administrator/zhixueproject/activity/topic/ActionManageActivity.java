@@ -183,7 +183,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
     private void requestError() {
         mrlActionManage.refreshComplete();
         mrlActionManage.loadMoreComplete();
-        showMsg(getString(R.string.load_failed));
+        showMsg(getString(R.string.net_error));
     }
 
     /**
