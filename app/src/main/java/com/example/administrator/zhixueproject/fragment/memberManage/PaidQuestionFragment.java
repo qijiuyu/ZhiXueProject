@@ -132,7 +132,6 @@ public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayou
             return;
         }
         if (bean.isStatus()) {
-
             if (bean.getData().getPostList().size() <= 0) {
                 showMsg(getString(R.string.no_more_data));
             }

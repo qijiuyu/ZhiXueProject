@@ -165,6 +165,9 @@ public class SelectLecturersActivity extends BaseActivity implements View.OnClic
         if (bean.isStatus()) {
             SelectLecturersBean.DataBean dataBean = bean.getData();
             listData = dataBean.getTeacherList();
+            if (dataBean.getTeacherList().size()==0){
+                return;
+            }
             adapterView();
         } else {
             showMsg(bean.errorMsg);
