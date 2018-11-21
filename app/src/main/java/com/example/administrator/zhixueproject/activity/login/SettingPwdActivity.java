@@ -91,14 +91,13 @@ public class SettingPwdActivity extends BaseActivity implements View.OnClickList
                     MyApplication.spUtil.removeMessage(SPUtil.SMS_CODE_TIME);
                     break;
                 //提交
-                case HandlerConstant1.REGISTER_SUCCESS:
+                case HandlerConstant1.UPDATE_PWD_SUCCESS:
                      clearTask();
                      baseBean= (BaseBean) msg.obj;
                      if(null==baseBean){
                         return;
                      }
                      if(baseBean.isStatus()){
-                         MyApplication.spUtil.addString(SPUtil.LOGIN_MOBILE,etMobile.getText().toString().trim());
                          finish();
                      }else{
                         showMsg(baseBean.getErrorMsg());

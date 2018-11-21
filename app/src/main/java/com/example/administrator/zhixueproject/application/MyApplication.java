@@ -8,6 +8,7 @@ import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.utils.ActivitysLifecycle;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.google.gson.Gson;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -38,6 +39,7 @@ public class MyApplication extends Application {
         if(!TextUtils.isEmpty(strHome)){
             homeBean=gson.fromJson(strHome,Home.HomeBean.class);
         }
+        LogUtils.e(userInfo+"+++++++++++++++");
 
         api = WXAPIFactory.createWXAPI(this, HttpConstant.WX_APPID, true);
         api.registerApp(HttpConstant.WX_APPID);
