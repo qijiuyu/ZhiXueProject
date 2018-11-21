@@ -2,9 +2,7 @@
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/tabhost"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
-
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -50,8 +48,8 @@
 
                         <ImageView
                             android:id="@+id/img_tab_college"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:src="@mipmap/tab_1_false" />
 
@@ -79,8 +77,8 @@
 
                         <ImageView
                             android:id="@+id/img_tab_topic"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:src="@mipmap/tab_2_false" />
 
@@ -108,8 +106,8 @@
 
                         <ImageView
                             android:id="@+id/img_tab_zhibo"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:src="@mipmap/tab_3_false" />
 
@@ -137,8 +135,8 @@
 
                         <ImageView
                             android:id="@+id/img_tab_huati"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:src="@mipmap/tab_4_false" />
 
@@ -166,8 +164,8 @@
 
                         <ImageView
                             android:id="@+id/img_tab_ren"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:src="@mipmap/tab_5_false" />
 
