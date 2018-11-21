@@ -128,7 +128,7 @@ public class SettingPwdActivity extends BaseActivity implements View.OnClickList
                      HttpMethod1.getSmsCode(mobile,"2",mHandler);
                  }
                  break;
-            //注册
+            //修改密码
             case R.id.tv_register:
                  String smsCode=etCode.getText().toString().trim();
                  String pwd=etPwd.getText().toString().trim();
@@ -162,7 +162,7 @@ public class SettingPwdActivity extends BaseActivity implements View.OnClickList
                     return;
                 }
                 showProgress("提交中...");
-                HttpMethod1.register(mobile,pwd,smsCode,mHandler);
+                HttpMethod1.updatePwd(mobile,pwd,smsCode,mHandler);
                 break;
             case R.id.lin_back:
                 finish();

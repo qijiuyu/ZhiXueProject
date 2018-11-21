@@ -142,12 +142,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 case HandlerConstant1.LOGIN_SUCCESS:
                     userInfo= (UserInfo) msg.obj;
                     if(null==userInfo){
+                        clearTask();
                         return;
                     }
                     if(userInfo.isStatus()){
                         MyApplication.userInfo=userInfo;
                         loginSuccess(userInfo);
                     }else{
+                        clearTask();
                         showMsg(userInfo.getErrorMsg());
                     }
                     break;
@@ -155,6 +157,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 case HandlerConstant1.WEIXIN_LOGIN_SUCCESS:
                       final String message= (String) msg.obj;
                       if(TextUtils.isEmpty(message)){
+                          clearTask();
                           return;
                       }
                       try {
@@ -180,6 +183,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                      clearTask();
                     final Home home= (Home) msg.obj;
                     if(null==home){
+                        clearTask();
                         return;
                     }
                     if(home.isStatus()){
@@ -189,10 +193,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                         setClass(TabActivity.class);
                         finish();
                     }else{
+                        clearTask();
                         showMsg(home.getErrorMsg());
                     }
                      break;
                 case HandlerConstant1.REQUST_ERROR:
+                    clearTask();
                     showMsg(getString(R.string.net_error));
                     break;
                 default:

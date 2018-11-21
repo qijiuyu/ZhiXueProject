@@ -220,10 +220,11 @@ public class HttpMethod1  extends BaseRequst {
      * 修改密码
      * @param handler
      */
-    public static void updatePwd(String mobile,String newPwd,final Handler handler) {
+    public static void updatePwd(String mobile,String newPwd,String code,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("mobile",mobile);
         map.put("newPwd",newPwd);
+        map.put("code",code);
         Http.getRetrofit().create(HttpApi1.class).updatePwd(map).enqueue(new Callback<BaseBean>() {
             public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
                 try {
