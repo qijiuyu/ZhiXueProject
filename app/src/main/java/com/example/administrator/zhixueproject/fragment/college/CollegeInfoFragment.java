@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.college.EditCollegeActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
@@ -32,7 +33,6 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
     private OvalImageViews imgBJ;
     private ImageView imgEdit,imgGrade;
     private TextView tvName,tvTime,tvContent;
-    public static Home.HomeBean homeBean;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -61,15 +61,15 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
                          return;
                      }
                      if(home.isStatus()){
-                         homeBean=home.getData().getCollege();
-                         if(null==homeBean){
+                         MyApplication.homeBean=home.getData().getCollege();
+                         if(null==MyApplication.homeBean){
                              return;
                          }
-                         Glide.with(mActivity).load(homeBean.getCollegeBackimg()).override(337,192).centerCrop().error(R.mipmap.not_img).into(imgBJ);
-                         tvName.setText(homeBean.getCollegeName());
-                         Glide.with(mActivity).load(homeBean.getCollegeGradeImg()).override(55,18).centerCrop().into(imgGrade);
-                         tvTime.setText(DateUtil.getDay(homeBean.getCollegeCreationTime())+"到期");
-                         tvContent.setText(homeBean.getCollegeInfo());
+                         Glide.with(mActivity).load(MyApplication.homeBean.getCollegeBackimg()).override(337,192).centerCrop().error(R.mipmap.not_img).into(imgBJ);
+                         tvName.setText(MyApplication.homeBean.getCollegeName());
+                         Glide.with(mActivity).load(MyApplication.homeBean.getCollegeGradeImg()).override(55,18).centerCrop().into(imgGrade);
+                         tvTime.setText(DateUtil.getDay(MyApplication.homeBean.getCollegeCreationTime())+"到期");
+                         tvContent.setText(MyApplication.homeBean.getCollegeInfo());
                      }else{
                          showMsg(home.getErrorMsg());
                      }
@@ -88,7 +88,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
             //编辑学院
             case R.id.iv_edit:
                 Intent intent=new Intent(mActivity,EditCollegeActivity.class);
-                intent.putExtra("homeBean",homeBean);
+                intent.putExtra("homeBean",MyApplication.homeBean);
                 startActivity(intent);
                 break;
             default:
@@ -104,6 +104,13 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
         HttpMethod1.getHomeInfo(mHandler);
     }
 
+
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            getHomeInfo();
+        }
+    }
 
     @Override
     public void onResume() {

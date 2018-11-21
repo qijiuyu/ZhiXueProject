@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -149,3 +154,21 @@
     </RelativeLayout>
 
 </LinearLayout>
+
+<RelativeLayout
+android:id="@+id/left_menu"
+android:layout_gravity="start"
+android:layout_width="283dp"
+android:layout_height="match_parent">
+
+<fragment
+    android:id="@+id/id_left_menu"
+    android:name="com.example.administrator.zhixueproject.fragment.LeftFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true" />
+
+</RelativeLayout>
+
+    </android.support.v4.widget.DrawerLayout>

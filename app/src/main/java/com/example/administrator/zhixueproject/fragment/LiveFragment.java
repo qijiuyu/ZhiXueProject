@@ -2,19 +2,19 @@ package com.example.administrator.zhixueproject.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
 import com.example.administrator.zhixueproject.activity.live.AddLiveActivity;
@@ -24,10 +24,9 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.live.Live;
 import com.example.administrator.zhixueproject.callback.LiveCallBack;
-import com.example.administrator.zhixueproject.fragment.college.CollegeInfoFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
-import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -39,8 +38,10 @@ import java.util.List;
  * Created by Administrator on 2018/1/3 0003.
  */
 
-public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListener,View.OnClickListener{
+public class LiveFragment extends BaseActivity implements MyRefreshLayoutListener,View.OnClickListener{
 
+    //侧滑菜单
+    public static DrawerLayout mDrawerLayout;
     private CircleImageView imgHead;
     private TextView tvHead;
     private ListView listView;
@@ -48,44 +49,74 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
     private int page=1;
     private int limit=20;
     private LiveListAdapter liveListAdapter;
-    //fragment是否可见
-    private boolean isVisibleToUser=false;
     private List<Live.LiveList> listAll=new ArrayList<>();
     //直播id
     private long postId;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtils.transparencyBar(this);
+        setContentView(R.layout.fragment_live);
+        initView();
+        leftMenu();
     }
 
 
-    View view=null;
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_live, container, false);
-        imgHead=(CircleImageView)view.findViewById(R.id.img_fc_head);
+    private void initView(){
+        imgHead=(CircleImageView)findViewById(R.id.img_fc_head);
         imgHead.setOnClickListener(this);
-        tvHead=(TextView)view.findViewById(R.id.tv_head);
+        tvHead=(TextView)findViewById(R.id.tv_head);
         tvHead.setText("直播预告");
-        mRefreshLayout=(MyRefreshLayout)view.findViewById(R.id.re_list);
-        view.findViewById(R.id.iv_college).setOnClickListener(this);
-        view.findViewById(R.id.ll_release).setOnClickListener(this);
-        listView=(ListView)view.findViewById(R.id.listView);
+        mRefreshLayout=(MyRefreshLayout)findViewById(R.id.re_list);
+        findViewById(R.id.iv_college).setOnClickListener(this);
+        findViewById(R.id.ll_release).setOnClickListener(this);
+        listView=(ListView)findViewById(R.id.listView);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
-        liveListAdapter=new LiveListAdapter(mActivity,listAll);
+        liveListAdapter=new LiveListAdapter(this,listAll);
         listView.setAdapter(liveListAdapter);
         liveListAdapter.setCallBack(liveCallBack);
         //查询举报数据
         getData(HandlerConstant1.GET_LIVE_LIST_SUCCESS);
-        return view;
+    }
+
+    /**
+     * 设置侧边栏
+     */
+    private void leftMenu() {
+        mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        // 设置遮盖主要内容的布颜色
+        mDrawerLayout.setScrimColor(Color.TRANSPARENT);
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                View content = mDrawerLayout.getChildAt(0);
+                int offset = (int) (drawerView.getWidth() * slideOffset);
+                content.setTranslationX(offset);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
     }
 
 
-    @Override
     public void onClick(View v) {
         switch (v.getId()){
             //点击头像
             case R.id.img_fc_head:
-                TabActivity.openLeft();
+                mDrawerLayout.openDrawer(Gravity.LEFT);
                 break;
             //点击设置
             case R.id.iv_college:
@@ -93,7 +124,7 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
                 break;
              //发布
             case R.id.ll_release:
-                 Intent intent=new Intent(mActivity,AddLiveActivity.class);
+                 Intent intent=new Intent(mContext,AddLiveActivity.class);
                  startActivityForResult(intent,1);
                  break;
             default:
@@ -188,9 +219,7 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
      * @param index
      */
     private void getData(int index){
-        if(isVisibleToUser && view!=null && listAll.size()==0){
-            HttpMethod1.getLiveList(page,limit,index,mHandler);
-        }
+        HttpMethod1.getLiveList(page,limit,index,mHandler);
     }
 
 
@@ -214,19 +243,10 @@ public class LiveFragment extends BaseFragment  implements MyRefreshLayoutListen
         }
     }
 
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        this.isVisibleToUser=isVisibleToUser;
-        //查询举报数据
-        getData(HandlerConstant1.GET_LIVE_LIST_SUCCESS);
-    }
-
-
-    @Override
     public void onResume() {
         super.onResume();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
-        Glide.with(mActivity).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
+        Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
         // tvHead.setText(CollegeInfoFragment.homeBean.getCollegeName());
     }
 

@@ -19,7 +19,17 @@ public class Home extends BaseBean {
 
     public static class collegeBean implements Serializable{
 
+        private int type;
+
         private HomeBean college;
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
 
         public HomeBean getCollege() {
             return college;

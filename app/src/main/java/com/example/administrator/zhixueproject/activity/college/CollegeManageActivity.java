@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.fragment.college.CollegeInfoFragment;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 
@@ -51,7 +52,7 @@ public class CollegeManageActivity extends BaseActivity implements View.OnClickL
             case R.id.rl_institution_manage:
             case R.id.rl_open_institution:
                  Intent intent=new Intent(mContext,EditCollegeActivity.class);
-                 intent.putExtra("homeBean", CollegeInfoFragment.homeBean);
+                 intent.putExtra("homeBean", MyApplication.homeBean);
                  startActivity(intent);
                  break;
             //会员等级设置

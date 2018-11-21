@@ -3,6 +3,7 @@ package com.example.administrator.zhixueproject.application;
 import android.app.Application;
 import android.text.TextUtils;
 
+import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HttpConstant;
@@ -18,6 +19,7 @@ public class MyApplication extends Application {
     public static Gson gson;
     public static SPUtil spUtil;
     public static UserInfo userInfo;
+    public static Home.HomeBean homeBean;
     public static IWXAPI api;
     public void onCreate() {
         super.onCreate();

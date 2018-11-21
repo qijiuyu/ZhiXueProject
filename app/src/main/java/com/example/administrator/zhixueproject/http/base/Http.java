@@ -70,6 +70,10 @@ public class Http {
     }
 
 
+    /**
+     * 注释拦截器
+     * @return
+     */
     public static Retrofit getRetrofitNoInterceptor() {
         Retrofit.Builder builder = new Retrofit.Builder();
         builder.baseUrl(baseUrl);
@@ -83,6 +87,7 @@ public class Http {
         Retrofit retrofit = builder.build();
         return retrofit;
     }
+
 
     /**
      * 上传文件

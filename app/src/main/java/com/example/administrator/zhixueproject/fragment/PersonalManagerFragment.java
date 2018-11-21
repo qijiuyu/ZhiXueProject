@@ -1,15 +1,16 @@
 package com.example.administrator.zhixueproject.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
 import com.example.administrator.zhixueproject.activity.memberManage.BlacklistActivity;
@@ -26,38 +27,72 @@ import com.example.administrator.zhixueproject.view.CircleImageView;
  * Created by Administrator on 2018/1/3 0003.
  */
 
-public class PersonalManagerFragment extends BaseFragment implements View.OnClickListener {
+public class PersonalManagerFragment extends BaseActivity implements View.OnClickListener {
 
-    View view=null;
+    //侧滑菜单
+    public static DrawerLayout mDrawerLayout;
     private CircleImageView imgHead;
     private TextView tvHead;
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fm_personal_manager, container, false);
-        initView(view);
-        return view;
+
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fm_personal_manager);
+        initView();
+        leftMenu();
     }
 
-    private void initView(View view) {
-        imgHead=(CircleImageView)view.findViewById(R.id.img_fc_head);
+    private void initView() {
+        imgHead=(CircleImageView)findViewById(R.id.img_fc_head);
         imgHead.setOnClickListener(this);
-        tvHead=(TextView)view.findViewById(R.id.tv_head);
+        tvHead=(TextView)findViewById(R.id.tv_head);
         tvHead.setText("人员管理");
         // 会员管理
-        view.findViewById(R.id.iv_college).setOnClickListener(this);
-        view.findViewById(R.id.rl_member_manager).setOnClickListener(this);
-        view.findViewById(R.id.rl_member_application).setOnClickListener(this);
-        view.findViewById(R.id.rl_kick_out_member).setOnClickListener(this);
-        view.findViewById(R.id.rl_black_list).setOnClickListener(this);
-        view.findViewById(R.id.rl_sign_in_manager).setOnClickListener(this);
+        findViewById(R.id.iv_college).setOnClickListener(this);
+        findViewById(R.id.rl_member_manager).setOnClickListener(this);
+        findViewById(R.id.rl_member_application).setOnClickListener(this);
+        findViewById(R.id.rl_kick_out_member).setOnClickListener(this);
+        findViewById(R.id.rl_black_list).setOnClickListener(this);
+        findViewById(R.id.rl_sign_in_manager).setOnClickListener(this);
     }
+
+    /**
+     * 设置侧边栏
+     */
+    private void leftMenu() {
+        mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        // 设置遮盖主要内容的布颜色
+        mDrawerLayout.setScrimColor(Color.TRANSPARENT);
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                View content = mDrawerLayout.getChildAt(0);
+                int offset = (int) (drawerView.getWidth() * slideOffset);
+                content.setTranslationX(offset);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+    }
+
 
     public void onClick(View view){
         switch (view.getId()){
             //点击头像
             case R.id.img_fc_head:
-                TabActivity.openLeft();
+                mDrawerLayout.openDrawer(Gravity.LEFT);
                 break;
             //点击设置
             case R.id.iv_college:
@@ -88,6 +123,6 @@ public class PersonalManagerFragment extends BaseFragment implements View.OnClic
     public void onResume() {
         super.onResume();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
-        Glide.with(mActivity).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
+        Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
     }
 }

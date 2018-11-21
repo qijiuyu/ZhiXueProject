@@ -36,12 +36,15 @@ public class LogInterceptor implements Interceptor {
         long t2 = System.nanoTime();
         String body = response.body().string();
         if(getCode(body)==900001){
+            LogUtils.e("11111111111111111111");
             String message=getAccessToken();
+
             try {
                 final JSONObject jsonObject=new JSONObject(message);
                 if(jsonObject.getBoolean("status")){
                     final JSONObject jsonObject2=new JSONObject(jsonObject.getString("data"));
                     MyApplication.spUtil.addString(SPUtil.TOKEN,jsonObject2.getString("token"));
+                    LogUtils.e(jsonObject2.getString("token")+"________");
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -90,7 +93,9 @@ public class LogInterceptor implements Interceptor {
         final UserBean userBean=MyApplication.userInfo.getData().getUser();
         Map<String, String> map = new HashMap<>();
         map.put("userId", userBean.getUserId()+"");
-        String message = Http.getRetrofitNoInterceptor().create(HttpApi1.class).autoLogin(map).execute().body().string();
+        LogUtils.e(userBean.getUserId()+"____________222");
+        String message = Http.getRetrofit().create(HttpApi1.class).autoLogin(map).execute().body().string();
+        LogUtils.e(message+"————————————————————33");
         return message;
     }
 

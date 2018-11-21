@@ -21,8 +21,8 @@ public class ParameterUtil {
        }
 
        //学院id
-       if(null!= CollegeInfoFragment.homeBean){
-           map.put("collegeId",String.valueOf(CollegeInfoFragment.homeBean.getCollegeId()));
+       if(null!= MyApplication.homeBean){
+           map.put("collegeId",String.valueOf(MyApplication.homeBean.getCollegeId()));
            map.put("collegeId","62");
        }
 
