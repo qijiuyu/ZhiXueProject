@@ -180,16 +180,5 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
         super.onResume();
         //获取个人信息
         HttpMethod1.getUserInfo(mHandler);
-//        final UserBean userBean= MyApplication.userInfo.getData().getUser();
-//
-//
-//        String a= "15011224467123456be07e7093fefeaaf95f54c2b350d7810";
-//        try {
-//            String b=Encrypt.getSHA(a);
-//            String c=Encrypt.stringToAscii(b);
-//            HttpMethod1.autoLogin(userBean.getUserPhone(),userBean.getUserPassword(),c,mHandler);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 }

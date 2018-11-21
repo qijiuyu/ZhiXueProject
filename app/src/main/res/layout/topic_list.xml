@@ -4,7 +4,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/head" />
+    <RelativeLayout
+        android:id="@+id/rel_head"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/bg_title">
+
+        <com.example.administrator.zhixueproject.view.CircleImageView
+            android:id="@+id/img_fc_head"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/head_bg"/>
+
+        <TextView
+            android:id="@+id/tv_head"
+            android:text="帖子"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="15sp"
+            android:textColor="@android:color/white"/>
+
+        <ImageView
+            android:id="@+id/iv_college"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/institution_icon" />
+
+    </RelativeLayout>
 
     <com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout
         android:id="@+id/mrl_topic_list"

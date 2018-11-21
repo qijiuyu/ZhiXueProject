@@ -460,22 +460,20 @@ public class HttpMethod1  extends BaseRequst {
      * 自动登陆保持回话
      * @param handler
      */
-    public static void autoLogin(String mobile,String pwd,String sign,final Handler handler) {
+    public static void autoLogin(long userId,final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put("mobile",mobile);
-        map.put("pwd",pwd);
-        map.put("sign",sign);
-        Http.getRetrofit().create(HttpApi1.class).autoLogin(map).enqueue(new Callback<UserInfo>() {
-            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+        map.put("userId",userId+"");
+        Http.getRetrofit().create(HttpApi1.class).autoLogin(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant1.AUTO_LOGIN_SUCCESS, response.body());
+                    sendMessage(handler, HandlerConstant1.AUTO_LOGIN_SUCCESS, response.body().string());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
-            public void onFailure(Call<UserInfo> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

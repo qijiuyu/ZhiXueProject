@@ -9,13 +9,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
+import com.example.administrator.zhixueproject.activity.TabActivity;
+import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
 import com.example.administrator.zhixueproject.adapter.topic.TopicListAdapter;
+import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -28,6 +35,7 @@ import java.util.List;
  */
 
 public class InvitationFragment extends BaseFragment implements MyRefreshLayoutListener {
+    private CircleImageView imgHead;
     private TopicListAdapter mAdapter;
     private List<TopicListBean> listData = new ArrayList<>();
     private int PAGE = 1;
@@ -47,7 +55,7 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
     }
 
     private void initView(View view) {
-        view.findViewById(R.id.lin_back).setVisibility(View.GONE);
+        imgHead=(CircleImageView)view.findViewById(R.id.img_fc_head);
         mRefreshLayout = (MyRefreshLayout) view.findViewById(R.id.mrl_topic_list);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_topic_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -56,6 +64,16 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
         mRecyclerView.addItemDecoration(itemDecoration);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
+        imgHead.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TabActivity.openLeft();
+            }
+        });
+        view.findViewById(R.id.iv_college).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                setClass(CollegeManageActivity.class);
+            }
+        });
     }
 
     private void initData() {
@@ -170,4 +188,10 @@ public class InvitationFragment extends BaseFragment implements MyRefreshLayoutL
         initData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        final UserBean userBean= MyApplication.userInfo.getData().getUser();
+        Glide.with(mActivity).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
+    }
 }
