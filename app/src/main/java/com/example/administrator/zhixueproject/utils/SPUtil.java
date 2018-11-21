@@ -18,8 +18,8 @@ public class SPUtil {
     public static final String LOGIN_MOBILE="login_mobile";
     //用户信息
     public static final String USER_INFO="user_info";
-    //回话id
-    public static final String SESSION_ID="session_Id";
+    //学院信息
+    public static final String HOME_INFO="home_info";
     //登录的token
     public static final String TOKEN="token";
     private static SPUtil sharUtil = null;

@@ -71,6 +71,25 @@ public class Http {
 
 
     /**
+     * 注释拦截器
+     * @return
+     */
+    public static Retrofit getRetrofitNoInterceptor() {
+        Retrofit.Builder builder = new Retrofit.Builder();
+        builder.baseUrl(baseUrl);
+        builder.addConverterFactory(GsonConverterFactory.create());
+        OkHttpClient.Builder okBuilder = new OkHttpClient().newBuilder();
+        okBuilder.connectTimeout(15, TimeUnit.SECONDS);
+        okBuilder.writeTimeout(15, TimeUnit.SECONDS);
+        okBuilder.readTimeout(15, TimeUnit.SECONDS);
+//        okBuilder.addInterceptor(new LogInterceptor());
+        builder.callFactory(okBuilder.build());
+        Retrofit retrofit = builder.build();
+        return retrofit;
+    }
+
+
+    /**
      * 上传文件
      */
     public static void upLoadFile(String url, String fileKey, List<File> list, Map<String, String> map, Callback callback) {

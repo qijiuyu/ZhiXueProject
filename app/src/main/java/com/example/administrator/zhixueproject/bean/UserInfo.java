@@ -11,12 +11,22 @@ public class UserInfo extends BaseBean {
 
     private UserInfoBean data;
 
+    private int type;
+
     public UserInfoBean getData() {
         return data;
     }
 
     public void setData(UserInfoBean data) {
         this.data = data;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public static class UserInfoBean implements Serializable{

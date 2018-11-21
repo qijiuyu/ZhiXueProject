@@ -91,14 +91,13 @@ public class SettingPwdActivity extends BaseActivity implements View.OnClickList
                     MyApplication.spUtil.removeMessage(SPUtil.SMS_CODE_TIME);
                     break;
                 //提交
-                case HandlerConstant1.REGISTER_SUCCESS:
+                case HandlerConstant1.UPDATE_PWD_SUCCESS:
                      clearTask();
                      baseBean= (BaseBean) msg.obj;
                      if(null==baseBean){
                         return;
                      }
                      if(baseBean.isStatus()){
-                         MyApplication.spUtil.addString(SPUtil.LOGIN_MOBILE,etMobile.getText().toString().trim());
                          finish();
                      }else{
                         showMsg(baseBean.getErrorMsg());
@@ -128,7 +127,7 @@ public class SettingPwdActivity extends BaseActivity implements View.OnClickList
                      HttpMethod1.getSmsCode(mobile,"2",mHandler);
                  }
                  break;
-            //注册
+            //修改密码
             case R.id.tv_register:
                  String smsCode=etCode.getText().toString().trim();
                  String pwd=etPwd.getText().toString().trim();
@@ -162,7 +161,7 @@ public class SettingPwdActivity extends BaseActivity implements View.OnClickList
                     return;
                 }
                 showProgress("提交中...");
-                HttpMethod1.register(mobile,pwd,smsCode,mHandler);
+                HttpMethod1.updatePwd(mobile,pwd,smsCode,mHandler);
                 break;
             case R.id.lin_back:
                 finish();

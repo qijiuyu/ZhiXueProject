@@ -1,10 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/head" />
+    <RelativeLayout
+        android:id="@+id/rel_head"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/bg_title">
+
+        <com.example.administrator.zhixueproject.view.CircleImageView
+            android:id="@+id/img_fc_head"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/head_bg"/>
+
+        <TextView
+            android:id="@+id/tv_head"
+            android:text="帖子"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="15sp"
+            android:textColor="@android:color/white"/>
+
+        <ImageView
+            android:id="@+id/iv_college"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/institution_icon" />
+
+    </RelativeLayout>
 
     <com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout
         android:id="@+id/mrl_topic_list"
@@ -21,3 +60,21 @@
     </com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout>
 
 </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/left_menu"
+        android:layout_gravity="start"
+        android:layout_width="283dp"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/id_left_menu"
+            android:name="com.example.administrator.zhixueproject.fragment.LeftFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
+    </RelativeLayout>
+
+</android.support.v4.widget.DrawerLayout>

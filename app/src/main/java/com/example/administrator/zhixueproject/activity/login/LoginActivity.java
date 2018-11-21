@@ -14,10 +14,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
@@ -134,43 +136,36 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            clearTask();
+            UserInfo userInfo;
             switch (msg.what){
                 //登陆回执
                 case HandlerConstant1.LOGIN_SUCCESS:
-                    final UserInfo login= (UserInfo) msg.obj;
-                    if(null==login){
+                    userInfo= (UserInfo) msg.obj;
+                    if(null==userInfo){
+                        clearTask();
                         return;
                     }
-                    if(login.isStatus()){
-                        MyApplication.userInfo=login;
-                        MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(login));
-                        MyApplication.spUtil.addString(SPUtil.LOGIN_MOBILE,etMobile.getText().toString().trim());
-                        //保存token
-                        MyApplication.spUtil.addString(SPUtil.TOKEN,login.getData().getToken());
-                        setClass(TabActivity.class);
-                        finish();
+                    if(userInfo.isStatus()){
+                        MyApplication.userInfo=userInfo;
+                        loginSuccess(userInfo);
                     }else{
-                        showMsg(login.getErrorMsg());
+                        clearTask();
+                        showMsg(userInfo.getErrorMsg());
                     }
                     break;
                 //微信登陆回执
                 case HandlerConstant1.WEIXIN_LOGIN_SUCCESS:
                       final String message= (String) msg.obj;
                       if(TextUtils.isEmpty(message)){
+                          clearTask();
                           return;
                       }
                       try {
                           final JSONObject jsonObject=new JSONObject(message);
                           if(jsonObject.getBoolean("status")){
-                              final UserInfo userInfo=MyApplication.gson.fromJson(message,UserInfo.class);
+                              userInfo=MyApplication.gson.fromJson(message,UserInfo.class);
                               MyApplication.userInfo=userInfo;
-                              MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(userInfo));
-                              //保存token
-                              MyApplication.spUtil.addString(SPUtil.TOKEN,userInfo.getData().getToken());
-                              setClass(TabActivity.class);
-                              finish();
-
+                              loginSuccess(userInfo);
                           }else{
                               if(jsonObject.getString("errorCode").equals("200203")){
                                   Intent intent=new Intent(mContext,RegisterActivity.class);
@@ -184,7 +179,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                           e.printStackTrace();
                       }
                       break;
+                case HandlerConstant1.GET_HOME_INFO_SUCCESS:
+                     clearTask();
+                    final Home home= (Home) msg.obj;
+                    if(null==home){
+                        clearTask();
+                        return;
+                    }
+                    if(home.isStatus()){
+                        MyApplication.homeBean=home.getData().getCollege();
+                        MyApplication.userInfo.setType(home.getData().getType());
+                        MyApplication.spUtil.addString(SPUtil.HOME_INFO,MyApplication.gson.toJson(MyApplication.homeBean));
+                        setClass(TabActivity.class);
+                        finish();
+                    }else{
+                        clearTask();
+                        showMsg(home.getErrorMsg());
+                    }
+                     break;
                 case HandlerConstant1.REQUST_ERROR:
+                    clearTask();
                     showMsg(getString(R.string.net_error));
                     break;
                 default:
@@ -192,6 +206,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             }
         }
     };
+
+
+    private void loginSuccess(UserInfo userInfo){
+        MyApplication.spUtil.addString(SPUtil.LOGIN_MOBILE,etMobile.getText().toString().trim());
+        MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(userInfo));
+        //保存token
+        MyApplication.spUtil.addString(SPUtil.TOKEN,userInfo.getData().getToken());
+
+        //查询首页信息
+        getHomeInfo();
+    }
+
+
+    /**
+     * 查询首页信息
+     */
+    private void getHomeInfo(){
+        HttpMethod1.getHomeInfo(mHandler);
+    }
 
 
     /**

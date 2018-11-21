@@ -29,7 +29,6 @@
            android:layout_height="wrap_content"
            android:layout_alignBottom="@id/img_head"
            android:layout_toRightOf ="@id/img_head"
-           android:layout_below="@id/tv_userName"
            android:layout_marginLeft="7dp"
            android:textSize="13sp"
            android:textColor="@color/color_333333"/>

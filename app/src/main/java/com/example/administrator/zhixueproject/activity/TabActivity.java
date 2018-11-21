@@ -1,112 +1,168 @@
 package com.example.administrator.zhixueproject.activity;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.RadioButton;
+import android.widget.ImageView;
+import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.administrator.zhixueproject.R;
-import com.example.administrator.zhixueproject.adapter.TabAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UserBean;
+import com.example.administrator.zhixueproject.fragment.InvitationFragment;
+import com.example.administrator.zhixueproject.fragment.LiveFragment;
+import com.example.administrator.zhixueproject.fragment.PersonalManagerFragment;
+import com.example.administrator.zhixueproject.fragment.TopicFragment;
+import com.example.administrator.zhixueproject.fragment.college.CollegeFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.ActivitysLifecycle;
-import com.example.administrator.zhixueproject.utils.Encrypt;
-import com.example.administrator.zhixueproject.utils.EnumTAB;
-import com.example.administrator.zhixueproject.utils.EnumUtils;
-import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
-import com.example.administrator.zhixueproject.view.MyViewPager;
+import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 
 import org.json.JSONObject;
 
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class TabActivity extends BaseActivity implements View.OnClickListener {
+public class TabActivity extends android.app.TabActivity implements View.OnClickListener{
 
-    private MyViewPager myViewPager;
-    //侧滑菜单
-    public static DrawerLayout mDrawerLayout;
-    private TabAdapter tabAdapter;
     // 按两次退出
     protected long exitTime = 0;
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    private TabHost tabHost;
+    private ImageView imgCollege,imgTopic,imgZhibo,imgHuati,imgRen;
+    private TextView tvCollege,tvTopic,tvZhibo,tvHuati,tvRen;
+    private List<ImageView> imgList=new ArrayList<>();
+    private List<TextView> tvList=new ArrayList<>();
+    private int[] notClick=new int[]{R.mipmap.tab_1_false,R.mipmap.tab_2_false,R.mipmap.tab_3_false,R.mipmap.tab_4_false,R.mipmap.tab_5_false};
+    private int[] yesClick=new int[]{R.mipmap.tab_1_true,R.mipmap.tab_2_true,R.mipmap.tab_3_true,R.mipmap.tab_4_true,R.mipmap.tab_5_true};
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab);
+        StatusBarUtils.transparencyBar(this);
+        setContentView(R.layout.activity_tag);
         initView();
-        leftMenu();
+        updateType();
     }
 
 
-    /**
-     * 初始化控件
-     */
-    private void initView() {
-        myViewPager = (MyViewPager) findViewById(R.id.tab_vp);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        final EnumTAB[] enumArr = EnumTAB.values();
-        Drawable drawable;
-        for (int i = 0; i < enumArr.length; i++) {
-            enumArr[i].setRadioButton((RadioButton) findViewById(enumArr[i].getId()));
-            enumArr[i].getRadioButton().setOnClickListener(this);
-            enumArr[i].getRadioButton().setText(enumArr[i].getTitle());
-            drawable = getResources().getDrawable(enumArr[i].getDrawable());
-            drawable.setBounds(0, 0, 58, 58);
-            enumArr[i].getRadioButton().setCompoundDrawables(null, drawable, null, null);
+    private void initView(){
+        imgCollege=(ImageView)findViewById(R.id.img_tab_college);
+        tvCollege=(TextView)findViewById(R.id.tv_tab_college);
+        imgTopic=(ImageView)findViewById(R.id.img_tab_topic);
+        tvTopic=(TextView)findViewById(R.id.tv_tab_topic);
+        imgZhibo=(ImageView)findViewById(R.id.img_tab_zhibo);
+        tvZhibo=(TextView)findViewById(R.id.tv_tab_zhibo);
+        imgHuati=(ImageView)findViewById(R.id.img_tab_huati);
+        tvHuati=(TextView)findViewById(R.id.tv_tab_huati);
+        imgRen=(ImageView)findViewById(R.id.img_tab_ren);
+        tvRen=(TextView)findViewById(R.id.tv_tab_ren);
+        imgList.add(imgCollege);imgList.add(imgTopic);imgList.add(imgZhibo);imgList.add(imgHuati);imgList.add(imgRen);
+        tvList.add(tvCollege);tvList.add(tvTopic);tvList.add(tvZhibo);tvList.add(tvHuati);tvList.add(tvRen);
+        findViewById(R.id.lin_tab_college).setOnClickListener(this);
+        findViewById(R.id.lin_tab_topic).setOnClickListener(this);
+        findViewById(R.id.lin_tab_zhibo).setOnClickListener(this);
+        findViewById(R.id.lin_tab_huati).setOnClickListener(this);
+        findViewById(R.id.lin_tab_ren).setOnClickListener(this);
+
+        tabHost=this.getTabHost();
+        TabHost.TabSpec spec;
+        if(MyApplication.userInfo.getType()==1){
+            spec=tabHost.newTabSpec("学院").setIndicator("学院").setContent(new Intent(this, CollegeFragment.class));
+            tabHost.addTab(spec);
+            spec=tabHost.newTabSpec("帖子").setIndicator("帖子").setContent(new Intent(this, InvitationFragment.class));
+            tabHost.addTab(spec);
+            imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_true));
+            tvCollege.setTextColor(getResources().getColor(R.color.color_48c6ef));
+        }else{
+            spec=tabHost.newTabSpec("帖子").setIndicator("帖子").setContent(new Intent(this, InvitationFragment.class));
+            tabHost.addTab(spec);
+            spec=tabHost.newTabSpec("学院").setIndicator("学院").setContent(new Intent(this, CollegeFragment.class));
+            tabHost.addTab(spec);
+            imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_2_true));
+            tvCollege.setTextColor(getResources().getColor(R.color.color_48c6ef));
+            imgTopic.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_true));
         }
-        tabAdapter = new TabAdapter(getSupportFragmentManager());
-        myViewPager.setAdapter(tabAdapter);
-        myViewPager.setNoScroll(true);//禁止不能滑动
-        myViewPager.setOffscreenPageLimit(5);
-        myViewPager.setCurrentItem(0);
+        spec=tabHost.newTabSpec("直播预告").setIndicator("直播预告").setContent(new Intent(this, LiveFragment.class));
+        tabHost.addTab(spec);
+        spec=tabHost.newTabSpec("话题管理").setIndicator("话题管理").setContent(new Intent(this, TopicFragment.class));
+        tabHost.addTab(spec);
+        spec=tabHost.newTabSpec("人员管理").setIndicator("人员管理").setContent(new Intent(this, PersonalManagerFragment.class));
+        tabHost.addTab(spec);
+        tabHost.setCurrentTab(0);
+    }
+
+    private void updateType(){
+        if(MyApplication.userInfo.getType()==2){
+            imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_2_false));
+            tvCollege.setText("帖子");
+
+            imgTopic.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_false));
+            tvTopic.setText("学院");
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.lin_tab_college:
+                updateImg(0);
+                if(MyApplication.userInfo.getType()==1){
+                    tabHost.setCurrentTabByTag("学院");
+                }else{
+                    tabHost.setCurrentTabByTag("帖子");
+                    imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_2_true));
+                }
+                 break;
+            case R.id.lin_tab_topic:
+                updateImg(1);
+                if(MyApplication.userInfo.getType()==1){
+                    tabHost.setCurrentTabByTag("帖子");
+                }else{
+                    tabHost.setCurrentTabByTag("学院");
+                    imgTopic.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_true));
+                }
+                 break;
+            case R.id.lin_tab_zhibo:
+                updateImg(2);
+                tabHost.setCurrentTabByTag("直播预告");
+                 break;
+            case R.id.lin_tab_huati:
+                updateImg(3);
+                tabHost.setCurrentTabByTag("话题管理");
+                 break;
+            case R.id.lin_tab_ren:
+                updateImg(4);
+                tabHost.setCurrentTabByTag("人员管理");
+                 break;
+             default:
+                 break;
+        }
     }
 
 
-    /**
-     * 设置侧边栏
-     */
-    private void leftMenu() {
-        // 设置遮盖主要内容的布颜色
-        mDrawerLayout.setScrimColor(Color.TRANSPARENT);
-        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                View content = mDrawerLayout.getChildAt(0);
-                int offset = (int) (drawerView.getWidth() * slideOffset);
-                content.setTranslationX(offset);
+    private void updateImg(int type){
+        for(int i=0;i<5;i++){
+            if(i==type){
+                imgList.get(i).setImageDrawable(getResources().getDrawable(yesClick[i]));
+                tvList.get(i).setTextColor(getResources().getColor(R.color.color_48c6ef));
+            }else{
+                imgList.get(i).setImageDrawable(getResources().getDrawable(notClick[i]));
+                tvList.get(i).setTextColor(getResources().getColor(R.color.color_91dcf5));
             }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
+        }
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            clearTask();
             switch (msg.what){
                 //获取个人资料
                 case HandlerConstant1.GET_USER_INFO_SUCCESS:
@@ -134,32 +190,6 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
         }
     };
 
-    @Override
-    public void onClick(View v) {
-        EnumTAB[] enumArr = EnumTAB.values();
-        for (int i = 0; i < enumArr.length; i++) {
-            if (enumArr[i].getId() == v.getId()) {
-                setCurrentTabByTag(enumArr[i]);
-                break;
-            }
-        }
-    }
-
-    public void setCurrentTabByTag(EnumTAB enumTab) {
-        EnumTAB[] enumArr = EnumTAB.values();
-        for (int i = 0; i < enumArr.length; i++) {
-            enumArr[i].getRadioButton().setChecked(enumArr[i] == enumTab);
-        }
-        myViewPager.setCurrentItem(EnumUtils.getEnumUtils().getIdx(enumTab), false);
-    }
-
-    /**
-     * 打开侧边栏
-     */
-    public static void openLeft() {
-        mDrawerLayout.openDrawer(Gravity.LEFT);
-    }
-
 
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN ) {
@@ -180,16 +210,6 @@ public class TabActivity extends BaseActivity implements View.OnClickListener {
         super.onResume();
         //获取个人信息
         HttpMethod1.getUserInfo(mHandler);
-//        final UserBean userBean= MyApplication.userInfo.getData().getUser();
-//
-//
-//        String a= "15011224467123456be07e7093fefeaaf95f54c2b350d7810";
-//        try {
-//            String b=Encrypt.getSHA(a);
-//            String c=Encrypt.stringToAscii(b);
-//            HttpMethod1.autoLogin(userBean.getUserPhone(),userBean.getUserPassword(),c,mHandler);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
+
 }

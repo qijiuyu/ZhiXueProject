@@ -2,17 +2,16 @@ package com.example.administrator.zhixueproject.http.base;
 
 
 import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.UserBean;
+import com.example.administrator.zhixueproject.http.api.HttpApi1;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.ParameterUtil;
 import com.example.administrator.zhixueproject.utils.SPUtil;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -25,6 +24,7 @@ import okhttp3.ResponseBody;
 
 public class LogInterceptor implements Interceptor {
 
+
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         long t1 = System.nanoTime();
@@ -35,6 +35,23 @@ public class LogInterceptor implements Interceptor {
         Response response = chain.proceed(request);
         long t2 = System.nanoTime();
         String body = response.body().string();
+        if(getCode(body)==900001){
+            String message=getAccessToken();
+            try {
+                final JSONObject jsonObject=new JSONObject(message);
+                if(jsonObject.getBoolean("status")){
+                    final JSONObject jsonObject2=new JSONObject(jsonObject.getString("data"));
+                    MyApplication.spUtil.addString(SPUtil.TOKEN,jsonObject2.getString("token"));
+                    LogUtils.e(jsonObject2.getString("token")+"________");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            request = addParameter(request);
+            response = chain.proceed(request);
+            body = response.body().string();
+        }
 
         LogUtils.e(String.format("response %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, body));
         return response.newBuilder().body(ResponseBody.create(response.body().contentType(), body)).build();
@@ -66,12 +83,24 @@ public class LogInterceptor implements Interceptor {
         return request;
     }
 
+
+    /**
+     * 获取AccessToken
+     */
+    public String getAccessToken() throws IOException {
+        final UserBean userBean=MyApplication.userInfo.getData().getUser();
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", userBean.getUserId()+"");
+        String message = Http.getRetrofit().create(HttpApi1.class).autoLogin(map).execute().body().string();
+        return message;
+    }
+
     public int getCode(String json) {
         int code = 0;
         try {
             JSONObject jsonObject = new JSONObject(json);
-            if (jsonObject.has("code")) {
-                code = jsonObject.getInt("code");
+            if(!jsonObject.isNull("errorCode")){
+                code=jsonObject.getInt("errorCode");
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -183,7 +183,7 @@ public interface HttpApi1 {
      */
     @FormUrlEncoded
     @POST(HttpConstant.AUTO_LOGIN)
-    Call<UserInfo> autoLogin(@FieldMap Map<String, String> map);
+    Call<ResponseBody> autoLogin(@FieldMap Map<String, String> map);
 
 
     /**

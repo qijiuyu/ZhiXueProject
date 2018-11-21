@@ -55,6 +55,28 @@
         <activity
             android:name=".activity.TabActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".fragment.college.CollegeFragment"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".fragment.InvitationFragment"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".fragment.LiveFragment"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".fragment.TopicFragment"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".fragment.PersonalManagerFragment"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.WelcomeActivity"
             android:screenOrientation="portrait" />
