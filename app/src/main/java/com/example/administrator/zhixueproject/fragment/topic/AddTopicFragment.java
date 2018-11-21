@@ -15,6 +15,7 @@ import com.example.administrator.zhixueproject.adapter.topic.AddTopicAdapter;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
+import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import java.util.ArrayList;
@@ -65,6 +66,11 @@ public class AddTopicFragment extends BaseFragment implements BaseQuickAdapter.O
             switch (msg.what) {
                 case HandlerConstant2.GET_TOPIC_LIST_SUCCESS:
                     getDataSuccess(bean);
+                    break;
+                case HandlerConstant1.REQUST_ERROR:
+                    showMsg(getString(R.string.net_error));
+                    break;
+                default:
                     break;
             }
         }
