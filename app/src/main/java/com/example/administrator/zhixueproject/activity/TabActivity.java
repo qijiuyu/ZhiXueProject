@@ -51,6 +51,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.activity_tag);
         initView();
+        updateType();
     }
 
 
@@ -75,10 +76,17 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
 
         tabHost=this.getTabHost();
         TabHost.TabSpec spec;
-        spec=tabHost.newTabSpec("学院").setIndicator("学院").setContent(new Intent(this, CollegeFragment.class));
-        tabHost.addTab(spec);
-        spec=tabHost.newTabSpec("帖子").setIndicator("帖子").setContent(new Intent(this, InvitationFragment.class));
-        tabHost.addTab(spec);
+        if(MyApplication.userInfo.getType()==1){
+            spec=tabHost.newTabSpec("学院").setIndicator("学院").setContent(new Intent(this, CollegeFragment.class));
+            tabHost.addTab(spec);
+            spec=tabHost.newTabSpec("帖子").setIndicator("帖子").setContent(new Intent(this, InvitationFragment.class));
+            tabHost.addTab(spec);
+        }else{
+            spec=tabHost.newTabSpec("帖子").setIndicator("帖子").setContent(new Intent(this, InvitationFragment.class));
+            tabHost.addTab(spec);
+            spec=tabHost.newTabSpec("学院").setIndicator("学院").setContent(new Intent(this, CollegeFragment.class));
+            tabHost.addTab(spec);
+        }
         spec=tabHost.newTabSpec("直播预告").setIndicator("直播预告").setContent(new Intent(this, LiveFragment.class));
         tabHost.addTab(spec);
         spec=tabHost.newTabSpec("话题管理").setIndicator("话题管理").setContent(new Intent(this, TopicFragment.class));
@@ -88,14 +96,32 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         tabHost.setCurrentTab(0);
     }
 
+    private void updateType(){
+        if(MyApplication.userInfo.getType()==2){
+            imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_2_false));
+            tvCollege.setText("帖子");
+
+            imgTopic.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_false));
+            tvTopic.setText("学院");
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.lin_tab_college:
-                tabHost.setCurrentTabByTag("学院");
+                if(MyApplication.userInfo.getType()==1){
+                    tabHost.setCurrentTabByTag("学院");
+                }else{
+                    tabHost.setCurrentTabByTag("帖子");
+                }
                  break;
             case R.id.lin_tab_topic:
-                tabHost.setCurrentTabByTag("帖子");
+                if(MyApplication.userInfo.getType()==1){
+                    tabHost.setCurrentTabByTag("帖子");
+                }else{
+                    tabHost.setCurrentTabByTag("学院");
+                }
                  break;
             case R.id.lin_tab_zhibo:
                 tabHost.setCurrentTabByTag("直播预告");
