@@ -24,6 +24,7 @@ import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.CodeUtils;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import org.json.JSONObject;
@@ -184,6 +185,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     if(home.isStatus()){
                         MyApplication.homeBean=home.getData().getCollege();
                         MyApplication.userInfo.setType(home.getData().getType());
+                        MyApplication.spUtil.addString(SPUtil.HOME_INFO,MyApplication.gson.toJson(MyApplication.homeBean));
                         setClass(TabActivity.class);
                         finish();
                     }else{

@@ -40,6 +40,8 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
     private TextView tvCollege,tvTopic,tvZhibo,tvHuati,tvRen;
     private List<ImageView> imgList=new ArrayList<>();
     private List<TextView> tvList=new ArrayList<>();
+    private int[] notClick=new int[]{R.mipmap.tab_1_false,R.mipmap.tab_2_false,R.mipmap.tab_3_false,R.mipmap.tab_4_false,R.mipmap.tab_5_false};
+    private int[] yesClick=new int[]{R.mipmap.tab_1_true,R.mipmap.tab_2_true,R.mipmap.tab_3_true,R.mipmap.tab_4_true,R.mipmap.tab_5_true};
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtils.transparencyBar(this);
@@ -75,11 +77,16 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
             tabHost.addTab(spec);
             spec=tabHost.newTabSpec("帖子").setIndicator("帖子").setContent(new Intent(this, InvitationFragment.class));
             tabHost.addTab(spec);
+            imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_true));
+            tvCollege.setTextColor(getResources().getColor(R.color.color_48c6ef));
         }else{
             spec=tabHost.newTabSpec("帖子").setIndicator("帖子").setContent(new Intent(this, InvitationFragment.class));
             tabHost.addTab(spec);
             spec=tabHost.newTabSpec("学院").setIndicator("学院").setContent(new Intent(this, CollegeFragment.class));
             tabHost.addTab(spec);
+            imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_2_true));
+            tvCollege.setTextColor(getResources().getColor(R.color.color_48c6ef));
+            imgTopic.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_true));
         }
         spec=tabHost.newTabSpec("直播预告").setIndicator("直播预告").setContent(new Intent(this, LiveFragment.class));
         tabHost.addTab(spec);
@@ -104,30 +111,50 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.lin_tab_college:
+                updateImg(0);
                 if(MyApplication.userInfo.getType()==1){
                     tabHost.setCurrentTabByTag("学院");
                 }else{
                     tabHost.setCurrentTabByTag("帖子");
+                    imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_2_true));
                 }
                  break;
             case R.id.lin_tab_topic:
+                updateImg(1);
                 if(MyApplication.userInfo.getType()==1){
                     tabHost.setCurrentTabByTag("帖子");
                 }else{
                     tabHost.setCurrentTabByTag("学院");
+                    imgTopic.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_true));
                 }
                  break;
             case R.id.lin_tab_zhibo:
+                updateImg(2);
                 tabHost.setCurrentTabByTag("直播预告");
                  break;
             case R.id.lin_tab_huati:
+                updateImg(3);
                 tabHost.setCurrentTabByTag("话题管理");
                  break;
             case R.id.lin_tab_ren:
+                updateImg(4);
                 tabHost.setCurrentTabByTag("人员管理");
                  break;
              default:
                  break;
+        }
+    }
+
+
+    private void updateImg(int type){
+        for(int i=0;i<5;i++){
+            if(i==type){
+                imgList.get(i).setImageDrawable(getResources().getDrawable(yesClick[i]));
+                tvList.get(i).setTextColor(getResources().getColor(R.color.color_48c6ef));
+            }else{
+                imgList.get(i).setImageDrawable(getResources().getDrawable(notClick[i]));
+                tvList.get(i).setTextColor(getResources().getColor(R.color.color_91dcf5));
+            }
         }
     }
 

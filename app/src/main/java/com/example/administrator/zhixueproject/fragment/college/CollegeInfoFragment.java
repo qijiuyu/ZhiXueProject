@@ -21,6 +21,7 @@ import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.example.administrator.zhixueproject.view.OvalImageViews;
 
 /**
@@ -65,6 +66,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
                          if(null==MyApplication.homeBean){
                              return;
                          }
+                         MyApplication.spUtil.addString(SPUtil.HOME_INFO,MyApplication.gson.toJson(MyApplication.homeBean));
                          Glide.with(mActivity).load(MyApplication.homeBean.getCollegeBackimg()).override(337,192).centerCrop().error(R.mipmap.not_img).into(imgBJ);
                          tvName.setText(MyApplication.homeBean.getCollegeName());
                          Glide.with(mActivity).load(MyApplication.homeBean.getCollegeGradeImg()).override(55,18).centerCrop().into(imgGrade);

@@ -33,6 +33,12 @@ public class MyApplication extends Application {
             userInfo=gson.fromJson(strUserInfo,UserInfo.class);
         }
 
+        //获取学院信息
+        final String strHome=spUtil.getString(SPUtil.HOME_INFO);
+        if(!TextUtils.isEmpty(strHome)){
+            homeBean=gson.fromJson(strHome,Home.HomeBean.class);
+        }
+
         api = WXAPIFactory.createWXAPI(this, HttpConstant.WX_APPID, true);
         api.registerApp(HttpConstant.WX_APPID);
 
