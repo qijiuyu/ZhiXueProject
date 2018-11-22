@@ -36,8 +36,9 @@ public class LogInterceptor implements Interceptor {
         long t2 = System.nanoTime();
         String body = response.body().string();
         if(getCode(body)==900001){
-            String message=getAccessToken();
+            Request request2=request;
             try {
+                String message=getAccessToken();
                 final JSONObject jsonObject=new JSONObject(message);
                 if(jsonObject.getBoolean("status")){
                     final JSONObject jsonObject2=new JSONObject(jsonObject.getString("data"));
@@ -48,9 +49,9 @@ public class LogInterceptor implements Interceptor {
                 e.printStackTrace();
             }
 
-            request = addParameter(request);
-            response = chain.proceed(request);
-            body = response.body().string();
+            //继续执行上个请求
+            Response response2 = chain.proceed(request2);
+            body = response2.body().string();
         }
 
         LogUtils.e(String.format("response %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, body));
@@ -79,7 +80,7 @@ public class LogInterceptor implements Interceptor {
             bodyBuilder.addEncoded(key, requstMap.get(key));
         }
         formBody = bodyBuilder.build();
-        request = request.newBuilder().post(formBody).addHeader("Authentication", MyApplication.spUtil.getString(SPUtil.TOKEN)).build();
+        request = request.newBuilder().addHeader("Authentication", MyApplication.spUtil.getString(SPUtil.TOKEN)).post(formBody).build();
         return request;
     }
 

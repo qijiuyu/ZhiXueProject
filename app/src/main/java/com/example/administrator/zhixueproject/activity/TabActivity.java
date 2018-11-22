@@ -23,6 +23,7 @@ import com.example.administrator.zhixueproject.fragment.college.CollegeFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.ActivitysLifecycle;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 
@@ -72,6 +73,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
 
         tabHost=this.getTabHost();
         TabHost.TabSpec spec;
+        LogUtils.e(MyApplication.userInfo.getType()+"++++++++++++++++");
         if(MyApplication.userInfo.getType()==1){
             spec=tabHost.newTabSpec("学院").setIndicator("学院").setContent(new Intent(this, CollegeFragment.class));
             tabHost.addTab(spec);
@@ -86,7 +88,9 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
             tabHost.addTab(spec);
             imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_2_true));
             tvCollege.setTextColor(getResources().getColor(R.color.color_48c6ef));
+            tvCollege.setText("帖子");
             imgTopic.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_true));
+            tvTopic.setText("学院");
         }
         spec=tabHost.newTabSpec("直播预告").setIndicator("直播预告").setContent(new Intent(this, LiveFragment.class));
         tabHost.addTab(spec);

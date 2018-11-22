@@ -54,10 +54,8 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 if(null== MyApplication.userInfo){
-                    LogUtils.e("111111111111111");
                     setClass(LoginActivity.class);
                 }else{
-                    LogUtils.e("22222222");
                     setClass(TabActivity.class);
                 }
                 finish();
