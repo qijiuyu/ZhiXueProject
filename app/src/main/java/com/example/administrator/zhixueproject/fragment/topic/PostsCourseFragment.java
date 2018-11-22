@@ -209,9 +209,6 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         if (bean.isStatus()) {
             PostsCourseBean.DataBean dataBean = bean.getData();
             listData = dataBean.getPostList();
-            if (dataBean.getPostList().size()==0){
-                return;
-            }
             adapterView();
         } else {
             showMsg(bean.errorMsg);
