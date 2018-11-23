@@ -93,6 +93,8 @@ public class ToolUtils {
             img_html = html;
         }
         img_html = imgStyle2+img_html;
+        // img_html=replaceAudio(img_html);
+        LogUtils.e("img_html===" +img_html);
         return img_html;
     }
     /**
@@ -103,6 +105,13 @@ public class ToolUtils {
         Pattern pattern = Pattern.compile(reg);
         Matcher matcher = pattern.matcher(html);
         return matcher.replaceAll("");
+    }
+
+    public static String replaceAudio(String html){
+        String reg = "audio";
+        Pattern pattern = Pattern.compile(reg);
+        Matcher matcher = pattern.matcher(html);
+        return matcher.replaceAll("video");
     }
 
     /**
