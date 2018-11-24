@@ -199,7 +199,7 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
                 switch (view.getId()) {
                     case R.id.img_delete:
                         // 删除投票参与者
-                        HttpMethod2.deleteVoteMember(listData.get(i).getUserEmail(),mHandler);
+                        HttpMethod2.deleteVoteMember(listData.get(i).getVoteId()+"",mHandler);
                         break;
                     default:
                         break;

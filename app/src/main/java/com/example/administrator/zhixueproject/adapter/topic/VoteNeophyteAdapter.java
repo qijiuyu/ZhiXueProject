@@ -29,10 +29,8 @@ public class VoteNeophyteAdapter extends BaseQuickAdapter<VoteDetailListBean, Ba
         helper.setText(R.id.tv_phone_num,"联系方式："+item.getUserPhone());
         helper.setText(R.id.tv_email, "邮箱："+ item.getUserEmail());
         helper.setText(R.id.tv_join_time, item.getVoteCreattime());
-        ArrayList<String> list=new ArrayList<>();
-        list.add(item.getVoteSsecName());
         helper.addOnClickListener(R.id.img_delete);
-        VoteActionListAdapter mAdapter = new VoteActionListAdapter(R.layout.post_comment_reply_item, list);
+        VoteActionListAdapter mAdapter = new VoteActionListAdapter(R.layout.post_comment_reply_item, item.getVoteSsecName());
         RecyclerView rvCommentReply = helper.getView(R.id.rv_vote_option);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(mContext);
         layoutManager.setAutoMeasureEnabled(true);

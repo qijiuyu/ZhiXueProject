@@ -1261,10 +1261,10 @@ public class HttpMethod2 extends BaseRequst {
      * @param memberId
      * @param handler
      */
-    public static void deleteVoteMember(String memberId, final Handler handler) {
+    public static void deleteVoteMember(String voteId, final Handler handler) {
 
         Map<String, String> map = new HashMap<>();
-        map.put("voteId", memberId);
+        map.put("voteId", voteId);
         Http.getRetrofit().create(HttpApi2.class).deleteVoteMember(map).enqueue(new Callback<VoteNeophyteBean>() {
             @Override
             public void onResponse(Call<VoteNeophyteBean> call, Response<VoteNeophyteBean> response) {

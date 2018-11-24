@@ -126,7 +126,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
      */
     public void getPostList(int index) {
         TIMESTAMP= DateUtil.getTime();
-        showProgress(getString(R.string.loading));
+        // showProgress(getString(R.string.loading));
         HttpMethod2.getPostList(type, postType + "", postTopicId, key, PAGE + "", LIMIT, TIMESTAMP, index, mHandler);
     }
 
@@ -176,7 +176,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            clearTask();
+            // clearTask();
             PostsCourseBean bean = (PostsCourseBean) msg.obj;
             switch (msg.what) {
                 case HandlerConstant2.GET_POST_LIST_SUCCESS1:

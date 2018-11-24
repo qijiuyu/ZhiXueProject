@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.bean.topic;
 
 
+import java.util.List;
 
 public class VoteDetailListBean {
 
@@ -14,21 +15,15 @@ public class VoteDetailListBean {
          * userName : 九天揽月
          */
 
-        private String voteSsecName;
+        private List<String> voteSsecName;
         private String voteCreattime;
         private int postType;
         private String userPhone;
         private String VoteName;
         private String userEmail;
         private String userName;
+        private int voteId;
 
-        public String getVoteSsecName() {
-            return voteSsecName;
-        }
-
-        public void setVoteSsecName(String voteSsecName) {
-            this.voteSsecName = voteSsecName;
-        }
 
         public String getVoteCreattime() {
             return voteCreattime;
@@ -77,4 +72,20 @@ public class VoteDetailListBean {
         public void setUserName(String userName) {
             this.userName = userName;
         }
+
+    public int getVoteId() {
+        return voteId;
+    }
+
+    public void setVoteId(int voteId) {
+        this.voteId = voteId;
+    }
+
+    public List<String> getVoteSsecName() {
+        return voteSsecName;
+    }
+
+    public void setVoteSsecName(List<String> voteSsecName) {
+        this.voteSsecName = voteSsecName;
+    }
 }
