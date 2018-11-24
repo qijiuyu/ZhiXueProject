@@ -19,7 +19,7 @@ public class ActionNeophyteAdapter extends BaseQuickAdapter<ActivityUserListBean
 
     @Override
     protected void convert(BaseViewHolder helper, ActivityUserListBean item) {
-
+        helper.setText(R.id.tv_item_neophyte_action_name,item.getActivityName());
         helper.setText(R.id.tv_player, item.getUserName());
         helper.setText(R.id.tv_phone_num, "联系方式："+item.getTel());
         helper.setText(R.id.tv_join_time, item.getActivityTime());

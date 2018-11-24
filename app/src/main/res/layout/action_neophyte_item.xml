@@ -12,7 +12,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:padding="25dp">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -20,11 +20,24 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tv_item_neophyte_action_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="活动名称"
+                android:textColor="@color/color_333333"
+                android:textSize="16sp"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"/>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="报名人："
                 android:textColor="@color/color_333333"
-                android:textSize="14sp" />
+                android:textSize="16sp"
+                android:layout_toLeftOf="@+id/tv_player"
+                android:background="@mipmap/item_action_icon_left"
+                android:gravity="center"/>
 
             <TextView
                 android:id="@+id/tv_player"
@@ -32,9 +45,12 @@
                 android:layout_height="wrap_content"
                 android:text="景小甜"
                 android:textColor="@color/color_333333"
-                android:textSize="14sp" />
+                android:textSize="16sp"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/item_action_icon_right"
+                android:gravity="center"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
         <LinearLayout

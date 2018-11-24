@@ -1253,4 +1253,35 @@ public class HttpMethod2 extends BaseRequst {
             }
         });
     }
+
+
+    /**
+     * 删除投票参与者
+     *
+     * @param memberId
+     * @param handler
+     */
+    public static void deleteVoteMember(String memberId, final Handler handler) {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("voteId", memberId);
+        Http.getRetrofit().create(HttpApi2.class).deleteVoteMember(map).enqueue(new Callback<VoteNeophyteBean>() {
+            @Override
+            public void onResponse(Call<VoteNeophyteBean> call, Response<VoteNeophyteBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.DELETE_VOTE_MEMBER_SUCCESS, response.body());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VoteNeophyteBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
 }

@@ -336,5 +336,12 @@ public interface HttpApi2 {
     @POST(HttpConstant.REMOVE_BLACK_LIST)
     Call<BlackListBean> removeBlackList(@FieldMap Map<String, String> map);
 
-
+    /**
+     * 删除投票参与者
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DELETE_VOTE_MEMBER)
+    Call<VoteNeophyteBean>deleteVoteMember(@FieldMap Map<String,String> map);
 }
