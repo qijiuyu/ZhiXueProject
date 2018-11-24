@@ -447,7 +447,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                     }
                     if (uploadFile.isStatus()) {
                         topicImg=uploadFile.getData().getUrl();
-                        Glide.with(mContext).load(mOutputUri.toString()).error(R.mipmap.unify_image_ing).into(ivAddPic);
+                        Glide.with(mContext).load(topicImg).error(R.mipmap.unify_image_ing).into(ivAddPic);
                     } else {
                         showMsg(uploadFile.getErrorMsg());
                     }
