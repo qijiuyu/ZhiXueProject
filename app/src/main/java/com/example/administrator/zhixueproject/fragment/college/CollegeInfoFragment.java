@@ -1,9 +1,10 @@
 package com.example.administrator.zhixueproject.fragment.college;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,9 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.college.EditCollegeActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
-import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
-import com.example.administrator.zhixueproject.http.HandlerConstant1;
-import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.fragment.LeftFragment;
 import com.example.administrator.zhixueproject.utils.DateUtil;
-import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.example.administrator.zhixueproject.view.OvalImageViews;
 
@@ -36,6 +34,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
     private TextView tvName,tvTime,tvContent;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registerReceiver();
     }
 
 
@@ -53,35 +52,22 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
     }
 
 
-    private Handler mHandler=new Handler(){
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case HandlerConstant1.GET_HOME_INFO_SUCCESS:
-                     final Home home= (Home) msg.obj;
-                     if(null==home){
-                         return;
-                     }
-                     if(home.isStatus()){
-                         MyApplication.homeBean=home.getData().getCollege();
-                         if(null==MyApplication.homeBean){
-                             return;
-                         }
-                         MyApplication.spUtil.addString(SPUtil.HOME_INFO,MyApplication.gson.toJson(MyApplication.homeBean));
-                         Glide.with(mActivity).load(MyApplication.homeBean.getCollegeBackimg()).override(337,192).centerCrop().error(R.mipmap.not_img).into(imgBJ);
-                         tvName.setText(MyApplication.homeBean.getCollegeName());
-                         Glide.with(mActivity).load(MyApplication.homeBean.getCollegeGradeImg()).override(55,18).centerCrop().into(imgGrade);
-                         tvTime.setText(DateUtil.getDay(MyApplication.homeBean.getCollegeCreationTime())+"到期");
-                         tvContent.setText(MyApplication.homeBean.getCollegeInfo());
-                     }else{
-                         showMsg(home.getErrorMsg());
-                     }
-                     break;
-                 default:
-                     break;
-            }
-
+    /**
+     * 显示学院数据
+     */
+    private void showData(){
+        Glide.with(mActivity).load(MyApplication.homeBean.getCollegeBackimg()).override(337,192).centerCrop().into(imgBJ);
+        tvName.setText(MyApplication.homeBean.getCollegeName());
+        Glide.with(mActivity).load(MyApplication.homeBean.getCollegeGradeImg()).override(55,18).centerCrop().into(imgGrade);
+        tvTime.setText(DateUtil.getDay(MyApplication.homeBean.getCollegeCreationTime())+"到期");
+        tvContent.setText(MyApplication.homeBean.getCollegeInfo());
+//
+        if(MyApplication.homeBean.getAttendType()==1){
+            imgEdit.setVisibility(View.VISIBLE);
+        }else{
+            imgEdit.setVisibility(View.GONE);
         }
-    };
+    }
 
 
     @Override
@@ -100,23 +86,33 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
 
 
     /**
-     * 查询首页信息
+     * 注册广播
      */
-    private void getHomeInfo(){
-        HttpMethod1.getHomeInfo(mHandler);
+    private void registerReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(LeftFragment.GET_COLLEGE_DETAILS);
+        // 注册广播监听
+        mActivity.registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
 
 
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
-            getHomeInfo();
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
+                showData();
+            }
         }
-    }
+    };
 
-    @Override
+
     public void onResume() {
         super.onResume();
-        getHomeInfo();
+        showData();
+    }
+
+    public void onDestroy() {
+        mActivity.unregisterReceiver(mBroadcastReceiver);
+        super.onDestroy();
     }
 }

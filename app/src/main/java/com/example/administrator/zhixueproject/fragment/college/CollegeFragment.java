@@ -1,5 +1,9 @@
 package com.example.administrator.zhixueproject.fragment.college;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +23,8 @@ import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UserBean;
+import com.example.administrator.zhixueproject.fragment.LeftFragment;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.view.PagerSlidingTabStrip;
 
@@ -54,7 +60,30 @@ public class CollegeFragment extends BaseActivity implements View.OnClickListene
         setTabsValue();
 
         leftMenu();
+
+        //注册广播
+        registerReceiver();
     }
+
+    /**
+     * 注册广播
+     */
+    private void registerReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(LeftFragment.GET_COLLEGE_DETAILS);
+        // 注册广播监听
+        registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+            }
+        }
+    };
 
 
 
@@ -171,5 +200,11 @@ public class CollegeFragment extends BaseActivity implements View.OnClickListene
         super.onResume();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
         Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(mBroadcastReceiver);
+        super.onDestroy();
     }
 }

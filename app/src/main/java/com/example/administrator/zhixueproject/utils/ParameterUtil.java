@@ -21,9 +21,8 @@ public class ParameterUtil {
        }
 
        //学院id
-       if(null!= MyApplication.homeBean){
+       if(null==map.get("collegeId") && null!= MyApplication.homeBean){
            map.put("collegeId",String.valueOf(MyApplication.homeBean.getCollegeId()));
-           map.put("collegeId","62");
        }
 
        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

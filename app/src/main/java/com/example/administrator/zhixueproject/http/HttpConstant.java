@@ -260,4 +260,8 @@ public class HttpConstant {
 
     // 删除投票参与者
     public static final String DELETE_VOTE_MEMBER = "vote/delVote.do";
+
+    public static final String QUIT_COLLEGE="college/exit.do";
+
+    public static final String GET_COLLEGE_DETAILS="college/getCollegeById.do";
 }

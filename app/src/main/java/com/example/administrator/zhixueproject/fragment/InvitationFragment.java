@@ -1,5 +1,9 @@
 package com.example.administrator.zhixueproject.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,11 +15,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
-import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
 import com.example.administrator.zhixueproject.adapter.topic.TopicListAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
@@ -25,7 +29,6 @@ import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
-import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
@@ -43,6 +46,7 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
     //侧滑菜单
     public static DrawerLayout mDrawerLayout;
     private CircleImageView imgHead;
+    private TextView tvHead;
     private TopicListAdapter mAdapter;
     private List<TopicListBean> listData = new ArrayList<>();
     private int PAGE = 1;
@@ -56,10 +60,13 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
         initView();
         leftMenu();
         initData();
+        //注册广播
+        registerReceiver();
     }
 
     private void initView() {
         imgHead=(CircleImageView)findViewById(R.id.img_fc_head);
+        tvHead=(TextView)findViewById(R.id.tv_head);
         mRefreshLayout = (MyRefreshLayout)findViewById(R.id.mrl_topic_list);
         mRecyclerView = (RecyclerView)findViewById(R.id.rv_topic_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -219,6 +226,35 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
     public void onResume() {
         super.onResume();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
+        tvHead.setText(MyApplication.homeBean.getCollegeName());
         Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
+    }
+
+
+    /**
+     * 注册广播
+     */
+    private void registerReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(LeftFragment.GET_COLLEGE_DETAILS);
+        // 注册广播监听
+        registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+                tvHead.setText(MyApplication.homeBean.getCollegeName());
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(mBroadcastReceiver);
+        super.onDestroy();
     }
 }

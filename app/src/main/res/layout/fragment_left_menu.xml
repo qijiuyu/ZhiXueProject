@@ -53,9 +53,9 @@
 
     <ImageView
         android:id="@+id/img_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/down_arrow_gray"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/xia_next"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true"

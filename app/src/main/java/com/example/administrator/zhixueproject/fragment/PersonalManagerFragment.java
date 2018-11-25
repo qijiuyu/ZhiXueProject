@@ -1,5 +1,9 @@
 package com.example.administrator.zhixueproject.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,13 +43,13 @@ public class PersonalManagerFragment extends BaseActivity implements View.OnClic
         setContentView(R.layout.fm_personal_manager);
         initView();
         leftMenu();
+        registerReceiver();
     }
 
     private void initView() {
         imgHead=(CircleImageView)findViewById(R.id.img_fc_head);
         imgHead.setOnClickListener(this);
         tvHead=(TextView)findViewById(R.id.tv_head);
-        tvHead.setText("人员管理");
         // 会员管理
         findViewById(R.id.iv_college).setOnClickListener(this);
         findViewById(R.id.rl_member_manager).setOnClickListener(this);
@@ -123,6 +127,35 @@ public class PersonalManagerFragment extends BaseActivity implements View.OnClic
     public void onResume() {
         super.onResume();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
+        tvHead.setText(MyApplication.homeBean.getCollegeName());
         Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
+    }
+
+
+    /**
+     * 注册广播
+     */
+    private void registerReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(LeftFragment.GET_COLLEGE_DETAILS);
+        // 注册广播监听
+        registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+                tvHead.setText(MyApplication.homeBean.getCollegeName());
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(mBroadcastReceiver);
+        super.onDestroy();
     }
 }

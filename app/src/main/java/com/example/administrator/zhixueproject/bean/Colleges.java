@@ -12,6 +12,8 @@ public class Colleges {
     private String collegeBanner;
     //学院id
     private int collegeId;
+    //2：可以退出，   1：可以编辑
+    private int type=1;
 
     public String getCollegeLogo() {
         return collegeLogo;
@@ -43,5 +45,13 @@ public class Colleges {
 
     public void setCollegeId(int collegeId) {
         this.collegeId = collegeId;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

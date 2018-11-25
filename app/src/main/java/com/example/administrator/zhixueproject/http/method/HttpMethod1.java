@@ -1579,4 +1579,54 @@ public class HttpMethod1  extends BaseRequst {
             }
         });
     }
+
+
+    /**
+     * 退出学院
+     * @param collegeId
+     * @param handler
+     */
+    public static void quitCollege(long collegeId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("collegeId",collegeId+"");
+        Http.getRetrofit().create(HttpApi1.class).quitCollege(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.QUIT_COLLEGE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 查询学院详情
+     * @param collegeId
+     * @param handler
+     */
+    public static void getCollegeDetails(int collegeId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("collegeId",collegeId+"");
+        Http.getRetrofit().create(HttpApi1.class).getCollegeDetails(map).enqueue(new Callback<Home>() {
+            public void onResponse(Call<Home> call, Response<Home> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_COLLEGE_DETAILS_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<Home> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
 }

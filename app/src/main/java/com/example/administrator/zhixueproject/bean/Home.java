@@ -53,7 +53,7 @@ public class Home extends BaseBean {
         private int collegeGrade;
         private String collegeGradeImg;
         private long collegeGradetime;
-        private long collegeId;
+        private int collegeId;
         private double collegeIncomes;
         private String collegeInfo;
         private String collegeLoginPwd;
@@ -70,6 +70,7 @@ public class Home extends BaseBean {
         private String updator;
         private String userUrl;
         private String userUrlImgCode;
+        private int attendType;
 
         public String getCollegeAccBank() {
             return collegeAccBank;
@@ -175,11 +176,11 @@ public class Home extends BaseBean {
             this.collegeGradetime = collegeGradetime;
         }
 
-        public long getCollegeId() {
+        public int getCollegeId() {
             return collegeId;
         }
 
-        public void setCollegeId(long collegeId) {
+        public void setCollegeId(int collegeId) {
             this.collegeId = collegeId;
         }
 
@@ -309,6 +310,14 @@ public class Home extends BaseBean {
 
         public void setUserUrlImgCode(String userUrlImgCode) {
             this.userUrlImgCode = userUrlImgCode;
+        }
+
+        public int getAttendType() {
+            return attendType;
+        }
+
+        public void setAttendType(int attendType) {
+            this.attendType = attendType;
         }
     }
 }

@@ -555,4 +555,24 @@ public interface HttpApi1 {
     @POST(HttpConstant.UPDATE_LIVE)
     Call<BaseBean> updateLive(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 退出学院
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.QUIT_COLLEGE)
+    Call<BaseBean> quitCollege(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 查询学院详情
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_COLLEGE_DETAILS)
+    Call<Home> getCollegeDetails(@FieldMap Map<String, String> map);
+
 }

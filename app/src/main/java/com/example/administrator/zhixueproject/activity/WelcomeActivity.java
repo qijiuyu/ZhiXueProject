@@ -67,20 +67,46 @@ public class WelcomeActivity extends BaseActivity {
 
     private Handler mHandler=new Handler(new Handler.Callback() {
         public boolean handleMessage(Message msg) {
-            if(msg.what== HandlerConstant1.AUTO_LOGIN_SUCCESS){
-                final String message= (String) msg.obj;
-                if(TextUtils.isEmpty(message)){
-                    return true;
-                }
-                try {
-                    final JSONObject jsonObject=new JSONObject(message);
-                    if(jsonObject.getBoolean("status")){
-                        final JSONObject jsonObject2=new JSONObject(jsonObject.getString("data"));
-                        MyApplication.spUtil.addString(SPUtil.TOKEN,jsonObject2.getString("token"));
+            String message;
+            switch (msg.what){
+                case HandlerConstant1.AUTO_LOGIN_SUCCESS:
+                    message= (String) msg.obj;
+                    if(TextUtils.isEmpty(message)){
+                        return true;
                     }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                    try {
+                        final JSONObject jsonObject=new JSONObject(message);
+                        if(jsonObject.getBoolean("status")){
+                            final JSONObject jsonObject2=new JSONObject(jsonObject.getString("data"));
+                            MyApplication.spUtil.addString(SPUtil.TOKEN,jsonObject2.getString("token"));
+
+                            //获取个人信息
+                            getUserInfo();
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                     break;
+                //获取个人资料
+                case HandlerConstant1.GET_USER_INFO_SUCCESS:
+                    message=msg.obj.toString();
+                    if(TextUtils.isEmpty(message)){
+                        break;
+                    }
+                    try {
+                        final JSONObject jsonObject=new JSONObject(message);
+                        if(jsonObject.getBoolean("status")){
+                            final UserBean userBean= MyApplication.gson.fromJson(jsonObject.getString("data"),UserBean.class);
+                            if(null==userBean){
+                                break;
+                            }
+                            MyApplication.userInfo.getData().setUser(userBean);
+                            MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(MyApplication.userInfo));
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
             }
             return true;
         }
@@ -91,5 +117,10 @@ public class WelcomeActivity extends BaseActivity {
             final UserBean userBean=MyApplication.userInfo.getData().getUser();
             HttpMethod1.autoLogin(userBean.getUserId(),mHandler);
         }
+    }
+
+    private void getUserInfo(){
+        //获取个人信息
+        HttpMethod1.getUserInfo(mHandler);
     }
 }

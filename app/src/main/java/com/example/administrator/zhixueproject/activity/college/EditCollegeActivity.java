@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.UploadFile;
@@ -27,6 +28,7 @@ import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
+import com.example.administrator.zhixueproject.utils.SPUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -107,7 +109,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         etBack.setText(homeBean.getCollegeAccBankinfo());
         etCard.setText(homeBean.getCollegeAccBank());
         collegeBackimg=homeBean.getCollegeBackimg();
-        Glide.with(mContext).load(collegeBackimg).centerCrop().into(imgBJ);
+        Glide.with(mContext).load(collegeBackimg).centerCrop().error(R.mipmap.uploading_iv).into(imgBJ);
         //是否为私密
         collegeDelYn=homeBean.getCollegeDelYn();
         if(collegeDelYn==2){
@@ -153,10 +155,21 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                          return;
                      }
                      if(baseBean.isStatus()){
-                         finish();
+                         getCollegeDetails();
                      }else{
                          showMsg(baseBean.getErrorMsg());
                      }
+                     break;
+                case HandlerConstant1.GET_COLLEGE_DETAILS_SUCCESS:
+                    final Home home= (Home) msg.obj;
+                    if(null==home){
+                        return;
+                    }
+                    if(home.isStatus()) {
+                        MyApplication.homeBean = home.getData().getCollege();
+                        MyApplication.spUtil.addString(SPUtil.HOME_INFO,MyApplication.gson.toJson(MyApplication.homeBean));
+                        finish();
+                    }
                      break;
                 case HandlerConstant1.REQUST_ERROR:
                     showMsg(getString(R.string.net_error));
@@ -365,5 +378,13 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
             }
 
         }
+    }
+
+    /**
+     * 查询学院详情
+     */
+    private void getCollegeDetails(){
+        showProgress("数据加载中");
+        HttpMethod1.getCollegeDetails(homeBean.getCollegeId(),mHandler);
     }
 }

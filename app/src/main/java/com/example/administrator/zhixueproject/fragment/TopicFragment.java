@@ -1,5 +1,9 @@
 package com.example.administrator.zhixueproject.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -38,7 +42,6 @@ public class TopicFragment extends BaseActivity implements View.OnClickListener 
         imgHead=(CircleImageView)findViewById(R.id.img_fc_head);
         imgHead.setOnClickListener(this);
         tvHead=(TextView)findViewById(R.id.tv_head);
-        tvHead.setText("话题管理");
         TextView tvTopicManage = (TextView) findViewById(R.id.tv_topic);
         tvTopicManage.setOnClickListener(this);
         TextView tvActivityManage = (TextView)findViewById(R.id.tv_action);
@@ -48,6 +51,8 @@ public class TopicFragment extends BaseActivity implements View.OnClickListener 
        findViewById(R.id.iv_college).setOnClickListener(this);
 
         leftMenu();
+
+        registerReceiver();
     }
 
 
@@ -117,6 +122,34 @@ public class TopicFragment extends BaseActivity implements View.OnClickListener 
     public void onResume() {
         super.onResume();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
+        tvHead.setText(MyApplication.homeBean.getCollegeName());
         Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
+    }
+
+    /**
+     * 注册广播
+     */
+    private void registerReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(LeftFragment.GET_COLLEGE_DETAILS);
+        // 注册广播监听
+        registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+                tvHead.setText(MyApplication.homeBean.getCollegeName());
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(mBroadcastReceiver);
+        super.onDestroy();
     }
 }

@@ -20,6 +20,8 @@ public class SPUtil {
     public static final String USER_INFO="user_info";
     //学院信息
     public static final String HOME_INFO="home_info";
+    //学院列表
+    public static final String COLLEGE_LIST="college_list";
     //登录的token
     public static final String TOKEN="token";
     private static SPUtil sharUtil = null;

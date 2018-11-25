@@ -188,7 +188,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     }
                     if(home.isStatus()){
                         MyApplication.homeBean=home.getData().getCollege();
-                        MyApplication.userInfo.setType(home.getData().getType());
+                        MyApplication.homeBean.setAttendType(home.getData().getType());
                         MyApplication.spUtil.addString(SPUtil.HOME_INFO,MyApplication.gson.toJson(MyApplication.homeBean));
                         setClass(TabActivity.class);
                         finish();
@@ -211,6 +211,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private void loginSuccess(UserInfo userInfo){
         MyApplication.spUtil.addString(SPUtil.LOGIN_MOBILE,etMobile.getText().toString().trim());
         MyApplication.spUtil.addString(SPUtil.USER_INFO,MyApplication.gson.toJson(userInfo));
+        MyApplication.listColleges=userInfo.getData().getColleges();
+        MyApplication.spUtil.addString(SPUtil.COLLEGE_LIST,MyApplication.gson.toJson(userInfo.getData().getColleges()));
         //保存token
         MyApplication.spUtil.addString(SPUtil.TOKEN,userInfo.getData().getToken());
 

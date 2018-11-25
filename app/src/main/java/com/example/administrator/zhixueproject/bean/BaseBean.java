@@ -1,6 +1,8 @@
 package com.example.administrator.zhixueproject.bean;
 
-public class BaseBean {
+import java.io.Serializable;
+
+public class BaseBean implements Serializable{
 
     //true：成功、false：失败,
     public boolean status;

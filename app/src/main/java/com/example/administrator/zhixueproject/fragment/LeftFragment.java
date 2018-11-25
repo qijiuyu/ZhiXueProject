@@ -1,6 +1,9 @@
 package com.example.administrator.zhixueproject.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,8 +20,13 @@ import com.example.administrator.zhixueproject.activity.userinfo.UserInfoActivit
 import com.example.administrator.zhixueproject.adapter.college.CollegeNameAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.Colleges;
+import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.UserInfo;
+import com.example.administrator.zhixueproject.http.HandlerConstant1;
+import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 
 import java.util.List;
@@ -34,6 +42,7 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
     private TextView tvName,tvSign;
     private CollegeNameAdapter mAdapter;
     private View view = null;
+    public static final String GET_COLLEGE_DETAILS="com.zhixue.get.college.details";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,34 +57,44 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
     /**
      * 初始化
      */
+    RecyclerView mRecyclerView;
     private void initView() {
         imgHead = (CircleImageView) view.findViewById(R.id.iv_menu_head);
         imgHead.setOnClickListener(this);
         view.findViewById(R.id.img_next).setOnClickListener(this);
         tvName = (TextView) view.findViewById(R.id.tv__menu_name);
         tvSign = (TextView) view.findViewById(R.id.tv_meun_sign);
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_college_name);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_college_name);
         LinearLayoutManager layout = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layout);
-        UserInfo userInfo = MyApplication.userInfo;
-        if (userInfo == null) {
-            return;
-        }
-        // adapter 数据
-        List<Colleges> dataBean = userInfo.getData().getColleges();
-        mAdapter = new CollegeNameAdapter(R.layout.joined_college_item, dataBean);
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(this);
-
     }
 
 
-    @Override
     public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
         Colleges colleges = mAdapter.getData().get(position);
-        // 设置title
+        showProgress("数据加载中");
+        HttpMethod1.getCollegeDetails(colleges.getCollegeId(),mHandler);
 
     }
+
+
+    private Handler mHandler=new Handler(new Handler.Callback() {
+        public boolean handleMessage(Message msg) {
+            clearTask();
+            if(msg.what== HandlerConstant1.GET_COLLEGE_DETAILS_SUCCESS){
+                final Home home= (Home) msg.obj;
+                if(null==home){
+                    return  false;
+                }
+                if(home.isStatus()) {
+                    MyApplication.homeBean = home.getData().getCollege();
+                    MyApplication.spUtil.addString(SPUtil.HOME_INFO,MyApplication.gson.toJson(MyApplication.homeBean));
+                    mActivity.sendBroadcast(new Intent(GET_COLLEGE_DETAILS));
+                }
+            }
+            return false;
+        }
+    });
 
     @Override
     public void onClick(View v) {
@@ -102,5 +121,8 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
         tvName.setText(userBean.getUserName());
         // 简介
         tvSign.setText(userBean.getUserIntro());
+        mAdapter = new CollegeNameAdapter(R.layout.joined_college_item,MyApplication.listColleges);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(this);
     }
 }
