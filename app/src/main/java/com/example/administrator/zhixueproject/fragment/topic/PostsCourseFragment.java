@@ -62,6 +62,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
     }
 
     private void initView(View view) {
+        EventBus.getDefault().register(this);
         mrlPostsCourse = (MyRefreshLayout) view.findViewById(R.id.mrl_posts_course);
         rvPostsCourse = (RecyclerView) view.findViewById(R.id.rv_posts_course);
         rvPostsCourse.setLayoutManager(new LinearLayoutManager(MyApplication.application));
@@ -125,7 +126,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
      */
     public void getPostList(int index) {
         TIMESTAMP= DateUtil.getTime();
-        showProgress(getString(R.string.loading));
+        // showProgress(getString(R.string.loading));
         HttpMethod2.getPostList(type, postType + "", postTopicId, key, PAGE + "", LIMIT, TIMESTAMP, index, mHandler);
     }
 
@@ -147,6 +148,9 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
             PAGE = 1;
             type = "1";
             getPostList(HandlerConstant2.GET_POST_LIST_SUCCESS1);
+            if (mAdapter!=null){
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 
@@ -172,7 +176,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            clearTask();
+            // clearTask();
             PostsCourseBean bean = (PostsCourseBean) msg.obj;
             switch (msg.what) {
                 case HandlerConstant2.GET_POST_LIST_SUCCESS1:
@@ -260,5 +264,6 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         //刷新加载
         mrlPostsCourse.setMyRefreshLayoutListener(this);
     }
+
 
 }

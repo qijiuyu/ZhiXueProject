@@ -10,7 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.PathInterpolator;
 import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.VoteNeophyteAdapter;
@@ -23,6 +26,7 @@ import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +46,7 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
     private String TIMESTAMP = "";
     private MyRefreshLayout mrlVoteNeophyte;
     private RecyclerView rvVoteNeophyte;
+    public static int position;// 被删除的投票者position
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +71,7 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void getVoteUserList(int index) {
-        TIMESTAMP= DateUtil.getTime();
+        TIMESTAMP = DateUtil.getTime();
         showProgress(getString(R.string.loading));
         HttpMethod2.getVoteUserList(voteId, TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
     }
@@ -101,6 +106,9 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
                 case HandlerConstant2.GET_VOTE_USER_LIST_SUCCESS2:
                     loadMoreSuccess(bean);
                     break;
+                case HandlerConstant2.DELETE_VOTE_MEMBER_SUCCESS:
+                    deleteMemberSuccess(bean);
+                    break;
                 case HandlerConstant1.REQUST_ERROR:
                     requestError();
                     break;
@@ -109,6 +117,23 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
             }
         }
     };
+
+    /**
+     * 删除投票参与者成功
+     * @param bean
+     */
+    private void deleteMemberSuccess(VoteNeophyteBean bean) {
+        if (null==bean){
+            return;
+        }
+        if (bean.isStatus()){
+            showMsg("删除成功");
+            listData.remove(position);
+            if (mAdapter!=null){
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+    }
 
     /**
      * 加载数据
@@ -121,7 +146,7 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
         if (bean.isStatus()) {
             VoteNeophyteBean.DataBean dataBean = bean.getData();
             listData = dataBean.getVoteDetailList();
-            if (dataBean.getVoteDetailList().size()==0){
+            if (dataBean.getVoteDetailList().size() == 0) {
                 return;
             }
             adapterView();
@@ -167,6 +192,20 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
         mAdapter = new VoteNeophyteAdapter(R.layout.vote_neophyte_item, listData);
         rvVoteNeophyte.setAdapter(mAdapter);
         mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) rvVoteNeophyte.getParent());
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                VoteNeophyteActivity.position=i;
+                switch (view.getId()) {
+                    case R.id.img_delete:
+                        // 删除投票参与者
+                        HttpMethod2.deleteVoteMember(listData.get(i).getVoteId()+"",mHandler);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
 

@@ -84,14 +84,17 @@ public class ToolUtils {
     }
 
     public static String imgStyleHtml(String html){
-        String imgStyle = "<style> img{width:auto; height:auto;}iframe{width:auto; height:auto;}</style>";
+       // String imgStyle = "<style> img{width:auto; height:auto;}iframe{width:auto; height:auto;}</style>";
+        String imgStyle2 = "<style> img{max-width:100%; height:auto;}iframe{max-width:100%; height:auto;}</style>";
         String img_html;
         if(TextUtils.isEmpty(html)){
             img_html ="";
         }else{
             img_html = html;
         }
-        img_html = imgStyle+img_html;
+        img_html = imgStyle2+img_html;
+        // img_html=replaceAudio(img_html);
+        LogUtils.e("img_html===" +img_html);
         return img_html;
     }
     /**
@@ -102,6 +105,13 @@ public class ToolUtils {
         Pattern pattern = Pattern.compile(reg);
         Matcher matcher = pattern.matcher(html);
         return matcher.replaceAll("");
+    }
+
+    public static String replaceAudio(String html){
+        String reg = "audio";
+        Pattern pattern = Pattern.compile(reg);
+        Matcher matcher = pattern.matcher(html);
+        return matcher.replaceAll("video");
     }
 
     /**

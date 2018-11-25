@@ -1,50 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="51dp">
+    android:layout_width="match_parent"
+    android:layout_height="51dp"
+    android:orientation="vertical"
+    >
+
     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="51dp">
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        >
+
         <ImageView
-                android:id="@+id/iv_member_medal"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="25dp"/>
+            android:id="@+id/iv_member_medal"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp" />
+
         <TextView
-                android:id="@+id/tv_medal"
-                android:layout_toRightOf="@+id/iv_member_medal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_centerVertical="true"
-                android:text="@string/decoration"
-                android:textSize="16sp"
-                android:textColor="@color/color_333333"/>
+            android:id="@+id/tv_medal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/iv_member_medal"
+            android:text="@string/decoration"
+            android:textColor="@color/color_333333"
+            android:textSize="16sp" />
+
         <TextView
-                android:id="@+id/tv_decoration_name"
-                android:layout_toRightOf="@+id/tv_medal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:maxEms="6"
-                android:ellipsize="end"
-                android:lines="1"
-                android:textSize="14sp"
-                android:textColor="@color/color_666666"/>
+            android:id="@+id/tv_decoration_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/tv_medal"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxEms="6"
+            android:textColor="@color/color_666666"
+            android:textSize="14sp" />
+
         <ImageView
-                android:id="@+id/iv_member_checked"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/gray_uncheck"/>
+            android:id="@+id/iv_member_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/tv_decoration_name"
+            android:src="@mipmap/gray_uncheck" />
     </RelativeLayout>
+
     <View
-            style="@style/view_line"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"/>
+        style="@style/view_line"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp" />
 
 </LinearLayout>

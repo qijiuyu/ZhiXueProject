@@ -93,7 +93,6 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
     public void onRefresh(View view) {
         PAGE = 1;
         getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS);
-
     }
 
     @Override
@@ -140,6 +139,9 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
         if (bean.isStatus()) {
              ActionManageBean.DataBean dataBean = bean.getData();
             listData = dataBean.getActivityList();
+            if (dataBean.getActivityList().size()==0){
+                return;
+            }
             adapterView();
         } else {
             showMsg(bean.errorMsg);

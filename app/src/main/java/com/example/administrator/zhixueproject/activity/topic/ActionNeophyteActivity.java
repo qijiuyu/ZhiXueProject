@@ -32,7 +32,7 @@ import java.util.List;
  * @author PeterGee
  * @date 2018/10/18
  */
-public class ActionNeophyteActivity extends BaseActivity implements MyRefreshLayoutListener {
+public class ActionNeophyteActivity extends BaseActivity implements MyRefreshLayoutListener, View.OnClickListener {
     private ActionNeophyteAdapter mAdapter;
     private List<ActivityUserListBean> listData = new ArrayList<>();
     private String activityId;
@@ -59,7 +59,7 @@ public class ActionNeophyteActivity extends BaseActivity implements MyRefreshLay
         rvActionNeophyte.setLayoutManager(new LinearLayoutManager(this));
         mrlActionNeophyte.setMyRefreshLayoutListener(this);//刷新加载
         getActivityUserList(HandlerConstant2.GET_ACTIVITY_USER_LIST_SUCCESS);
-
+        findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
     private void getActivityUserList(int index) {
@@ -109,6 +109,9 @@ public class ActionNeophyteActivity extends BaseActivity implements MyRefreshLay
         if (bean.isStatus()) {
             ActionNeophyteBean.DataBean dataBean = bean.getData();
             listData = dataBean.getActivityUserList();
+            if (dataBean.getActivityUserList().size()==0){
+                return;
+            }
             adapterView();
         } else {
             showMsg(bean.errorMsg);
@@ -165,5 +168,16 @@ public class ActionNeophyteActivity extends BaseActivity implements MyRefreshLay
     public void onLoadMore(View view) {
         PAGE++;
         getActivityUserList(HandlerConstant2.GET_ACTIVITY_USER_LIST_SUCCESS2);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.lin_back:
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 }

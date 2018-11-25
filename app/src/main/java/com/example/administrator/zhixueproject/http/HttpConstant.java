@@ -258,5 +258,6 @@ public class HttpConstant {
 
     public static final String UPDATE_LIVE="postLive/updatePostLive.do";
 
-
+    // 删除投票参与者
+    public static final String DELETE_VOTE_MEMBER = "vote/delVote.do";
 }

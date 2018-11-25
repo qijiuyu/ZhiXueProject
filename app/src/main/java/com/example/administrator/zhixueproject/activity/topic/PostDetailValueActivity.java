@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -37,13 +38,15 @@ import com.example.administrator.zhixueproject.utils.ToolUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 /**
  * 有偿帖子
  *
  * @author petergee
  * @date 2018/10/10
  */
-public class PostDetailValueActivity extends BaseActivity implements View.OnClickListener, BaseQuickAdapter.OnItemChildClickListener {
+public class PostDetailValueActivity extends BaseActivity implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
     private String postType = "1";
     private String postId;
     private int PAGE = 1;
@@ -94,6 +97,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         rvPostTask = (RecyclerView) findViewById(R.id.rv_posts_task);
         rvPostTask.setLayoutManager(new LinearLayoutManager(this));
         findViewById(R.id.tv_comment).setOnClickListener(this);
+        findViewById(R.id.tv_commit).setOnClickListener(this);
     }
 
     private void initData() {
@@ -112,6 +116,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
 
     public static void start(Context context, PostListBean postListBean) {
         Intent starter = new Intent(context, PostDetailValueActivity.class);
+        starter.setFlags(FLAG_ACTIVITY_NEW_TASK);
         starter.putExtra("postListBean", postListBean);
         context.startActivity(starter);
     }
@@ -128,6 +133,15 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.tv_commit:
                 commentPostOrWork();
+                break;
+            case R.id.tv_right:
+                ReleasePostActivity.start(
+                        view.getContext(),
+                        String.valueOf(postListBean.getPostId()),
+                        postListBean.getPostName(),
+                        String.valueOf(postListBean.getPostIsFree()),
+                        postListBean.getPostReward(),
+                        String.valueOf(postListBean.getPostIsTop()), postType);
                 break;
             default:
                 break;
@@ -150,7 +164,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         } else {
             //回复楼层
             HttpMethod2.commentReply(String.valueOf(postListBean.getPostId()), mFloorId, commentUserId
-                    , mFloorUserId, commentContent, mHandler);
+                   , mFloorUserId, commentContent, mHandler);
         }
     }
 
@@ -199,7 +213,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                     break;
                 case HandlerConstant2.GET_YOU_CHANG_DETAIL_SUCCESS:
                     PostsDetailsBean detailsBean = (PostsDetailsBean) msg.obj;
-                    if (bean.isStatus()) {
+                    if (detailsBean.isStatus()) {
                         postsDetailsSuccess(detailsBean);
                     }
                     break;
@@ -221,13 +235,14 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         tvMoneyReward.setText("赏金" + postContent.getPostReward());
         tvPeepNum.setText(String.valueOf(postContent.getPostPeepNum()));
 
-        //没有人偷看贴子。则不显示评论，
+        //评论区域
+        mAdapter = new PostsTaskAdapter(R.layout.posts_task_item, data.getPostCommentList());
+        rvPostTask.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(this);
+        /*//没有人偷看贴子。则不显示评论，
         if (data.isIsUpdated()) {
-            //评论区域
-            mAdapter = new PostsTaskAdapter(R.layout.posts_task_item, data.getPostCommentList());
-            rvPostTask.setAdapter(mAdapter);
-            mAdapter.setOnItemChildClickListener(this);
-        }
+
+        }*/
 
         //帖子内容
         String html = ToolUtils.imgStyleHtml(postContent.getPostContent());
@@ -239,19 +254,20 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         });
         wvPostContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
     }
-
-    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        LogUtils.e("itemClick");
+        isFloorComment = true;
         //回复楼层贴子
         PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean item = (PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean) adapter.getData().get(position);
         tvComment.setVisibility(View.GONE);
         llComment.setVisibility(View.VISIBLE);
         mFloorId = String.valueOf(item.getFloorInfo().getFloorId());
         mFloorUserId = item.getFloorInfo().getFloorUserId();
-    }
 
+    }
     @Subscribe
     public void replyCommentEvent(PostEvent postEvent) {
-
         switch (postEvent.getEventType()) {
             case PostEvent.REPLY_POST_COMMENT:
                 initFloorComment();
@@ -261,7 +277,6 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                 mFloorUserName = split2[1];
                 mFloorId = split2[2];
                 break;
-
             case PostEvent.COMMENT_SUCCESS:
                 PAGE = 1;
                 searchYouChangDetail(HandlerConstant2.GET_YOU_CHANG_DETAIL_SUCCESS);
@@ -275,4 +290,5 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         tvComment.setVisibility(View.GONE);
         etCommonContent.setText("");
     }
+
 }

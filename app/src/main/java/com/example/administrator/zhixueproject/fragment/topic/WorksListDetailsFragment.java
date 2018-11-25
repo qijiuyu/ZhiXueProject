@@ -144,6 +144,9 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
         mrlPostsTask.refreshComplete();
         listData.clear();
         listData = bean.getData().getWorkCommentList();
+        if (bean.getData().getWorkCommentList().size()==0){
+            return;
+        }
         adapterView();
     }
 

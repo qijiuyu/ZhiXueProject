@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.adapter.topic.AddTopicAdapter;
@@ -18,6 +19,7 @@ import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +89,9 @@ public class AddTopicFragment extends BaseFragment implements BaseQuickAdapter.O
         if (bean.isStatus()) {
             TopicsListBean.DataBean dataBean = bean.getData();
             listData = dataBean.getTopicList();
+            if (dataBean.getTopicList().size() == 0) {
+                return;
+            }
             adapterView();
         } else {
             showMsg(bean.errorMsg);

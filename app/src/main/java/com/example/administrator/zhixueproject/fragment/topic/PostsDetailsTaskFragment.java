@@ -144,6 +144,9 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
     private void getDetailSuccess(PostsDetailsBean bean) {
         mrlPostsTask.refreshComplete();
         listData = bean.getData().getPostCommentList();
+        if (bean.getData().getPostCommentList().size()==0){
+            return;
+        }
         adapterView();
     }
 

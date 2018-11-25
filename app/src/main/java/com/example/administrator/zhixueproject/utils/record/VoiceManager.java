@@ -11,9 +11,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.SeekBar;
-
 import com.example.administrator.zhixueproject.utils.LogUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

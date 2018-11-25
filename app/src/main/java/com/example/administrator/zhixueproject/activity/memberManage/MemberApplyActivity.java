@@ -3,6 +3,7 @@ package com.example.administrator.zhixueproject.activity.memberManage;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.BoolRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -65,6 +66,7 @@ public class MemberApplyActivity extends BaseActivity implements View.OnClickLis
         llBottomChoose = (LinearLayout) findViewById(R.id.ll_bottom_choose);
         ivAllChecked = (ImageView) findViewById(R.id.iv_all_checked);
         ivAllChecked.setOnClickListener(this);
+        findViewById(R.id.ll_all_check).setOnClickListener(this);
 
         mMemberApplyAdapter = new MemberApplyAdapter(R.layout.member_apply_item);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -114,7 +116,7 @@ public class MemberApplyActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_cancel://通过
                 showProgress(getString(R.string.loading));
-                HttpMethod2.applyVipPass(getCheckedMemberID(),APPLY_PASS,HandlerConstant2.APPLY_REFUSE_SUCCESS,mHandler);
+                HttpMethod2.applyVipPass(getCheckedMemberID(),APPLY_PASS,HandlerConstant2.APPLY_PASS_SUCCESS,mHandler);
                 break;
             case R.id.lin_back:
                 finish();
@@ -182,6 +184,14 @@ public class MemberApplyActivity extends BaseActivity implements View.OnClickLis
                 case HandlerConstant2.GET_APPLY_VIP_LIST_SUCCESS2:
                     loadMoreDataSuccess(bean);
                     break;
+                case HandlerConstant2.APPLY_REFUSE_SUCCESS:
+                    // 拒绝
+                    controlMemberSuccess(bean);
+                    break;
+                case HandlerConstant2.APPLY_PASS_SUCCESS:
+                    // 通过
+                    controlMemberSuccess(bean);
+                    break;
                 case HandlerConstant1.REQUST_ERROR:
                     requestError();
                     break;
@@ -191,14 +201,28 @@ public class MemberApplyActivity extends BaseActivity implements View.OnClickLis
         }
     };
 
+    /**
+     * 会员申请通过/拒绝
+     * @param bean
+     */
+    private void controlMemberSuccess(MemberApplyBean bean) {
+        if (bean.status){
+            showMsg("操作成功");
+            //设置title右边问题
+            tvRight.setText(getString(R.string.choose));
+            llBottomChoose.setVisibility(View.VISIBLE);
+            // 重新获取一遍数据
+            requestNet(HandlerConstant2.GET_APPLY_VIP_LIST_SUCCESS);
+        }else {
+            showMsg(bean.errorMsg);
+        }
+    }
+
 
     private void getApplyVipListSuccess(MemberApplyBean bean) {
         refreshLayout.refreshComplete();
         if (bean.isStatus()){
             mApplyVipList=bean.getData().getApplyVipList();
-            if (bean.getData().getApplyVipList().size()<=0){
-                return;
-            }
             mMemberApplyAdapter.setNewData(mApplyVipList);
             mMemberApplyAdapter.notifyDataSetChanged();
         }else {

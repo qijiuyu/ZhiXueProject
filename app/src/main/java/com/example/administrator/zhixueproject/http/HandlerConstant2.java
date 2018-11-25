@@ -51,4 +51,6 @@ public class HandlerConstant2 {
     public static final int REMOVE_BLACK_LIST_SUCCESS = 2046;
     public static final int GET_BLACK_LIST_SUCCESS = 2047;
     public static final int GET_BLACK_LIST_SUCCESS2 = 2048;
+    public static final int DELETE_VOTE_MEMBER_SUCCESS = 2049;
+    public static final int APPLY_PASS_SUCCESS = 2050;
 }

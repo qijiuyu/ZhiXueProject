@@ -147,7 +147,8 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
         if (payType == 1) {
             tvTollMode.setText("免费");
         } else if (payType == 2) {
-            tvTollMode.setText(bean.getTopicPrice() + "");
+            tvTollMode.setTextColor(getResources().getColor(R.color.color_ff0000));
+            tvTollMode.setText("￥"+bean.getTopicPrice() + "");
         } else if (payType == 3) {
             tvTollMode.setText(bean.getTopicVipName());
         } else if (payType == 4) {
@@ -245,10 +246,11 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                             tvTollMode.setText(mCost);
                             payType = 1;
                         } else if (mCost.equals(costs[1])) {
-                            tvTollMode.setText(etCost.getText().toString());
+                            tvTollMode.setTextColor(getResources().getColor(R.color.color_ff0000));
+                            tvTollMode.setText("￥"+etCost.getText().toString());
                             payType = 2;
                         } else if (mCost.equals(costs[2])) {
-                            tvTollMode.setText(etCost.getText().toString());
+                            tvTollMode.setText("VIP"+etCost.getText().toString());
                             payType = 3;
                         } else if (mCost.equals(costs[3])) {
                             tvTollMode.setText(mCost);
@@ -445,7 +447,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                     }
                     if (uploadFile.isStatus()) {
                         topicImg=uploadFile.getData().getUrl();
-                        Glide.with(mContext).load(mOutputUri.toString()).error(R.mipmap.unify_image_ing).into(ivAddPic);
+                        Glide.with(mContext).load(topicImg).error(R.mipmap.unify_image_ing).into(ivAddPic);
                     } else {
                         showMsg(uploadFile.getErrorMsg());
                     }
