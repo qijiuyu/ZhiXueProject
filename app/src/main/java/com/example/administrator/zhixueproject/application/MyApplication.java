@@ -39,7 +39,6 @@ public class MyApplication extends Application {
         if(!TextUtils.isEmpty(strHome)){
             homeBean=gson.fromJson(strHome,Home.HomeBean.class);
         }
-        LogUtils.e(userInfo+"+++++++++++++++");
 
         api = WXAPIFactory.createWXAPI(this, HttpConstant.WX_APPID, true);
         api.registerApp(HttpConstant.WX_APPID);
