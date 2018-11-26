@@ -21,6 +21,8 @@ import com.example.administrator.zhixueproject.bean.RecentEarningList;
 import com.example.administrator.zhixueproject.fragment.college.SelectTimeFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,10 +85,10 @@ public class RecentEarningActivity extends BaseActivity implements View.OnClickL
                          return;
                      }
                      if(recentEarning.isStatus()){
-                         tvCount.setText(recentEarning.getData().getAccount().getSumGift()+"个");
-                         tvTotalPrice.setText(recentEarning.getData().getAccount().getSumCost()+"元");
-                         tvCollegeCount.setText(recentEarning.getData().getAccount().getCollegeIncomes()+"元");
-                         tvBalance.setText(recentEarning.getData().getAccount().getCollegeBalance()+"元");
+                         tvCount.setText(recentEarning.getData().getAccount().getSumGift().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"个");
+                         tvTotalPrice.setText(recentEarning.getData().getAccount().getSumCost().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"元");
+                         tvCollegeCount.setText(recentEarning.getData().getAccount().getCollegeIncomes().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"元");
+                         tvBalance.setText(recentEarning.getData().getAccount().getCollegeBalance().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"元");
                          List<RecentEarningList> list=new ArrayList<>();
                          final String[] incomeType = getResources().getStringArray(R.array.income_type);
                          for (int i = 0; i < incomeType.length; i++) {
@@ -94,22 +96,22 @@ public class RecentEarningActivity extends BaseActivity implements View.OnClickL
                               recentEarningList.setIcon(incomeIcon[i]);
                               switch (i){
                                   case 0:
-                                      recentEarningList.setMoney(recentEarning.getData().getAccount().getSumAcc()+"元");
+                                      recentEarningList.setMoney(recentEarning.getData().getAccount().getSumAcc().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"元");
                                        break;
                                   case 1:
-                                      recentEarningList.setMoney(recentEarning.getData().getAccount().getSumTopic()+"元");
+                                      recentEarningList.setMoney(recentEarning.getData().getAccount().getSumTopic().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"元");
                                       break;
                                   case 2:
-                                      recentEarningList.setMoney(recentEarning.getData().getAccount().getSumPost()+"元");
+                                      recentEarningList.setMoney(recentEarning.getData().getAccount().getSumPost().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"元");
                                       break;
                                   case 3:
-                                      recentEarningList.setMoney(recentEarning.getData().getAccount().getSumGive()+"元");
+                                      recentEarningList.setMoney(recentEarning.getData().getAccount().getSumGive().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"元");
                                       break;
                                   case 4:
-                                      recentEarningList.setMoney(recentEarning.getData().getAccount().getSumScalGive()+"元");
+                                      recentEarningList.setMoney(recentEarning.getData().getAccount().getSumScalGive().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"元");
                                       break;
                                   case 5:
-                                      recentEarningList.setMoney(recentEarning.getData().getAccount().getSumYouChangGive()+"元");
+                                      recentEarningList.setMoney(recentEarning.getData().getAccount().getSumYouChangGive().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"元");
                                       break;
                               }
                               recentEarningList.setTypeName(incomeType[i]);

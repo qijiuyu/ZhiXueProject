@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class RecentEarning extends BaseBean {
 
@@ -28,94 +29,94 @@ public class RecentEarning extends BaseBean {
 
     public static class Account implements Serializable{
 
-        private String sumTopic="0.0";
-        private String sumPost="0.0";
-        private String  SumYouChangGive="0.0";
-        private double sumScalGive;
-        private String sumAcc="0.0";
-        private double sumGive;
-        private double sumCost;
-        private double collegeIncomes;
-        private double sumGift;
-        private double collegeBalance;
+        private BigDecimal sumTopic=new BigDecimal(0);
+        private BigDecimal sumPost=new BigDecimal(0);
+        private BigDecimal  SumYouChangGive=new BigDecimal(0);
+        private BigDecimal sumScalGive=new BigDecimal(0);
+        private BigDecimal sumAcc=new BigDecimal(0);
+        private BigDecimal sumGive=new BigDecimal(0);
+        private BigDecimal sumCost=new BigDecimal(0);
+        private BigDecimal collegeIncomes=new BigDecimal(0);
+        private BigDecimal sumGift=new BigDecimal(0);
+        private BigDecimal collegeBalance=new BigDecimal(0);
 
-        public String getSumTopic() {
+        public BigDecimal getSumTopic() {
             return sumTopic;
         }
 
-        public void setSumTopic(String sumTopic) {
+        public void setSumTopic(BigDecimal sumTopic) {
             this.sumTopic = sumTopic;
         }
 
-        public String getSumPost() {
+        public BigDecimal getSumPost() {
             return sumPost;
         }
 
-        public void setSumPost(String sumPost) {
+        public void setSumPost(BigDecimal sumPost) {
             this.sumPost = sumPost;
         }
 
-        public String getSumYouChangGive() {
+        public BigDecimal getSumYouChangGive() {
             return SumYouChangGive;
         }
 
-        public void setSumYouChangGive(String sumYouChangGive) {
+        public void setSumYouChangGive(BigDecimal sumYouChangGive) {
             SumYouChangGive = sumYouChangGive;
         }
 
-        public double getSumScalGive() {
+        public BigDecimal getSumScalGive() {
             return sumScalGive;
         }
 
-        public void setSumScalGive(double sumScalGive) {
+        public void setSumScalGive(BigDecimal sumScalGive) {
             this.sumScalGive = sumScalGive;
         }
 
-        public String getSumAcc() {
+        public BigDecimal getSumAcc() {
             return sumAcc;
         }
 
-        public void setSumAcc(String sumAcc) {
+        public void setSumAcc(BigDecimal sumAcc) {
             this.sumAcc = sumAcc;
         }
 
-        public double getSumGive() {
+        public BigDecimal getSumGive() {
             return sumGive;
         }
 
-        public void setSumGive(double sumGive) {
+        public void setSumGive(BigDecimal sumGive) {
             this.sumGive = sumGive;
         }
 
-        public double getSumCost() {
+        public BigDecimal getSumCost() {
             return sumCost;
         }
 
-        public void setSumCost(double sumCost) {
+        public void setSumCost(BigDecimal sumCost) {
             this.sumCost = sumCost;
         }
 
-        public double getCollegeIncomes() {
+        public BigDecimal getCollegeIncomes() {
             return collegeIncomes;
         }
 
-        public void setCollegeIncomes(double collegeIncomes) {
+        public void setCollegeIncomes(BigDecimal collegeIncomes) {
             this.collegeIncomes = collegeIncomes;
         }
 
-        public double getSumGift() {
+        public BigDecimal getSumGift() {
             return sumGift;
         }
 
-        public void setSumGift(double sumGift) {
+        public void setSumGift(BigDecimal sumGift) {
             this.sumGift = sumGift;
         }
 
-        public double getCollegeBalance() {
+        public BigDecimal getCollegeBalance() {
             return collegeBalance;
         }
 
-        public void setCollegeBalance(double collegeBalance) {
+        public void setCollegeBalance(BigDecimal collegeBalance) {
             this.collegeBalance = collegeBalance;
         }
     }
