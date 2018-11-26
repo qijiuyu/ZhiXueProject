@@ -1,5 +1,7 @@
 package com.example.administrator.zhixueproject.utils;
 
+import java.text.DecimalFormat;
+
 public class Utils {
 
     /**
@@ -24,5 +26,30 @@ public class Utils {
         } else {
             return false;
         }
+    }
+
+
+    /**
+     * 保留小数的double数据
+     * @param d
+     * @return
+     */
+    public static String setDouble(double d,int type){
+        DecimalFormat df=null;
+        switch (type){
+            case 1:
+                df = new DecimalFormat("0.0");
+                break;
+            case 2:
+                df = new DecimalFormat("0.00");
+                break;
+            case 3:
+                df = new DecimalFormat("0.000");
+                break;
+            case 4:
+                df = new DecimalFormat("0.0000");
+                break;
+        }
+        return df.format(d);
     }
 }

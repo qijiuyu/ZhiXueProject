@@ -33,10 +33,10 @@ public class RecentEarning extends BaseBean {
         private String  SumYouChangGive="0.0";
         private double sumScalGive;
         private String sumAcc="0.0";
-        private int sumGive;
-        private int sumCost;
+        private double sumGive;
+        private double sumCost;
         private double collegeIncomes;
-        private int sumGift;
+        private double sumGift;
         private double collegeBalance;
 
         public String getSumTopic() {
@@ -79,19 +79,19 @@ public class RecentEarning extends BaseBean {
             this.sumAcc = sumAcc;
         }
 
-        public int getSumGive() {
+        public double getSumGive() {
             return sumGive;
         }
 
-        public void setSumGive(int sumGive) {
+        public void setSumGive(double sumGive) {
             this.sumGive = sumGive;
         }
 
-        public int getSumCost() {
+        public double getSumCost() {
             return sumCost;
         }
 
-        public void setSumCost(int sumCost) {
+        public void setSumCost(double sumCost) {
             this.sumCost = sumCost;
         }
 
@@ -103,11 +103,11 @@ public class RecentEarning extends BaseBean {
             this.collegeIncomes = collegeIncomes;
         }
 
-        public int getSumGift() {
+        public double getSumGift() {
             return sumGift;
         }
 
-        public void setSumGift(int sumGift) {
+        public void setSumGift(double sumGift) {
             this.sumGift = sumGift;
         }
 
