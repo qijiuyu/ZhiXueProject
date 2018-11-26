@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -42,7 +44,7 @@ import java.util.List;
 public class EditCollegeActivity extends BaseActivity implements View.OnClickListener,SeekBar.OnSeekBarChangeListener{
 
     private EditText etName,etRegister,etBack,etCard,etDetails;
-    private TextView tvMoney;
+    private TextView tvMoney,tvNum;
     private ImageView imgBJ;
     private SeekBar seekBar;
     private RadioButton radioButton1,radioButton2,radioButton3,radioButton4;
@@ -68,7 +70,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
      */
     private void initView(){
         TextView tvHead=(TextView)findViewById(R.id.tv_title);
-        tvHead.setText("编辑学院");
+        tvHead.setText("开通学院");
         etName=(EditText)findViewById(R.id.et_college_name);
         etRegister=(EditText)findViewById(R.id.et_registrant);
         etBack=(EditText)findViewById(R.id.et_bank_name);
@@ -81,6 +83,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         radioButton3=(RadioButton)findViewById(R.id.item_option3);
         radioButton4=(RadioButton)findViewById(R.id.item_option4);
         etDetails=(EditText)findViewById(R.id.et_address_detail);
+        tvNum=(TextView)findViewById(R.id.tv_details_num);
         imgBJ.setOnClickListener(this);
         radioButton1.setOnClickListener(this);
         radioButton2.setOnClickListener(this);
@@ -92,6 +95,18 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         seekBar.setOnSeekBarChangeListener(this);
         rbList.add(radioButton1);rbList.add(radioButton2);
         rbList.add(radioButton3);rbList.add(radioButton4);
+        etDetails.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            public void afterTextChanged(Editable s) {
+                if(null==s){
+                    return;
+                }
+                tvNum.setText(s.toString().length()+"/500");
+            }
+        });
 
     }
 
@@ -156,6 +171,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                      }
                      if(baseBean.isStatus()){
                          getCollegeDetails();
+                         showMsg("恭喜您开通成功");
                      }else{
                          showMsg(baseBean.getErrorMsg());
                      }

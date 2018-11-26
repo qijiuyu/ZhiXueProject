@@ -105,7 +105,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     showMsg(getString(R.string.code_error));
                     return;
                 }
-                showProgress("登陆中...");
+                showProgress("登录中...");
                 HttpMethod1.login(mobile,pwd,mHandler);
                 break;
             //忘记密码

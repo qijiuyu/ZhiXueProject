@@ -67,7 +67,7 @@ public class ReportManagerActivity extends BaseActivity implements View.OnClickL
         tvHead.setText("举报管理");
         linearLayout=(LinearLayout)findViewById(R.id.lin);
         tvRight=(TextView)findViewById(R.id.tv_right);
-        tvRight.setText(getString(R.string.whole));
+        tvRight.setText("排序");
         imgRight=(ImageView)findViewById(R.id.img_right);
         imgRight.setVisibility(View.VISIBLE);
         imgRight.setImageDrawable(getResources().getDrawable(R.mipmap.down_arrow_white));
