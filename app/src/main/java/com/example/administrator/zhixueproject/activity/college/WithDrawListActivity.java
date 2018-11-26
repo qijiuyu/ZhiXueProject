@@ -117,7 +117,9 @@ public class WithDrawListActivity extends BaseActivity   implements MyRefreshLay
                          return;
                      }
                      if(baseBean.isStatus()){
-
+                         page=1;
+                         getData(HandlerConstant1.GET_WITHDRAW_SUCCESS);
+                         showMsg("已提交提现申请！");
                      }else{
                          showMsg(baseBean.getErrorMsg());
                      }
@@ -171,7 +173,7 @@ public class WithDrawListActivity extends BaseActivity   implements MyRefreshLay
      * 操作提现
      * @param withDrawInfo
      */
-    private void withDrawPop(WithDrawInfo withDrawInfo){
+    private void withDrawPop(final WithDrawInfo withDrawInfo){
         View view= LayoutInflater.from(mContext).inflate(R.layout.with_draw_pop,null);
         TextView tvName=(TextView) view.findViewById(R.id.tv_name);
         TextView tvPrice=(TextView)view.findViewById(R.id.tv_price);
@@ -184,10 +186,14 @@ public class WithDrawListActivity extends BaseActivity   implements MyRefreshLay
             @Override
             public void onClick(View v) {
                 final String money=etPrice.getText().toString().trim();
-                if(TextUtils.isEmpty(money)){
+                if(withDrawInfo.getData().getCashInfo().getCollegeBalance()==0){
+                    showMsg("余额为0无法提现！");
+                }else if(TextUtils.isEmpty(money)){
                     showMsg("请输入提现金额！");
                 }else if(Double.parseDouble(money) <10){
                     showMsg("提现金额不得小于10元！");
+                }else if(Double.parseDouble(money) > withDrawInfo.getData().getCashInfo().getCollegeBalance()){
+                    showMsg("提现金额不能大于余额！");
                 }else{
                     closeDialog();
                     showProgress(getString(R.string.loding));
