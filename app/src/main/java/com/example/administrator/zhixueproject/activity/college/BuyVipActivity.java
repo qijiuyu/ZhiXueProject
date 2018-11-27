@@ -89,8 +89,9 @@ public class BuyVipActivity extends BaseActivity implements RadioGroup.OnChecked
                         return;
                      }
                      if (baseBean.isStatus()) {
+                         showMsg("交易成功！");
+                         setClass(VipDetailsActivity.class);
                          finish();
-                         showMsg("购买成功！");
                      } else {
                         showMsg(baseBean.getErrorMsg());
                      }

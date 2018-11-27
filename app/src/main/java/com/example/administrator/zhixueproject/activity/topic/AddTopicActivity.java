@@ -34,6 +34,7 @@ import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
@@ -391,11 +392,12 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
+        LogUtils.e(tollMode+"+++++++++++");
         if (type.equals(FLAG_ADD)) {
             if (payType == 1) {
                 HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", "", "",mHandler);
             } else if (payType == 2) {
-                HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, tollMode, "", "",mHandler);
+                HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, tollMode.replace("￥",""), "", "",mHandler);
             } else if (payType == 3) {
                 HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", tollMode, "",mHandler);
             }
@@ -403,7 +405,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
             if (payType == 1) {
                 HttpMethod2.updateTopic( topicId + "", topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", "", "",mHandler);
             } else if (payType == 2) {
-                HttpMethod2.updateTopic( topicId + "", topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, tollMode, "", "",mHandler);
+                HttpMethod2.updateTopic( topicId + "", topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, tollMode.replace("￥",""), "", "",mHandler);
             } else if (payType == 3) {
                 HttpMethod2.updateTopic( topicId + "", topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", tollMode, "",mHandler);
             }

@@ -29,8 +29,7 @@ import com.example.administrator.zhixueproject.view.OvalImageViews;
 
 public class CollegeInfoFragment extends BaseFragment implements View.OnClickListener{
 
-    private OvalImageViews imgBJ;
-    private ImageView imgEdit,imgGrade;
+    private ImageView imgBJ,imgEdit,imgGrade;
     private TextView tvName,tvTime,tvContent;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +40,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
     View view;
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_collete_info, container, false);
-        imgBJ=(OvalImageViews)view.findViewById(R.id.iv_college);
+        imgBJ=(ImageView)view.findViewById(R.id.iv_college);
         imgEdit=(ImageView)view.findViewById(R.id.iv_edit);
         tvName=(TextView)view.findViewById(R.id.tv_college_name);
         imgGrade=(ImageView)view.findViewById(R.id.iv_grade);

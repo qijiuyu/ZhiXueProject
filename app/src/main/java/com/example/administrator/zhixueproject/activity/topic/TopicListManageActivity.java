@@ -209,8 +209,6 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
             }
             listData.addAll(dataBean.getTopicList());
             adapterView();
-        } else {
-            showMsg(bean.errorMsg);
         }
     }
 

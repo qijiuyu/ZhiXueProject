@@ -107,7 +107,7 @@
         android:layout_marginTop="50dp"
         android:background="@mipmap/bg_botton"
         android:gravity="center"
-        android:text="购买"
+        android:text="下一步"
         android:textColor="@android:color/white"
         android:textSize="15sp" />
 

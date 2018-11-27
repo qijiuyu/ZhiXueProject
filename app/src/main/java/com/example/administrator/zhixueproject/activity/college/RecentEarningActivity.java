@@ -85,7 +85,7 @@ public class RecentEarningActivity extends BaseActivity implements View.OnClickL
                          return;
                      }
                      if(recentEarning.isStatus()){
-                         tvCount.setText(recentEarning.getData().getAccount().getSumGift().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"个");
+                         tvCount.setText(recentEarning.getData().getAccount().getSumGift().longValue()+"个");
                          tvTotalPrice.setText(recentEarning.getData().getAccount().getSumCost().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"元");
                          tvCollegeCount.setText(recentEarning.getData().getAccount().getCollegeIncomes().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"元");
                          tvBalance.setText(recentEarning.getData().getAccount().getCollegeBalance().setScale(2,BigDecimal.ROUND_HALF_DOWN)+"元");
