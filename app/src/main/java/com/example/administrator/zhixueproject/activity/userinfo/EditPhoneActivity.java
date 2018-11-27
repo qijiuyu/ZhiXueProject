@@ -62,7 +62,7 @@ public class EditPhoneActivity extends BaseActivity implements View.OnClickListe
                     showMsg(getString(R.string.input_mailbox));
                 } else {
                     showProgress(getString(R.string.get_code));
-                    HttpMethod1.getEmailCode(email, "1", mHandler);
+                    HttpMethod1.getEmailCode(email, "0", mHandler);
                 }
                 break;
             //下一步

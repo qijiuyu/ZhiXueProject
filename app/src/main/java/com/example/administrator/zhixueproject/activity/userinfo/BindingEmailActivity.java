@@ -89,6 +89,7 @@ public class BindingEmailActivity extends BaseActivity implements View.OnClickLi
                     break;
                 //修改成功
                 case HandlerConstant2.MODIFY_USER_INFO_SUCCESS:
+                     clearTask();
                      baseBean= (BaseBean) msg.obj;
                      if(null==baseBean){
                         return;
@@ -125,7 +126,7 @@ public class BindingEmailActivity extends BaseActivity implements View.OnClickLi
                 HttpMethod1.getEmailCode(email,"0",mHandler);
                 break;
             //绑定
-            case R.id.tv_next:
+            case R.id.tv_submit:
                 final String code=etCode.getText().toString().trim();
                 if(TextUtils.isEmpty(email)){
                     showMsg("请输入邮箱!");

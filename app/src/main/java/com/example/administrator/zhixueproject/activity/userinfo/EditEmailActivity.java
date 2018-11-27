@@ -123,7 +123,7 @@ public class EditEmailActivity extends BaseActivity implements View.OnClickListe
                      return;
                  }
                  showProgress(getString(R.string.get_code));
-                 HttpMethod1.getSmsCode(mobile,"1",mHandler);
+                 HttpMethod1.getSmsCode(mobile,"0",mHandler);
                  break;
             //下一步
             case R.id.tv_next:
