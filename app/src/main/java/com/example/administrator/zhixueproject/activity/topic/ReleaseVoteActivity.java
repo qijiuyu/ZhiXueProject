@@ -208,9 +208,9 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     showMsg("请输入结束时间");
                     return;
                 }
-                showProgress(getString(R.string.loading));
-                HttpMethod2.addVote(topicId, voteName, String.valueOf(topicType), mIsTop, String.valueOf(activityWriterId)
-                        , mStartTime, mEndTime, MyApplication.gson.toJson(list), mIsMultiple, mHandler);
+                // 跳转到发布内容页
+                ReleaseContentsActivity.start(this,topicId,voteName, String.valueOf(topicType), mIsTop, String.valueOf(activityWriterId)
+                        , mStartTime, mEndTime, MyApplication.gson.toJson(list), mIsMultiple);
                 break;
             case R.id.rl_vote_type:
                 showVoteTypePop();
@@ -427,30 +427,4 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         showTopicFragment(false);
     }
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            clearTask();
-            switch (msg.what) {
-                case HandlerConstant2.ADD_VOTE_SUCCESS:
-                    BaseBean bean = (BaseBean) msg.obj;
-                    if (null == bean) {
-                        return;
-                    }
-                    if (bean.isStatus()) {
-                        showMsg("发布成功");
-                        finish();
-                    } else {
-                        showMsg(bean.errorMsg);
-                    }
-                    break;
-                case HandlerConstant1.REQUST_ERROR:
-                    showMsg(getString(R.string.net_error));
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
 }

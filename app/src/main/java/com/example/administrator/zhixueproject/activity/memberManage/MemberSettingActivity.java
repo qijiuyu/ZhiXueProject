@@ -190,7 +190,7 @@ public class MemberSettingActivity extends BaseActivity implements View.OnClickL
             tvNoSpeakingTime.setVisibility(View.VISIBLE);
             attendTalkTime = "3";//0分钟
             if (!TextUtils.isEmpty(mTalkTime)) {
-                tvNoSpeakingTime.setText(getResources().getString(R.string.nospeaking_to).concat(mTalkTime));
+                tvNoSpeakingTime.setText("禁言".concat(mTalkTime));
             }
         } else {
             ivIsNoSpeaking.setBackgroundResource(R.mipmap.close);

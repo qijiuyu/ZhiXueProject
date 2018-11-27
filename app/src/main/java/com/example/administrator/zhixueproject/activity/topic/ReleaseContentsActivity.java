@@ -30,6 +30,7 @@ import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.ReleaseContentsAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
+import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.ReleaseContentsBean;
@@ -97,6 +98,13 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
     private LinearLayout llReleaseContents;
     private FrameLayout flEmoji;
     private LinearLayout llRelease;
+    private String topicID;
+    private String voteName;
+    private String topicType;
+    private String voteIsTop;
+    private String voteWriterId;
+    private String voteSecNames;
+    private Boolean isMultipleChoice;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,6 +132,16 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         endTime = getIntent().getStringExtra("endTime");
         activityId = getIntent().getStringExtra("activityId");
         postId = getIntent().getStringExtra("postId");
+
+        // 添加投票
+        topicID = getIntent().getStringExtra("topicId");
+        voteName = getIntent().getStringExtra("voteName");
+        topicType = getIntent().getStringExtra("topicType");
+        voteIsTop = getIntent().getStringExtra("voteIsTop");
+        voteWriterId = getIntent().getStringExtra("voteWriterId");
+        voteSecNames = getIntent().getStringExtra("voteSecNames");
+        isMultipleChoice = getIntent().getBooleanExtra("isMultipleChoice",false);
+
 
         llContent = (LinearLayout) findViewById(R.id.ll_content);
         findViewById(R.id.iv_expression).setOnClickListener(this);
@@ -291,6 +309,35 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
     }
 
     /**
+     * 发布投票
+     * @param context
+     * @param topicId
+     * @param voteName
+     * @param topicType
+     * @param voteIsTop
+     * @param voteWriterId
+     * @param startTime
+     * @param endTime
+     * @param voteSecNames
+     * @param isMultipleChoice
+     */
+    public static void start(Context context,String topicId, String voteName, String topicType, String voteIsTop, String voteWriterId,
+                             String startTime, String endTime, String voteSecNames, boolean isMultipleChoice) {
+        Intent starter = new Intent(context, ReleaseContentsActivity.class);
+        starter.putExtra("topicId", topicId);
+        starter.putExtra("voteName", voteName);
+        starter.putExtra("topicType", topicType);
+        starter.putExtra("voteIsTop", voteIsTop);
+        starter.putExtra("voteWriterId", voteWriterId);
+        starter.putExtra("startTime", startTime);
+        starter.putExtra("endTime", endTime);
+        starter.putExtra("voteSecNames", voteSecNames);
+        starter.putExtra("isMultipleChoice", String.valueOf(isMultipleChoice));
+        context.startActivity(starter);
+    }
+
+
+    /**
      * RecyclerView监听
      */
     private void institutionListener() {
@@ -379,14 +426,9 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
             // emoji表情
             case R.id.iv_expression:
                 if (flEmoji.getVisibility() == View.VISIBLE) {
-                    startAnim(flEmoji,1);
-                    flEmoji.setVisibility(View.GONE);
-                    llRelease.setVisibility(View.VISIBLE);
+                    hideEmoji();
                 } else {
-                    startAnim(flEmoji,2);
-                    flEmoji.setVisibility(View.VISIBLE);
-                    // 隐藏发布按钮
-                    llRelease.setVisibility(View.GONE);
+                    shouEmoji();
                 }
                 break;
             case R.id.iv_picture:
@@ -409,7 +451,12 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                     // 修改活动
                     HttpMethod2.updateActivity(postTopicId, activityId, topicImg, postName, postType, postIsTop, postWriterId
                             , startTime, endTime, MyApplication.gson.toJson(listData), mHandler);
-                } else {
+                }else if (!TextUtils.isEmpty(voteName)){
+                    // 添加投票
+                      HttpMethod2.addVote(topicID, voteName, topicType, voteIsTop, voteWriterId
+                        , startTime, endTime, voteSecNames, isMultipleChoice, mHandler);
+
+                }else {
                     // 发布贴子
                     if (TextUtils.isEmpty(postId)) {
                         HttpMethod2.addPost(postType, postName, postTopicId, postWriterId, postIsFree, postPrice, postIsTop,
@@ -431,6 +478,19 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
             default:
                 break;
         }
+    }
+
+    private void shouEmoji() {
+        startAnim(flEmoji,2);
+        flEmoji.setVisibility(View.VISIBLE);
+        // 隐藏发布按钮
+        llRelease.setVisibility(View.GONE);
+    }
+
+    private void hideEmoji() {
+        startAnim(flEmoji,1);
+        flEmoji.setVisibility(View.GONE);
+        llRelease.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -675,6 +735,19 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         postEvent();
                     } else {
                         showMsg(bean.getErrorMsg());
+                    }
+                    break;
+                case HandlerConstant2.ADD_VOTE_SUCCESS:
+                    // 发布投票
+                    if (null == bean) {
+                        return;
+                    }
+                    if (bean.isStatus()) {
+                        showMsg("发布成功");
+                        finish();
+                        postEvent();
+                    } else {
+                        showMsg(bean.errorMsg);
                     }
                     break;
                 case HandlerConstant1.REQUST_ERROR:

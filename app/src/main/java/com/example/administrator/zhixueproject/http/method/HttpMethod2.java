@@ -518,9 +518,9 @@ public class HttpMethod2 extends BaseRequst {
         map.put("endTime", endTime);
         map.put("voteSecNames", voteSecNames);
         map.put("isMultipleChoice", String.valueOf(isMultipleChoice));
-        Http.getRetrofit().create(HttpApi2.class).addVote(map).enqueue(new Callback<BaseBean>() {
+        Http.getRetrofit().create(HttpApi2.class).addVote(map).enqueue(new Callback<UploadFile>() {
             @Override
-            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+            public void onResponse(Call<UploadFile> call, Response<UploadFile> response) {
                 try {
                     sendMessage(handler, HandlerConstant2.ADD_VOTE_SUCCESS, response.body());
                 } catch (Exception e) {
@@ -530,7 +530,7 @@ public class HttpMethod2 extends BaseRequst {
             }
 
             @Override
-            public void onFailure(Call<BaseBean> call, Throwable t) {
+            public void onFailure(Call<UploadFile> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
