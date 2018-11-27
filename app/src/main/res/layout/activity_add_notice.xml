@@ -66,7 +66,7 @@
             <LinearLayout
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -81,7 +81,6 @@
                     android:textColor="@color/color_999999"
                     android:maxLength="500"
                     android:gravity="top"
-                    android:padding="10dp"
                     android:hint="@string/input_content"
                     android:textColorHint="@color/color_999999" />
 
