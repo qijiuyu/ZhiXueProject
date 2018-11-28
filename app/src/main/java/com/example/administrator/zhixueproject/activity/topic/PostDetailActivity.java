@@ -69,6 +69,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private SlidingTabLayout tabPostsDetail;
     private ViewPager vpContent;
     private LinearLayout llPostDetailHead;
+    private ImageView imgArrow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,6 +97,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         vpContent = (ViewPager) findViewById(R.id.vp_content);
         llPostDetailHead = (LinearLayout) findViewById(R.id.ll_post_details_head);
         findViewById(R.id.tv_commit).setOnClickListener(this);
+        imgArrow = (ImageView) findViewById(R.id.img_topic_arrow);
+        imgArrow.setOnClickListener(this);
 
     }
 
@@ -181,6 +184,9 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                         String.valueOf(postListBean.getPostIsFree()),
                         postListBean.getPostReward(),
                         String.valueOf(postListBean.getPostIsTop()), postType);
+                break;
+            case R.id.img_topic_arrow:
+                // 点击收起
                 break;
             case R.id.lin_back:
                 finish();
@@ -273,7 +279,9 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         GlideCirclePictureUtil.setCircleImg(this,data.getPostContent().getUserImg(),ivHead);
         tvNickName.setText(data.getPostContent().getUserName());
         tvAttentionNum.setText(data.getPostContent().getAttentionNum() + "");
-
+        if (!TextUtils.isEmpty(data.getPostContent().getPostContent())){
+            imgArrow.setVisibility(View.VISIBLE);
+        }
         //帖子内容
         String html = ToolUtils.imgStyleHtml(data.getPostContent().getPostContent());
         wvPostContent.setWebViewClient(new WebViewClient() {

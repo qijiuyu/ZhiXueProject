@@ -20,7 +20,6 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
     protected void convert(BaseViewHolder helper, PostListBean item) {
 
         helper.setText(R.id.tv_name, item.getUserName());
-        helper.setVisible(R.id.tv_live_status, false);
         int postType = item.getPostType();
         Log.i("postType", postType + "");
         if (postType == 1 || postType == 2) {
@@ -38,7 +37,7 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
             helper.setVisible(R.id.tv_cost_money, true);
             helper.setText(R.id.tv_cost_money, "赏金" + item.getPostReward());
         }
-        helper.setText(R.id.tv_post_name1, item.getPostName());
+        helper.setText(R.id.tv_course_name, item.getPostName());
         helper.setText(R.id.tv_post_name2, item.getPostName());
         helper.setText(R.id.tv_post_time, item.getPostCreationTime());
         helper.setText(R.id.tv_collect_num, "浏览 " + item.getPostCollection());

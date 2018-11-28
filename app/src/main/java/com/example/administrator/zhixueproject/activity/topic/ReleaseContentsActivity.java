@@ -350,6 +350,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
             @Override
             public void onDeleteItemListener(int position) {
                 mAdapter.remove(position);
+                listData.remove(position);
             }
         });
         //条目子控件的点击事件监听
@@ -359,6 +360,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 switch (view.getId()) {
                     case R.id.iv_delete:
                         mAdapter.remove(position);
+                        listData.remove(position);
                         break;
                     case R.id.iv_record_play:
                         PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(listData.get(position));
@@ -368,13 +370,6 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
             }
         });
 
-        mAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                mAdapter.remove(position);
-                return false;
-            }
-        });
     }
 
 
