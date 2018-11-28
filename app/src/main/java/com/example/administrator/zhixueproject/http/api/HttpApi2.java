@@ -143,7 +143,7 @@ public interface HttpApi2 {
      */
     @FormUrlEncoded
     @POST(HttpConstant.ADD_VOTE)
-    Call<BaseBean> addVote(@FieldMap Map<String,String> map);
+    Call<UploadFile> addVote(@FieldMap Map<String,String> map);
 
 
     /**

@@ -79,7 +79,8 @@ public class NoSpeakingTimeFragment extends BaseFragment implements BaseQuickAda
                 break;
             case R.id.tv_confirm://确定
                 if(!TextUtils.isEmpty(checkedPosition)){
-                    mTimeCheckedListener.checkedTimeListener(checkedPosition,timeTip(getMinite()));
+                    // mTimeCheckedListener.checkedTimeListener(checkedPosition,timeTip(getMinite()));
+                    mTimeCheckedListener.checkedTimeListener(checkedPosition,getMinite());
                 }else {
                     showTipPop();
                 }
@@ -120,13 +121,13 @@ public class NoSpeakingTimeFragment extends BaseFragment implements BaseQuickAda
             }
         });
     }
-    public int getMinite(){
+    public String getMinite(){
         if(TextUtils.equals(checkedPosition,"0")){
-            return 10;
+            return 10+"分钟";
         }else if(TextUtils.equals(checkedPosition,"1")){
-            return 30;
+            return 30+"分钟";
         }else {
-            return 60;
+            return 1+"小时";
         }
     }
     /**
