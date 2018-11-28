@@ -13,7 +13,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +60,7 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
 
     private LinearLayout linearLayout;
     private EditText etTitle,etContent,etCost;
-    private TextView tvTopicName,tvTeacher,tvTime,tvCost;
+    private TextView tvTopicName,tvTeacher,tvTime,tvCost,tvNum;
     private SwitchButton switchButton;
     //侧滑菜单
     public static DrawerLayout mDrawerLayout;
@@ -100,6 +102,19 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
         tvCost=(TextView)findViewById(R.id.tv_cost);
         switchButton=(SwitchButton)findViewById(R.id.sb_stick);
         etContent=(EditText)findViewById(R.id.et_live_detail);
+        tvNum=(TextView)findViewById(R.id.tv_num);
+        etContent.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            public void afterTextChanged(Editable s) {
+                if(null==s){
+                    return;
+                }
+                tvNum.setText(s.toString().length()+"/100");
+            }
+        });
 
         //是否置顶
         ((SwitchButton) findViewById(R.id.sb_stick)).setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
