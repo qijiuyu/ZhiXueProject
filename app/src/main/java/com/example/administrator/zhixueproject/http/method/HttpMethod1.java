@@ -8,6 +8,7 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.BuyIness;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
+import com.example.administrator.zhixueproject.bean.DownLoad;
 import com.example.administrator.zhixueproject.bean.EntryGroup;
 import com.example.administrator.zhixueproject.bean.FeedBack;
 import com.example.administrator.zhixueproject.bean.GiveAccount;
@@ -1626,6 +1627,24 @@ public class HttpMethod1  extends BaseRequst {
 
             public void onFailure(Call<Home> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 文件下载
+     * @param handler
+     */
+    public static void download(final DownLoad downLoad, final Handler handler) {
+        Http.dowload(downLoad.getDownPath(), downLoad.getSavePath(),handler, new okhttp3.Callback() {
+            public void onFailure(okhttp3.Call call, IOException e) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                if(response.isSuccessful()){
+                    sendMessage(handler, HandlerConstant1.DOWNLOAD_SUCCESS, downLoad);
+                }
             }
         });
     }

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 
+import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 
@@ -151,7 +152,7 @@ public class Http {
                     if (null != mHandler) {
                         format.setMinimumFractionDigits(0);// 设置小数位
                         Message msg = new Message();
-//                        msg.what = HandlerConstant.DOWNLOAD_PRORESS;
+                        msg.what = HandlerConstant1.DOWNLOAD_PRORESS;
                         msg.obj = format.format((float) l / (float) length);
                         mHandler.sendMessage(msg);
                     }

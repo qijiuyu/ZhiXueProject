@@ -78,4 +78,7 @@ public class HandlerConstant1 {
     public static final int GET_REPORT_DETAILS_SUCCESS2=2052;
     public static final int QUIT_COLLEGE_SUCCESS=2053;
     public static final int GET_COLLEGE_DETAILS_SUCCESS=2054;
+    public static final int GET_VERSION_SUCCESS=2055;
+    public static final int DOWNLOAD_PRORESS=2056;
+    public static final int DOWNLOAD_SUCCESS=2057;
 }
