@@ -18,16 +18,16 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_margin="19dp"
+            android:layout_margin="20dp"
             android:layout_weight="1">
 
             <EditText
                 android:id="@+id/et_pem_money"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top"
+                android:layout_height="50dp"
                 android:padding="5dp"
-                android:background="@null"
+                android:gravity="center"
+                android:background="@drawable/bg_stroke"
                 android:hint="请输入付费金额"
                 android:maxLength="3"
                 android:inputType="phone"

@@ -71,6 +71,8 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
     private void initView(){
         TextView tvHead=(TextView)findViewById(R.id.tv_title);
         tvHead.setText("开通学院");
+        TextView tvRight=(TextView)findViewById(R.id.tv_right);
+        tvRight.setText("保存");
         etName=(EditText)findViewById(R.id.et_college_name);
         etRegister=(EditText)findViewById(R.id.et_registrant);
         etBack=(EditText)findViewById(R.id.et_bank_name);
@@ -89,6 +91,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         radioButton2.setOnClickListener(this);
         radioButton3.setOnClickListener(this);
         radioButton4.setOnClickListener(this);
+        tvRight.setOnClickListener(this);
         findViewById(R.id.tv_commit).setOnClickListener(this);
         findViewById(R.id.tv_cancel).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
@@ -224,6 +227,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                  setRadioButton(3);
                  collegeType=3;
                 break;
+            case R.id.tv_right:
             case R.id.tv_commit:
                  final String collegeName=etName.getText().toString().trim();
                  final String registerName=etRegister.getText().toString().trim();
