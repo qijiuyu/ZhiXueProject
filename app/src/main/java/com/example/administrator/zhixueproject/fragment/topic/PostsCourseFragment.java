@@ -48,7 +48,6 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
     private String TIMESTAMP = "";
     private String postTopicId;
     private String type = "1"; //1 帖子列表  2 搜索
-    private int sType;
     private MyRefreshLayout mrlPostsCourse;
     private RecyclerView rvPostsCourse;
     private Context mContext=MyApplication.application;
@@ -107,8 +106,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         PAGE = 1;
         TIMESTAMP = "";
         type = "2";
-        sType = searchType;
-        showProgress(getString(R.string.loading));
+        postType = searchType;
         getPostList(HandlerConstant2.GET_POST_LIST_SEARCH_SUCCESS1);
     }
 
@@ -176,7 +174,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            // clearTask();
+             // clearTask();
             PostsCourseBean bean = (PostsCourseBean) msg.obj;
             switch (msg.what) {
                 case HandlerConstant2.GET_POST_LIST_SUCCESS1:

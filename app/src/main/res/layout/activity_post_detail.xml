@@ -21,6 +21,15 @@
             android:orientation="vertical">
 
             <include layout="@layout/posts_details_head"/>
+            <ImageView
+                android:id="@+id/img_topic_arrow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/topic_arrow"
+                android:rotation="90"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                />
 
             <com.flyco.tablayout.SlidingTabLayout
                 android:id="@+id/tab_posts_details"

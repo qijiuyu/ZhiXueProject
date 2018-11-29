@@ -69,6 +69,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
     private EditText etCommonContent;
     private LinearLayout llComment;
     private RecyclerView rvPostTask;
+    private ImageView imgArrow;
 
 
     @Override
@@ -98,6 +99,8 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         rvPostTask.setLayoutManager(new LinearLayoutManager(this));
         findViewById(R.id.tv_comment).setOnClickListener(this);
         findViewById(R.id.tv_commit).setOnClickListener(this);
+        imgArrow = (ImageView) findViewById(R.id.img_topic_arrow);
+        imgArrow.setOnClickListener(this);
     }
 
     private void initData() {
@@ -142,6 +145,9 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                         String.valueOf(postListBean.getPostIsFree()),
                         postListBean.getPostReward(),
                         String.valueOf(postListBean.getPostIsTop()), postType);
+                break;
+            case R.id.img_topic_arrow:
+                // 收起箭头
                 break;
             default:
                 break;
@@ -237,13 +243,18 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
 
         //评论区域
         mAdapter = new PostsTaskAdapter(R.layout.posts_task_item, data.getPostCommentList());
+        if (data.getPostCommentList().size()==0){
+            rvPostTask.setVisibility(View.GONE);
+        }
         rvPostTask.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
         /*//没有人偷看贴子。则不显示评论，
         if (data.isIsUpdated()) {
 
         }*/
-
+        if (!TextUtils.isEmpty(data.getPostContent().getPostContent())){
+            imgArrow.setVisibility(View.VISIBLE);
+        }
         //帖子内容
         String html = ToolUtils.imgStyleHtml(postContent.getPostContent());
         wvPostContent.setWebViewClient(new WebViewClient() {
