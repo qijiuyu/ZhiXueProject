@@ -21,6 +21,7 @@ import com.example.administrator.zhixueproject.callback.CollegeCallBack;
 import com.example.administrator.zhixueproject.fragment.LeftFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 
 /**
@@ -49,11 +50,13 @@ public class MoreCollegeActivity extends BaseActivity implements CollegeCallBack
         listView.setAdapter(collegeItemAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LogUtils.e("111111111111111111");
                 Colleges colleges=MyApplication.listColleges.get(position);
                 showProgress("数据加载中");
                 HttpMethod1.getCollegeDetails(colleges.getCollegeId(),mHandler);
             }
         });
+
         findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 MoreCollegeActivity.this.finish();
