@@ -21,6 +21,8 @@ import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +30,7 @@ import java.util.List;
  */
 public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayoutListener {
     public static final String TYPE_PAY_QUESTION = "3";//有偿
-    private List<MemberTopicListBean> mQuestionList;
+    private List<MemberTopicListBean> mQuestionList=new ArrayList<>();
     private PaidQuestionListAdapter mPaitQuestionListAdapter;
     private int PAGE = 1;
     private String LIMIT = "10";
@@ -112,9 +114,6 @@ public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayou
         }
         if (bean.isStatus()) {
             mQuestionList = bean.getData().getPostList();
-            if (bean.getData().getPostList().size() == 0) {
-                return;
-            }
             adapterView();
         } else {
             bean.getErrorMsg();

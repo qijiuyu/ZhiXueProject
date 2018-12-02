@@ -18,8 +18,11 @@ import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +30,7 @@ import java.util.List;
  */
 public class TalkAboutFragment extends BaseFragment implements MyRefreshLayoutListener {
     public static final String TYPE_TALK_ABOUT = "2";//大家谈
-    private List<MemberTopicListBean> mTopicList;
+    private List<MemberTopicListBean> mTopicList=new ArrayList<>();
     private TalkAboutListAdapter mMemberTopicListAdapter;
     private int PAGE = 1;
     private String LIMIT = "10";
@@ -105,14 +108,15 @@ public class TalkAboutFragment extends BaseFragment implements MyRefreshLayoutLi
      */
     private void requestDataSuccess(MemberDetailBean bean) {
         refreshLayout.refreshComplete();
+        if (mTopicList.size()>0){
+            mTopicList.clear();
+        }
         if (null == bean) {
             return;
         }
         if (bean.isStatus()) {
             mTopicList = bean.getData().getPostList();
-            if (bean.getData().getPostList().size() == 0) {
-                return;
-            }
+            LogUtils.e("TalkAboutFragment   getPostList==="+bean.getData().getPostList().size());
             adapterView();
         } else {
             bean.getErrorMsg();
@@ -130,7 +134,6 @@ public class TalkAboutFragment extends BaseFragment implements MyRefreshLayoutLi
             return;
         }
         if (bean.isStatus()) {
-
             if (bean.getData().getPostList().size() <= 0) {
                 showMsg(getString(R.string.no_more_data));
             }

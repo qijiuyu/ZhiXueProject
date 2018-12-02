@@ -2,10 +2,14 @@ package com.example.administrator.zhixueproject.adapter.memberManage;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberTopicListBean;
+import com.example.administrator.zhixueproject.utils.Utils;
 
 import java.util.List;
 
@@ -37,12 +41,7 @@ public class TalkAboutListAdapter extends BaseQuickAdapter<MemberTopicListBean,B
 
         helper.setText(R.id.tv_time,item.getPostCreationTime());//时间
         String content=item.getPostContent();
-        String s="";
-        // 截取文字内容
-        if (content.contains("p")){
-           s=content.substring(content.indexOf("p")+2,content.indexOf("/")-1);
-        }
-        helper.setText(R.id.tv_content, s);//话题内容
+        helper.setText(R.id.tv_content, Utils.getChineseChar(content));//话题内容
         int scanNum = item.getPostSeeNum();//浏览人数
         helper.setText(R.id.tv_scan_number, "浏览 "+scanNum);
         int commentNum = item.getPostTalkNum();//评论人数

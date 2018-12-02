@@ -66,8 +66,6 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
         rvPostsTask.addItemDecoration(itemDecoration);
         //刷新加载
         mrlPostsTask.setMyRefreshLayoutListener(this);
-
-        getPostDetailTask(HandlerConstant2.GET_POST_DETAIL_SUCCESS);
     }
 
     public void setPostId(String postId) {

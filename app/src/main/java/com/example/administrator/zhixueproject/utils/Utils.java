@@ -1,5 +1,7 @@
 package com.example.administrator.zhixueproject.utils;
 
+import android.text.TextUtils;
+
 import java.text.DecimalFormat;
 
 public class Utils {
@@ -52,4 +54,32 @@ public class Utils {
         }
         return df.format(d);
     }
+
+    /**
+     *  获取中文字符
+     * @param str
+     * @return
+     */
+
+    public static String getChineseChar(String str) {
+        if (TextUtils.isEmpty(str)){
+            return "";
+        }
+        str=str.replace("[","");
+        str=str.replace("]","");
+        StringBuffer buffer=new StringBuffer();
+        char[] chars=str.toCharArray();
+        try {
+            for (char c:chars){
+                if (String.valueOf(c).getBytes("UTF-8").length > 1){
+                    buffer.append(c);
+                }
+
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return buffer.toString();
+    }
+
 }

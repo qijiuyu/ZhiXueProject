@@ -12,6 +12,8 @@ public class ReleaseContentsBean implements MultiItemEntity, Parcelable {
 
     private String content;
     private int type;//type  0--文字；1--图片;  2--录音
+    private long timeLength; //录音时间
+    private String strLength;
 
     protected ReleaseContentsBean(Parcel in) {
         content = in.readString();
@@ -40,8 +42,7 @@ public class ReleaseContentsBean implements MultiItemEntity, Parcelable {
         this.timeLength = timeLength;
     }
 
-    private long timeLength; //录音时间
-    private String strLength;
+
 
     public String getStrLength() {
         return strLength;

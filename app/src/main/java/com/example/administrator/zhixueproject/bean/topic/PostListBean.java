@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.bean.topic;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class PostListBean implements Serializable {
     /**
@@ -68,6 +69,7 @@ public class PostListBean implements Serializable {
     private int postCollection;
     private String postCreationTime;
     private String postReward;
+    // private List<ReleaseContentsBean> postContentApp;
     private String postContentApp;
     private String postContent;
     private String postName;
@@ -112,13 +114,6 @@ public class PostListBean implements Serializable {
         this.postReward = postReward;
     }
 
-    public String getPostContentApp() {
-        return postContentApp;
-    }
-
-    public void setPostContentApp(String postContentApp) {
-        this.postContentApp = postContentApp;
-    }
 
     public String getPostContent() {
         return postContent;
@@ -182,5 +177,13 @@ public class PostListBean implements Serializable {
 
     public void setPostPeepNum(String postPeepNum) {
         this.postPeepNum = postPeepNum;
+    }
+
+    public String getPostContentApp() {
+        return postContentApp;
+    }
+
+    public void setPostContentApp(String postContentApp) {
+        this.postContentApp = postContentApp;
     }
 }

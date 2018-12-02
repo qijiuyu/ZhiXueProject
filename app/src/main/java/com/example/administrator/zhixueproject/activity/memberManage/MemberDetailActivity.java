@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
@@ -19,8 +18,8 @@ import com.example.administrator.zhixueproject.bean.memberManage.AttendanceBean;
 import com.example.administrator.zhixueproject.fragment.memberManage.PaidQuestionFragment;
 import com.example.administrator.zhixueproject.fragment.memberManage.TalkAboutFragment;
 import com.example.administrator.zhixueproject.utils.GlideCirclePictureUtil;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.flyco.tablayout.SlidingTabLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +80,8 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         List<String> medalTypeMig = mMemberInfoBean.getMedalTypeMig();
         mMedalIconAdapter = new MedalIconAdapter(R.layout.medal_icon_detail_item, medalTypeMig);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        linearLayoutManager.setAutoMeasureEnabled(true);
         mRvMedal.setLayoutManager(linearLayoutManager);
         mRvMedal.setAdapter(mMedalIconAdapter);
         //初始化大家谈、有偿提问fm
