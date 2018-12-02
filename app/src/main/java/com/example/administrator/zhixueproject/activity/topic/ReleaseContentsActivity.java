@@ -449,7 +449,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 }else if (!TextUtils.isEmpty(voteName)){
                     // 添加投票
                       HttpMethod2.addVote(topicID, voteName, topicType, voteIsTop, voteWriterId
-                        , startTime, endTime, voteSecNames, isMultipleChoice, mHandler);
+                        , startTime, endTime, voteSecNames, isMultipleChoice, MyApplication.gson.toJson(listData), mHandler);
 
                 }else {
                     // 发布贴子
