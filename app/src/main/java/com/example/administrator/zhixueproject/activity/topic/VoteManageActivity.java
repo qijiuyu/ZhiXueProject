@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.VoteManageAdapter;
+import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.VoteListBean;
 import com.example.administrator.zhixueproject.bean.topic.VoteManageBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
@@ -22,6 +23,10 @@ import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +55,7 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.vote_manage));
         findViewById(R.id.lin_back).setOnClickListener(this);
@@ -139,7 +145,7 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
             }
             adapterView();
         } else {
-            showMsg(bean.errorMsg);
+           // showMsg(bean.errorMsg);
         }
     }
 
@@ -160,7 +166,7 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
             listData.addAll(dataBean.getVoteList());
             adapterView();
         } else {
-            showMsg(bean.errorMsg);
+            // showMsg(bean.errorMsg);
         }
     }
 
@@ -210,5 +216,21 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
             default:
                 break;
         }
+    }
+
+
+    @Subscribe
+    public void postEvent(PostEvent postEvent) {
+        if (PostEvent.RELEASE_VOTE_SUCCESS == postEvent.getEventType()) {
+            //查询投票列表
+             PAGE = 1;
+            getVoteList(HandlerConstant2.GET_VOTE_LIST_SUCCESS);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

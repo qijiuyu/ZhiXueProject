@@ -14,7 +14,7 @@
             android:layout_centerVertical="true"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@mipmap/head_icon" />
+            />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -31,7 +31,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="sdfgsd"
                 android:textSize="13sp"
                 android:textColor="@color/color_333333"/>
 
@@ -60,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_fd703e"
                 android:textSize="13sp"
-                android:text="500" />
+                 />
 
         </LinearLayout>
     </RelativeLayout>

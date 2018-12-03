@@ -1259,7 +1259,7 @@ public class HttpMethod2 extends BaseRequst {
     /**
      * 删除投票参与者
      *
-     * @param memberId
+     * @param
      * @param handler
      */
     public static void deleteVoteMember(String voteId, final Handler handler) {

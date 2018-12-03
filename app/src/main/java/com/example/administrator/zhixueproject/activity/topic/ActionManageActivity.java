@@ -144,7 +144,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
             }
             adapterView();
         } else {
-            showMsg(bean.errorMsg);
+           // showMsg(bean.errorMsg);
 
         }
     }
@@ -166,7 +166,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
             listData.addAll(dataBean.getActivityList());
             adapterView();
         } else {
-            showMsg(bean.errorMsg);
+           // showMsg(bean.errorMsg);
         }
     }
 
@@ -218,7 +218,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
 
     @Subscribe
     public void postEvent(PostEvent postEvent) {
-        if (PostEvent.RELEASE_SUCCESS == postEvent.getEventType()) {
+        if (PostEvent.RELEASE_ACTIVITY_SUCCESS == postEvent.getEventType()) {
             PAGE = 1;
             getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS);
         }

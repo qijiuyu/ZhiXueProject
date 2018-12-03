@@ -16,11 +16,15 @@ import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.TopicListAdapter;
+import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.fragment.topic.PostsCourseFragment;
 import com.example.administrator.zhixueproject.utils.InputMethodUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.flyco.tablayout.SlidingTabLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -54,6 +58,7 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
         StatusBarUtils.transparencyBar(this);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title_topic);
         tvTitle.setText(getString(R.string.posts_list));
@@ -215,5 +220,17 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
         contentView.findViewById(R.id.menu3).setOnClickListener(listener);
     }
 
+    @Subscribe
+    public void postEvent(PostEvent postEvent) {
+        if (PostEvent.RELEASE_SUCCESS == postEvent.getEventType()) {
+            finish();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
 }

@@ -113,7 +113,6 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
 
     private void searchYouChangDetail(int index) {
         TIMESTAMP= DateUtil.getTime();
-        showProgress(getString(R.string.loading));
         HttpMethod2.getYouChangDetail(postId, PAGE + "", LIMIT, TIMESTAMP, index, mHandler);
     }
 

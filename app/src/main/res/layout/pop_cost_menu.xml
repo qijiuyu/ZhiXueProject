@@ -29,7 +29,7 @@
 
         <EditText
             android:id="@+id/et_cost"
-            android:layout_width="101dp"
+            android:layout_width="130dp"
             android:layout_height="40dp"
             android:background="@drawable/action_neophyte_bg"
             android:gravity="center"

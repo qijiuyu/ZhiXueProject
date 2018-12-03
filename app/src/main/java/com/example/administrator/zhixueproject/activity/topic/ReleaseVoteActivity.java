@@ -143,7 +143,6 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     mIsTop = "1";
                 else
                     mIsTop = "0";
-                showMsg(mIsTop);
                 break;
             case R.id.sb_select:
                 //是否多选
@@ -186,7 +185,12 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                 pvCustomTime.show(tvEndTime);
                 break;
             case R.id.tv_add_vote:
-                showAddVotePop();
+                // 不是多选才能添加
+                if (list.size()>=1&&mIsMultiple==false){
+                    showMsg("您未开启多选，不能添加多个投票项");
+                }else {
+                    showAddVotePop();
+                }
                 break;
             case R.id.tv_confirm:
                 String voteName = etTitle.getText().toString().trim();

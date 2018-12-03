@@ -33,6 +33,14 @@ public class PostEvent extends BaseEvent {
      * 回复贴子成功
      */
     public static final int COMMENT_SUCCESS = 4006;
+    /**
+     * 发布投票成功
+     */
+    public static final int RELEASE_VOTE_SUCCESS = 4007;
+    /**
+     * 发布活动成功
+     */
+    public static final int RELEASE_ACTIVITY_SUCCESS = 4008;
 
 
 }

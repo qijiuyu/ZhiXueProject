@@ -119,7 +119,6 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                     mIsTop = "是";
                 else
                     mIsTop = "否";
-                showMsg(mIsTop);
             }
         });
 
@@ -467,7 +466,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
 
     @Subscribe
     public void postEvent(PostEvent postEvent) {
-        if (PostEvent.RELEASE_SUCCESS == postEvent.getEventType()) {
+        if (PostEvent.RELEASE_ACTIVITY_SUCCESS == postEvent.getEventType()) {
             finish();
         }
     }

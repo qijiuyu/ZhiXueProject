@@ -9,8 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.memberManage.MemberDetailActivity;
+import com.example.administrator.zhixueproject.activity.topic.PostDetailActivity;
+import com.example.administrator.zhixueproject.activity.topic.PostDetailValueActivity;
 import com.example.administrator.zhixueproject.adapter.memberManage.TalkAboutListAdapter;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberTopicListBean;
@@ -28,7 +32,7 @@ import java.util.List;
 /**
  * 大家谈
  */
-public class TalkAboutFragment extends BaseFragment implements MyRefreshLayoutListener {
+public class TalkAboutFragment extends BaseFragment implements MyRefreshLayoutListener, BaseQuickAdapter.OnItemClickListener {
     public static final String TYPE_TALK_ABOUT = "2";//大家谈
     private List<MemberTopicListBean> mTopicList=new ArrayList<>();
     private TalkAboutListAdapter mMemberTopicListAdapter;
@@ -159,6 +163,20 @@ public class TalkAboutFragment extends BaseFragment implements MyRefreshLayoutLi
     private void adapterView() {
         mMemberTopicListAdapter = new TalkAboutListAdapter(R.layout.member_detail_topic_item,mTopicList);
         rvMemberDetailList.setAdapter(mMemberTopicListAdapter);
+        //条目点击
+        mMemberTopicListAdapter.setOnItemClickListener(this);
         mMemberTopicListAdapter.setEmptyView(R.layout.empty_member_detail_view, (ViewGroup) rvMemberDetailList.getParent());
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+      /*  int postType = mTopicList.get( i).getPostType();
+        if (postType == 1 || postType == 2) {
+            LogUtils.e("免费帖子");
+            // PostDetailActivity.start(mContext,listData.get(position));
+        } else if (postType == 3) {
+            LogUtils.e("付费帖子");
+           //  PostDetailValueActivity.start(mContext,listData.get(position));
+        }*/
     }
 }

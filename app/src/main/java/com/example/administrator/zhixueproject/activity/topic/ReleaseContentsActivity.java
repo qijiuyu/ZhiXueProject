@@ -714,6 +714,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         showMsg("发布成功");
                         finish();
                         postEvent();
+                        postActivityEvent();
                     } else {
                         showMsg(bean.getErrorMsg());
                     }
@@ -728,6 +729,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         showMsg("编辑成功");
                         finish();
                         postEvent();
+                        postActivityEvent();
                     } else {
                         showMsg(bean.getErrorMsg());
                     }
@@ -741,6 +743,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         showMsg("发布成功");
                         finish();
                         postEvent();
+                        postVoteEvent();
                     } else {
                         showMsg(bean.errorMsg);
                     }
@@ -759,6 +762,13 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.RELEASE_SUCCESS));
     }
 
+    private void postVoteEvent() {
+        EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.RELEASE_VOTE_SUCCESS));
+    }
+
+    private void postActivityEvent() {
+        EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.RELEASE_ACTIVITY_SUCCESS));
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
