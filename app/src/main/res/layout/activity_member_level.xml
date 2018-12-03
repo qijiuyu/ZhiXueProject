@@ -104,7 +104,7 @@
             android:layout_marginRight="24dp"
             android:background="@mipmap/bg_botton"
             android:gravity="center"
-            android:text="@string/save"
+            android:text="提交"
             android:textColor="@android:color/white"
             android:textSize="15sp"/>
 

@@ -110,6 +110,16 @@
                 android:text="删除"
                 android:textColor="@color/color_ff0000"/>
 
+            <TextView
+                android:id="@+id/tv_up"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:background="@mipmap/edit_white_bg"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="上架"
+                android:textColor="@color/color_ff0000"/>
+
         </LinearLayout>
     </com.guanaj.easyswipemenulibrary.EasySwipeMenuLayout>
 
