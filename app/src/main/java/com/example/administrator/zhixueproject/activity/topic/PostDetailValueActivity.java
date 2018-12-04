@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.adapter.topic.PostsTaskAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
@@ -78,6 +79,8 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         setContentView(R.layout.activity_post_detail_value);
         initView();
         initData();
+        //关闭帖子上的小红点
+        sendBroadcast(new Intent(TabActivity.ACTION_CLEAR_NEW_NEWS));
     }
 
     private void initView() {

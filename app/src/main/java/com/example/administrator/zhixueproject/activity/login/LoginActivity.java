@@ -29,6 +29,12 @@ import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import org.json.JSONObject;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
+
 /**
  * 登陆
  */
@@ -216,9 +222,40 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         //保存token
         MyApplication.spUtil.addString(SPUtil.TOKEN,userInfo.getData().getToken());
 
+        //设置极光推送的别名
+        Set<String> tags = new HashSet<String>();
+        tags.add(MyApplication.userInfo.getData().getUser().getUserId()+"");
+        JPushInterface.setAliasAndTags(getApplicationContext(), MyApplication.userInfo.getData().getUser().getUserId()+"", tags, mAliasCallback);
+
         //查询首页信息
         getHomeInfo();
     }
+
+
+    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
+        public void gotResult(int code, String alias, Set<String> tags) {
+            String logs ;
+            switch (code) {
+                case 0:
+                    logs = "Set tag and alias success";
+                    // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
+                    break;
+                case 6002:
+                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+                    mHandler.postDelayed(new Runnable() {
+                        public void run() {
+                            Set<String> tags = new HashSet<String>();
+                            tags.add(MyApplication.userInfo.getData().getUser().getUserId()+"");
+                            JPushInterface.setAliasAndTags(getApplicationContext(), MyApplication.userInfo.getData().getUser().getUserId()+"", tags, mAliasCallback);
+                        }
+                    },60000);
+                    break;
+                default:
+                    logs = "Failed with errorCode = " + code;
+            }
+            LogUtils.e(logs);
+        }
+    };
 
 
     /**

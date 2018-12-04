@@ -1,11 +1,10 @@
 package com.example.administrator.zhixueproject.activity;
 
-import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,24 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.application.MyApplication;
-import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.fragment.InvitationFragment;
 import com.example.administrator.zhixueproject.fragment.LiveFragment;
 import com.example.administrator.zhixueproject.fragment.PersonalManagerFragment;
 import com.example.administrator.zhixueproject.fragment.TopicFragment;
 import com.example.administrator.zhixueproject.fragment.college.CollegeFragment;
-import com.example.administrator.zhixueproject.http.HandlerConstant1;
-import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.ActivitysLifecycle;
 import com.example.administrator.zhixueproject.utils.LogUtils;
-import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
-
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
 public class TabActivity extends android.app.TabActivity implements View.OnClickListener{
 
     // 按两次退出
@@ -43,11 +34,16 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
     private List<TextView> tvList=new ArrayList<>();
     private int[] notClick=new int[]{R.mipmap.tab_1_false,R.mipmap.tab_2_false,R.mipmap.tab_3_false,R.mipmap.tab_4_false,R.mipmap.tab_5_false};
     private int[] yesClick=new int[]{R.mipmap.tab_1_true,R.mipmap.tab_2_true,R.mipmap.tab_3_true,R.mipmap.tab_4_true,R.mipmap.tab_5_true};
+    private ImageView imgRed;
+    public static final String ACTION_SHOW_NEW_NEWS="com.zhixue.project.action.show.new.news";
+    public static final String ACTION_CLEAR_NEW_NEWS="com.zhixue.project.action.clear.new.news";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtils.transparencyBar(this);
         setContentView(R.layout.activity_tag);
         initView();
+        //注册广播
+        registerBoradcastReceiver();
     }
 
 
@@ -62,6 +58,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         tvHuati=(TextView)findViewById(R.id.tv_tab_huati);
         imgRen=(ImageView)findViewById(R.id.img_tab_ren);
         tvRen=(TextView)findViewById(R.id.tv_tab_ren);
+        imgRed=(ImageView)findViewById(R.id.img_red);
         imgList.add(imgCollege);imgList.add(imgTopic);imgList.add(imgZhibo);imgList.add(imgHuati);imgList.add(imgRen);
         tvList.add(tvCollege);tvList.add(tvTopic);tvList.add(tvZhibo);tvList.add(tvHuati);tvList.add(tvRen);
         findViewById(R.id.lin_tab_college).setOnClickListener(this);
@@ -72,7 +69,6 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
 
         tabHost=this.getTabHost();
         TabHost.TabSpec spec;
-        LogUtils.e(MyApplication.homeBean.getAttendType()+"++++++++++++++++");
         if(MyApplication.homeBean.getAttendType()==1){
             spec=tabHost.newTabSpec("学院").setIndicator("学院").setContent(new Intent(this, CollegeFragment.class));
             tabHost.addTab(spec);
@@ -155,17 +151,45 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         }
     }
 
+
+    /**
+     * 注册广播
+     */
+    private void registerBoradcastReceiver(){
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(ACTION_SHOW_NEW_NEWS);
+        myIntentFilter.addAction(ACTION_CLEAR_NEW_NEWS);
+        registerReceiver(mBroadcastReceiver, myIntentFilter);
+    }
+
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()){
+                case ACTION_SHOW_NEW_NEWS:
+                    imgRed.setVisibility(View.VISIBLE);
+                     break;
+                case ACTION_CLEAR_NEW_NEWS:
+                    imgRed.setVisibility(View.GONE);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN ) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Toast.makeText(getApplicationContext(),"再按一次退出程序!",Toast.LENGTH_LONG).show();
                 exitTime = System.currentTimeMillis();
             } else {
+                //关闭广播
+                unregisterReceiver(mBroadcastReceiver);
                 ActivitysLifecycle.getInstance().exit();
             }
             return false;
         }
         return super.dispatchKeyEvent(event);
     }
-
 }

@@ -19,6 +19,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class MyApplication extends Application {
 
     public static MyApplication application;
@@ -54,6 +56,9 @@ public class MyApplication extends Application {
 
         api = WXAPIFactory.createWXAPI(this, HttpConstant.WX_APPID, true);
         api.registerApp(HttpConstant.WX_APPID);
+
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);     		// 初始化 JPush
 
         registerActivityLifecycleCallbacks(ActivitysLifecycle.getInstance());
     }
