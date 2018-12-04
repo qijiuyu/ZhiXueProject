@@ -49,6 +49,8 @@ public class BuyIness extends BaseBean {
         private String newWriterId;
         private String topicImg;
         private String topicName;
+        //1:上架
+        private int buytopicUp;
 
         public long getBuytopicBuyer() {
             return buytopicBuyer;
@@ -192,6 +194,14 @@ public class BuyIness extends BaseBean {
 
         public void setTopicName(String topicName) {
             this.topicName = topicName;
+        }
+
+        public int getBuytopicUp() {
+            return buytopicUp;
+        }
+
+        public void setBuytopicUp(int buytopicUp) {
+            this.buytopicUp = buytopicUp;
         }
     }
 }

@@ -59,6 +59,7 @@ public class BuyInessInAdapter extends BaseAdapter{
 			holder.tvCollege=(TextView)view.findViewById(R.id.tv_businessIn_college);
 			holder.tvTime=(TextView)view.findViewById(R.id.tv_businessIn_endtime);
 			holder.tvDel=(TextView)view.findViewById(R.id.tv_delete);
+			holder.tvUp=(TextView)view.findViewById(R.id.tv_up);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -90,12 +91,28 @@ public class BuyInessInAdapter extends BaseAdapter{
 				((BuyInessInActivity)activity).deleteBuyIness(busInessList);
 			}
 		});
+		holder.tvUp.setTag(busInessList);
+		if(busInessList.getBuytopicUp()==1){
+			holder.tvUp.setText("上架");
+		}else{
+			holder.tvUp.setText("下架");
+		}
+		//上下架
+		holder.tvUp.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if(null==v.getTag()){
+					return;
+				}
+				final BuyIness.BusInessList busInessList= (BuyIness.BusInessList) v.getTag();
+				((BuyInessInActivity)activity).uporDown(busInessList);
+			}
+		});
 		return view;
 	}
 
 
 	 private class ViewHolder{
 		private ImageView imageView;
-		TextView tvTopic,tvCollege,tvTime,tvDel;
+		TextView tvTopic,tvCollege,tvTime,tvDel,tvUp;
 	 }
 }

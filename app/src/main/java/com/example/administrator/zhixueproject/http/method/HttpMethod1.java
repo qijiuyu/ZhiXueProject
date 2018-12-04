@@ -1648,4 +1648,29 @@ public class HttpMethod1  extends BaseRequst {
             }
         });
     }
+
+
+    /**
+     * 友商管理购进上下架
+     * @param buyTopicId
+     */
+    public static void uporDown(long buyTopicId ,int type,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("buyTopicId",buyTopicId+"");
+        map.put("type",type+"");
+        Http.getRetrofit().create(HttpApi1.class).uporDown(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.UP_OR_DOWN_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
 }

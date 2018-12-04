@@ -56,6 +56,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
      * 初始化控件
      */
     //13911896806 123456
+    //15155948970
     private void initView(){
         TextView tvTitle=(TextView)findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.main_title));

@@ -37,6 +37,8 @@ public class BuyInessInActivity extends BaseActivity  implements MyRefreshLayout
     private BuyInessInAdapter buyInessInAdapter;
     //友商购买id
     private long buytopicId;
+    //上下架状态
+    private int buytopicUp;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_in);
@@ -74,6 +76,7 @@ public class BuyInessInActivity extends BaseActivity  implements MyRefreshLayout
             super.handleMessage(msg);
             clearTask();
             BuyIness buyIness;
+            BaseBean baseBean;
             switch (msg.what){
                 case HandlerConstant1.BUY_INESS_IN_SUCCESS:
                     mRefreshLayout.refreshComplete();
@@ -88,7 +91,7 @@ public class BuyInessInActivity extends BaseActivity  implements MyRefreshLayout
                     break;
                  //删除
                 case HandlerConstant1.DEL_BUY_INESS_SUCCESS:
-                    BaseBean baseBean= (BaseBean) msg.obj;
+                    baseBean= (BaseBean) msg.obj;
                     if(null==baseBean){
                         return;
                     }
@@ -96,6 +99,28 @@ public class BuyInessInActivity extends BaseActivity  implements MyRefreshLayout
                         for (int i=0;i<listAll.size();i++){
                             if(buytopicId==listAll.get(i).getBuytopicId()){
                                 listAll.remove(i);
+                                break;
+                            }
+                        }
+                        buyInessInAdapter.notifyDataSetChanged();
+                    }else{
+                        showMsg(baseBean.getErrorMsg());
+                    }
+                     break;
+                 //上下架
+                case HandlerConstant1.UP_OR_DOWN_SUCCESS:
+                    baseBean= (BaseBean) msg.obj;
+                    if(null==baseBean){
+                        return;
+                    }
+                    if(baseBean.isStatus()){
+                        for (int i=0;i<listAll.size();i++){
+                            if(buytopicId==listAll.get(i).getBuytopicId()){
+                                if(buytopicUp==0){
+                                    listAll.get(i).setBuytopicUp(1);
+                                }else{
+                                    listAll.get(i).setBuytopicUp(0);
+                                }
                                 break;
                             }
                         }
@@ -144,6 +169,23 @@ public class BuyInessInActivity extends BaseActivity  implements MyRefreshLayout
         showProgress(getString(R.string.loding));
         HttpMethod1.delBuyIness(buytopicId,mHandler);
     }
+
+
+    /**
+     * 上下架
+     * @param busInessList
+     */
+    public void uporDown(BuyIness.BusInessList busInessList){
+        this.buytopicId=busInessList.getBuytopicId();
+        this.buytopicUp=busInessList.getBuytopicUp();
+        showProgress(getString(R.string.loding));
+        if(busInessList.getBuytopicUp()==0){
+            HttpMethod1.uporDown(buytopicId,1,mHandler);
+        }else{
+            HttpMethod1.uporDown(buytopicId,0, mHandler);
+        }
+    }
+
 
     @Override
     public void onRefresh(View view) {

@@ -81,4 +81,5 @@ public class HandlerConstant1 {
     public static final int GET_VERSION_SUCCESS=2055;
     public static final int DOWNLOAD_PRORESS=2056;
     public static final int DOWNLOAD_SUCCESS=2057;
+    public static final int UP_OR_DOWN_SUCCESS=2058;
 }

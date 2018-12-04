@@ -575,4 +575,14 @@ public interface HttpApi1 {
     @POST(HttpConstant.GET_COLLEGE_DETAILS)
     Call<Home> getCollegeDetails(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 友商管理购进上下架
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPOR_DOWN)
+    Call<BaseBean> uporDown(@FieldMap Map<String, String> map);
+
 }
