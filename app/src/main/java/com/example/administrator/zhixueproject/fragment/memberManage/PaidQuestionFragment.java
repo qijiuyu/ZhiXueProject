@@ -9,11 +9,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.memberManage.MemberDetailActivity;
+import com.example.administrator.zhixueproject.activity.topic.PostDetailActivity;
+import com.example.administrator.zhixueproject.activity.topic.PostDetailValueActivity;
 import com.example.administrator.zhixueproject.adapter.memberManage.PaidQuestionListAdapter;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberTopicListBean;
+import com.example.administrator.zhixueproject.bean.topic.PostListBean;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
@@ -28,7 +33,7 @@ import java.util.List;
 /**
  * 有偿问答
  */
-public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayoutListener {
+public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayoutListener, BaseQuickAdapter.OnItemClickListener {
     public static final String TYPE_PAY_QUESTION = "3";//有偿
     private List<MemberTopicListBean> mQuestionList=new ArrayList<>();
     private PaidQuestionListAdapter mPaitQuestionListAdapter;
@@ -156,6 +161,24 @@ public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayou
     private void adapterView() {
         mPaitQuestionListAdapter = new PaidQuestionListAdapter(R.layout.member_detail_topic_item,mQuestionList);
         rvMemberDetailList.setAdapter(mPaitQuestionListAdapter);
+        //条目点击
+        mPaitQuestionListAdapter.setOnItemClickListener(this);
         mPaitQuestionListAdapter.setEmptyView(R.layout.empty_member_detail_view, (ViewGroup) rvMemberDetailList.getParent());
     }
+
+
+    @Override
+    public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+        MemberTopicListBean listBean=mQuestionList.get(i);
+        PostListBean bean=new PostListBean();
+        bean.setPostId(listBean.getPostId());
+        bean.setPostType(3);
+        bean.setPostName(listBean.getPostName());
+        bean.setPostIsFree(listBean.getPostIsFree());
+        bean.setPostReward(listBean.getPostReward()+"");
+        bean.setPostIsTop(0);
+        PostDetailValueActivity.start(getActivity(),bean,2);
+
+    }
+
 }

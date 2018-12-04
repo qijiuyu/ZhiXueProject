@@ -151,9 +151,12 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         HttpMethod2.updatePostColl(String.valueOf(postListBean.getPostId()),mHandler);
     }
 
-    public static void start(Context context, PostListBean postListBean) {
+    // type :1 帖子列表进入   2：会员详情页进入
+    public static void start(Context context, PostListBean postListBean,int type) {
         Intent starter = new Intent(context, PostDetailActivity.class);
-        starter.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (type==1){
+            starter.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
         starter.putExtra("postListBean", postListBean);
         context.startActivity(starter);
     }

@@ -121,9 +121,12 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         HttpMethod2.getYouChangDetail(postId, PAGE + "", LIMIT, TIMESTAMP, index, mHandler);
     }
 
-    public static void start(Context context, PostListBean postListBean) {
+    // type :1 帖子列表进入   2：会员详情页进入
+    public static void start(Context context, PostListBean postListBean,int type) {
         Intent starter = new Intent(context, PostDetailValueActivity.class);
-        starter.setFlags(FLAG_ACTIVITY_NEW_TASK);
+        if (type==1){
+            starter.setFlags(FLAG_ACTIVITY_NEW_TASK);
+        }
         starter.putExtra("postListBean", postListBean);
         context.startActivity(starter);
     }

@@ -18,6 +18,7 @@ import com.example.administrator.zhixueproject.activity.topic.PostDetailValueAct
 import com.example.administrator.zhixueproject.adapter.memberManage.TalkAboutListAdapter;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberTopicListBean;
+import com.example.administrator.zhixueproject.bean.topic.PostListBean;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
@@ -171,6 +172,16 @@ public class TalkAboutFragment extends BaseFragment implements MyRefreshLayoutLi
     @Override
     public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
         // PostDetailActivity.start(getActivity(),mTopicList.get(i).getPostId()+"");
+        MemberTopicListBean listBean=mTopicList.get(i);
+        PostListBean bean=new PostListBean();
+        bean.setPostId(listBean.getPostId());
+        bean.setPostType(2);
+        bean.setPostName(listBean.getPostName());
+        bean.setPostIsFree(listBean.getPostIsFree());
+        bean.setPostReward("0.00");
+        bean.setPostIsTop(0);
+
+        PostDetailActivity.start(getActivity(),bean,2);
 
     }
 }

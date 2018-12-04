@@ -157,10 +157,10 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         int postType = listData.get(position).getPostType();
         if (postType == 1 || postType == 2) {
             LogUtils.e("免费帖子");
-            PostDetailActivity.start(mContext,listData.get(position));
+            PostDetailActivity.start(mContext,listData.get(position),1);
         } else if (postType == 3) {
             LogUtils.e("付费帖子");
-            PostDetailValueActivity.start(mContext,listData.get(position));
+            PostDetailValueActivity.start(mContext,listData.get(position),1);
         }
     }
 
