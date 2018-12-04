@@ -93,9 +93,9 @@ public class BuyInessInAdapter extends BaseAdapter{
 		});
 		holder.tvUp.setTag(busInessList);
 		if(busInessList.getBuytopicUp()==1){
-			holder.tvUp.setText("上架");
-		}else{
 			holder.tvUp.setText("下架");
+		}else{
+			holder.tvUp.setText("上架");
 		}
 		//上下架
 		holder.tvUp.setOnClickListener(new View.OnClickListener() {
