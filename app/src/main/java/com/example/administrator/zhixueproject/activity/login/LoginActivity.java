@@ -223,7 +223,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         MyApplication.spUtil.addString(SPUtil.TOKEN,userInfo.getData().getToken());
 
         //设置极光推送的别名
-        Set<String> tags = new HashSet<String>();
+        Set<String> tags = new HashSet<>();
         tags.add(MyApplication.userInfo.getData().getUser().getUserId()+"");
         JPushInterface.setAliasAndTags(getApplicationContext(), MyApplication.userInfo.getData().getUser().getUserId()+"", tags, mAliasCallback);
 
