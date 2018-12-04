@@ -44,9 +44,6 @@ public class MyReceiver extends BroadcastReceiver {
 				}
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
-				LogUtils.e( "[MyReceiver] 接收到推送下来的通知");
-				int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
-				LogUtils.e( "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
 				LogUtils.e( "[MyReceiver] 用户点击打开了通知");
@@ -63,9 +60,6 @@ public class MyReceiver extends BroadcastReceiver {
 				//在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
 
 			} else if(JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent.getAction())) {
-				boolean connected = intent.getBooleanExtra(JPushInterface.EXTRA_CONNECTION_CHANGE, false);
-			} else {
-				LogUtils.e( "[MyReceiver] Unhandled intent - " + intent.getAction());
 			}
 		} catch (Exception e){
 
