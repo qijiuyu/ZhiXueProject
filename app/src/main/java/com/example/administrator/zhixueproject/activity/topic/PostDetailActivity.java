@@ -147,6 +147,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             }
         });
         searchTopicDetail();
+        //添加浏览量
+        HttpMethod2.updatePostColl(String.valueOf(postListBean.getPostId()),mHandler);
     }
 
     public static void start(Context context, PostListBean postListBean) {
@@ -263,6 +265,9 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                     } else {
                         showMsg(detailsBean.getErrorMsg());
                     }
+                    break;
+                case HandlerConstant2.UPDATE_POST_COLL_SUCCESS:
+                    LogUtils.e("添加浏览量成功");
                     break;
                 case HandlerConstant1.REQUST_ERROR:
                     showMsg(getString(R.string.net_error));

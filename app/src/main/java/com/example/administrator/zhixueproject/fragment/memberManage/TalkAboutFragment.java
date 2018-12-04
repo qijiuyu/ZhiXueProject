@@ -170,13 +170,7 @@ public class TalkAboutFragment extends BaseFragment implements MyRefreshLayoutLi
 
     @Override
     public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-      /*  int postType = mTopicList.get( i).getPostType();
-        if (postType == 1 || postType == 2) {
-            LogUtils.e("免费帖子");
-            // PostDetailActivity.start(mContext,listData.get(position));
-        } else if (postType == 3) {
-            LogUtils.e("付费帖子");
-           //  PostDetailValueActivity.start(mContext,listData.get(position));
-        }*/
+        // PostDetailActivity.start(getActivity(),mTopicList.get(i).getPostId()+"");
+
     }
 }

@@ -34,6 +34,7 @@ public class MemberTopicListBean {
     private int postTalkNum;  //评论人数
     private int postPeepNum;  //偷看人数
     private int type;//0=大家谈，1=有偿提问
+    private int postId;
 
     public String getPostWriterId() {
         return postWriterId;
@@ -114,4 +115,11 @@ public class MemberTopicListBean {
         this.type = type;
     }
 
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
 }

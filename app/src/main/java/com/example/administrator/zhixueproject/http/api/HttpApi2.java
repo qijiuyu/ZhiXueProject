@@ -344,4 +344,13 @@ public interface HttpApi2 {
     @FormUrlEncoded
     @POST(HttpConstant.DELETE_VOTE_MEMBER)
     Call<VoteNeophyteBean>deleteVoteMember(@FieldMap Map<String,String> map);
+
+    /**
+     * 添加浏览量
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_POST_COLL)
+    Call<BaseBean>updatePostColl(@FieldMap Map<String,String> map);
 }

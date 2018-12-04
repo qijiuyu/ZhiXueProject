@@ -112,6 +112,8 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         postListBean = (PostListBean) getIntent().getSerializableExtra("postListBean");
         postId = String.valueOf(postListBean.getPostId());
         searchYouChangDetail(HandlerConstant2.GET_YOU_CHANG_DETAIL_SUCCESS);
+        //添加浏览量
+        HttpMethod2.updatePostColl(String.valueOf(postListBean.getPostId()),mHandler);
     }
 
     private void searchYouChangDetail(int index) {
@@ -224,6 +226,9 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                     if (detailsBean.isStatus()) {
                         postsDetailsSuccess(detailsBean);
                     }
+                    break;
+                case HandlerConstant2.UPDATE_POST_COLL_SUCCESS:
+                        LogUtils.e("添加浏览量成功");
                     break;
                 case HandlerConstant1.REQUST_ERROR:
                     showMsg(getString(R.string.net_error));

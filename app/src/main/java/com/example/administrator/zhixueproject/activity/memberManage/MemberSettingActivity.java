@@ -90,7 +90,7 @@ public class MemberSettingActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initData() {
-        etMemberName.setText(mMemberInfoBean.getAttendUsername());
+        etMemberName.setText(TextUtils.isEmpty(mMemberInfoBean.getAttendUsername())?"":mMemberInfoBean.getAttendUsername());
         etMemberName.requestFocus();
         etMemberName.setSelection(mMemberInfoBean.getAttendUsername().length());//将光标移至文字末尾
         mAttendId = mMemberInfoBean.getAttendId();

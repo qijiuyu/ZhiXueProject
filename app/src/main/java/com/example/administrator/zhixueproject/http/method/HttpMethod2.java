@@ -1285,4 +1285,33 @@ public class HttpMethod2 extends BaseRequst {
 
     }
 
+    /**
+     * 添加浏览量
+     *
+     * @param
+     * @param handler
+     */
+    public static void updatePostColl(String postId , final Handler handler) {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("postId", postId);
+        Http.getRetrofit().create(HttpApi2.class).updatePostColl(map).enqueue(new Callback<BaseBean>() {
+            @Override
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.UPDATE_POST_COLL_SUCCESS, response.body());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                   // sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+               // sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
 }
