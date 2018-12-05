@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
@@ -108,7 +109,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         initCustomTimePicker();
         sbStick.setOnCheckedChangeListener(this);
         sbMultiSelect.setOnCheckedChangeListener(this);
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setAutoMeasureEnabled(true);
         rvVote.setLayoutManager(layoutManager);
         mAdapter = new AddVoteAdapter(R.layout.add_vote_item, list);
@@ -121,10 +122,10 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         if (mVoteListBean != null) {
             etTitle.setText(mVoteListBean.getVoteName());
             tvStartTime.setText(mVoteListBean.getStartTime());
-            mStartTime=mVoteListBean.getStartTime();
+            mStartTime = mVoteListBean.getStartTime();
             tvEndTime.setText(mVoteListBean.getEndTime());
-            mEndTime=mVoteListBean.getEndTime();
-            topicId=mVoteListBean.getVoteId()+"";
+            mEndTime = mVoteListBean.getEndTime();
+            topicId = mVoteListBean.getVoteId() + "";
         }
     }
 
@@ -153,7 +154,6 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
 
     /**
      * 显示话题弹窗
-     *
      */
     private void showTopicFragment(boolean show) {
         if (mAddTopicFragment == null) {
@@ -186,32 +186,37 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.tv_add_vote:
                 // 不是多选才能添加
-                if (list.size()>=1&&mIsMultiple==false){
+                if (list.size() >= 1 && mIsMultiple == false) {
                     showMsg("您未开启多选，不能添加多个投票项");
-                }else {
+                } else {
                     showAddVotePop();
                 }
                 break;
             case R.id.tv_confirm:
                 String voteName = etTitle.getText().toString().trim();
+
                 if (TextUtils.isEmpty(voteName)) {
                     showMsg("请输入标题");
                     return;
                 }
-                if (TextUtils.isEmpty(topicId)){
+                if (TextUtils.isEmpty(topicId)) {
                     showMsg("请输入话题");
                     return;
                 }
-                if (TextUtils.isEmpty(mStartTime)){
+                if (TextUtils.isEmpty(mStartTime)) {
                     showMsg("请输入开始时间");
                     return;
                 }
-                if (TextUtils.isEmpty(mEndTime)){
+                if (TextUtils.isEmpty(mEndTime)) {
                     showMsg("请输入结束时间");
                     return;
                 }
+                if (list.size() >= 1 && mIsMultiple == false) {
+                    showMsg("您未开启多选，不能添加多个投票项");
+                    return;
+                }
                 // 跳转到发布内容页
-                ReleaseContentsActivity.start(this,topicId,voteName, String.valueOf(topicType), mIsTop, String.valueOf(activityWriterId)
+                ReleaseContentsActivity.start(this, topicId, voteName, String.valueOf(topicType), mIsTop, String.valueOf(activityWriterId)
                         , mStartTime, mEndTime, MyApplication.gson.toJson(list), mIsMultiple);
                 break;
             case R.id.rl_vote_type:
@@ -428,6 +433,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         tvTopic.setText(topicName);
         showTopicFragment(false);
     }
+
     @Subscribe
     public void postEvent(PostEvent postEvent) {
         if (PostEvent.RELEASE_SUCCESS == postEvent.getEventType()) {

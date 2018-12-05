@@ -286,8 +286,8 @@
     </array>
 
     <array name="topic_type">
-        <item>全部</item>
         <item>课程</item>
         <item>大家谈</item>
+        <item>全部</item>
     </array>
 </resources>
