@@ -268,4 +268,6 @@ public class HttpConstant {
     public static final String UPOR_DOWN="buyTopic/upOrDown.do";
     // 增加浏览量
     public static final String UPDATE_POST_COLL="post/updatePostColl.do";
+
+    public static final String UPDATE_VERSION="resources/version.json";
 }

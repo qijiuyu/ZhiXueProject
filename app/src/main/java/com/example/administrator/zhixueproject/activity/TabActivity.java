@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -21,6 +23,8 @@ import com.example.administrator.zhixueproject.fragment.college.CollegeFragment;
 import com.example.administrator.zhixueproject.utils.ActivitysLifecycle;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
+import com.example.administrator.zhixueproject.utils.UpdateVersionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 public class TabActivity extends android.app.TabActivity implements View.OnClickListener{
@@ -177,6 +181,16 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
             }
         }
     };
+
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+            //查询最新版本
+            new UpdateVersionUtils().searchVersion(TabActivity.this);
+        }
+    }
 
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN ) {

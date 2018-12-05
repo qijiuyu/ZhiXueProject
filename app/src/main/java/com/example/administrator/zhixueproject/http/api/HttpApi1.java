@@ -20,6 +20,7 @@ import com.example.administrator.zhixueproject.bean.TeacherBean;
 import com.example.administrator.zhixueproject.bean.RecentEarning;
 import com.example.administrator.zhixueproject.bean.TopicAccount;
 import com.example.administrator.zhixueproject.bean.UserInfo;
+import com.example.administrator.zhixueproject.bean.Version;
 import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.bean.WithDraw;
 import com.example.administrator.zhixueproject.bean.WithDrawInfo;
@@ -584,5 +585,14 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.UPOR_DOWN)
     Call<BaseBean> uporDown(@FieldMap Map<String, String> map);
+
+    /**
+     * 查询最新版本
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.UPDATE_VERSION)
+    Call<Version> updateVersion(@FieldMap Map<String, String> map);
 
 }

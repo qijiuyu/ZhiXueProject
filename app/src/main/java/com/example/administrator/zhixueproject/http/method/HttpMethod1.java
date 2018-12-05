@@ -26,6 +26,7 @@ import com.example.administrator.zhixueproject.bean.RecentEarning;
 import com.example.administrator.zhixueproject.bean.TopicAccount;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.UserInfo;
+import com.example.administrator.zhixueproject.bean.Version;
 import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.bean.WithDraw;
 import com.example.administrator.zhixueproject.bean.WithDrawInfo;
@@ -1669,6 +1670,29 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 查询最新版本
+     * @param handler
+     */
+    public static void updateVersion(final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        Http.getRetrofit().create(HttpApi1.class).updateVersion(map).enqueue(new Callback<Version>() {
+            public void onResponse(Call<Version> call, Response<Version> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.UPDATE_VERSION_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<Version> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
