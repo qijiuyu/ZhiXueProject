@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
@@ -51,6 +52,7 @@ public class CollegeItemAdapter extends BaseAdapter{
             holder.imageView=(ImageView)view.findViewById(R.id.iv_college_img);
             holder.tvName=(TextView)view.findViewById(R.id.tv_college_name);
             holder.tvQuit=(TextView)view.findViewById(R.id.tv_menu_one);
+            holder.lin=(LinearLayout)view.findViewById(R.id.content);
             view.setTag(holder);
         }else{
             holder=(ViewHolder)view.getTag();
@@ -76,6 +78,17 @@ public class CollegeItemAdapter extends BaseAdapter{
         }else{
             holder.tvQuit.setVisibility(View.GONE);
         }
+
+
+        holder.lin.setTag(colleges);
+        holder.lin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(null==v.getTag()){
+                    return;
+                }
+                collegeCallBack.onClick((Colleges) v.getTag());
+            }
+        });
         return view;
     }
 
@@ -83,5 +96,6 @@ public class CollegeItemAdapter extends BaseAdapter{
     private class ViewHolder{
         ImageView imageView;
         TextView tvName,tvQuit;
+        LinearLayout lin;
     }
 }

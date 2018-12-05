@@ -48,14 +48,6 @@ public class MoreCollegeActivity extends BaseActivity implements CollegeCallBack
         listView = (ListView)findViewById(R.id.rv_college_list);
         collegeItemAdapter=new CollegeItemAdapter(mContext,MyApplication.listColleges,this);
         listView.setAdapter(collegeItemAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LogUtils.e("111111111111111111");
-                Colleges colleges=MyApplication.listColleges.get(position);
-                showProgress("数据加载中");
-                HttpMethod1.getCollegeDetails(colleges.getCollegeId(),mHandler);
-            }
-        });
 
         findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -117,5 +109,11 @@ public class MoreCollegeActivity extends BaseActivity implements CollegeCallBack
         this.collegeId=collegeId;
         showProgress("退出中");
         HttpMethod1.quitCollege(Long.parseLong(collegeId),mHandler);
+    }
+
+    @Override
+    public void onClick(Colleges colleges) {
+        showProgress("数据加载中");
+        HttpMethod1.getCollegeDetails(colleges.getCollegeId(),mHandler);
     }
 }
