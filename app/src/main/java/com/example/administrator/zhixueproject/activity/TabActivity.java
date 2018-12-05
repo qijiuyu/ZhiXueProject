@@ -183,10 +183,12 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
     };
 
 
+    private boolean isFrist=false;
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if(hasFocus){
+        if(hasFocus && !isFrist){
+            isFrist=true;
             //查询最新版本
             new UpdateVersionUtils().searchVersion(TabActivity.this);
         }
