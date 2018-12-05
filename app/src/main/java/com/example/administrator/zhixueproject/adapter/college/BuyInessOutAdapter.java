@@ -2,6 +2,7 @@ package com.example.administrator.zhixueproject.adapter.college;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -72,12 +73,8 @@ public class BuyInessOutAdapter extends BaseAdapter{
 			Glide.with(activity).load(imgUrl).override(105,77).centerCrop().into(holder.imageView);
 		}
 		if(!TextUtils.isEmpty(busInessList.getTopicName())){
-			SpannableString spannableString = new SpannableString("售出话题 ".concat(busInessList.getTopicName()));
-			spannableString.setSpan(new ForegroundColorSpan(activity.getResources().getColor(R.color
-					.color_999999)), 0,5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-			spannableString.setSpan(new ForegroundColorSpan(activity.getResources().getColor(R.color
-					.color_333333)), 5,spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-			holder.tvTopic.setText(spannableString.toString());
+			holder.tvTopic.setText(Html.fromHtml("<font color='#999999'>"+"售出话题 "+"</font>"));
+			holder.tvTopic.append(busInessList.getTopicName());
 		}
 		holder.tvCollege.setText(busInessList.getCollegeName());
 		holder.tvTime.setText(DateUtil.gethour(busInessList.getBuytopicEndtime()));

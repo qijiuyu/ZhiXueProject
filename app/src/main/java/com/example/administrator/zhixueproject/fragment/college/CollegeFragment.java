@@ -25,6 +25,7 @@ import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.fragment.LeftFragment;
 import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.utils.UpdateVersionUtils;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.view.PagerSlidingTabStrip;
 
@@ -60,7 +61,6 @@ public class CollegeFragment extends BaseActivity implements View.OnClickListene
         setTabsValue();
 
         leftMenu();
-
         //注册广播
         registerReceiver();
     }
