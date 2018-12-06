@@ -22,6 +22,9 @@ import com.example.administrator.zhixueproject.fragment.memberManage.IdentityFra
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 /**
@@ -367,12 +370,14 @@ public class MemberSettingActivity extends BaseActivity implements View.OnClickL
         if (bean.isStatus()){
             showMsg("保存成功");
             AttendanceBean result=bean.getData().getAttendance();
-            Intent mIntent = new Intent();
-            mIntent.putExtra(MemberManagerActivity.MEMBER_INFO,result);
-            setResult(MemberSettingActivity.RESULT_CODE,mIntent);
+            postEventInfo(result);
             finish();
         }else {
             showMsg(bean.getErrorMsg());
         }
+    }
+
+    private void postEventInfo(AttendanceBean result) {
+        EventBus.getDefault().post(result);
     }
 }

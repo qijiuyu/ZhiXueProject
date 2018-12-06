@@ -219,7 +219,6 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
         //回复贴子
         if (!isFloorComment) {
-            LogUtils.e("type=="+type);
             HttpMethod2.commentPost(String.valueOf(postListBean.getPostId()), type, commentContent, mHandler);
         } else {
             //回复楼层

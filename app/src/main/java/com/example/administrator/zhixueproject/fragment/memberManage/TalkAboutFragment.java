@@ -9,12 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.memberManage.MemberDetailActivity;
 import com.example.administrator.zhixueproject.activity.topic.PostDetailActivity;
-import com.example.administrator.zhixueproject.activity.topic.PostDetailValueActivity;
 import com.example.administrator.zhixueproject.adapter.memberManage.TalkAboutListAdapter;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberTopicListBean;
@@ -171,7 +169,6 @@ public class TalkAboutFragment extends BaseFragment implements MyRefreshLayoutLi
 
     @Override
     public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-        // PostDetailActivity.start(getActivity(),mTopicList.get(i).getPostId()+"");
         MemberTopicListBean listBean=mTopicList.get(i);
         PostListBean bean=new PostListBean();
         bean.setPostId(listBean.getPostId());
