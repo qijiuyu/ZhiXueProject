@@ -71,6 +71,7 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
         rvPostsTask.addItemDecoration(itemDecoration);
         //刷新加载
         mrlPostsTask.setMyRefreshLayoutListener(this);
+        getPostDetailTask(HandlerConstant2.GET_POST_DETAIL_SUCCESS);
     }
 
     public void setPostId(String postId) {
@@ -142,11 +143,10 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
 
     private void getDetailSuccess(PostsDetailsBean bean) {
         mrlPostsTask.refreshComplete();
-        listData.clear();
-        listData = bean.getData().getWorkCommentList();
-        if (bean.getData().getWorkCommentList().size()==0){
-            return;
+        if (null!=listData&&listData.size()>0){
+            listData.clear();
         }
+        listData = bean.getData().getWorkCommentList();
         adapterView();
     }
 
@@ -159,7 +159,7 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
             return;
         }
         if (bean.isStatus()) {
-            if (bean.getData().getPostCommentList().size() <= 0) {
+            if (bean.getData().getWorkCommentList().size() <= 0) {
                 showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }

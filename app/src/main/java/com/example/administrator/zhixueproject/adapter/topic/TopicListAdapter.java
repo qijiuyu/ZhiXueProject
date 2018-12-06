@@ -40,11 +40,13 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
         int type = item.getTopicType();//话题类型
         String[] topics = mContext.getResources().getStringArray(R.array.topic_type);
         if (type == 1) {
-            helper.setText(R.id.tv_post_status, topics[1]);
-        } else if (type == 2) {
-            helper.setText(R.id.tv_post_status, topics[2]);
-        } else if (type == 3) {
             helper.setText(R.id.tv_post_status, topics[0]);
+        } else if (type == 2) {
+            helper.setText(R.id.tv_post_status, topics[1]);
+        } else if (type == 3) {
+            helper.setText(R.id.tv_post_status, topics[2]);
+        }else {
+            helper.setText(R.id.tv_post_status, topics[2]);
         }
         int costType = item.getTopicPayType();//话题付费类型
         String[] costs = mContext.getResources().getStringArray(R.array.add_topic);
