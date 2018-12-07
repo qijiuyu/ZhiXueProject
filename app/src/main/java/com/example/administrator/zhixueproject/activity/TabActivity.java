@@ -26,7 +26,13 @@ import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.utils.UpdateVersionUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
+
 public class TabActivity extends android.app.TabActivity implements View.OnClickListener{
 
     // 按两次退出
@@ -48,6 +54,8 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         initView();
         //注册广播
         registerBoradcastReceiver();
+        //设置推送
+        setPush();
     }
 
 
@@ -199,6 +207,48 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
             new UpdateVersionUtils().searchVersion(TabActivity.this);
         }
     }
+
+
+    /**
+     * 设置推送
+     */
+    private void setPush(){
+        final boolean isPush=MyApplication.spUtil.getBoolean("isPush");
+        if(!isPush){
+            MyApplication.spUtil.addBoolean("isPush",true);
+            //设置极光推送的别名
+            Set<String> tags = new HashSet<>();
+            tags.add(MyApplication.userInfo.getData().getUser().getUserId()+"");
+            JPushInterface.setAliasAndTags(getApplicationContext(), MyApplication.userInfo.getData().getUser().getUserId()+"", tags, mAliasCallback);
+        }
+    }
+
+
+    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
+        public void gotResult(int code, String alias, Set<String> tags) {
+            String logs ;
+            switch (code) {
+                case 0:
+                    logs = "Set tag and alias success";
+                    // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
+                    break;
+                case 6002:
+                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+                    new Handler().postDelayed(new Runnable() {
+                        public void run() {
+                            Set<String> tags = new HashSet<String>();
+                            tags.add(MyApplication.userInfo.getData().getUser().getUserId()+"");
+                            JPushInterface.setAliasAndTags(getApplicationContext(), MyApplication.userInfo.getData().getUser().getUserId()+"", tags, mAliasCallback);
+                        }
+                    },60000);
+                    break;
+                default:
+                    logs = "Failed with errorCode = " + code;
+            }
+            LogUtils.e(logs);
+        }
+    };
+
 
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN ) {
