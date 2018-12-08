@@ -146,8 +146,8 @@ public class HttpMethod2 extends BaseRequst {
      * @param ids
      * @param handler
      */
-    public static void addTopic( String topicName, String topicPayType, String topicIsTop,
-                                String topicType, String topicUseyn, String topicImg, String topicPrice, String topicVipName,
+    public static void addTopic( String topicName, String topicPayType,  String topicType,String topicIsTop,
+                                String topicUseyn, String topicImg, String topicPrice, String topicVipName,
                                 String ids, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("topicName", topicName);
@@ -194,8 +194,8 @@ public class HttpMethod2 extends BaseRequst {
      * @param ids
      * @param handler
      */
-    public static void updateTopic(String topicId, String topicName, String topicPayType, String topicIsTop,
-                                   String topicType, String topicUseyn, String topicImg, String topicPrice, String topicVipName,
+    public static void updateTopic(String topicId, String topicName, String topicPayType, String topicType,String topicIsTop,
+                                    String topicUseyn, String topicImg, String topicPrice, String topicVipName,
                                    String ids, final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("topicId", topicId);

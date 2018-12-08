@@ -199,8 +199,16 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     showMsg("请输入标题");
                     return;
                 }
+                if (activityWriterId==0){
+                    showMsg("请选择发布人");
+                    return;
+                }
                 if (TextUtils.isEmpty(topicId)) {
                     showMsg("请输入话题");
+                    return;
+                }
+                if (topicType==0){
+                    showMsg("请选择话题类型");
                     return;
                 }
                 if (TextUtils.isEmpty(mStartTime)) {
