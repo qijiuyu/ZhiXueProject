@@ -56,12 +56,12 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
-                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             public void onFailure(Call<TopicsListBean> call, Throwable t) {
-                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
     }
