@@ -73,7 +73,7 @@ public class ReportListAdapter extends BaseAdapter{
 		holder.tvReportName.setText(reportList.getPostWriterId());
 		holder.tvTime.setText(reportList.getComplaintCreationTime());
 		holder.tvCount.setText(reportList.getComplaintCount()+"人  举报");
-		holder.tvContent.setText(reportList.getComplaintContent());
+		holder.tvContent.setText(reportList.getComplaintInfo());
 		holder.imgChoose.setTag(reportList.getComplaintToId());
 		if(isSelect){
 			holder.imgChoose.setVisibility(View.VISIBLE);

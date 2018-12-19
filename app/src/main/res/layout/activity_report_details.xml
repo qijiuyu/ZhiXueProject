@@ -13,17 +13,6 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:visibility="gone"
-            android:id="@+id/iv_choose"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="7dp"
-            android:layout_gravity="center_vertical"
-            android:background="@mipmap/unchecked_gray_report"
-            />
-
-        <ImageView
             android:id="@+id/iv_img"
             android:layout_width="105dp"
             android:layout_height="78dp"
@@ -48,11 +37,21 @@
 
                     <TextView
                         android:id="@+id/tv_report_topic"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:maxLines="2"
                         android:textColor="@color/color_222222"
                         android:textSize="15sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_report_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/color_40c5f1"
+                        android:textSize="13sp"/>
 
                 </LinearLayout>
 
@@ -68,19 +67,10 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_report_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="我是名称"
-                android:textColor="@color/color_40c5f1"
-                android:textSize="10sp"/>
-
-            <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="2017-3-10 12:04"
                 android:textColor="@color/color_999999"
                 android:textSize="11sp"/>
 

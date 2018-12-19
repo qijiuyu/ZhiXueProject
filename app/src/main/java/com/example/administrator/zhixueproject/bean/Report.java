@@ -38,6 +38,7 @@ public class Report extends BaseBean {
         private String topicImg;
         private int complaintCount;
         private String complaintCreationTime;
+        private String complaintInfo;
 
         public long getComplaintToId() {
             return complaintToId;
@@ -93,6 +94,14 @@ public class Report extends BaseBean {
 
         public void setComplaintCreationTime(String complaintCreationTime) {
             this.complaintCreationTime = complaintCreationTime;
+        }
+
+        public String getComplaintInfo() {
+            return complaintInfo;
+        }
+
+        public void setComplaintInfo(String complaintInfo) {
+            this.complaintInfo = complaintInfo;
         }
     }
 }
