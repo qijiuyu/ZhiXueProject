@@ -2,6 +2,7 @@ package com.example.administrator.zhixueproject.adapter.topic;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -57,8 +58,14 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
             helper.setText(R.id.tv_charge, costs[1]);
             helper.getView(R.id.tv_restrict).setVisibility(View.GONE);
         } else if (costType == 3) {
-            helper.setText(R.id.tv_restrict, "限制：" + item.getTopicVipName());
-            helper.getView(R.id.tv_charge).setVisibility(View.GONE);
+           if (TextUtils.isEmpty(item.getTopicVipName())){
+               helper.getView(R.id.tv_restrict).setVisibility(View.GONE);
+               helper.setText(R.id.tv_charge, costs[1]);
+           }else {
+               helper.setText(R.id.tv_restrict, "限制：" +item.getTopicVipName() );
+               helper.getView(R.id.tv_charge).setVisibility(View.GONE);
+           }
+
         } else if (costType == 4) {
             helper.setText(R.id.tv_restrict, "限制：" + costs[3]);
             helper.getView(R.id.tv_charge).setVisibility(View.GONE);

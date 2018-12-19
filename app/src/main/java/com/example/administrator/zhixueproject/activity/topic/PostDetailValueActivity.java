@@ -249,7 +249,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         tvNickName.setText(postContent.getUserName());
         tvAttentionNum.setText(String.valueOf(postContent.getAttentionNum()));
         tvMoneyReward.setText("赏金" + postContent.getPostReward());
-        tvPeepNum.setText(String.valueOf(postContent.getPostPeepNum()));
+        tvPeepNum.setText(TextUtils.isEmpty(postContent.getPostPeepNum())?"0":postContent.getPostPeepNum());
 
         //评论区域
         mAdapter = new PostsTaskAdapter(R.layout.posts_task_item, data.getPostCommentList());

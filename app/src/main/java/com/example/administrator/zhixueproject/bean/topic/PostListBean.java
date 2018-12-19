@@ -69,6 +69,7 @@ public class PostListBean implements Serializable {
     private int postCollection;
     private String postCreationTime;
     private String postReward;
+    private String postPrice;
     // private List<ReleaseContentsBean> postContentApp;
     private String postContentApp;
     private String postContent;
@@ -185,5 +186,13 @@ public class PostListBean implements Serializable {
 
     public void setPostContentApp(String postContentApp) {
         this.postContentApp = postContentApp;
+    }
+
+    public String getPostPrice() {
+        return postPrice;
+    }
+
+    public void setPostPrice(String postPrice) {
+        this.postPrice = postPrice;
     }
 }

@@ -219,7 +219,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     showMsg("请输入结束时间");
                     return;
                 }
-                if (list.size() >= 1 && mIsMultiple == false) {
+                if (list.size() > 1 && mIsMultiple == false) {
                     showMsg("您未开启多选，不能添加多个投票项");
                     return;
                 }

@@ -49,6 +49,12 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
         helper.setText(R.id.tv_post_time, item.getPostCreationTime());
         helper.setText(R.id.tv_collect_num, "浏览 " + item.getPostCollection());
         helper.setText(R.id.tv_comment_num, "评论 " + item.getPostTalkNum());
-        helper.setText(R.id.tv_peep_num, "偷看 " + item.getPostPeepNum());
+        String num="";
+        if (TextUtils.isEmpty(item.getPostPeepNum())){
+            num="0";
+        }else {
+            num=item.getPostPeepNum();
+        }
+        helper.setText(R.id.tv_peep_num, "偷看 " + num);
     }
 }

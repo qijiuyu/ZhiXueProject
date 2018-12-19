@@ -188,12 +188,18 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                 break;
             //编辑贴子
             case R.id.tv_right:
+                String price;
+                if (postType.equals("3")){
+                   price= postListBean.getPostReward();
+                }else {
+                    price=postListBean.getPostPrice();
+                }
                 ReleasePostActivity.start(
                         view.getContext(),
                         String.valueOf(postListBean.getPostId()),
                         postListBean.getPostName(),
                         String.valueOf(postListBean.getPostIsFree()),
-                        postListBean.getPostReward(),
+                        price,
                         String.valueOf(postListBean.getPostIsTop()), postType);
                 break;
             case R.id.img_topic_arrow:
