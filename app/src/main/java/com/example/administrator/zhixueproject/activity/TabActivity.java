@@ -26,7 +26,13 @@ import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.utils.UpdateVersionUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
+
 public class TabActivity extends android.app.TabActivity implements View.OnClickListener{
 
     // 按两次退出
@@ -38,7 +44,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
     private List<TextView> tvList=new ArrayList<>();
     private int[] notClick=new int[]{R.mipmap.tab_1_false,R.mipmap.tab_2_false,R.mipmap.tab_3_false,R.mipmap.tab_4_false,R.mipmap.tab_5_false};
     private int[] yesClick=new int[]{R.mipmap.tab_1_true,R.mipmap.tab_2_true,R.mipmap.tab_3_true,R.mipmap.tab_4_true,R.mipmap.tab_5_true};
-    private ImageView imgRed;
+    private ImageView imgRed,imgRed2;
     public static final String ACTION_SHOW_NEW_NEWS="com.zhixue.project.action.show.new.news";
     public static final String ACTION_CLEAR_NEW_NEWS="com.zhixue.project.action.clear.new.news";
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,8 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         initView();
         //注册广播
         registerBoradcastReceiver();
+        //设置推送
+        setPush();
     }
 
 
@@ -63,6 +71,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         imgRen=(ImageView)findViewById(R.id.img_tab_ren);
         tvRen=(TextView)findViewById(R.id.tv_tab_ren);
         imgRed=(ImageView)findViewById(R.id.img_red);
+        imgRed2=(ImageView)findViewById(R.id.img_red2);
         imgList.add(imgCollege);imgList.add(imgTopic);imgList.add(imgZhibo);imgList.add(imgHuati);imgList.add(imgRen);
         tvList.add(tvCollege);tvList.add(tvTopic);tvList.add(tvZhibo);tvList.add(tvHuati);tvList.add(tvRen);
         findViewById(R.id.lin_tab_college).setOnClickListener(this);
@@ -171,10 +180,15 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         public void onReceive(Context context, Intent intent) {
             switch (intent.getAction()){
                 case ACTION_SHOW_NEW_NEWS:
-                    imgRed.setVisibility(View.VISIBLE);
+                    if(MyApplication.homeBean.getAttendType()==1){
+                        imgRed.setVisibility(View.VISIBLE);
+                    }else{
+                        imgRed2.setVisibility(View.VISIBLE);
+                    }
                      break;
                 case ACTION_CLEAR_NEW_NEWS:
                     imgRed.setVisibility(View.GONE);
+                    imgRed2.setVisibility(View.GONE);
                     break;
                 default:
                     break;
@@ -183,14 +197,58 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
     };
 
 
+    private boolean isFrist=false;
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if(hasFocus){
+        if(hasFocus && !isFrist){
+            isFrist=true;
             //查询最新版本
             new UpdateVersionUtils().searchVersion(TabActivity.this);
         }
     }
+
+
+    /**
+     * 设置推送
+     */
+    private void setPush(){
+        final boolean isPush=MyApplication.spUtil.getBoolean("isPush");
+        if(!isPush){
+            MyApplication.spUtil.addBoolean("isPush",true);
+            //设置极光推送的别名
+            Set<String> tags = new HashSet<>();
+            tags.add(MyApplication.userInfo.getData().getUser().getUserId()+"");
+            JPushInterface.setAliasAndTags(getApplicationContext(), MyApplication.userInfo.getData().getUser().getUserId()+"", tags, mAliasCallback);
+        }
+    }
+
+
+    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
+        public void gotResult(int code, String alias, Set<String> tags) {
+            String logs ;
+            switch (code) {
+                case 0:
+                    logs = "Set tag and alias success";
+                    // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
+                    break;
+                case 6002:
+                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+                    new Handler().postDelayed(new Runnable() {
+                        public void run() {
+                            Set<String> tags = new HashSet<String>();
+                            tags.add(MyApplication.userInfo.getData().getUser().getUserId()+"");
+                            JPushInterface.setAliasAndTags(getApplicationContext(), MyApplication.userInfo.getData().getUser().getUserId()+"", tags, mAliasCallback);
+                        }
+                    },60000);
+                    break;
+                default:
+                    logs = "Failed with errorCode = " + code;
+            }
+            LogUtils.e(logs);
+        }
+    };
+
 
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN ) {

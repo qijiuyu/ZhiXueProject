@@ -89,10 +89,10 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
     }
 
     private void initData() {
-        if (listData.size() == 0) {
-            showProgress(getString(R.string.loading));
+            LogUtils.e("话题列表管理中查询话题列表");
+            PAGE=1;
             getTopicList(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
-        }
+
     }
 
     @Override

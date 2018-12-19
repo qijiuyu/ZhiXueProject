@@ -12,6 +12,9 @@ import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.bean.Report;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,7 +76,27 @@ public class ReportListAdapter extends BaseAdapter{
 		holder.tvReportName.setText(reportList.getPostWriterId());
 		holder.tvTime.setText(reportList.getComplaintCreationTime());
 		holder.tvCount.setText(reportList.getComplaintCount()+"人  举报");
-		holder.tvContent.setText(reportList.getComplaintContent());
+
+		try {
+			boolean isContent=false;
+			String msg = null;
+			final JSONArray jsonArray=new JSONArray(reportList.getComplaintContent());
+			for (int i=0;i<jsonArray.length();i++){
+				final JSONObject jsonObject=jsonArray.getJSONObject(i);
+				if(jsonObject.getInt("type")==0){
+					isContent=true;
+					msg=jsonObject.getString("content");
+					break;
+				}
+			}
+			if(!isContent){
+				holder.tvContent.setText("");
+			}else{
+				holder.tvContent.setText(msg);
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		holder.imgChoose.setTag(reportList.getComplaintToId());
 		if(isSelect){
 			holder.imgChoose.setVisibility(View.VISIBLE);

@@ -94,5 +94,6 @@ public class Report extends BaseBean {
         public void setComplaintCreationTime(String complaintCreationTime) {
             this.complaintCreationTime = complaintCreationTime;
         }
+
     }
 }

@@ -29,8 +29,8 @@ import com.example.administrator.zhixueproject.view.OvalImageViews;
 
 public class CollegeInfoFragment extends BaseFragment implements View.OnClickListener{
 
-    private ImageView imgBJ,imgEdit,imgGrade;
-    private TextView tvName,tvTime,tvContent;
+    private ImageView imgBJ,imgEdit;
+    private TextView tvName,tvTime,tvContent,tvGrade;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         registerReceiver();
@@ -43,9 +43,9 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
         imgBJ=(ImageView)view.findViewById(R.id.iv_college);
         imgEdit=(ImageView)view.findViewById(R.id.iv_edit);
         tvName=(TextView)view.findViewById(R.id.tv_college_name);
-        imgGrade=(ImageView)view.findViewById(R.id.iv_grade);
         tvTime=(TextView)view.findViewById(R.id.tv_expire_time);
         tvContent=(TextView)view.findViewById(R.id.tv_content);
+        tvGrade=(TextView)view.findViewById(R.id.tv_grade);
         view.findViewById(R.id.iv_edit).setOnClickListener(this);
         return view;
     }
@@ -57,7 +57,11 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
     private void showData(){
         Glide.with(mActivity).load(MyApplication.homeBean.getCollegeBackimg()).override(337,192).centerCrop().into(imgBJ);
         tvName.setText(MyApplication.homeBean.getCollegeName());
-        Glide.with(mActivity).load(MyApplication.homeBean.getCollegeGradeImg()).override(55,18).centerCrop().into(imgGrade);
+        int grade=MyApplication.homeBean.getCollegeGrade();
+        if(grade==7){
+            grade=0;
+        }
+        tvGrade.setText("VIP"+grade);
         tvTime.setText(DateUtil.getDay(MyApplication.homeBean.getCollegeCreationTime())+"到期");
         tvContent.setText(MyApplication.homeBean.getCollegeInfo());
 //

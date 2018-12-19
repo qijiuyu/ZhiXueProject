@@ -59,20 +59,26 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:text="学院VIP等级"
                     android:textColor="@color/color_fd703e"
                     android:textSize="12sp" />
 
-                <ImageView
-                    android:layout_width="55dp"
-                    android:id="@+id/iv_grade"
-                    android:layout_height="18dp"
-                    android:layout_marginLeft="5dp" />
+                <TextView
+                    android:id="@+id/tv_grade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/color_fd703e"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_expire_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="19dp"
                     android:textColor="@color/color_999999"
                     android:textSize="10sp" />

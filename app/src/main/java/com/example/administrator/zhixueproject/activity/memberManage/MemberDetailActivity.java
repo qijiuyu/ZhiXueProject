@@ -18,8 +18,9 @@ import com.example.administrator.zhixueproject.bean.memberManage.AttendanceBean;
 import com.example.administrator.zhixueproject.fragment.memberManage.PaidQuestionFragment;
 import com.example.administrator.zhixueproject.fragment.memberManage.TalkAboutFragment;
 import com.example.administrator.zhixueproject.utils.GlideCirclePictureUtil;
-import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.flyco.tablayout.SlidingTabLayout;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.member_detail));
         findViewById(R.id.lin_back).setOnClickListener(this);
@@ -64,12 +66,24 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         mIvMemberLevel = (ImageView) findViewById(R.id.iv_member_level);
     }
 
+
+
     private void initData() {
         //会员基本信息
         mMemberInfoBean = getIntent().getParcelableExtra(MemberManagerActivity.MEMBER_INFO);
         if (mMemberInfoBean == null) {
             return;
         }
+        initInfo(mMemberInfoBean);
+        //初始化大家谈、有偿提问fm
+        initFragment();
+    }
+
+    /**
+     * 初始化会员信息
+     * @param mMemberInfoBean
+     */
+    private void initInfo(AttendanceBean mMemberInfoBean) {
         //头像
         GlideCirclePictureUtil.setCircleImg(this, mMemberInfoBean.getUserImg(), mIvHeadPic);
         //昵称
@@ -84,8 +98,6 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         linearLayoutManager.setAutoMeasureEnabled(true);
         mRvMedal.setLayoutManager(linearLayoutManager);
         mRvMedal.setAdapter(mMedalIconAdapter);
-        //初始化大家谈、有偿提问fm
-        initFragment();
     }
 
     /**
@@ -110,6 +122,8 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         paidQuestionFragment.setArguments(bundle);
     }
 
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -122,7 +136,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.tv_right:
                 Intent starter = new Intent(this,MemberSettingActivity.class);
                 starter.putExtra(MemberManagerActivity.MEMBER_INFO,mMemberInfoBean);
-                startActivityForResult(starter,REQUEST_CODE);
+                startActivity(starter);
                 break;
             default:
                 break;
@@ -130,12 +144,16 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == MemberSettingActivity.RESULT_CODE && requestCode == REQUEST_CODE) {
-            mMemberInfoBean = data.getParcelableExtra(MemberManagerActivity.MEMBER_INFO);
-            initData();
-        }
+    @Subscribe
+    public void postEventInfo(AttendanceBean result) {
+        initInfo(result);
+
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
 }

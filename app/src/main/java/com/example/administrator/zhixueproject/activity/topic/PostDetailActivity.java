@@ -56,7 +56,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     public String mFloorUserName;
     private String mFloorId;
     private PostListBean postListBean;
-    private String postType;
+    private String postType;  // 1.课程 2.大家谈 3.有偿提问
+    private String type="1"; //1.回复帖子 2.回复作业
     public String mFloorUserId;
     private String commentUserId = MyApplication.userInfo.getData().getUser().getUserId() + "";
     private boolean isFloorComment;
@@ -80,6 +81,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         initData();
         //关闭帖子上的小红点
         sendBroadcast(new Intent(TabActivity.ACTION_CLEAR_NEW_NEWS));
+        LogUtils.e("commentUserId=== "+commentUserId);
     }
 
     private void initView() {
@@ -109,7 +111,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         EventBus.getDefault().register(this);
         StatusBarUtils.transparencyBar(this);
         postListBean = (PostListBean) getIntent().getSerializableExtra("postListBean");
-        postType = String.valueOf(postListBean.getPostType());
+         postType = String.valueOf(postListBean.getPostType());
         //设置头部随着滚动
         AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) llPostDetailHead.getLayoutParams();
         layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
@@ -138,7 +140,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onPageSelected(int position) {
-                postType = String.valueOf(position + 1);
+                LogUtils.e("position=== "+  position);
+                type = String.valueOf(position + 1);
             }
 
             @Override
@@ -216,7 +219,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
         //回复贴子
         if (!isFloorComment) {
-            HttpMethod2.commentPost(String.valueOf(postListBean.getPostId()), postType, commentContent, mHandler);
+            HttpMethod2.commentPost(String.valueOf(postListBean.getPostId()), type, commentContent, mHandler);
         } else {
             //回复楼层
             HttpMethod2.commentReply(String.valueOf(postListBean.getPostId()), mFloorId, commentUserId
@@ -294,6 +297,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             imgArrow.setVisibility(View.VISIBLE);
         }
         //帖子内容
+        LogUtils.e("++++"+data.getPostContent().getPostContent());
         String html = ToolUtils.imgStyleHtml(data.getPostContent().getPostContent());
         wvPostContent.setWebViewClient(new WebViewClient() {
             @Override

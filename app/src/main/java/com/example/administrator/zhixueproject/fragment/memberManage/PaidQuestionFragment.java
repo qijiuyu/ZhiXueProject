@@ -9,11 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.memberManage.MemberDetailActivity;
-import com.example.administrator.zhixueproject.activity.topic.PostDetailActivity;
 import com.example.administrator.zhixueproject.activity.topic.PostDetailValueActivity;
 import com.example.administrator.zhixueproject.adapter.memberManage.PaidQuestionListAdapter;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberDetailBean;
@@ -24,6 +22,7 @@ import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.DateUtil;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
 
@@ -119,6 +118,10 @@ public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayou
         }
         if (bean.isStatus()) {
             mQuestionList = bean.getData().getPostList();
+            LogUtils.e("mQuestionList   ="+mQuestionList.size());
+            if (null!=mQuestionList&&mQuestionList.size()==0){
+                return;
+            }
             adapterView();
         } else {
             bean.getErrorMsg();

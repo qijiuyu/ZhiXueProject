@@ -27,13 +27,11 @@ public class PostCommentReplyAdapter extends BaseQuickAdapter<PostsDetailsBean.P
 
     public PostCommentReplyAdapter(@LayoutRes int layoutResId, @Nullable List<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean.TalkInfoBean> data, int floorId) {
         super(layoutResId, data);
-        LogUtils.e("楼层回复adapter");
         this.floorId = floorId;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, final PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean.TalkInfoBean item) {
-        LogUtils.e("啦啦啦  convert");
         helper.setText(R.id.tv_comment_reply,item.getTalkStr());
         final String finalMFloorUserId = showReply(helper, item.getTalkStr(), floorId);
         helper.itemView.setOnClickListener(new View.OnClickListener() {

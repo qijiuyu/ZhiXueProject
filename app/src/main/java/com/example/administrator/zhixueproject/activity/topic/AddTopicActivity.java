@@ -392,7 +392,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        LogUtils.e(tollMode+"+++++++++++");
+        LogUtils.e(tollMode+"+++++++++++"+"topicType===  "+topicType);
         if (type.equals(FLAG_ADD)) {
             if (payType == 1) {
                 HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", "", "",mHandler);

@@ -223,7 +223,6 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
     @Subscribe
     public void postEvent(PostEvent postEvent) {
         if (PostEvent.RELEASE_SUCCESS == postEvent.getEventType()) {
-            finish();
         }
     }
 

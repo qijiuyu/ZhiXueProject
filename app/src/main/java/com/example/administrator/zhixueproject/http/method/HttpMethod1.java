@@ -1565,7 +1565,7 @@ public class HttpMethod1  extends BaseRequst {
         map.put("complaintType",complaintType+"");
         map.put("complaintToId",complaintToId+"");
         map.put("page",page+"");
-        map.put("limit","20");
+        map.put("limit","200");
         Http.getRetrofit().create(HttpApi1.class).getReportDetails(map).enqueue(new Callback<ReportDetails>() {
             public void onResponse(Call<ReportDetails> call, Response<ReportDetails> response) {
                 try {
