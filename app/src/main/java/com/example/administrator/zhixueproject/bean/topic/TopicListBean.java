@@ -21,7 +21,7 @@ public class TopicListBean implements Serializable {
     private String topicName;
     private int topicPayType;
     private int topicType;
-    private int topicPrice;
+    private double topicPrice;
     private String topicVipName;
     private int topicIsTop;
 
@@ -32,16 +32,6 @@ public class TopicListBean implements Serializable {
 
     public void setTopicIsTop(int topicIsTop) {
         this.topicIsTop = topicIsTop;
-    }
-
-
-
-    public int getTopicPrice() {
-        return topicPrice;
-    }
-
-    public void setTopicPrice(int topicPrice) {
-        this.topicPrice = topicPrice;
     }
 
 
@@ -108,5 +98,13 @@ public class TopicListBean implements Serializable {
 
     public void setTopicType(int topicType) {
         this.topicType = topicType;
+    }
+
+    public void setTopicPrice(double topicPrice) {
+        this.topicPrice = topicPrice;
+    }
+
+    public double getTopicPrice() {
+        return topicPrice;
     }
 }

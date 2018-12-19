@@ -24,6 +24,7 @@ import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.live.TeacherListBean;
 import com.example.administrator.zhixueproject.bean.topic.CostsListBean;
 import com.example.administrator.zhixueproject.utils.KeyboardUtils;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.example.administrator.zhixueproject.view.SwitchButton;
@@ -183,8 +184,7 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
     private void nextStep() {
         String postName = etTitle.getText().toString().trim();
         String mLecturer = tvIssuer.getText().toString().trim();
-        String postPrice;
-        if ("1".equals(postIsFree)) {
+        if (!"1".equals(postIsFree)) {
             if (et_cost != null) {
                 postPrice = et_cost.getText().toString().trim();
             } else {
@@ -193,6 +193,7 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         } else {
             postPrice = "0";
         }
+        LogUtils.e("帖子价格==="+postPrice);
 
         if (TextUtils.isEmpty(postName)) {
             showMsg("标题不能为空");
