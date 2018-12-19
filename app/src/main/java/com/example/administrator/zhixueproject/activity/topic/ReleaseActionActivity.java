@@ -410,8 +410,8 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                         view_bg.setBackgroundColor(getResources().getColor(R.color.translete));
                     }
                 })
-                .setType(new boolean[]{true, true, true, false, false, false})
-                .setLabel("", "", "", "", "", "")
+                .setType(new boolean[]{true, true, true, true, true, false})
+                .setLabel("年","月","日","时","分","")
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(getResources().getColor(R.color.color_dbdbdb))
                 .setTextColorCenter(getResources().getColor(R.color.color_333333))
@@ -420,7 +420,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return format.format(date);
     }
 

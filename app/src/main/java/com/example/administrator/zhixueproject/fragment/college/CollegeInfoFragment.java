@@ -57,7 +57,11 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
     private void showData(){
         Glide.with(mActivity).load(MyApplication.homeBean.getCollegeBackimg()).override(337,192).centerCrop().into(imgBJ);
         tvName.setText(MyApplication.homeBean.getCollegeName());
-        tvGrade.setText("VIP"+MyApplication.homeBean.getCollegeGrade());
+        int grade=MyApplication.homeBean.getCollegeGrade();
+        if(grade==7){
+            grade=0;
+        }
+        tvGrade.setText("VIP"+grade);
         tvTime.setText(DateUtil.getDay(MyApplication.homeBean.getCollegeCreationTime())+"到期");
         tvContent.setText(MyApplication.homeBean.getCollegeInfo());
 //

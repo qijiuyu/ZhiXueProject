@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.adapter.college;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,27 +60,50 @@ public class ReportDetailsAdapter extends BaseAdapter{
 			Glide.with(activity).load(imgUrl).override(50,50).centerCrop().into(holder.imageView);
 		}
 		holder.tvUserName.setText(listBean.getUserName());
-		switch (listBean.getComplaintInfoType()){
-			case 0:
-				 holder.tvType.setText("侵权");
-				 break;
-			case 1:
-				holder.tvType.setText("淫秽色情");
-				break;
-			case 2:
-				holder.tvType.setText("内容与标题不符");
-				break;
-			case 3:
-				holder.tvType.setText("敏感信息");
-				break;
-			case 4:
-				holder.tvType.setText("垃圾广告");
-				break;
+
+		final String[] types=convert(listBean.getComplaintInfoType()).split(",");
+		if(null!=types){
+			StringBuffer stringBuffer=new StringBuffer("举报原因：");
+			for (int i=0;i<types.length;i++){
+				switch (types[i]){
+					case "0":
+						stringBuffer.append("侵权，");
+						break;
+					case "1":
+						stringBuffer.append("淫秽色情，");
+						break;
+					case "2":
+						stringBuffer.append("内容与标题不符，");
+						break;
+					case "3":
+						stringBuffer.append("敏感信息，");
+						break;
+					case "4":
+						stringBuffer.append("垃圾广告，");
+						break;
+				}
+				final String strType=stringBuffer.toString();
+				holder.tvType.setText(strType.substring(0,strType.length()-1));
+			}
 		}
+
 		holder.tvContent.setText(listBean.getComplaintInfo());
 		return view;
 	}
 
+
+	private static String convert(int s){
+		String s1 = "";
+		while(true){
+			s1=s1+(s%10)+",";
+			if(s<10){
+				break;
+			}
+			s=s/10;
+		}
+
+		return s1.substring(0, s1.length()-1);
+	}
 
 	 private class ViewHolder{
 		private ImageView imageView;
