@@ -4,9 +4,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +23,9 @@ import com.example.administrator.zhixueproject.bean.Report;
 import com.example.administrator.zhixueproject.bean.ReportDetails;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.utils.ToolUtils;
+import com.example.administrator.zhixueproject.view.CustomListView;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
 import java.util.ArrayList;
@@ -31,8 +38,9 @@ import java.util.List;
 
 public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLayoutListener {
 
-    private ListView listView;
+    private CustomListView listView;
     private MyRefreshLayout mRefreshLayout;
+    private WebView webView;
     private int page=1;
     private int complaintType;
     private Report.ReportList reportList;
@@ -51,7 +59,8 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
         TextView tvHead = (TextView) findViewById(R.id.tv_title);
         tvHead.setText("举报明细");
         mRefreshLayout=(MyRefreshLayout)findViewById(R.id.re_list);
-        listView=(ListView)findViewById(R.id.listView);
+        listView=(CustomListView)findViewById(R.id.listView);
+        webView=(WebView)findViewById(R.id.wv_post_content);
         final View view = getLayoutInflater().inflate(R.layout.empty_view, null);
         ((ViewGroup) listView.getParent()).addView(view, new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT));
         listView.setEmptyView(view);
@@ -120,16 +129,33 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
      * 刷新数据
      * @param reportDetails
      */
+    String content;
     private void refresh(ReportDetails reportDetails){
         if(null==reportDetails){
             return;
         }
+
         if(reportDetails.isStatus()){
             List<ReportDetails.listBean> list=reportDetails.getData().getComplaintList();
             listAll.addAll(list);
             reportDetailsAdapter.notifyDataSetChanged();
             if(list.size()<20){
                 mRefreshLayout.setIsLoadingMoreEnabled(false);
+            }
+
+
+            //显示帖子详情
+            if(TextUtils.isEmpty(content)){
+                //帖子内容
+                String html = ToolUtils.imgStyleHtml(reportDetails.getData().getPost().getPostContent());
+                webView.setWebViewClient(new WebViewClient() {
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        return true;
+                    }
+                });
+                WebSettings settings = webView.getSettings();
+                settings.setJavaScriptEnabled(true);
+                webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
             }
         }else{
             showMsg(reportDetails.getErrorMsg());

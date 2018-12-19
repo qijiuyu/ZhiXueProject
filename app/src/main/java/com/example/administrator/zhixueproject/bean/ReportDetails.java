@@ -21,6 +21,7 @@ public class ReportDetails extends BaseBean {
     }
 
     public static class dataBean implements Serializable{
+        private postBean post;
 
         private List<listBean> complaintList=new ArrayList<>();
 
@@ -30,6 +31,26 @@ public class ReportDetails extends BaseBean {
 
         public void setComplaintList(List<listBean> complaintList) {
             this.complaintList = complaintList;
+        }
+
+        public postBean getPost() {
+            return post;
+        }
+
+        public void setPost(postBean post) {
+            this.post = post;
+        }
+    }
+
+    public static class postBean implements Serializable{
+        private String postContent;
+
+        public String getPostContent() {
+            return postContent;
+        }
+
+        public void setPostContent(String postContent) {
+            this.postContent = postContent;
         }
     }
 

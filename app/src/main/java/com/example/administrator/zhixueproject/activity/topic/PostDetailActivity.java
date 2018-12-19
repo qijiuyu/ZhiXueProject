@@ -297,6 +297,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             imgArrow.setVisibility(View.VISIBLE);
         }
         //帖子内容
+        LogUtils.e("++++"+data.getPostContent().getPostContent());
         String html = ToolUtils.imgStyleHtml(data.getPostContent().getPostContent());
         wvPostContent.setWebViewClient(new WebViewClient() {
             @Override
