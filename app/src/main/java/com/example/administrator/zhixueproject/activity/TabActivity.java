@@ -213,14 +213,10 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
      * 设置推送
      */
     private void setPush(){
-        final boolean isPush=MyApplication.spUtil.getBoolean("isPush");
-        if(!isPush){
-            MyApplication.spUtil.addBoolean("isPush",true);
-            //设置极光推送的别名
-            Set<String> tags = new HashSet<>();
-            tags.add(MyApplication.userInfo.getData().getUser().getUserId()+"");
-            JPushInterface.setAliasAndTags(getApplicationContext(), MyApplication.userInfo.getData().getUser().getUserId()+"", tags, mAliasCallback);
-        }
+        //设置极光推送的别名
+        Set<String> tags = new HashSet<>();
+        tags.add(MyApplication.userInfo.getData().getUser().getUserId()+"");
+        JPushInterface.setAliasAndTags(getApplicationContext(), MyApplication.userInfo.getData().getUser().getUserId()+"", tags, mAliasCallback);
     }
 
 
