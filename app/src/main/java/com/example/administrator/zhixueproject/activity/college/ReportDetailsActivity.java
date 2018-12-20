@@ -166,9 +166,13 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
 
     @JavascriptInterface
     public void playAutio() {
-        ReleaseContentsBean releaseContentsBean=new ReleaseContentsBean(audioPath,2,null,timeLength);
-        PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(releaseContentsBean);
-        fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
+        mHandler.post(new Runnable() {
+            public void run() {
+                ReleaseContentsBean releaseContentsBean=new ReleaseContentsBean(audioPath,2,null,timeLength);
+                PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(releaseContentsBean);
+                fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
+            }
+        });
     }
 
 
