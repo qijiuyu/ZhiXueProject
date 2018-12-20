@@ -1,5 +1,8 @@
 package com.example.administrator.zhixueproject.activity.college;
 
+import android.annotation.SuppressLint;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -25,9 +29,15 @@ import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.ToolUtils;
+import com.example.administrator.zhixueproject.utils.record.VoiceManager;
 import com.example.administrator.zhixueproject.view.CustomListView;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +56,9 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
     private Report.ReportList reportList;
     private ReportDetailsAdapter reportDetailsAdapter;
     private List<ReportDetails.listBean> listAll=new ArrayList<>();
+    private  VoiceManager voiceManager;
+    //音频路径
+    private String audioPath;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_details);
@@ -93,8 +106,65 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
         tvCount.setText(reportList.getComplaintCount()+"人  举报");
         tvName.setText(reportList.getPostWriterId());
         tvTime.setText(reportList.getComplaintCreationTime());
+
+        if(!TextUtils.isEmpty(reportList.getComplaintContent())){
+            StringBuffer stringBuffer=new StringBuffer();
+            try {
+                final JSONArray jsonArray=new JSONArray("帖子内容");
+                for (int i=0;i<jsonArray.length();i++){
+                     final JSONObject jsonObject=jsonArray.getJSONObject(i);
+                     //文字
+                     if(jsonObject.getInt("type")==0){
+                        stringBuffer.append("<p>"+jsonObject.getString("content")+"</p>");
+                    }
+                    //图片
+                    if(jsonObject.getInt("type")==1){
+                        stringBuffer.append("<img src='http://"+jsonObject.getString("content")+"'/>");
+                    }
+                    //音频
+                    if(jsonObject.getInt("type")==2){
+                         audioPath="http://"+jsonObject.getString("content");
+                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/><br>" + "0:00/"+jsonObject.getString("strLength"));
+                    }
+                }
+                //帖子内容
+                String html = ToolUtils.imgStyleHtml(stringBuffer.toString());
+                initWebView();
+                webView.setWebViewClient(new WebViewClient() {
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        return true;
+                    }
+                });
+                webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
+
+    @SuppressLint("JavascriptInterface")
+    private void initWebView(){
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setUseWideViewPort(true);//关键点
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webSettings.setDisplayZoomControls(false);
+        webSettings.setAllowFileAccess(true); // 允许访问文件
+        webSettings.setBuiltInZoomControls(true); // 设置显示缩放按钮
+        webView.setHorizontalScrollBarEnabled(false);//水平不显示
+        webView.setVerticalScrollBarEnabled(false);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.addJavascriptInterface(this, "hello");
+    }
+
+
+    @JavascriptInterface
+    public void playAutio() {
+        voiceManager=VoiceManager.getInstance(mContext);
+        voiceManager.startPlay(audioPath);
+    }
 
 
     private Handler mHandler=new Handler(){
@@ -128,7 +198,6 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
      * 刷新数据
      * @param reportDetails
      */
-    String content;
     private void refresh(ReportDetails reportDetails){
         if(null==reportDetails){
             return;
@@ -140,21 +209,6 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
             reportDetailsAdapter.notifyDataSetChanged();
             if(list.size()<20){
                 mRefreshLayout.setIsLoadingMoreEnabled(false);
-            }
-
-
-            //显示帖子详情
-            if(TextUtils.isEmpty(content)){
-                //帖子内容
-                String html = ToolUtils.imgStyleHtml(reportDetails.getData().getPost().getPostContent());
-                webView.setWebViewClient(new WebViewClient() {
-                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                        return true;
-                    }
-                });
-                WebSettings settings = webView.getSettings();
-                settings.setJavaScriptEnabled(true);
-                webView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
             }
         }else{
             showMsg(reportDetails.getErrorMsg());
@@ -180,5 +234,14 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
      */
     private void getData(int index){
         HttpMethod1.getReportDetails(complaintType,reportList.getComplaintToId(),page, index,mHandler);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        if(null!=voiceManager){
+            voiceManager.stopPlay();
+        }
+        super.onDestroy();
     }
 }

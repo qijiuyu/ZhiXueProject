@@ -1,6 +1,7 @@
 package com.example.administrator.zhixueproject.adapter.college;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,26 +78,31 @@ public class ReportListAdapter extends BaseAdapter{
 		holder.tvTime.setText(reportList.getComplaintCreationTime());
 		holder.tvCount.setText(reportList.getComplaintCount()+"人  举报");
 
-		try {
-			boolean isContent=false;
-			String msg = null;
-			final JSONArray jsonArray=new JSONArray(reportList.getComplaintContent());
-			for (int i=0;i<jsonArray.length();i++){
-				final JSONObject jsonObject=jsonArray.getJSONObject(i);
-				if(jsonObject.getInt("type")==0){
-					isContent=true;
-					msg=jsonObject.getString("content");
-					break;
+		if(!TextUtils.isEmpty(reportList.getComplaintContent())){
+			try {
+				boolean isContent=false;
+				String msg = null;
+				final JSONArray jsonArray=new JSONArray(reportList.getComplaintContent());
+				for (int i=0;i<jsonArray.length();i++){
+					final JSONObject jsonObject=jsonArray.getJSONObject(i);
+					if(jsonObject.getInt("type")==0){
+						isContent=true;
+						msg=jsonObject.getString("content");
+						break;
+					}
 				}
+				if(!isContent){
+					holder.tvContent.setText(null);
+				}else{
+					holder.tvContent.setText(msg);
+				}
+			}catch (Exception e){
+				e.printStackTrace();
 			}
-			if(!isContent){
-				holder.tvContent.setText("");
-			}else{
-				holder.tvContent.setText(msg);
-			}
-		}catch (Exception e){
-			e.printStackTrace();
+		}else{
+			holder.tvContent.setText(null);
 		}
+
 		holder.imgChoose.setTag(reportList.getComplaintToId());
 		if(isSelect){
 			holder.imgChoose.setVisibility(View.VISIBLE);
