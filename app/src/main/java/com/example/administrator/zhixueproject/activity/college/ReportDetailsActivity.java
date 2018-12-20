@@ -124,7 +124,7 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
                     //音频
                     if(jsonObject.getInt("type")==2){
                          audioPath="http://"+jsonObject.getString("content");
-                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/><br>" + "0:00/"+jsonObject.getString("strLength"));
+                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/><br>" + "点击播放");
                     }
                 }
                 //帖子内容
