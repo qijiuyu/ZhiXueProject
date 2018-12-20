@@ -101,6 +101,7 @@ public class PostsDetailsBean extends BaseBean {
 
             private int attentionNum;
             private String postContent;
+            private String postContentApp;
             private String userImg;
             private String userName;
             private String postReward;
@@ -152,6 +153,14 @@ public class PostsDetailsBean extends BaseBean {
 
             public void setUserName(String userName) {
                 this.userName = userName;
+            }
+
+            public String getPostContentApp() {
+                return postContentApp;
+            }
+
+            public void setPostContentApp(String postContentApp) {
+                this.postContentApp = postContentApp;
             }
         }
 

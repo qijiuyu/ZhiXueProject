@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.topic;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -26,6 +28,8 @@ import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.PostListBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
+import com.example.administrator.zhixueproject.bean.topic.ReleaseContentsBean;
+import com.example.administrator.zhixueproject.fragment.topic.PlaybackDialogFragment;
 import com.example.administrator.zhixueproject.fragment.topic.PostsDetailsTaskFragment;
 import com.example.administrator.zhixueproject.fragment.topic.WorksListDetailsFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
@@ -40,6 +44,8 @@ import com.example.administrator.zhixueproject.utils.ToolUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
@@ -72,6 +78,10 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private ViewPager vpContent;
     private LinearLayout llPostDetailHead;
     private ImageView imgArrow;
+    //音频路径
+    private String audioPath;
+    //播放时长
+    private int timeLength;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -303,17 +313,74 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             imgArrow.setVisibility(View.VISIBLE);
         }
         //帖子内容
-        LogUtils.e("++++"+data.getPostContent().getPostContent());
-        String html = ToolUtils.imgStyleHtml(data.getPostContent().getPostContent());
-        wvPostContent.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return true;
+        LogUtils.e("++++"+data.getPostContent().getPostContentApp());
+        showDetail(data.getPostContent().getPostContentApp());
+    }
+
+    private void showDetail(String postContent) {
+        if(!TextUtils.isEmpty(postContent)){
+            StringBuffer stringBuffer=new StringBuffer();
+            try {
+                final JSONArray jsonArray=new JSONArray(postContent);
+                for (int i=0;i<jsonArray.length();i++){
+                    final JSONObject jsonObject=jsonArray.getJSONObject(i);
+                    //文字
+                    if(jsonObject.getInt("type")==0){
+                        stringBuffer.append("<p>"+jsonObject.getString("content")+"</p>");
+                    }
+                    //图片
+                    if(jsonObject.getInt("type")==1){
+                        stringBuffer.append("<img src='http://"+jsonObject.getString("content")+"'/>");
+                    }
+                    //音频
+                    if(jsonObject.getInt("type")==2){
+                        audioPath=jsonObject.getString("content");
+                        timeLength=jsonObject.getInt("timeLength");
+                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/><br>" + "点击播放");
+                    }
+                }
+                //帖子内容
+                String html = ToolUtils.imgStyleHtml(stringBuffer.toString());
+                initWebView();
+                wvPostContent.setWebViewClient(new WebViewClient() {
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        return true;
+                    }
+                });
+                wvPostContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @SuppressLint("JavascriptInterface")
+    private void initWebView(){
+        WebSettings webSettings = wvPostContent.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setUseWideViewPort(true);//关键点
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webSettings.setDisplayZoomControls(false);
+        webSettings.setAllowFileAccess(true); // 允许访问文件
+        webSettings.setBuiltInZoomControls(true); // 设置显示缩放按钮
+        wvPostContent.setHorizontalScrollBarEnabled(false);//水平不显示
+        wvPostContent.setVerticalScrollBarEnabled(false);
+        wvPostContent.getSettings().setDomStorageEnabled(true);
+        wvPostContent.addJavascriptInterface(this, "hello");
+    }
+
+
+    @JavascriptInterface
+    public void playAutio() {
+        mHandler.post(new Runnable() {
+            public void run() {
+                ReleaseContentsBean releaseContentsBean=new ReleaseContentsBean(audioPath,2,null,timeLength);
+                PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(releaseContentsBean);
+                fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
             }
         });
-        WebSettings settings = wvPostContent.getSettings();
-        settings.setJavaScriptEnabled(true);
-        wvPostContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
     }
 
     /**
