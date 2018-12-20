@@ -110,7 +110,7 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
         if(!TextUtils.isEmpty(reportList.getComplaintContent())){
             StringBuffer stringBuffer=new StringBuffer();
             try {
-                final JSONArray jsonArray=new JSONArray("帖子内容");
+                final JSONArray jsonArray=new JSONArray(reportList.getComplaintContent());
                 for (int i=0;i<jsonArray.length();i++){
                      final JSONObject jsonObject=jsonArray.getJSONObject(i);
                      //文字
