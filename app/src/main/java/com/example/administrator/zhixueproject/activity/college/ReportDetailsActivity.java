@@ -25,6 +25,8 @@ import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.college.ReportDetailsAdapter;
 import com.example.administrator.zhixueproject.bean.Report;
 import com.example.administrator.zhixueproject.bean.ReportDetails;
+import com.example.administrator.zhixueproject.bean.topic.ReleaseContentsBean;
+import com.example.administrator.zhixueproject.fragment.topic.PlaybackDialogFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.LogUtils;
@@ -56,9 +58,10 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
     private Report.ReportList reportList;
     private ReportDetailsAdapter reportDetailsAdapter;
     private List<ReportDetails.listBean> listAll=new ArrayList<>();
-    private  VoiceManager voiceManager;
     //音频路径
     private String audioPath;
+    //播放时长
+    private int timeLength;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_details);
@@ -123,8 +126,9 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
                     }
                     //音频
                     if(jsonObject.getInt("type")==2){
-                         audioPath="http://"+jsonObject.getString("content");
-                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/><br>" + "点击播放");
+                         audioPath=jsonObject.getString("content");
+                         timeLength=jsonObject.getInt("timeLength");
+                         stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/><br>" + "点击播放");
                     }
                 }
                 //帖子内容
@@ -162,8 +166,9 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
 
     @JavascriptInterface
     public void playAutio() {
-        voiceManager=VoiceManager.getInstance(mContext);
-        voiceManager.startPlay(audioPath);
+        ReleaseContentsBean releaseContentsBean=new ReleaseContentsBean(audioPath,2,null,timeLength);
+        PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(releaseContentsBean);
+        fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
     }
 
 
@@ -236,12 +241,4 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
         HttpMethod1.getReportDetails(complaintType,reportList.getComplaintToId(),page, index,mHandler);
     }
 
-
-    @Override
-    protected void onDestroy() {
-        if(null!=voiceManager){
-            voiceManager.stopPlay();
-        }
-        super.onDestroy();
-    }
 }
