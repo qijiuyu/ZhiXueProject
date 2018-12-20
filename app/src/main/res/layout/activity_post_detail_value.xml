@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include layout="@layout/head" />
 
     <RelativeLayout
-        android:paddingLeft="11dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="11dp">
 
         <ImageView
-            android:layout_centerVertical="true"
             android:id="@+id/iv_head"
             android:layout_width="40dp"
             android:layout_height="40dp"
-             />
+            android:layout_centerVertical="true" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -28,145 +27,157 @@
 
             <TextView
                 android:id="@+id/tv_nickname"
-                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:textSize="13sp"
-                android:textColor="@color/color_333333"/>
+                android:gravity="center"
+                android:textColor="@color/color_333333"
+                android:textSize="13sp" />
 
             <LinearLayout
-                android:gravity="center_vertical"
-                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
+                    android:text="关注"
                     android:textColor="@color/color_999999"
-                    android:text="关注" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tv_attention_num"
-                    android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:textColor="@color/color_fd703e"
-                    android:textSize="13sp"
-                     />
+                    android:textSize="13sp" />
+
                 <TextView
                     android:id="@+id/tv_money_reward"
-                    android:background="@drawable/orange_box_bg"
-                    android:padding="2dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/orange_box_bg"
+                    android:padding="2dp"
                     android:textColor="@color/color_fd703e"
-                    android:textSize="12sp"
-                    />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginRight="@dimen/dm050"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dm050"
+            android:gravity="center"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@mipmap/peep_iv"
                 android:drawablePadding="3dp"
-                android:textSize="13sp"
+                android:text="偷看人数"
                 android:textColor="@color/color_999999"
-                android:text="偷看人数" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/tv_peep_num"
-                android:layout_marginLeft="@dimen/dm015"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dm015"
                 android:textColor="@color/color_fd703e"
-                android:textSize="13sp"
-                />
+                android:textSize="13sp" />
 
         </LinearLayout>
     </RelativeLayout>
 
-    <WebView
-        android:id="@+id/wv_post_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <ImageView
-        android:id="@+id/img_topic_arrow"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@mipmap/topic_arrow"
-        android:rotation="90"
-        android:layout_margin="5dp"
-        android:visibility="gone"
-        />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_posts_task"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/tv_comment"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@color/color_48c6ef"
-            android:gravity="center"
-            android:text="我来抢答"
-            android:textColor="@color/color_ffffff"
-            android:textSize="16sp" />
-
-        <!--评论-->
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        >
         <LinearLayout
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:id="@+id/ll_comment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <WebView
+            android:id="@+id/wv_post_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-            <EditText
-                android:id="@+id/et_comment_content"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:background="@drawable/sp_radiu_reply"
-                android:hint="评论"/>
+        <ImageView
+            android:id="@+id/img_topic_arrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:rotation="90"
+            android:src="@mipmap/topic_arrow"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_posts_task"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/tv_commit"
-                android:layout_width="55dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/sp_send_comment"
+                android:id="@+id/tv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@color/color_48c6ef"
                 android:gravity="center"
-                android:text="发送"
-                android:textColor="@color/color_ffffff"/>
+                android:text="我来抢答"
+                android:textColor="@color/color_ffffff"
+                android:textSize="16sp" />
 
+            <!--评论-->
+            <LinearLayout
+                android:id="@+id/ll_comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/et_comment_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/sp_radiu_reply"
+                    android:hint="评论"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:id="@+id/tv_commit"
+                    android:layout_width="55dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/sp_send_comment"
+                    android:gravity="center"
+                    android:text="发送"
+                    android:textColor="@color/color_ffffff" />
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <include layout="@layout/include_bottom" />
         </LinearLayout>
-    </FrameLayout>
-
-    <include layout="@layout/include_bottom" />
+    </ScrollView>
 
 </LinearLayout>
