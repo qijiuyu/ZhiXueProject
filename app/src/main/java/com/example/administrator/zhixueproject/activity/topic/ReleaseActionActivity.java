@@ -77,6 +77,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     private LinearLayout llAddAction;
     private TextView tvTopic;
     private ImageView ivAddPicture;
+    public static final String RELAEASE_ACTION_SUCCESS="con.example.action.release";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -148,6 +149,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             mStartTime=mActivityListBean.getStartTime();
             tvEndTime.setText(mActivityListBean.getEndTime());
             mEndTime=mActivityListBean.getEndTime();
+            topicId=mActivityListBean.getTopicId()+"";
         }
     }
 
@@ -437,6 +439,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                     }
                     if (bean.isStatus()) {
                         String url = bean.getData().getUrl();
+                        topicImg=url;
                         Glide.with(mContext).load(url).error(R.mipmap.unify_image_ing).into(ivAddPicture);
                     } else {
                         showMsg(bean.getErrorMsg());
@@ -467,8 +470,16 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     @Subscribe
     public void postEvent(PostEvent postEvent) {
         if (PostEvent.RELEASE_ACTIVITY_SUCCESS == postEvent.getEventType()) {
+            // 发送广播
+            sendLocalBroadCast();
             finish();
         }
+    }
+
+    private void sendLocalBroadCast() {
+        Intent intent=new Intent();
+        intent.setAction(RELAEASE_ACTION_SUCCESS);
+        sendBroadcast(intent);
     }
 
     @Override
@@ -476,4 +487,6 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+
 }

@@ -87,7 +87,7 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         tvIssuer = (TextView) findViewById(R.id.tv_issuer);
         findViewById(R.id.tv_confirm).setOnClickListener(this);
         findViewById(R.id.rl_cost).setOnClickListener(this);
-        TextView tvTitle= (TextView) findViewById(R.id.tv_title);
+        TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         if (TextUtils.isEmpty(postId)) {
             tvTitle.setText(getResources().getString(R.string.release_post));
         } else {
@@ -187,13 +187,18 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         if (!"1".equals(postIsFree)) {
             if (et_cost != null) {
                 postPrice = et_cost.getText().toString().trim();
+                double price = Double.parseDouble(postPrice);
+                if (price <= 0) {
+                    showMsg("付费帖子价格不能为0");
+                    return;
+                }
             } else {
                 postPrice = "0";
             }
         } else {
             postPrice = "0";
         }
-        LogUtils.e("帖子价格==="+postPrice);
+        LogUtils.e("帖子价格===" + postPrice);
 
         if (TextUtils.isEmpty(postName)) {
             showMsg("标题不能为空");
@@ -275,7 +280,7 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
                         } else if (mCost.equals(costs[1])) {
                             String cost = et_cost.getText().toString();
                             if (cost.isEmpty()) {
-                                showMsg("金额不能为空");
+                                showMsg("付费帖子金额不能为空");
                                 return;
                             }
                             tvCost.setText("¥" + cost);

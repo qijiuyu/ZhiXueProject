@@ -1,5 +1,9 @@
 package com.example.administrator.zhixueproject.activity.topic;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,17 +17,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.ActionManageAdapter;
-import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
 import com.example.administrator.zhixueproject.bean.topic.ActivityListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.DateUtil;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
-import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +69,17 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this, R.drawable.divider_activity_line, LinearLayoutManager.VERTICAL);
         rvActionManage.addItemDecoration(itemDecoration);
         mrlActionManage.setMyRefreshLayoutListener(this);//刷新加载
+        registerBroadCast();
         getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS);
+    }
+
+    /**
+     * 注册广播
+     */
+    private void registerBroadCast() {
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction(ReleaseActionActivity.RELAEASE_ACTION_SUCCESS);
+        registerReceiver(mBroadCastReceiver,intentFilter);
     }
 
     public void getActivityList(int index) {
@@ -216,12 +229,22 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    @Subscribe
-    public void postEvent(PostEvent postEvent) {
-        if (PostEvent.RELEASE_ACTIVITY_SUCCESS == postEvent.getEventType()) {
-            PAGE = 1;
-            getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS);
+    private BroadcastReceiver mBroadCastReceiver=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction()==ReleaseActionActivity.RELAEASE_ACTION_SUCCESS){
+                LogUtils.e("刷新活动管理列表");
+                PAGE = 1;
+                getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS);
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mBroadCastReceiver!=null){
+            unregisterReceiver(mBroadCastReceiver);
         }
     }
-
 }
