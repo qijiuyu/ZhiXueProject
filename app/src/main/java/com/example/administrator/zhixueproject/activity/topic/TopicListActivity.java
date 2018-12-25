@@ -22,10 +22,8 @@ import com.example.administrator.zhixueproject.utils.InputMethodUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.flyco.tablayout.SlidingTabLayout;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 
 /**
