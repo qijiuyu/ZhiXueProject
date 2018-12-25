@@ -243,7 +243,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             final String action = intent.getAction();
             if(action.equals(ACTION_WEIXIN_LOGIN_OPENID)){
                 openId=intent.getStringExtra("openId");
-                showProgress("微信登陆中");
+                showProgress("微信登录中");
                 HttpMethod1.wxLogin(openId,"0",null,null,null,mHandler);
             }
         }
