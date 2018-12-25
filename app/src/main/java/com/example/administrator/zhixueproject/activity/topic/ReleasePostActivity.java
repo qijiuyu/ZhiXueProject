@@ -187,6 +187,10 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         if (!"1".equals(postIsFree)) {
             if (et_cost != null) {
                 postPrice = et_cost.getText().toString().trim();
+                if(TextUtils.isEmpty(postPrice)){
+                    showMsg("付费帖子价格不能为空");
+                    return;
+                }
                 double price = Double.parseDouble(postPrice);
                 if (price <= 0) {
                     showMsg("付费帖子价格不能为0");
