@@ -252,7 +252,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                                 showMsg("付费金额不能为空");
                                 return;
                             }
-                            if(money.equals("0")){
+                            if(Double.parseDouble(money)==0){
                                 showMsg("付费金额不能0");
                                 return;
                             }
