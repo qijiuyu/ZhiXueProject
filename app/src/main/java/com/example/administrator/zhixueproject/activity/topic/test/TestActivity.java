@@ -38,9 +38,7 @@ public class TestActivity extends Activity implements View.OnClickListener {
             myMediaPlayer = new MediaPlayer();
             myMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             myMediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(),
-
                     fileDescriptor.getStartOffset(),
-
                     fileDescriptor.getLength());
 
             myMediaPlayer.prepare();

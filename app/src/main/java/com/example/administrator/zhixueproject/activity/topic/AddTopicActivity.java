@@ -247,6 +247,15 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                             tvTollMode.setText(mCost);
                             payType = 1;
                         } else if (mCost.equals(costs[1])) {
+                            final String money=etCost.getText().toString().trim();
+                            if(TextUtils.isEmpty(money)){
+                                showMsg("付费金额不能为空");
+                                return;
+                            }
+                            if(Double.parseDouble(money)==0){
+                                showMsg("付费金额不能0");
+                                return;
+                            }
                             tvTollMode.setTextColor(getResources().getColor(R.color.color_ff0000));
                             tvTollMode.setText("￥"+etCost.getText().toString());
                             payType = 2;

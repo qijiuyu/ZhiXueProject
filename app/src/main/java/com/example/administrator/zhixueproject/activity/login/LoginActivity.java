@@ -166,6 +166,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                               MyApplication.userInfo=userInfo;
                               loginSuccess(userInfo);
                           }else{
+                              clearTask();
                               if(jsonObject.getString("errorCode").equals("200203")){
                                   Intent intent=new Intent(mContext,RegisterActivity.class);
                                   intent.putExtra("openId",openId);
@@ -180,21 +181,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                       break;
                 case HandlerConstant1.GET_HOME_INFO_SUCCESS:
                      clearTask();
-                    final Home home= (Home) msg.obj;
-                    if(null==home){
-                        clearTask();
+                     final Home home= (Home) msg.obj;
+                     if(null==home){
                         return;
-                    }
-                    if(home.isStatus()){
+                     }
+                     if(home.isStatus()){
                         MyApplication.homeBean=home.getData().getCollege();
                         MyApplication.homeBean.setAttendType(home.getData().getType());
                         MyApplication.spUtil.addString(SPUtil.HOME_INFO,MyApplication.gson.toJson(MyApplication.homeBean));
                         setClass(TabActivity.class);
                         finish();
-                    }else{
-                        clearTask();
+                     }else{
                         showMsg(home.getErrorMsg());
-                    }
+                     }
                      break;
                 case HandlerConstant1.REQUST_ERROR:
                     clearTask();
@@ -243,7 +242,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             final String action = intent.getAction();
             if(action.equals(ACTION_WEIXIN_LOGIN_OPENID)){
                 openId=intent.getStringExtra("openId");
-                showProgress("微信登陆中");
+                showProgress("微信登录中");
                 HttpMethod1.wxLogin(openId,"0",null,null,null,mHandler);
             }
         }

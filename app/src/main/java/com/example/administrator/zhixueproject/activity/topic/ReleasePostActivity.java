@@ -187,6 +187,10 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         if (!"1".equals(postIsFree)) {
             if (et_cost != null) {
                 postPrice = et_cost.getText().toString().trim();
+                if(TextUtils.isEmpty(postPrice)){
+                    showMsg("付费帖子价格不能为空");
+                    return;
+                }
                 double price = Double.parseDouble(postPrice);
                 if (price <= 0) {
                     showMsg("付费帖子价格不能为0");
@@ -262,9 +266,6 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mCostPopWindow != null) {
-                    mCostPopWindow.dissmiss();
-                }
                 switch (v.getId()) {
                     case R.id.tv_cancel:
                         mCostPopWindow.dissmiss();
@@ -281,6 +282,10 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
                             String cost = et_cost.getText().toString();
                             if (cost.isEmpty()) {
                                 showMsg("付费帖子金额不能为空");
+                                return;
+                            }
+                            if(Double.parseDouble(cost)==0){
+                                showMsg("付费帖子金额不能为0");
                                 return;
                             }
                             tvCost.setText("¥" + cost);
