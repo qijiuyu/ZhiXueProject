@@ -64,7 +64,7 @@ public class Home extends BaseBean {
         private int collegeType;
         private String collegeUser;
         private double collegeZxScale;
-        private int scale;
+        private Double scale;
         private int sort;
         private String updatetime;
         private String updator;
@@ -264,11 +264,11 @@ public class Home extends BaseBean {
             this.collegeZxScale = collegeZxScale;
         }
 
-        public int getScale() {
+        public Double getScale() {
             return scale;
         }
 
-        public void setScale(int scale) {
+        public void setScale(Double scale) {
             this.scale = scale;
         }
 
