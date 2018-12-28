@@ -305,6 +305,12 @@
             android:name=".activity.college.ReportDetailsActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.Mp3Activity"
+            android:screenOrientation="portrait" />
+
+
+
        <!--注册微信回调 WXEntryActivity -->
         <activity
             android:name=".wxapi.WXEntryActivity"

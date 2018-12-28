@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.activity.Mp3Activity;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.Home;
@@ -47,7 +48,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     /**
      * 初始化控件
      */
-    //13911896806 123456
+    //18610717775   a123456
     //13121430770
     private void initView(){
         TextView tvTitle=(TextView)findViewById(R.id.tv_title);
@@ -72,7 +73,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         switch (v.getId()){
             //注册
             case R.id.tv_right:
-                setClass(RegisterActivity.class);
+//                setClass(RegisterActivity.class);
+                setClass(Mp3Activity.class);
                 break;
             //刷新验证码
             case R.id.iv_get_code:
