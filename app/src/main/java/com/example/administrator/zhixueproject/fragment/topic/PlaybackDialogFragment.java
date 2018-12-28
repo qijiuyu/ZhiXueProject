@@ -219,7 +219,6 @@ public class PlaybackDialogFragment extends DialogFragment {
         try {
 
             mMediaPlayer.setDataSource("http://" + item.getContent());
-            LogUtils.e("Content==" + "http://" + item.getContent());
             mMediaPlayer.prepare();
             mSeekBar.setMax(mMediaPlayer.getDuration());
 
