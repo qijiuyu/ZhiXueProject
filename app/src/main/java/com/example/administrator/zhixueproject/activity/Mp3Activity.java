@@ -9,6 +9,8 @@ import com.example.administrator.zhixueproject.activity.audio.AudioRecordFunc;
 import com.example.administrator.zhixueproject.bean.topic.ReleaseContentsBean;
 import com.example.administrator.zhixueproject.fragment.topic.PlaybackDialogFragment;
 
+import java.io.File;
+
 public class Mp3Activity extends BaseActivity {
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,6 +22,14 @@ public class Mp3Activity extends BaseActivity {
          */
         findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //先删除之前的录音文件
+                final String path=AudioFileFunc.getWavFilePath();
+                File file=new File(path);
+                if(file.isFile()){
+                    file.delete();
+                }
+
+                //开始录音
                 AudioRecordFunc mRecord_1 = AudioRecordFunc.getInstance();
                 mRecord_1.startRecordAndFile();
             }
