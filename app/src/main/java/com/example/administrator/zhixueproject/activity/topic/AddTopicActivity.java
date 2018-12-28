@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -288,6 +289,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                 .enableOutsideTouchableDissmiss(true)
                 .size(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 .setAnimationStyle(R.style.AnimUp)
+                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                 .create();
         mTopicTypePop.showAtLocation(llAddTopic, Gravity.BOTTOM, 0, 0);
     }

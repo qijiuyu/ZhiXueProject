@@ -143,7 +143,12 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
             }
         }
         //学院比例
-        seekBar.setProgress(homeBean.getScale());
+        if(homeBean.getScale()<1){
+            Double d=homeBean.getScale()*100;
+            seekBar.setProgress(d.intValue());
+        }else{
+            seekBar.setProgress(homeBean.getScale().intValue());
+        }
         etDetails.setText(homeBean.getCollegeInfo());
     }
 
@@ -264,7 +269,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                     return;
                 }
                  showProgress("数据加载中...");
-                 HttpMethod1.editCollege(collegeName,registerName,backInfo,backCard,collegeBackimg,seekBar.getProgress(),collegeType,money,collegeDelYn,details,mHandler);
+                 HttpMethod1.editCollege(collegeName,registerName,backInfo,backCard,collegeBackimg,(double)(seekBar.getProgress())/100,collegeType,money,collegeDelYn,details,mHandler);
                  break;
             case R.id.tv_cancel:
             case R.id.lin_back:

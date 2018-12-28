@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,7 +56,8 @@ public class PlaybackDialogFragment extends DialogFragment {
 
     private ReleaseContentsBean item;
 
-    public static PlaybackDialogFragment newInstance(ReleaseContentsBean item) {
+    public static PlaybackDialogFragment
+    newInstance(ReleaseContentsBean item) {
         PlaybackDialogFragment f = new PlaybackDialogFragment();
         Bundle b = new Bundle();
         b.putParcelable(ARG_ITEM, item);
@@ -217,7 +219,7 @@ public class PlaybackDialogFragment extends DialogFragment {
             mMediaPlayer = new MediaPlayer();
         }
         try {
-
+            // mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setDataSource("http://" + item.getContent());
             mMediaPlayer.prepare();
             mSeekBar.setMax(mMediaPlayer.getDuration());
@@ -253,6 +255,7 @@ public class PlaybackDialogFragment extends DialogFragment {
         }
 
         try {
+            // mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setDataSource("http://" + item.getContent());
             mMediaPlayer.prepare();
             mSeekBar.setMax(mMediaPlayer.getDuration());

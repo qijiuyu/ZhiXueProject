@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -334,6 +335,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                 .enableOutsideTouchableDissmiss(true)
                 .size(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 .setAnimationStyle(R.style.AnimUp)
+                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                 .create();
         mTopicTypePop.showAtLocation(llAddAction, Gravity.BOTTOM, 0, 0);
     }

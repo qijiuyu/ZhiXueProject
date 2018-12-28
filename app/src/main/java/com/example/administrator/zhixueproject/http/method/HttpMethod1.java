@@ -379,7 +379,7 @@ public class HttpMethod1  extends BaseRequst {
      * @param collegeInfo
      * @param handler
      */
-    public static void editCollege(String collegeName,String collegeUser,String collegeAccBankinfo,String collegeAccBank,String collegeBackimg,int scale,int collegeType,String collegePrice,int collegeDelYn,String collegeInfo,final Handler handler) {
+    public static void editCollege(String collegeName,String collegeUser,String collegeAccBankinfo,String collegeAccBank,String collegeBackimg,double scale,int collegeType,String collegePrice,int collegeDelYn,String collegeInfo,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("collegeName",collegeName);
         map.put("collegeUser",collegeUser);

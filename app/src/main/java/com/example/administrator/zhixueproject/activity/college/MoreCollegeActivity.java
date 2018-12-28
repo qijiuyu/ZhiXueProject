@@ -113,7 +113,7 @@ public class MoreCollegeActivity extends BaseActivity implements CollegeCallBack
 
     @Override
     public void onClick(Colleges colleges) {
-//        showProgress("数据加载中");
-//        HttpMethod1.getCollegeDetails(colleges.getCollegeId(),mHandler);
+        showProgress("数据加载中");
+        HttpMethod1.getCollegeDetails(colleges.getCollegeId(),mHandler);
     }
 }
