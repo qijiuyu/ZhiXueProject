@@ -11,6 +11,9 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.SeekBar;
+
+import com.example.administrator.zhixueproject.activity.audio.AudioFileFunc;
+import com.example.administrator.zhixueproject.activity.audio.AudioRecordFunc;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import java.io.File;
 import java.io.FileInputStream;
@@ -248,21 +251,35 @@ public class VoiceManager {
         if (voicePlayCallBack != null) {
             voicePlayCallBack.playFinish();
         }
+
         stopRecorder(mMediaRecorder, true);
-        mMediaRecorder = null;
+        // mMediaRecorder = null;
 
         stopMedia(mMediaPlayer, true);
         mMediaPlayer = null;
-        mMediaRecorder = new MediaRecorder();
-        File file = prepareRecorder(mMediaRecorder, true);
-        if (file != null) {
+        // mMediaRecorder = new MediaRecorder();
+
+      // ********************************WAV格式录制  start *************************************
+        final String path= AudioFileFunc.getWavFilePath();
+        File file1=new File(path);
+        if(file1.isFile()){
+            file1.delete();
+        }
+        //开始录音
+        AudioRecordFunc mRecord_1 = AudioRecordFunc.getInstance();
+        mRecord_1.startRecordAndFile();
+        //*********************WAV格式录制    end *********************
+
+
+       // File file = prepareRecorder(mMediaRecorder, true);
+        if (file1 != null) {
             //开始录音回调
             if (voiceRecordCallBack != null) {
                 voiceRecordCallBack.recStart(init);
             }
             mDeviceState = MEDIA_STATE_RECORD_DOING;
             mRecTimePrev = VoiceTimeUtils.getTimeStrFromMillis(System.currentTimeMillis());
-            mRecList.add(file);
+            mRecList.add(file1);
 
             mHandler.removeMessages(MSG_TIME_INTERVAL);
             mHandler.sendEmptyMessage(MSG_TIME_INTERVAL);
@@ -659,13 +676,20 @@ public class VoiceManager {
     private boolean stopRecorder(MediaRecorder mr, boolean release) {
         boolean result = false;
         try {
-            if (mr != null) {
+           /* if (mr != null) {
                 mr.stop();
                 if (release) {
                     mr.release();
                 }
                 result = true;
-            }
+            }*/
+
+           //******************* WAV  STOP********************
+            AudioRecordFunc mRecord_1 = AudioRecordFunc.getInstance();
+            mRecord_1.stopRecordAndFile();
+
+            //******************* WAV  STOP********************
+
             if (mThread != null) {
                 mThread.exit();
                 mThread = null;
