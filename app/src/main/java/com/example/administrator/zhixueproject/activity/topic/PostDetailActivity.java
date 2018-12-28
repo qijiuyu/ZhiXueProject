@@ -11,6 +11,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -42,6 +43,13 @@ import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.utils.ToolUtils;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
@@ -82,7 +90,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private String audioPath;
     //播放时长
     private int timeLength;
-
+    //分享渠道
+    private SHARE_MEDIA share_media;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +124,83 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         imgArrow = (ImageView) findViewById(R.id.img_topic_arrow);
         imgArrow.setOnClickListener(this);
 
+        ImageView imgShare=(ImageView)findViewById(R.id.img_right);
+        imgShare.setImageDrawable(getResources().getDrawable(R.mipmap.share_icon));
+        imgShare.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                View view= LayoutInflater.from(mContext).inflate(R.layout.share_pop,null);
+                dialogPop(view,true);
+                view.findViewById(R.id.img_share_wx).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        share_media = SHARE_MEDIA.WEIXIN;
+                        startShare();
+                    }
+                });
+
+
+                view.findViewById(R.id.img_share_wxp).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        share_media = SHARE_MEDIA.WEIXIN_CIRCLE;
+                        startShare();
+                    }
+                });
+
+            }
+        });
+
+    }
+
+
+
+    /**
+     * 分享
+     */
+    private void startShare() {
+//        UMImage img = new UMImage(this, null);
+        UMWeb web = new UMWeb("http:www.baidu.com");
+        web.setTitle("知学");
+        web.setDescription("我是描述");
+        new ShareAction(PostDetailActivity.this).setPlatform(share_media)
+                .setCallback(umShareListener)
+                .withMedia(web)
+                .share();
+    }
+
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        public void onStart(SHARE_MEDIA share_media) {
+        }
+
+        public void onResult(SHARE_MEDIA platform) {
+            if (platform.name().equals("WEIXIN_FAVORITE")) {
+                showMsg(getString(R.string.collect_success));
+            } else {
+                showMsg(getString(R.string.share_success));
+            }
+        }
+
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            if (t.getMessage().indexOf("2008") != -1) {
+                if (platform.name().equals("WEIXIN") || platform.name().equals("WEIXIN_CIRCLE")) {
+                    showMsg(getString(R.string.share_failed_install_wechat));
+                } else if (platform.name().equals("QQ") || platform.name().equals("QZONE")) {
+                    showMsg(getString(R.string.share_failed_install_qq));
+                }
+            }
+            showMsg(getString(R.string.share_failed));
+        }
+
+        public void onCancel(SHARE_MEDIA platform) {
+            showMsg(getString(R.string.share_canceled));
+        }
+    };
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != 0) {
+            UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     private void initData() {

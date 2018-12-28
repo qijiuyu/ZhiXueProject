@@ -272,6 +272,12 @@
     <string name="is_up_success">上架成功</string>
     <string name="is_dowm_success">下架成功</string>
     <string name="invite_success">邀请成功</string>
+    <string name="collect_success">收藏成功</string>
+    <string name="share_success">分享成功</string>
+    <string name="share_failed_install_qq">分享失败，请安装QQ客户端</string>
+    <string name="share_failed">分享失败</string>
+    <string name="share_canceled">分享取消</string>
+    <string name="share_failed_install_wechat">分享失败，请安装微信客户端</string>
 
     <array name="release_cost">
         <item>免费</item>

@@ -40,4 +40,6 @@
 
     <color name="color_91dcf5">#91dcf5</color>
     <color name="color_48c6ef">#48c6ef</color>
+    <color name="color_7e7e7e">#7e7e7e</color>
+    <color name="half_transparent">#b0000000</color>
 </resources>
