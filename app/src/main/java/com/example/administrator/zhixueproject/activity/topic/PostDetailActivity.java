@@ -124,6 +124,10 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         imgArrow = (ImageView) findViewById(R.id.img_topic_arrow);
         imgArrow.setOnClickListener(this);
 
+
+        /**
+         * 分享功能
+         */
         ImageView imgShare=(ImageView)findViewById(R.id.img_right);
         imgShare.setImageDrawable(getResources().getDrawable(R.mipmap.share_icon));
         imgShare.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +136,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                 dialogPop(view,true);
                 view.findViewById(R.id.img_share_wx).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        closeDialog();
                         share_media = SHARE_MEDIA.WEIXIN;
                         startShare();
                     }
@@ -140,6 +145,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
                 view.findViewById(R.id.img_share_wxp).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        closeDialog();
                         share_media = SHARE_MEDIA.WEIXIN_CIRCLE;
                         startShare();
                     }
@@ -156,10 +162,11 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
      * 分享
      */
     private void startShare() {
-//        UMImage img = new UMImage(this, null);
-        UMWeb web = new UMWeb("http:www.baidu.com");
-        web.setTitle("知学");
-        web.setDescription("我是描述");
+        UMImage image = new UMImage(this, R.mipmap.ic_launcher);
+        UMWeb web = new UMWeb("http://zxw.yl-mall.cn/zhixue_c/Wxpay/aftershareskip.html?floorPostId=345");
+        web.setTitle("知学就学");
+        web.setDescription("帖子详情");
+        web.setThumb(image);
         new ShareAction(PostDetailActivity.this).setPlatform(share_media)
                 .setCallback(umShareListener)
                 .withMedia(web)

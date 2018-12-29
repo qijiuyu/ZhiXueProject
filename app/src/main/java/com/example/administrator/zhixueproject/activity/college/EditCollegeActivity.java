@@ -43,19 +43,21 @@ import java.util.List;
 
 public class EditCollegeActivity extends BaseActivity implements View.OnClickListener,SeekBar.OnSeekBarChangeListener{
 
-    private EditText etName,etRegister,etBack,etCard,etDetails;
+    private EditText etName,etRegister,etBack,etCard,etDetails,etWelcome;
     private TextView tvMoney,tvNum;
-    private ImageView imgBJ;
+    private ImageView imgBJ,imgLogo;
     private SeekBar seekBar;
     private RadioButton radioButton1,radioButton2,radioButton3,radioButton4;
     private Home.HomeBean homeBean;
     //学院背景图地址
     private String outputUri;
-    private String collegeBackimg;
+    private String collegeBackimg,colletgeLogo;
     //入群设置(1：开放、2：付费、3：审核)
     private int collegeType;
     //设为私群(0：否、2：是)
     private int collegeDelYn=2;
+    //  0:学院背景    1：学院logo
+    private int imgType;
     private List<RadioButton> rbList=new ArrayList<>();
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +79,10 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         etRegister=(EditText)findViewById(R.id.et_registrant);
         etBack=(EditText)findViewById(R.id.et_bank_name);
         etCard=(EditText)findViewById(R.id.et_card_number);
+        etWelcome=(EditText)findViewById(R.id.et_welcome);
         tvMoney=(TextView)findViewById(R.id.tv_aec_money);
         imgBJ=(ImageView)findViewById(R.id.iv_college_back_img);
+        imgLogo=(ImageView)findViewById(R.id.iv_college_logo);
         seekBar=(SeekBar)findViewById(R.id.college_seek_bar);
         radioButton1=(RadioButton)findViewById(R.id.item_option1);
         radioButton2=(RadioButton)findViewById(R.id.item_option2);
@@ -87,6 +91,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         etDetails=(EditText)findViewById(R.id.et_address_detail);
         tvNum=(TextView)findViewById(R.id.tv_details_num);
         imgBJ.setOnClickListener(this);
+        imgLogo.setOnClickListener(this);
         radioButton1.setOnClickListener(this);
         radioButton2.setOnClickListener(this);
         radioButton3.setOnClickListener(this);
@@ -128,6 +133,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         etCard.setText(homeBean.getCollegeAccBank());
         collegeBackimg=homeBean.getCollegeBackimg();
         Glide.with(mContext).load(collegeBackimg).centerCrop().error(R.mipmap.uploading_iv).into(imgBJ);
+//        colletgeLogo=
         //是否为私密
         collegeDelYn=homeBean.getCollegeDelYn();
         if(collegeDelYn==2){
@@ -165,8 +171,13 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                         return;
                     }
                     if(uploadFile.isStatus()){
-                        collegeBackimg=uploadFile.getData().getUrl();
-                        Glide.with(mContext).load(collegeBackimg).centerCrop().into(imgBJ);
+                        if(imgType==0){
+                            collegeBackimg=uploadFile.getData().getUrl();
+                            Glide.with(mContext).load(collegeBackimg).centerCrop().into(imgBJ);
+                        }else{
+                            colletgeLogo=uploadFile.getData().getUrl();
+                            Glide.with(mContext).load(colletgeLogo).centerCrop().into(imgLogo);
+                        }
                     }else{
                         showMsg(uploadFile.getErrorMsg());
                     }
@@ -179,7 +190,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                      }
                      if(baseBean.isStatus()){
                          getCollegeDetails();
-                         showMsg("恭喜您开通成功");
+                         showMsg("提交成功");
                      }else{
                          showMsg(baseBean.getErrorMsg());
                      }
@@ -209,6 +220,12 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()){
             //选择背景图
             case R.id.iv_college_back_img:
+                 imgType=0;
+                 addPic();
+                 break;
+            //学院logo
+            case R.id.iv_college_logo:
+                 imgType=1;
                  addPic();
                  break;
              //设为私密
@@ -240,6 +257,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                  final String backCard=etCard.getText().toString().trim();
                  final String money=tvMoney.getText().toString().trim().replace("元","");
                  final String details=etDetails.getText().toString().trim();
+                 final String welcome=etWelcome.getText().toString().trim();
                  if(TextUtils.isEmpty(collegeName)){
                      showMsg("请输入学院名称！");
                      return;
@@ -260,9 +278,17 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                     showMsg("请选择学院背景图！");
                     return;
                 }
+                if(TextUtils.isEmpty(colletgeLogo)){
+                    showMsg("请选择学院Logo图！");
+                    return;
+                }
                 if(collegeType==2 && TextUtils.isEmpty(money)){
                      setMoney();
                      return;
+                }
+                if(TextUtils.isEmpty(welcome)){
+                    showMsg("请输入学院欢迎语！");
+                    return;
                 }
                 if(TextUtils.isEmpty(details)){
                     showMsg("请输入学院简介！");

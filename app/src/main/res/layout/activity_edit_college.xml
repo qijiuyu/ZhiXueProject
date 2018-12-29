@@ -167,6 +167,27 @@
 
             </LinearLayout>
 
+
+            <View style="@style/gray_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="15dp"
+                android:text="学院logo"
+                android:textColor="@color/color_333333"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/iv_college_logo"
+                android:scaleType="centerCrop"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:layout_margin="11dp"
+                android:src="@mipmap/uploading_iv"/>
+
+
             <View style="@style/gray_line" />
 
             <TextView
@@ -331,6 +352,32 @@
                     android:textColor="@color/color_333333"
                     android:textSize="14sp" />
             </LinearLayout>
+
+            <View style="@style/gray_line" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="19dp"
+                android:text="学院欢迎语"
+                android:textColor="@color/color_333333"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/et_welcome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:padding="5dp"
+                android:minLines="3"
+                android:layout_margin="11dp"
+                android:background="@null"
+                android:hint="编辑学院欢迎语"
+                android:maxLength="500"
+                android:textColor="@color/color_666666"
+                android:textColorHint="@color/color_999999"
+                android:textSize="14sp" />
 
             <View style="@style/gray_line" />
 

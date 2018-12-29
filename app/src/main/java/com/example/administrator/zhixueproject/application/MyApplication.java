@@ -76,7 +76,7 @@ public class MyApplication extends Application {
         UMConfigure.setLogEnabled(true);
         UMConfigure.init(this,"561cae6ae0f55abd990035bf","umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
         //微信
-        PlatformConfig.setWeixin("wx1a322841c0378eab", "3b0df5e49906d4d129721920aef465a1");
+        PlatformConfig.setWeixin("wxf2413139ede45239", "59fecf8eedfd5c4fc7e699c4424a7dfa");
     }
 
 }
