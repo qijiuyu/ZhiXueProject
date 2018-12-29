@@ -163,11 +163,13 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
      */
     private void startShare() {
         UMImage image = new UMImage(this, R.mipmap.ic_launcher);
-        UMWeb web = new UMWeb("http://zxw.yl-mall.cn/zhixue_c/Wxpay/aftershareskip.html?floorPostId=345");
+        int id=postListBean.getPostId();
+        LogUtils.e("getPostId==="+id);
+        UMWeb web = new UMWeb("http://zxw.yl-mall.cn/zhixue_c/Wxpay/aftershareskip.html?floorPostId="+String.valueOf(id));
         web.setTitle("知学就学");
         web.setDescription("帖子详情");
         web.setThumb(image);
-        new ShareAction(PostDetailActivity.this).setPlatform(share_media)
+        new ShareAction(this).setPlatform(share_media)
                 .setCallback(umShareListener)
                 .withMedia(web)
                 .share();
