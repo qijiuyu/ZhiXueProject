@@ -147,6 +147,7 @@ public class BaseActivity extends FragmentActivity {
         Window window = baseDialog.getWindow();
         window.setGravity(Gravity.CENTER);  //此处可以设置dialog显示的位置
         window.setWindowAnimations(R.style.mystyle);  //添加动画
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         baseDialog.show();
         return baseDialog;
     }
