@@ -30,7 +30,6 @@ import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.ReleaseContentsAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
-import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.ReleaseContentsBean;
@@ -605,6 +604,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         });
         voiceManager.startVoiceRecord(RecordUtil.getAudioPath());
     }
+
 
     /**
      * 添加数据--本地显示
