@@ -447,6 +447,16 @@ public interface HttpApi1 {
 
 
     /**
+     * 获取我的反馈列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.MY_FEEDBACK)
+    Call<FeedBack> getMyFeedBack(@FieldMap Map<String, String> map);
+
+
+    /**
      * 添加意见反馈
      * @param map
      * @return

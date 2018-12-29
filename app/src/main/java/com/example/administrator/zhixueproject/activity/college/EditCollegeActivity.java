@@ -133,7 +133,8 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         etCard.setText(homeBean.getCollegeAccBank());
         collegeBackimg=homeBean.getCollegeBackimg();
         Glide.with(mContext).load(collegeBackimg).centerCrop().error(R.mipmap.uploading_iv).into(imgBJ);
-//        colletgeLogo=
+        colletgeLogo=homeBean.getCollegeLogo();
+        Glide.with(mContext).load(colletgeLogo).centerCrop().error(R.mipmap.uploading_iv).into(imgLogo);
         //是否为私密
         collegeDelYn=homeBean.getCollegeDelYn();
         if(collegeDelYn==2){
@@ -156,6 +157,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
             seekBar.setProgress(homeBean.getScale().intValue());
         }
         etDetails.setText(homeBean.getCollegeInfo());
+        etWelcome.setText(homeBean.getCollegeBanner());
     }
 
 
@@ -295,7 +297,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                     return;
                 }
                  showProgress("数据加载中...");
-                 HttpMethod1.editCollege(collegeName,registerName,backInfo,backCard,collegeBackimg,(double)(seekBar.getProgress())/100,collegeType,money,collegeDelYn,details,mHandler);
+                 HttpMethod1.editCollege(collegeName,registerName,backInfo,backCard,collegeBackimg,(double)(seekBar.getProgress())/100,collegeType,money,collegeDelYn,details,colletgeLogo,welcome,mHandler);
                  break;
             case R.id.tv_cancel:
             case R.id.lin_back:

@@ -270,4 +270,6 @@ public class HttpConstant {
     public static final String UPDATE_POST_COLL="post/updatePostColl.do";
 
     public static final String UPDATE_VERSION="resources/version.json";
+
+    public static final String MY_FEEDBACK="advice/getMyAdviceList.do";
 }

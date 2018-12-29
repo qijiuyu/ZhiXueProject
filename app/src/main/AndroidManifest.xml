@@ -306,6 +306,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".activity.college.MyFeedBackActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".activity.Mp3Activity"
             android:screenOrientation="portrait" />
 

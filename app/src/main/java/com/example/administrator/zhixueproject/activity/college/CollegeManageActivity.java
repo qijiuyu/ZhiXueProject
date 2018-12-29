@@ -40,6 +40,7 @@ public class CollegeManageActivity extends BaseActivity implements View.OnClickL
         findViewById(R.id.rl_cash_details).setOnClickListener(this);
         findViewById(R.id.rl_announcement_edit).setOnClickListener(this);
         findViewById(R.id.rl_feedback).setOnClickListener(this);
+        findViewById(R.id.rl_Mfeedback).setOnClickListener(this);
         findViewById(R.id.rl_about_platform).setOnClickListener(this);
         findViewById(R.id.rl_report_manage).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
@@ -94,6 +95,9 @@ public class CollegeManageActivity extends BaseActivity implements View.OnClickL
             //意见反馈
             case R.id.rl_feedback:
                  setClass(FeedBackActivity.class);
+                 break;
+            case R.id.rl_Mfeedback:
+                setClass(MyFeedBackActivity.class);
                  break;
             //关于我们
             case R.id.rl_about_platform:
