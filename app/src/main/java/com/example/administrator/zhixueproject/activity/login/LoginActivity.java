@@ -73,8 +73,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         switch (v.getId()){
             //注册
             case R.id.tv_right:
-//                setClass(RegisterActivity.class);
-                setClass(Mp3Activity.class);
+                setClass(RegisterActivity.class);
                 break;
             //刷新验证码
             case R.id.iv_get_code:
