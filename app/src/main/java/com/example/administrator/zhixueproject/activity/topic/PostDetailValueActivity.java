@@ -441,13 +441,22 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
     @Subscribe
     public void replyCommentEvent(PostEvent postEvent) {
         switch (postEvent.getEventType()) {
+            // 回复帖子
+            case PostEvent.REPLY_POST:
+                PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean postData = (PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean) postEvent.getData();
+                mFloorId = String.valueOf(postData.getFloorInfo().getFloorId());
+                mFloorUserName = postData.getFloorInfo().getUserName();
+                mFloorUserId = postData.getFloorInfo().getFloorUserId();
+                initFloorComment(mFloorUserName);
+                break;
             case PostEvent.REPLY_POST_COMMENT:
-                initFloorComment();
+                // 回复楼层
                 String postDataSt = (String) postEvent.getData();
                 String[] split2 = postDataSt.split("=");
                 mFloorUserId = split2[0];
                 mFloorUserName = split2[1];
                 mFloorId = split2[2];
+                initFloorComment(mFloorUserName);
                 break;
             case PostEvent.COMMENT_SUCCESS:
                 PAGE = 1;
@@ -456,10 +465,11 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         }
     }
 
-    private void initFloorComment() {
+    private void initFloorComment(String mFloorUserName) {
         isFloorComment = true;
         llComment.setVisibility(View.VISIBLE);
         tvComment.setVisibility(View.GONE);
+        etCommonContent.setHint("@"+mFloorUserName);
         etCommonContent.setText("");
     }
 

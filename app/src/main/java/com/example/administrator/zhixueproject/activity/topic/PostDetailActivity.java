@@ -493,44 +493,47 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     @Subscribe
     public void replyCommentEvent(PostEvent postEvent) {
         switch (postEvent.getEventType()) {
+            // 回复帖子
             case PostEvent.REPLY_POST:
-                initFloorComment();
                 PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean postData = (PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean) postEvent.getData();
                 mFloorId = String.valueOf(postData.getFloorInfo().getFloorId());
                 mFloorUserName = postData.getFloorInfo().getUserName();
                 mFloorUserId = postData.getFloorInfo().getFloorUserId();
+                initFloorComment(mFloorUserName);
                 break;
             case PostEvent.REPLY_WORK:
-                initFloorComment();
                 PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean workData = (PostsDetailsBean.PostDetailBeanOuter.WorkCommentListBean) postEvent.getData();
                 mFloorId = String.valueOf(workData.getFloorInfo().getFloorId());
                 mFloorUserName = workData.getFloorInfo().getUserName();
                 mFloorUserId = workData.getFloorInfo().getFloorUserId();
+                initFloorComment(mFloorUserName);
                 break;
             case PostEvent.REPLY_WORK_COMMENT:
-                initFloorComment();
                 String workDataSt = (String) postEvent.getData();
                 String[] split = workDataSt.split("=");
                 mFloorUserId = split[0];
                 mFloorUserName = split[1];
                 mFloorId = split[2];
+                initFloorComment(mFloorUserName);
                 break;
             case PostEvent.REPLY_POST_COMMENT:
-                initFloorComment();
+                // 回复帖子楼层
                 String postDataSt = (String) postEvent.getData();
                 String[] split2 = postDataSt.split("=");
                 mFloorUserId = split2[0];
                 mFloorUserName = split2[1];
                 mFloorId = split2[2];
+                initFloorComment(mFloorUserName);
                 break;
         }
 
     }
 
-    private void initFloorComment() {
+    private void initFloorComment(String mFloorUserName) {
         isFloorComment = true;
         llComment.setVisibility(View.VISIBLE);
         tvComment.setVisibility(View.GONE);
+        etCommentContent.setHint("@"+mFloorUserName);
         etCommentContent.setText("");
     }
 }
