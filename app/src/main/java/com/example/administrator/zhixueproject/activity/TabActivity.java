@@ -225,7 +225,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
                 exitTime = System.currentTimeMillis();
             } else {
                 //关闭广播
-                unregisterReceiver(mBroadcastReceiver);
+                // unregisterReceiver(mBroadcastReceiver);
                 ActivitysLifecycle.getInstance().exit();
             }
             return false;

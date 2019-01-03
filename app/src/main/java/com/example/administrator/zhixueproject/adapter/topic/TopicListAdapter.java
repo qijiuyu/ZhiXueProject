@@ -23,6 +23,7 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
 
     private boolean mIsPostList;
     public static final String TOPIC_ITEM_ID="topicItemId";
+    public static final String TOPIC_TYPE="topicType";
     private Context mContext=MyApplication.application;
 
     public TopicListAdapter(int layoutResId, List<TopicListBean> data, boolean isPostList) {
@@ -103,6 +104,7 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setClass(mContext,TopicListActivity.class);
                 intent.putExtra(TOPIC_ITEM_ID,item.getTopicId());
+                intent.putExtra(TOPIC_TYPE,item.getTopicType());
                 mContext.startActivity(intent);
             }
         });
