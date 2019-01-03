@@ -46,6 +46,8 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
             helper.setText(R.id.tv_post_status, topics[1]);
         } else if (type == 3) {
             helper.setText(R.id.tv_post_status, topics[2]);
+        }else if (type==4){
+            helper.setText(R.id.tv_post_status, topics[3]);
         }else {
             helper.setText(R.id.tv_post_status, topics[2]);
         }
