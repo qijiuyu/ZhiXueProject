@@ -158,7 +158,7 @@ public class KickOutMemberActivity extends BaseActivity implements View.OnClickL
         if (bean.isStatus()) {
             kickOutList.addAll(bean.getData().getDelynVipList());
             if (bean.getData().getDelynVipList().size() <= 0) {
-                showMsg(getString(R.string.no_more_data));
+                return;
             }
             mKickOutMemberAdapter.setNewData(kickOutList);
             mKickOutMemberAdapter.notifyDataSetChanged();

@@ -48,9 +48,8 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:lineSpacingExtra="4dp"
-        android:maxLines="2"
         android:padding="10dp"
-        android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
+        android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容如"
         android:textColor="@color/color_666666"
         android:textSize="14sp" />
 

@@ -130,7 +130,6 @@ public class ActionNeophyteActivity extends BaseActivity implements MyRefreshLay
         if (bean.isStatus()) {
             ActionNeophyteBean.DataBean dataBean = bean.getData();
             if (dataBean.getActivityUserList().size() <= 0) {
-                showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }
             listData.addAll(dataBean.getActivityUserList());

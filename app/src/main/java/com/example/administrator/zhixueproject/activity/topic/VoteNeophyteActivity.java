@@ -166,7 +166,6 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
         if (bean.isStatus()) {
             VoteNeophyteBean.DataBean dataBean = bean.getData();
             if (dataBean.getVoteDetailList().size() <= 0) {
-                showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }
             listData.addAll(dataBean.getVoteDetailList());

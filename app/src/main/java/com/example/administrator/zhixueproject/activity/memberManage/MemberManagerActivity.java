@@ -268,7 +268,6 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
         }
         if (bean.isStatus()) {
             if (bean.getData().getAttendanceList().size() <= 0) {
-                showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }
             mAttendanceList.addAll(bean.getData().getAttendanceList());

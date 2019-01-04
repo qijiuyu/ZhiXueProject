@@ -59,6 +59,7 @@ public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayou
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvMemberDetailList.setLayoutManager(linearLayoutManager);
         getVipInfo(HandlerConstant2.GET_VIP_INFO_SUCCESS);
+        adapterView();
     }
 
     /**
@@ -122,7 +123,8 @@ public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayou
             if (null!=mQuestionList&&mQuestionList.size()==0){
                 return;
             }
-            adapterView();
+            mPaitQuestionListAdapter.setNewData(mQuestionList);
+            mPaitQuestionListAdapter.notifyDataSetChanged();
         } else {
             bean.getErrorMsg();
         }
@@ -140,10 +142,11 @@ public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayou
         }
         if (bean.isStatus()) {
             if (bean.getData().getPostList().size() <= 0) {
-                showMsg(getString(R.string.no_more_data));
+                return;
             }
             mQuestionList.addAll(bean.getData().getPostList());
-            adapterView();
+            mPaitQuestionListAdapter.setNewData(mQuestionList);
+            mPaitQuestionListAdapter.notifyDataSetChanged();
         } else {
             showMsg(bean.getErrorMsg());
         }

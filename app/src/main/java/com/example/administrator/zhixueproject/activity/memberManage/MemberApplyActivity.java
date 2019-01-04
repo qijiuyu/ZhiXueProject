@@ -235,7 +235,7 @@ public class MemberApplyActivity extends BaseActivity implements View.OnClickLis
         if (bean.isStatus()){
             mApplyVipList.addAll(bean.getData().getApplyVipList());
             if (bean.getData().getApplyVipList().size()<=0){
-                showMsg(getString(R.string.no_more_data));
+                return;
             }
             mMemberApplyAdapter.setNewData(mApplyVipList);
             mMemberApplyAdapter.notifyDataSetChanged();

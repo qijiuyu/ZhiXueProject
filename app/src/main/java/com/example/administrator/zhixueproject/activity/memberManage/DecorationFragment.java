@@ -200,7 +200,7 @@ public class DecorationFragment extends BaseFragment implements BaseQuickAdapter
         refreshLayout.loadMoreComplete();
         if (bean.status) {
             if (bean.getData().getMedalTypeList().size() <= 0) {
-                showMsg(getString(R.string.no_more_data));
+                return;
             }
             medalList.addAll(bean.getData().getMedalTypeList());
             mDecorationAdapter.setNewData(medalList);

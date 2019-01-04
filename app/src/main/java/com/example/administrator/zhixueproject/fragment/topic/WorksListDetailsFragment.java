@@ -72,6 +72,7 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
         //刷新加载
         mrlPostsTask.setMyRefreshLayoutListener(this);
         getPostDetailTask(HandlerConstant2.GET_POST_DETAIL_SUCCESS);
+        adapterView();
     }
 
     public void setPostId(String postId) {
@@ -147,7 +148,8 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
             listData.clear();
         }
         listData = bean.getData().getWorkCommentList();
-        adapterView();
+        mAdapter.setNewData(listData);
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -160,11 +162,11 @@ public class WorksListDetailsFragment extends BaseFragment implements MyRefreshL
         }
         if (bean.isStatus()) {
             if (bean.getData().getWorkCommentList().size() <= 0) {
-                showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }
             listData.addAll(bean.getData().getWorkCommentList());
-            adapterView();
+            mAdapter.setNewData(listData);
+            mAdapter.notifyDataSetChanged();
         } else {
             showMsg(bean.errorMsg);
         }

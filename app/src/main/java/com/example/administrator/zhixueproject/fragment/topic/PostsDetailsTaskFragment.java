@@ -25,6 +25,8 @@ import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayou
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,7 +40,7 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
     private String LIMIT = "10";
     private String TIMESTAMP = System.currentTimeMillis()+"";
     private int type;//1讨论  2作业
-    private List<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean> listData;
+    private List<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean> listData=new ArrayList<>();
     private MyRefreshLayout mrlPostsTask;
     private RecyclerView rvPostsTask;
     private PostsTaskAdapter mAdapter;
@@ -67,6 +69,8 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
         //刷新加载
         mrlPostsTask.setMyRefreshLayoutListener(this);
         getPostDetailTask(HandlerConstant2.GET_POST_DETAIL_SUCCESS);
+        adapterView();
+
     }
 
     public void setPostId(String postId) {
@@ -146,7 +150,8 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
         if (bean.getData().getPostCommentList().size()==0){
             return;
         }
-        adapterView();
+        mAdapter.setNewData(listData);
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -159,11 +164,11 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
         }
         if (bean.isStatus()) {
             if (bean.getData().getPostCommentList().size() <= 0) {
-                showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }
             listData.addAll(bean.getData().getPostCommentList());
-            adapterView();
+            mAdapter.setNewData(listData);
+            mAdapter.notifyDataSetChanged();
         } else {
             showMsg(bean.errorMsg);
         }
