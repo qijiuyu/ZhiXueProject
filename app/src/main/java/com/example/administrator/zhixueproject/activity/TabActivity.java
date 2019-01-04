@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.fragment.InvitationFragment;
+import com.example.administrator.zhixueproject.fragment.LeftFragment;
 import com.example.administrator.zhixueproject.fragment.LiveFragment;
 import com.example.administrator.zhixueproject.fragment.PersonalManagerFragment;
 import com.example.administrator.zhixueproject.fragment.TopicFragment;
@@ -53,7 +55,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         setContentView(R.layout.activity_tag);
         initView();
         //注册广播
-//        registerBoradcastReceiver();
+        registerBoradcastReceiver();
         //设置推送
         setPush();
     }
@@ -142,14 +144,20 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
      */
     private void registerBoradcastReceiver(){
         IntentFilter myIntentFilter = new IntentFilter();
-        myIntentFilter.addAction(ACTION_SHOW_NEW_NEWS);
-        myIntentFilter.addAction(ACTION_CLEAR_NEW_NEWS);
+//        myIntentFilter.addAction(ACTION_SHOW_NEW_NEWS);
+//        myIntentFilter.addAction(ACTION_CLEAR_NEW_NEWS);
+        myIntentFilter.addAction(LeftFragment.GET_COLLEGE_DETAILS);
         registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
 
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
+                updateImg(0);
+                tabHost.setCurrentTabByTag("学院");
+            }
 //            switch (intent.getAction()){
 //                case ACTION_SHOW_NEW_NEWS:
 //                    if(MyApplication.homeBean.getAttendType()==1){
@@ -225,7 +233,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
                 exitTime = System.currentTimeMillis();
             } else {
                 //关闭广播
-                // unregisterReceiver(mBroadcastReceiver);
+                 unregisterReceiver(mBroadcastReceiver);
                 ActivitysLifecycle.getInstance().exit();
             }
             return false;
