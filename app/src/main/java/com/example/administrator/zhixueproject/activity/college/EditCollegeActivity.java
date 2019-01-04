@@ -192,7 +192,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                      }
                      if(baseBean.isStatus()){
                          getCollegeDetails();
-                         showMsg("提交成功");
+                         showMsg("修改成功");
                      }else{
                          showMsg(baseBean.getErrorMsg());
                      }
