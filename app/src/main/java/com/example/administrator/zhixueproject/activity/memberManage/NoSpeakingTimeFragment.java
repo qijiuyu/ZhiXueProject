@@ -123,11 +123,11 @@ public class NoSpeakingTimeFragment extends BaseFragment implements BaseQuickAda
     }
     public String getMinite(){
         if(TextUtils.equals(checkedPosition,"0")){
-            return 10+"分钟";
-        }else if(TextUtils.equals(checkedPosition,"1")){
             return 30+"分钟";
+        }else if(TextUtils.equals(checkedPosition,"1")){
+            return 8+"小时";
         }else {
-            return 1+"小时";
+            return 24+"小时";
         }
     }
     /**
