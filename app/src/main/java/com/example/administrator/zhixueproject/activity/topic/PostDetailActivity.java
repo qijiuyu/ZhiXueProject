@@ -431,7 +431,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                     if(jsonObject.getInt("type")==2){
                         audioPath=jsonObject.getString("content");
                         timeLength=jsonObject.getInt("timeLength");
-                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/><br>" + "点击播放");
+                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/>" + "0:00/"+jsonObject.getString("strLength"));
                     }
                 }
                 //帖子内容

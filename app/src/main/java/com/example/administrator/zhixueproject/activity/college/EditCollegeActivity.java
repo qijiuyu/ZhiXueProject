@@ -44,7 +44,7 @@ import java.util.List;
 public class EditCollegeActivity extends BaseActivity implements View.OnClickListener,SeekBar.OnSeekBarChangeListener{
 
     private EditText etName,etRegister,etBack,etCard,etDetails,etWelcome;
-    private TextView tvMoney,tvNum;
+    private TextView tvMoney,tvNum,tvProgress;
     private ImageView imgBJ,imgLogo;
     private SeekBar seekBar;
     private RadioButton radioButton1,radioButton2,radioButton3,radioButton4;
@@ -90,6 +90,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         radioButton4=(RadioButton)findViewById(R.id.item_option4);
         etDetails=(EditText)findViewById(R.id.et_address_detail);
         tvNum=(TextView)findViewById(R.id.tv_details_num);
+        tvProgress=(TextView)findViewById(R.id.tv_seek_progress);
         imgBJ.setOnClickListener(this);
         imgLogo.setOnClickListener(this);
         radioButton1.setOnClickListener(this);
@@ -153,8 +154,10 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         if(homeBean.getScale()<1){
             Double d=homeBean.getScale()*100;
             seekBar.setProgress(d.intValue());
+            tvProgress.setText("("+d.intValue()+"%)");
         }else{
             seekBar.setProgress(homeBean.getScale().intValue());
+            tvProgress.setText("("+homeBean.getScale().intValue()+"%)");
         }
         etDetails.setText(homeBean.getCollegeInfo());
         etWelcome.setText(homeBean.getCollegeBanner());
@@ -317,7 +320,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
      * @param fromUser
      */
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+        tvProgress.setText("("+progress+"%)");
     }
     public void onStartTrackingTouch(SeekBar seekBar) {
 

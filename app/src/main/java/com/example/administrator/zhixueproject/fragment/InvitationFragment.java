@@ -248,6 +248,10 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
             if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 tvHead.setText(MyApplication.homeBean.getCollegeName());
+
+                //重新加载
+                PAGE = 1;
+                getTopicList(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
             }
         }
     };
