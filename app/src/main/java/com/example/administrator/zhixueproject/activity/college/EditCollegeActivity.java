@@ -179,7 +179,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                      }
                      if(baseBean.isStatus()){
                          getCollegeDetails();
-                         showMsg("恭喜您开通成功");
+                         showMsg("提交成功");
                      }else{
                          showMsg(baseBean.getErrorMsg());
                      }
