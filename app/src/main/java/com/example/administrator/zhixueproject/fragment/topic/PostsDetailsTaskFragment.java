@@ -23,6 +23,7 @@ import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -38,9 +39,9 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
     private String postId; // 帖子id
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = System.currentTimeMillis()+"";
+    private String TIMESTAMP = System.currentTimeMillis() + "";
     private int type;//1讨论  2作业
-    private List<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean> listData=new ArrayList<>();
+    private List<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean> listData = new ArrayList<>();
     private MyRefreshLayout mrlPostsTask;
     private RecyclerView rvPostsTask;
     private PostsTaskAdapter mAdapter;
@@ -98,8 +99,10 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
     }
 
     private void getPostDetailTask(int index) {
-        showProgress(getString(R.string.loading));
-        HttpMethod2.getPostDetail(postId,  PAGE + "", LIMIT, TIMESTAMP,index, mHandler);
+        if (null!=listData&&listData.size()==0){
+            showProgress(getString(R.string.loading));
+        }
+        HttpMethod2.getPostDetail(postId, PAGE + "", LIMIT, TIMESTAMP, index, mHandler);
     }
 
     @Override
@@ -140,6 +143,8 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
                 case HandlerConstant1.REQUST_ERROR:
                     requestError();
                     break;
+                default:
+                    break;
             }
         }
     };
@@ -147,7 +152,7 @@ public class PostsDetailsTaskFragment extends BaseFragment implements MyRefreshL
     private void getDetailSuccess(PostsDetailsBean bean) {
         mrlPostsTask.refreshComplete();
         listData = bean.getData().getPostCommentList();
-        if (bean.getData().getPostCommentList().size()==0){
+        if (bean.getData().getPostCommentList().size() == 0) {
             return;
         }
         mAdapter.setNewData(listData);
