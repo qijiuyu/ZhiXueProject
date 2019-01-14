@@ -20,13 +20,13 @@ import java.io.IOException;
 public class Mp3Activity extends BaseActivity implements Mp3Recorder.RecorderListener {
 
     Mp3Recorder mp3Recorder;
-    private String filePath;
+    private String filePath=Environment.getExternalStorageDirectory()+"/zhixue.mp3";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mp);
 
         if(mp3Recorder == null){
-            filePath = Environment.getExternalStorageDirectory()+"/zhixue.mp3";
+            //删除以前的录音文件
             File file=new File(filePath);
             if(file!=null && file.isFile()){
                 file.delete();
