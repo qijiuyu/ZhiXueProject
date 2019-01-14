@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
@@ -24,6 +25,7 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
     private boolean mIsPostList;
     public static final String TOPIC_ITEM_ID="topicItemId";
     public static final String TOPIC_TYPE="topicType";
+    public static final String TOPIC_NAME="topicName";
     private Context mContext=MyApplication.application;
 
     public TopicListAdapter(int layoutResId, List<TopicListBean> data, boolean isPostList) {
@@ -105,10 +107,27 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
                 intent.setClass(mContext,TopicListActivity.class);
                 intent.putExtra(TOPIC_ITEM_ID,item.getTopicId());
                 intent.putExtra(TOPIC_TYPE,item.getTopicType());
+                intent.putExtra(TOPIC_NAME,item.getTopicName());
+
+                //控制Vip等级
+                if (item.getTopicPayType()==3){
+                     int userType=MyApplication.userInfo.getData().getUser().getUserType();
+                     if (!TextUtils.isEmpty(item.getTopicVipName())){
+                         int type=Integer.parseInt(item.getTopicVipName().substring(3,4));
+                         LogUtils.e("userType->"+userType+"  type====>"+type);
+                         if (userType<type){
+                             // 弹吐司
+                             Toast.makeText(mContext,"等级权限不够",Toast.LENGTH_SHORT).show();
+                             return;
+                         }
+                     }else {
+                         LogUtils.e("话题Vip为空");
+                     }
+
+                }
                 mContext.startActivity(intent);
             }
         });
-
 
     }
 

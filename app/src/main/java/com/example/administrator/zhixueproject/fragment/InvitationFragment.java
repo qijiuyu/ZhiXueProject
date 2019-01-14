@@ -16,7 +16,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
@@ -29,12 +28,12 @@ import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
-import com.example.administrator.zhixueproject.utils.UpdateVersionUtils;
-import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.utils.DateUtil;
+import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +59,6 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
         setContentView(R.layout.topic_list);
         initView();
         leftMenu();
-        initData();
         //注册广播
         registerReceiver();
     }
@@ -122,7 +120,6 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
 
 
     private void initData() {
-        showProgress(getString(R.string.loading));
         getTopicList(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
     }
 
@@ -145,6 +142,9 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
      * @param index handler消息
      */
     private void getTopicList(int index) {
+        if (null!=listData&&listData.size()==0){
+            showProgress(getString(R.string.loading));
+        }
         HttpMethod2.getTopicList(TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
     }
 
@@ -225,6 +225,7 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
     @Override
     public void onResume() {
         super.onResume();
+        initData();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
         tvHead.setText(MyApplication.homeBean.getCollegeName());
         Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);

@@ -51,6 +51,7 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
     private ImageView ivSearch;
     private CustomPopWindow mCustomPopWindow;
     private int postType;
+    private String postName;// 帖子名称
     private String[] titles;
     //  "topicType": 话题类型(1=课程；2=大家谈；3=全部;4=付费问答)
     private static final int TYPE_COURSE = 1;
@@ -69,7 +70,6 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
         EventBus.getDefault().register(this);
         StatusBarUtils.transparencyBar(this);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title_topic);
-        tvTitle.setText(getString(R.string.posts_list));
         tabs = (SlidingTabLayout) findViewById(R.id.tab_posts);
         vpContent = (ViewPager) findViewById(R.id.vp_content);
         ivSearch = (ImageView) findViewById(R.id.iv_search);
@@ -84,6 +84,8 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
 
         postTopicId = Integer.parseInt(getIntent().getLongExtra(TopicListAdapter.TOPIC_ITEM_ID, postTopicId) + "");
         postType = getIntent().getIntExtra(TopicListAdapter.TOPIC_TYPE, 0);
+        postName = getIntent().getStringExtra(TopicListAdapter.TOPIC_NAME);
+        tvTitle.setText(TextUtils.isEmpty(postName)?getString(R.string.posts_list):postName);
         ArrayList<Fragment> fragmentList = new ArrayList<>();
         switch (postType) {
             case TYPE_COURSE:
