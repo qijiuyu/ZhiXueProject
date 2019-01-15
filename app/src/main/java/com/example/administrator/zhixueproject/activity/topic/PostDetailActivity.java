@@ -539,6 +539,11 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                 mFloorId = split2[2];
                 initFloorComment(mFloorUserName);
                 break;
+            case PostEvent.MODIFY_POST_SUCCESS:
+                LogUtils.e("postDetail 收到修改帖子成功通知");
+                // 修改帖子成功
+                searchTopicDetail();
+                break;
         }
 
     }

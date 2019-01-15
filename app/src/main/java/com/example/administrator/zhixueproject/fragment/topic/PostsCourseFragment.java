@@ -67,11 +67,15 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         rvPostsCourse.setLayoutManager(new LinearLayoutManager(MyApplication.application));
         key = TextUtils.isEmpty(getKey()) ? "" : getKey();
         postType = getPostType();
-        // 查询帖子
-        getPostList(HandlerConstant2.GET_POST_LIST_SUCCESS1);
         adapterView();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // 查询帖子
+        getPostList(HandlerConstant2.GET_POST_LIST_SUCCESS1);
+    }
 
     public int getPostType() {
         return postType;
@@ -174,7 +178,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-             // clearTask();
+              // clearTask();
             PostsCourseBean bean = (PostsCourseBean) msg.obj;
             switch (msg.what) {
                 case HandlerConstant2.GET_POST_LIST_SUCCESS1:

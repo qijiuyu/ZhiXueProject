@@ -474,6 +474,12 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                 PAGE = 1;
                 searchYouChangDetail(HandlerConstant2.GET_YOU_CHANG_DETAIL_SUCCESS);
                 break;
+            case PostEvent.MODIFY_POST_SUCCESS:
+                LogUtils.e("postDetail 收到修改帖子成功通知");
+                // 修改帖子成功
+                PAGE = 1;
+                searchYouChangDetail(HandlerConstant2.GET_YOU_CHANG_DETAIL_SUCCESS);
+                break;
         }
     }
 

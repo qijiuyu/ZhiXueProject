@@ -41,6 +41,10 @@ public class PostEvent extends BaseEvent {
      * 发布活动成功
      */
     public static final int RELEASE_ACTIVITY_SUCCESS = 4008;
+    /**
+     * 修改帖子成功
+     */
+    public static final int MODIFY_POST_SUCCESS = 4009;
 
 
 }
