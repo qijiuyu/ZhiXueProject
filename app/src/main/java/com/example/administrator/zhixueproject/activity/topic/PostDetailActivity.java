@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.TabActivity;
@@ -54,6 +55,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -66,12 +68,12 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP ="";
+    private String TIMESTAMP = "";
     public String mFloorUserName;
     private String mFloorId;
     private PostListBean postListBean;
     private String postType;  // 1.课程 2.大家谈 3.有偿提问
-    private String type="1"; //1.回复帖子 2.回复作业
+    private String type = "1"; //1.回复帖子 2.回复作业
     public String mFloorUserId;
     private String commentUserId = MyApplication.userInfo.getData().getUser().getUserId() + "";
     private boolean isFloorComment;
@@ -92,6 +94,9 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private int timeLength;
     //分享渠道
     private SHARE_MEDIA share_media;
+    // 帖子内容Str
+    private String postContentString;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +105,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         initData();
         //关闭帖子上的小红点
         sendBroadcast(new Intent(TabActivity.ACTION_CLEAR_NEW_NEWS));
-        LogUtils.e("commentUserId=== "+commentUserId);
+        LogUtils.e("commentUserId=== " + commentUserId);
     }
 
     private void initView() {
@@ -128,12 +133,12 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         /**
          * 分享功能
          */
-        ImageView imgShare=(ImageView)findViewById(R.id.img_right);
+        ImageView imgShare = (ImageView) findViewById(R.id.img_right);
         imgShare.setImageDrawable(getResources().getDrawable(R.mipmap.share_icon));
         imgShare.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                View view= LayoutInflater.from(mContext).inflate(R.layout.share_pop,null);
-                dialogPop(view,true);
+                View view = LayoutInflater.from(mContext).inflate(R.layout.share_pop, null);
+                dialogPop(view, true);
                 view.findViewById(R.id.img_share_wx).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         closeDialog();
@@ -157,17 +162,25 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     }
 
 
-
     /**
      * 分享
      */
     private void startShare() {
         UMImage image = new UMImage(this, R.mipmap.ic_launcher);
-        int id=postListBean.getPostId();
-        LogUtils.e("getPostId==="+id);
-        UMWeb web = new UMWeb("http://zxw.yl-mall.cn/zhixue_c/Wxpay/aftershareskip.html?floorPostId="+String.valueOf(id));
-        web.setTitle("知学就学");
-        web.setDescription("帖子详情");
+        int id = postListBean.getPostId();
+        LogUtils.e("getPostId===" + id);
+        UMWeb web = new UMWeb("http://zxw.yl-mall.cn/zhixue_c/Wxpay/aftershareskip.html?floorPostId=" + String.valueOf(id));
+        web.setTitle(TextUtils.isEmpty(postListBean.getPostName())?"帖子标题":postListBean.getPostName());
+        if (!TextUtils.isEmpty(postContentString)) {
+            if (postContentString.length() >=25) {
+                web.setDescription(postContentString.substring(0, 25));
+            } else {
+                web.setDescription(postContentString);
+            }
+        } else {
+            web.setDescription("帖子详情");
+        }
+
         web.setThumb(image);
         new ShareAction(this).setPlatform(share_media)
                 .setCallback(umShareListener)
@@ -216,7 +229,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         EventBus.getDefault().register(this);
         StatusBarUtils.transparencyBar(this);
         postListBean = (PostListBean) getIntent().getSerializableExtra("postListBean");
-         postType = String.valueOf(postListBean.getPostType());
+        postType = String.valueOf(postListBean.getPostType());
         //设置头部随着滚动
         AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) llPostDetailHead.getLayoutParams();
         layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
@@ -245,7 +258,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onPageSelected(int position) {
-                LogUtils.e("position=== "+  position);
+                LogUtils.e("position=== " + position);
                 type = String.valueOf(position + 1);
             }
 
@@ -256,13 +269,13 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         });
         searchTopicDetail();
         //添加浏览量
-        HttpMethod2.updatePostColl(String.valueOf(postListBean.getPostId()),mHandler);
+        HttpMethod2.updatePostColl(String.valueOf(postListBean.getPostId()), mHandler);
     }
 
     // type :1 帖子列表进入   2：会员详情页进入
-    public static void start(Context context, PostListBean postListBean,int type) {
+    public static void start(Context context, PostListBean postListBean, int type) {
         Intent starter = new Intent(context, PostDetailActivity.class);
-        if (type==1){
+        if (type == 1) {
             starter.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         starter.putExtra("postListBean", postListBean);
@@ -273,7 +286,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
      * 查询帖子详情
      */
     private void searchTopicDetail() {
-        TIMESTAMP= DateUtil.getTime();
+        TIMESTAMP = DateUtil.getTime();
         showProgress(getString(R.string.loading));
         HttpMethod2.getPostDetail(String.valueOf(postListBean.getPostId()), PAGE + "", LIMIT,
                 TIMESTAMP, HandlerConstant2.GET_POST_DETAIL_SUCCESS, mHandler);
@@ -294,10 +307,10 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             //编辑贴子
             case R.id.tv_right:
                 String price;
-                if (postType.equals("3")){
-                   price= postListBean.getPostReward();
-                }else {
-                    price=postListBean.getPostPrice();
+                if (postType.equals("3")) {
+                    price = postListBean.getPostReward();
+                } else {
+                    price = postListBean.getPostPrice();
                 }
                 ReleasePostActivity.start(
                         view.getContext(),
@@ -401,37 +414,38 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
      */
     public void postsDetailsSuccess(PostsDetailsBean postsDetailsBean) {
         PostsDetailsBean.PostDetailBeanOuter data = postsDetailsBean.getData();
-        GlideCirclePictureUtil.setCircleImg(this,data.getPostContent().getUserImg(),ivHead);
+        GlideCirclePictureUtil.setCircleImg(this, data.getPostContent().getUserImg(), ivHead);
         tvNickName.setText(data.getPostContent().getUserName());
         tvAttentionNum.setText(data.getPostContent().getAttentionNum() + "");
-        if (!TextUtils.isEmpty(data.getPostContent().getPostContent())){
+        if (!TextUtils.isEmpty(data.getPostContent().getPostContent())) {
             imgArrow.setVisibility(View.VISIBLE);
         }
         //帖子内容
-        LogUtils.e("++++"+data.getPostContent().getPostContentApp());
+        LogUtils.e("++++" + data.getPostContent().getPostContentApp());
         showDetail(data.getPostContent().getPostContentApp());
     }
 
     private void showDetail(String postContent) {
-        if(!TextUtils.isEmpty(postContent)){
-            StringBuffer stringBuffer=new StringBuffer();
+        if (!TextUtils.isEmpty(postContent)) {
+            StringBuffer stringBuffer = new StringBuffer();
             try {
-                final JSONArray jsonArray=new JSONArray(postContent);
-                for (int i=0;i<jsonArray.length();i++){
-                    final JSONObject jsonObject=jsonArray.getJSONObject(i);
+                final JSONArray jsonArray = new JSONArray(postContent);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    final JSONObject jsonObject = jsonArray.getJSONObject(i);
                     //文字
-                    if(jsonObject.getInt("type")==0){
-                        stringBuffer.append("<p>"+jsonObject.getString("content")+"</p>");
+                    if (jsonObject.getInt("type") == 0) {
+                        postContentString = jsonObject.getString("content");
+                        stringBuffer.append("<p>" + jsonObject.getString("content") + "</p>");
                     }
                     //图片
-                    if(jsonObject.getInt("type")==1){
-                        stringBuffer.append("<img src='http://"+jsonObject.getString("content")+"'/>");
+                    if (jsonObject.getInt("type") == 1) {
+                        stringBuffer.append("<img src='http://" + jsonObject.getString("content") + "'/>");
                     }
                     //音频
-                    if(jsonObject.getInt("type")==2){
-                        audioPath=jsonObject.getString("content");
-                        timeLength=jsonObject.getInt("timeLength");
-                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/>" + "0:00/"+jsonObject.getString("strLength"));
+                    if (jsonObject.getInt("type") == 2) {
+                        audioPath = jsonObject.getString("content");
+                        timeLength = jsonObject.getInt("timeLength");
+                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/>" + "0:00/" + jsonObject.getString("strLength"));
                     }
                 }
                 //帖子内容
@@ -443,7 +457,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                     }
                 });
                 wvPostContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -451,7 +465,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
 
     @SuppressLint("JavascriptInterface")
-    private void initWebView(){
+    private void initWebView() {
         WebSettings webSettings = wvPostContent.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -471,7 +485,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     public void playAutio() {
         mHandler.post(new Runnable() {
             public void run() {
-                ReleaseContentsBean releaseContentsBean=new ReleaseContentsBean(audioPath,2,null,timeLength);
+                ReleaseContentsBean releaseContentsBean = new ReleaseContentsBean(audioPath, 2, null, timeLength);
                 PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(releaseContentsBean);
                 fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
             }
@@ -525,6 +539,11 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                 mFloorId = split2[2];
                 initFloorComment(mFloorUserName);
                 break;
+            case PostEvent.MODIFY_POST_SUCCESS:
+                LogUtils.e("postDetail 收到修改帖子成功通知");
+                // 修改帖子成功
+                searchTopicDetail();
+                break;
         }
 
     }
@@ -533,7 +552,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         isFloorComment = true;
         llComment.setVisibility(View.VISIBLE);
         tvComment.setVisibility(View.GONE);
-        etCommentContent.setHint("@"+mFloorUserName);
+        etCommentContent.setHint("@" + mFloorUserName);
         etCommentContent.setText("");
     }
 }

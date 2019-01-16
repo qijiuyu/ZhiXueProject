@@ -90,6 +90,8 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
     private int timeLength;
     //分享渠道
     private SHARE_MEDIA share_media;
+    // 帖子内容Str
+    private String postContentString;
 
 
     @Override
@@ -163,8 +165,17 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         int id=postListBean.getPostId();
         LogUtils.e("getPostId==="+id);
         UMWeb web = new UMWeb("http://zxw.yl-mall.cn/zhixue_c/Wxpay/aftershareskip.html?floorPostId="+String.valueOf(id));
-        web.setTitle("知学就学");
-        web.setDescription("帖子详情");
+        web.setTitle(TextUtils.isEmpty(postListBean.getPostName())?"帖子标题":postListBean.getPostName());
+        if (!TextUtils.isEmpty(postContentString)) {
+            if (postContentString.length() >=25) {
+                web.setDescription(postContentString.substring(0, 25));
+            } else {
+                web.setDescription(postContentString);
+            }
+        } else {
+            web.setDescription("帖子详情");
+        }
+
         web.setThumb(image);
         new ShareAction(this).setPlatform(share_media)
                 .setCallback(umShareListener)
@@ -370,6 +381,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                     final JSONObject jsonObject=jsonArray.getJSONObject(i);
                     //文字
                     if(jsonObject.getInt("type")==0){
+                        postContentString = jsonObject.getString("content");
                         stringBuffer.append("<p>"+jsonObject.getString("content")+"</p>");
                     }
                     //图片
@@ -459,6 +471,12 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                 initFloorComment(mFloorUserName);
                 break;
             case PostEvent.COMMENT_SUCCESS:
+                PAGE = 1;
+                searchYouChangDetail(HandlerConstant2.GET_YOU_CHANG_DETAIL_SUCCESS);
+                break;
+            case PostEvent.MODIFY_POST_SUCCESS:
+                LogUtils.e("postDetail 收到修改帖子成功通知");
+                // 修改帖子成功
                 PAGE = 1;
                 searchYouChangDetail(HandlerConstant2.GET_YOU_CHANG_DETAIL_SUCCESS);
                 break;

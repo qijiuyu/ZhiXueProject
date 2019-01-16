@@ -11,10 +11,14 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
+import com.buihha.audiorecorder.Mp3Recorder;
+import com.example.administrator.zhixueproject.activity.Mp3Activity;
 import com.example.administrator.zhixueproject.activity.audio.AudioFileFunc;
 import com.example.administrator.zhixueproject.activity.audio.AudioRecordFunc;
 import com.example.administrator.zhixueproject.utils.LogUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -24,7 +28,7 @@ import java.util.ArrayList;
 /**
  * 录音管理类（包括录音和播放）
  */
-public class VoiceManager {
+public class VoiceManager implements Mp3Recorder.RecorderListener {
 
     private static volatile VoiceManager voiceManager;
     public final int MSG_TIME_INTERVAL = 100;
@@ -45,6 +49,7 @@ public class VoiceManager {
     private MediaPlayer mMediaPlayer = null;
     private String mRecTimePrev;
     private long mRecTimeSum = 0;
+    private Mp3Recorder mp3Recorder;
     /**
      * 录音文件存放的位置(文件夹)
      */
@@ -196,7 +201,7 @@ public class VoiceManager {
             if (VoiceTimeUtils.timeSpanSecond(mRecTimeSum).mSpanSecond == 0) {
             } else {
                 File file = getOutputVoiceFile(mRecList);
-                LogUtils.e("音频文件大小   "+file.length());
+                LogUtils.e("音频文件大小   " + file.length());
                 if (file != null && file.length() > 0) {
                     cleanFieArrayList(mRecList);
                     final VoiceTimeUtils ts = VoiceTimeUtils.timeSpanSecond(mRecTimeSum);
@@ -213,6 +218,7 @@ public class VoiceManager {
         } catch (Exception e) {
         }
     }
+
     private String currentFilePath;
 
     public String getCurrentFilePath() {
@@ -230,12 +236,13 @@ public class VoiceManager {
         if (currentFilePath != null) {
             File file = new File(currentFilePath);
             if (file.exists())
-            file.delete();
+                file.delete();
             currentFilePath = null;
         }
         stopVoiceRecord();
 
     }
+
     /**
      * 开始录音(内部调)
      *
@@ -252,38 +259,65 @@ public class VoiceManager {
             voicePlayCallBack.playFinish();
         }
 
-        stopRecorder(mMediaRecorder, true);
-        // mMediaRecorder = null;
+        // stopRecorder(mMediaRecorder, true);
+        //  mMediaRecorder = null;
 
         stopMedia(mMediaPlayer, true);
         mMediaPlayer = null;
-        // mMediaRecorder = new MediaRecorder();
+        //  mMediaRecorder = new MediaRecorder();
 
-      // ********************************WAV格式录制  start *************************************
-        final String path= AudioFileFunc.getWavFilePath();
+        // ********************************WAV格式录制  start *************************************
+       /* final String path= AudioFileFunc.getWavFilePath();
         File file1=new File(path);
         if(file1.isFile()){
             file1.delete();
         }
         //开始录音
         AudioRecordFunc mRecord_1 = AudioRecordFunc.getInstance();
-        mRecord_1.startRecordAndFile();
+        mRecord_1.startRecordAndFile();*/
         //*********************WAV格式录制    end *********************
 
 
-       // File file = prepareRecorder(mMediaRecorder, true);
-        if (file1 != null) {
+        //*********************MP3格式录制    START *********************
+        final String filePath = Environment.getExternalStorageDirectory() + "/zhixue.mp3";
+
+        //删除以前的录音文件
+        File file = new File(filePath);
+        if (file != null && file.isFile()) {
+            file.delete();
+        }
+        LogUtils.e("开始录制MP3");
+        mp3Recorder = new Mp3Recorder(filePath);
+        mp3Recorder.setListener(this);
+
+        try {
+            mp3Recorder.startRecording();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //*********************MP3格式录制    END *********************
+
+
+        //  File file1 = prepareRecorder(mMediaRecorder, true);
+        if (file != null) {
             //开始录音回调
             if (voiceRecordCallBack != null) {
                 voiceRecordCallBack.recStart(init);
             }
             mDeviceState = MEDIA_STATE_RECORD_DOING;
             mRecTimePrev = VoiceTimeUtils.getTimeStrFromMillis(System.currentTimeMillis());
-            mRecList.add(file1);
+            mRecList.add(file);
 
             mHandler.removeMessages(MSG_TIME_INTERVAL);
             mHandler.sendEmptyMessage(MSG_TIME_INTERVAL);
         }
+    }
+
+    @Override
+    public void stop() {
+        LogUtils.e("MP3录音停止了");
+
     }
 
     /**
@@ -342,7 +376,8 @@ public class VoiceManager {
         File recDirFile = recAudioDir(recFilePath);
 
         // 创建音频文件,合并的文件放这里
-        File resFile = new File(recDirFile, mMinute1 + ".amr");
+        // File resFile = new File(recDirFile, mMinute1 + ".amr");
+        File resFile = new File(recDirFile, mMinute1 + ".mp3");
         FileOutputStream fileOutputStream = null;
 
         if (!resFile.exists()) {
@@ -676,19 +711,26 @@ public class VoiceManager {
     private boolean stopRecorder(MediaRecorder mr, boolean release) {
         boolean result = false;
         try {
-           /* if (mr != null) {
-                mr.stop();
-                if (release) {
-                    mr.release();
-                }
-                result = true;
-            }*/
-
-           //******************* WAV  STOP********************
-            AudioRecordFunc mRecord_1 = AudioRecordFunc.getInstance();
-            mRecord_1.stopRecordAndFile();
+               /* if (mr != null) {
+                    mr.stop();
+                    if (release) {
+                        mr.release();
+                    }
+                    result = true;
+                }*/
 
             //******************* WAV  STOP********************
+            /*AudioRecordFunc mRecord_1 = AudioRecordFunc.getInstance();
+            mRecord_1.stopRecordAndFile();*/
+
+            //******************* WAV  STOP********************
+
+
+            //******************* MP3  STAT********************
+            mp3Recorder.stopRecording();
+            mp3Recorder = null;
+            //******************* MP3  STOP********************
+
 
             if (mThread != null) {
                 mThread.exit();
@@ -716,8 +758,9 @@ public class VoiceManager {
         if (mr == null) return null;
         try {
             String path = recAudioPath(recordFilePath);
-            LogUtils.e("path is === "+path);
-            recFile = new File(path, VoiceTimeUtils.getTime() + ".amr");
+            LogUtils.e("path is === " + path);
+            // recFile = new File(path, VoiceTimeUtils.getTime() + ".amr");
+            recFile = new File(path, VoiceTimeUtils.getTime() + ".mp3");
             currentFilePath = recFile.getAbsolutePath();
             mr.setAudioSource(MediaRecorder.AudioSource.MIC);
             mr.setOutputFormat(MediaRecorder.OutputFormat.RAW_AMR);

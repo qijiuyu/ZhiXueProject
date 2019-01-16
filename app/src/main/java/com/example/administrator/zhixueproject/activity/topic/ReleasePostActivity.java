@@ -331,6 +331,7 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
     @Subscribe
     public void postEvent(PostEvent postEvent) {
         if (PostEvent.RELEASE_SUCCESS == postEvent.getEventType()) {
+            EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.MODIFY_POST_SUCCESS));
             finish();
         }
     }

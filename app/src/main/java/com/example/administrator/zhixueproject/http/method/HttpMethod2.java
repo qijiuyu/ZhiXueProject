@@ -56,11 +56,13 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                      sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             public void onFailure(Call<TopicsListBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                  sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -90,12 +92,14 @@ public class HttpMethod2 extends BaseRequst {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<TopicsListBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -120,12 +124,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.UPDATE_SORT_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据报错异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<TopicsListBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -167,12 +173,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.ADD_TOPIC_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<TopicsListBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -216,12 +224,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.UPDATE_TOPIC_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<TopicsListBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -257,12 +267,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<PostsCourseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -294,12 +306,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<SelectLecturersBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -347,12 +361,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.ADD_POST_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<UploadFile> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -386,12 +402,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.UPDATE_POST_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<UploadFile> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -432,12 +450,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.ADD_ACTIVITY_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<UploadFile> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -479,12 +499,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.UPDATE_ACTIVITY_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<UploadFile> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -526,12 +548,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.ADD_VOTE_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<UploadFile> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -574,11 +598,13 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.MODIFY_USER_INFO_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -605,12 +631,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.COMMENT_POST_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -643,12 +671,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.COMMENT_REPLY_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -679,12 +709,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<PostsDetailsBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -716,12 +748,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<PostsDetailsBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -751,12 +785,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<ActionManageBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -780,12 +816,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.DELETE_ACTIVITY_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<ActionManageBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -816,12 +854,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<ActionNeophyteBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -851,12 +891,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<VoteManageBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -880,12 +922,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.DELETE_VOTE_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<VoteManageBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -917,12 +961,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<VoteNeophyteBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -956,12 +1002,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<MemberManagerBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -985,12 +1033,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.KICK_OUT_VIP_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<MemberManagerBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -1020,12 +1070,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<MemberDetailBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -1049,6 +1101,7 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
@@ -1087,6 +1140,7 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.SAVE_VIP_SUCCESS, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
@@ -1116,11 +1170,13 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             public void onFailure(Call<MemberApplyBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -1143,11 +1199,13 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             public void onFailure(Call<MemberApplyBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -1170,11 +1228,13 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             public void onFailure(Call<KickOutMemberBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -1194,11 +1254,13 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.DELYN_VIP_INVITE_SUCCESS, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             public void onFailure(Call<KickOutMemberBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -1221,11 +1283,13 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, index, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             public void onFailure(Call<BlackListBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -1245,11 +1309,13 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.REMOVE_BLACK_LIST_SUCCESS, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             public void onFailure(Call<BlackListBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -1273,12 +1339,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.DELETE_VOTE_MEMBER_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<VoteNeophyteBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
@@ -1302,12 +1370,14 @@ public class HttpMethod2 extends BaseRequst {
                     sendMessage(handler, HandlerConstant2.UPDATE_POST_COLL_SUCCESS, response.body());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
                    // sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
             @Override
             public void onFailure(Call<BaseBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
                // sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
