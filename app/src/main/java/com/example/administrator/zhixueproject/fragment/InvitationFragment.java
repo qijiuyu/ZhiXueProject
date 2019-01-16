@@ -60,7 +60,6 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
         setContentView(R.layout.topic_list);
         initView();
         leftMenu();
-        initData();
         //注册广播
         registerReceiver();
     }
@@ -122,7 +121,6 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
 
 
     private void initData() {
-        showProgress(getString(R.string.loading));
         getTopicList(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
     }
 
@@ -202,7 +200,6 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
         if (bean.isStatus()) {
             TopicsListBean.DataBean dataBean = bean.getData();
             if (dataBean.getTopicList().size() <= 0) {
-                showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }
             listData.addAll(dataBean.getTopicList());
@@ -226,6 +223,7 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
     @Override
     public void onResume() {
         super.onResume();
+        initData();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
         tvHead.setText(MyApplication.homeBean.getCollegeName());
         Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
@@ -249,6 +247,10 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
             if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 tvHead.setText(MyApplication.homeBean.getCollegeName());
+
+                //重新加载
+                PAGE = 1;
+                getTopicList(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
             }
         }
     };

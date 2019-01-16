@@ -85,6 +85,7 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
         mRecyclerView.addItemDecoration(itemDecoration);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
+        adapterView();
 
     }
 
@@ -183,10 +184,8 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
         if (bean.isStatus()) {
             TopicsListBean.DataBean dataBean = bean.getData();
             listData = dataBean.getTopicList();
-            if(dataBean.getTopicList().size()==0){
-                return;
-            }
-            adapterView();
+            mAdapter.setNewData(listData);
+            mAdapter.notifyDataSetChanged();
         } else {
             showMsg(bean.errorMsg);
 
@@ -203,12 +202,12 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
         }
         if (bean.isStatus()) {
             TopicsListBean.DataBean dataBean = bean.getData();
-            if (dataBean.getTopicList().size() <= 0) {
-                showMsg(getResources().getString(R.string.no_more_data));
+           if (dataBean.getTopicList().size() <= 0) {
                 return;
             }
             listData.addAll(dataBean.getTopicList());
-            adapterView();
+            mAdapter.setNewData(listData);
+            mAdapter.notifyDataSetChanged();
         }
     }
 

@@ -379,7 +379,7 @@ public class HttpMethod1  extends BaseRequst {
      * @param collegeInfo
      * @param handler
      */
-    public static void editCollege(String collegeName,String collegeUser,String collegeAccBankinfo,String collegeAccBank,String collegeBackimg,double scale,int collegeType,String collegePrice,int collegeDelYn,String collegeInfo,final Handler handler) {
+    public static void editCollege(String collegeName,String collegeUser,String collegeAccBankinfo,String collegeAccBank,String collegeBackimg,double scale,int collegeType,String collegePrice,int collegeDelYn,String collegeInfo,String collegeLogo,String collegeBanner,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("collegeName",collegeName);
         map.put("collegeUser",collegeUser);
@@ -391,6 +391,8 @@ public class HttpMethod1  extends BaseRequst {
         map.put("collegePrice",collegePrice);
         map.put("collegeDelYn",collegeDelYn+"");
         map.put("collegeInfo",collegeInfo);
+        map.put("collegeLogo",collegeLogo);
+        map.put("collegeBanner",collegeBanner);
         Http.getRetrofit().create(HttpApi1.class).editCollege(map).enqueue(new Callback<BaseBean>() {
             public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
                 try {
@@ -1231,6 +1233,35 @@ public class HttpMethod1  extends BaseRequst {
         map.put("page",page+"");
         map.put("limit",limit+"");
         Http.getRetrofit().create(HttpApi1.class).getFeedBack(map).enqueue(new Callback<FeedBack>() {
+            public void onResponse(Call<FeedBack> call, Response<FeedBack> response) {
+                try {
+                    sendMessage(handler, index, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<FeedBack> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+
+    /**
+     * 获取我的反馈列表
+     * @param page
+     * @param limit
+     * @param handler
+     */
+    public static void getMyFeedBack(int page,int limit,final int index,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("page",page+"");
+        map.put("limit",limit+"");
+        Http.getRetrofit().create(HttpApi1.class).getMyFeedBack(map).enqueue(new Callback<FeedBack>() {
             public void onResponse(Call<FeedBack> call, Response<FeedBack> response) {
                 try {
                     sendMessage(handler, index, response.body());

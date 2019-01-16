@@ -70,6 +70,7 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
         rvVoteManage.addItemDecoration(itemDecoration);
         mrlVoteManage.setMyRefreshLayoutListener(this);
         getVoteList(HandlerConstant2.GET_VOTE_LIST_SUCCESS);
+        adapterView();
     }
 
     private void getVoteList(int index) {
@@ -143,7 +144,8 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
             if (dataBean.getVoteList().size()==0){
                 return;
             }
-            adapterView();
+            mAdapter.setNewData(listData);
+            mAdapter.notifyDataSetChanged();
         } else {
            // showMsg(bean.errorMsg);
         }
@@ -160,11 +162,11 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
         if (bean.isStatus()) {
             VoteManageBean.DataBean dataBean = bean.getData();
             if (dataBean.getVoteList().size() <= 0) {
-                showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }
             listData.addAll(dataBean.getVoteList());
-            adapterView();
+            mAdapter.setNewData(listData);
+            mAdapter.notifyDataSetChanged();
         } else {
             // showMsg(bean.errorMsg);
         }

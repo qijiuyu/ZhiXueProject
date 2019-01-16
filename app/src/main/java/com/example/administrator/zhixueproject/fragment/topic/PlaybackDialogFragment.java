@@ -221,7 +221,6 @@ public class PlaybackDialogFragment extends DialogFragment {
         try {
             // mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setDataSource("http://" + item.getContent());
-            LogUtils.e("Content==" + "http://" + item.getContent());
             mMediaPlayer.prepare();
             mSeekBar.setMax(mMediaPlayer.getDuration());
 

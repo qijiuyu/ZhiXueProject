@@ -69,6 +69,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         postType = getPostType();
         // 查询帖子
         getPostList(HandlerConstant2.GET_POST_LIST_SUCCESS1);
+        adapterView();
     }
 
 
@@ -92,7 +93,6 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
     public String getKey() {
         return key;
     }
-
     public void setKey(String key) {
         this.key = key;
     }
@@ -211,7 +211,8 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         if (bean.isStatus()) {
             PostsCourseBean.DataBean dataBean = bean.getData();
             listData = dataBean.getPostList();
-            adapterView();
+            mAdapter.setNewData(listData);
+            mAdapter.notifyDataSetChanged();
         } else {
             showMsg(bean.errorMsg);
 
@@ -229,11 +230,11 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         if (bean.isStatus()) {
             PostsCourseBean.DataBean dataBean = bean.getData();
             if (dataBean.getPostList().size() <= 0) {
-                showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }
             listData.addAll(dataBean.getPostList());
-            adapterView();
+            mAdapter.setNewData(listData);
+            mAdapter.notifyDataSetChanged();
         } else {
             showMsg(bean.errorMsg);
         }

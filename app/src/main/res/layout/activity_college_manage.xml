@@ -257,6 +257,26 @@
                 <View
                     style="@style/view_line"/>
             </RelativeLayout>
+
+            <!--我的反馈-->
+            <RelativeLayout
+                android:id="@+id/rl_Mfeedback"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+                <ImageView
+                    android:id="@+id/iv_Mfeedback"
+                    style="@style/iv_icon"
+                    android:background="@mipmap/feedback_icon"/>
+                <TextView
+                    android:layout_toRightOf="@+id/iv_Mfeedback"
+                    android:text="我的反馈"
+                    style="@style/tv_item"
+                    />
+                <ImageView
+                    style="@style/iv_right_arrow"/>
+                <View
+                    style="@style/view_line"/>
+            </RelativeLayout>
             <!--关于平台-->
             <RelativeLayout
                 android:id="@+id/rl_about_platform"

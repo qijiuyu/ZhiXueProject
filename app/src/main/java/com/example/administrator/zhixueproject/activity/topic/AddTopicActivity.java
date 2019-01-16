@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
@@ -40,7 +41,9 @@ import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.example.administrator.zhixueproject.view.SwitchButton;
+
 import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +91,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
 
     private void initView() {
         StatusBarUtils.transparencyBar(this);
-        TextView tvTitle= (TextView) findViewById(R.id.tv_title);
+        TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.add_topic));
         findViewById(R.id.lin_back).setOnClickListener(this);
 
@@ -150,7 +153,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
             tvTollMode.setText("免费");
         } else if (payType == 2) {
             tvTollMode.setTextColor(getResources().getColor(R.color.color_ff0000));
-            tvTollMode.setText("￥"+bean.getTopicPrice() + "");
+            tvTollMode.setText("￥" + bean.getTopicPrice() + "");
         } else if (payType == 3) {
             tvTollMode.setText(bean.getTopicVipName());
         } else if (payType == 4) {
@@ -179,7 +182,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
         } else {
             sbStick.setChecked(true);
         }
-        topicImg=bean.getTopicImg().toString();
+        topicImg = bean.getTopicImg().toString();
         Glide.with(this).load(bean.getTopicImg().toString()).into(ivAddPic);
     }
 
@@ -248,20 +251,20 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                             tvTollMode.setText(mCost);
                             payType = 1;
                         } else if (mCost.equals(costs[1])) {
-                            final String money=etCost.getText().toString().trim();
-                            if(TextUtils.isEmpty(money)){
+                            final String money = etCost.getText().toString().trim();
+                            if (TextUtils.isEmpty(money)) {
                                 showMsg("付费金额不能为空");
                                 return;
                             }
-                            if(Double.parseDouble(money)==0){
+                            if (Double.parseDouble(money) == 0) {
                                 showMsg("付费金额不能0");
                                 return;
                             }
                             tvTollMode.setTextColor(getResources().getColor(R.color.color_ff0000));
-                            tvTollMode.setText("￥"+etCost.getText().toString());
+                            tvTollMode.setText("￥" + etCost.getText().toString());
                             payType = 2;
                         } else if (mCost.equals(costs[2])) {
-                            tvTollMode.setText("VIP"+etCost.getText().toString());
+                            tvTollMode.setText("VIP" + etCost.getText().toString());
                             payType = 3;
                         } else if (mCost.equals(costs[3])) {
                             tvTollMode.setText(mCost);
@@ -314,12 +317,17 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                         tvTopicType.setText("大家谈");
                         topicType = 2;
                         break;
+                    case R.id.tv_price_ask:
+                        tvTopicType.setText("付费问答");
+                        topicType = 4;
+                        break;
                 }
             }
         };
         contentView.findViewById(R.id.tv_all).setOnClickListener(listener);
         contentView.findViewById(R.id.tv_course).setOnClickListener(listener);
         contentView.findViewById(R.id.tv_voices).setOnClickListener(listener);
+        contentView.findViewById(R.id.tv_price_ask).setOnClickListener(listener);
     }
 
     /**
@@ -402,23 +410,30 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
             showMsg("话题类型不能为空");
             return;
         }
+        // 付费问答
+        if (topicType == 4) {
+            if (payType != 2) {
+                showMsg("只有收费方式为付费类型才能选择付费问答");
+                return;
+            }
+        }
 
-        LogUtils.e(tollMode+"+++++++++++"+"topicType===  "+topicType);
+        LogUtils.e(tollMode + "+++++++++++" + "topicType===  " + topicType);
         if (type.equals(FLAG_ADD)) {
             if (payType == 1) {
-                HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", "", "",mHandler);
+                HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", "", "", mHandler);
             } else if (payType == 2) {
-                HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, tollMode.replace("￥",""), "", "",mHandler);
+                HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, tollMode.replace("￥", ""), "", "", mHandler);
             } else if (payType == 3) {
-                HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", tollMode, "",mHandler);
+                HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", tollMode, "", mHandler);
             }
         } else if (type.equals(FLAG_EDIT)) {
             if (payType == 1) {
-                HttpMethod2.updateTopic( topicId + "", topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", "", "",mHandler);
+                HttpMethod2.updateTopic(topicId + "", topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", "", "", mHandler);
             } else if (payType == 2) {
-                HttpMethod2.updateTopic( topicId + "", topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, tollMode.replace("￥",""), "", "",mHandler);
+                HttpMethod2.updateTopic(topicId + "", topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, tollMode.replace("￥", ""), "", "", mHandler);
             } else if (payType == 3) {
-                HttpMethod2.updateTopic( topicId + "", topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", tollMode, "",mHandler);
+                HttpMethod2.updateTopic(topicId + "", topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", tollMode, "", mHandler);
             }
         }
 
@@ -459,19 +474,19 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                         return;
                     }
                     if (uploadFile.isStatus()) {
-                        topicImg=uploadFile.getData().getUrl();
+                        topicImg = uploadFile.getData().getUrl();
                         Glide.with(mContext).load(topicImg).error(R.mipmap.unify_image_ing).into(ivAddPic);
                     } else {
                         showMsg(uploadFile.getErrorMsg());
                     }
                     break;
-                    // 添加话题成功
+                // 添加话题成功
                 case HandlerConstant2.ADD_TOPIC_SUCCESS:
                     // 发广播
                     finish();
                     EventBus.getDefault().post(new TopicEvent().setEventType(TopicEvent.UPDATE_TOPIC_LIST));
                     break;
-                    // 修改话题成功
+                // 修改话题成功
                 case HandlerConstant2.UPDATE_TOPIC_SUCCESS:
                     EventBus.getDefault().post(new TopicEvent().setEventType(TopicEvent.UPDATE_TOPIC_LIST));
                     finish();

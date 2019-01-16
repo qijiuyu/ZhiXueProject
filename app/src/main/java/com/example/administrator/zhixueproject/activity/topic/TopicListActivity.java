@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.TopicListAdapter;
@@ -22,8 +23,10 @@ import com.example.administrator.zhixueproject.utils.InputMethodUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.flyco.tablayout.SlidingTabLayout;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 
 /**
@@ -47,6 +50,13 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
     private LinearLayout llPostSearch;
     private ImageView ivSearch;
     private CustomPopWindow mCustomPopWindow;
+    private int postType;
+    private String[] titles;
+    //  "topicType": 话题类型(1=课程；2=大家谈；3=全部;4=付费问答)
+    private static final int TYPE_COURSE = 1;
+    private static final int TYPE_ALL_TALK = 2;
+    private static final int TYPE_ALL = 3;
+    private static final int TYPE_PRICE_ASK = 4;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,42 +82,57 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
         findViewById(R.id.rl_search).setOnClickListener(this);
         findViewById(R.id.iv_close).setOnClickListener(this);
 
-        postTopicId = Integer.parseInt(getIntent().getLongExtra(TopicListAdapter.TOPIC_ITEM_ID, postTopicId)+"");
-        String[] titles = {"课程", "大家谈", "有偿提问"};
+        postTopicId = Integer.parseInt(getIntent().getLongExtra(TopicListAdapter.TOPIC_ITEM_ID, postTopicId) + "");
+        postType = getIntent().getIntExtra(TopicListAdapter.TOPIC_TYPE, 0);
         ArrayList<Fragment> fragmentList = new ArrayList<>();
-
-        postsFragment1 = new PostsCourseFragment();
-        postsFragment1.setPostType(1);
-        postsFragment1.setPostTopicId(String.valueOf(postTopicId));
-        fragmentList.add(postsFragment1);
-
-        postsFragment2 = new PostsCourseFragment();
-        postsFragment2.setPostType(2);
-        postsFragment2.setPostTopicId(String.valueOf(postTopicId));
-        fragmentList.add(postsFragment2);
-
-        postsFragment3 = new PostsCourseFragment();
-        postsFragment3.setPostType(3);
-        postsFragment3.setPostTopicId(String.valueOf(postTopicId));
-        fragmentList.add(postsFragment3);
-
+        switch (postType) {
+            case TYPE_COURSE:
+                titles = new String[]{"课程"};
+                type=1;
+                addCourseFragment(fragmentList);
+                tabs.setIndicatorHeight(0);
+                break;
+            case TYPE_ALL_TALK:
+                titles = new String[]{ "大家谈"};
+                type=2;
+                addAllTalkFragment(fragmentList);
+                tabs.setIndicatorHeight(0);
+                break;
+            case TYPE_ALL:
+                addCourseFragment(fragmentList);
+                addAllTalkFragment(fragmentList);
+                addValueAskFragment(fragmentList);
+                titles = new String[]{"课程", "大家谈", "有偿提问"};
+                break;
+            case TYPE_PRICE_ASK:
+                titles = new String[]{"有偿提问"};
+                type=3;
+                addValueAskFragment(fragmentList);
+                tabs.setIndicatorHeight(0);
+                break;
+            default:
+                break;
+        }
         tabs.setViewPager(vpContent, titles, this, fragmentList);
-        vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
+        if (postType==TYPE_ALL){
+            vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                }
 
-            @Override
-            public void onPageSelected(int position) {
-                type = position + 1;
-            }
+                @Override
+                public void onPageSelected(int position) {
+                    type = position + 1;
+                }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
+                @Override
+                public void onPageScrollStateChanged(int state) {
 
-            }
-        });
-        vpContent.setOffscreenPageLimit(3);
+                }
+            });
+        }
+
+        vpContent.setOffscreenPageLimit(titles.length);
 
         //编辑框，软键盘搜索按钮监听
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -122,6 +147,27 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
             }
         });
 
+    }
+
+    private void addValueAskFragment(ArrayList<Fragment> fragmentList) {
+        postsFragment3 = new PostsCourseFragment();
+        postsFragment3.setPostType(3);
+        postsFragment3.setPostTopicId(String.valueOf(postTopicId));
+        fragmentList.add(postsFragment3);
+    }
+
+    private void addAllTalkFragment(ArrayList<Fragment> fragmentList) {
+        postsFragment2 = new PostsCourseFragment();
+        postsFragment2.setPostType(2);
+        postsFragment2.setPostTopicId(String.valueOf(postTopicId));
+        fragmentList.add(postsFragment2);
+    }
+
+    private void addCourseFragment(ArrayList<Fragment> fragmentList) {
+        postsFragment1 = new PostsCourseFragment();
+        postsFragment1.setPostType(1);
+        postsFragment1.setPostTopicId(String.valueOf(postTopicId));
+        fragmentList.add(postsFragment1);
     }
 
 

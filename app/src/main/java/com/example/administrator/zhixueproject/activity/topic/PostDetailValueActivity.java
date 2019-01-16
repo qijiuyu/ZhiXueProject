@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -40,6 +41,11 @@ import com.example.administrator.zhixueproject.utils.KeyboardUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.utils.ToolUtils;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -82,6 +88,8 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
     private String audioPath;
     //播放时长
     private int timeLength;
+    //分享渠道
+    private SHARE_MEDIA share_media;
 
 
     @Override
@@ -115,7 +123,83 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         findViewById(R.id.tv_commit).setOnClickListener(this);
         imgArrow = (ImageView) findViewById(R.id.img_topic_arrow);
         imgArrow.setOnClickListener(this);
+
+        /**
+         * 分享功能
+         */
+        ImageView imgShare=(ImageView)findViewById(R.id.img_right);
+        imgShare.setImageDrawable(getResources().getDrawable(R.mipmap.share_icon));
+        imgShare.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                View view= LayoutInflater.from(mContext).inflate(R.layout.share_pop,null);
+                dialogPop(view,true);
+                view.findViewById(R.id.img_share_wx).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        closeDialog();
+                        share_media = SHARE_MEDIA.WEIXIN;
+                        startShare();
+                    }
+                });
+
+
+                view.findViewById(R.id.img_share_wxp).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        closeDialog();
+                        share_media = SHARE_MEDIA.WEIXIN_CIRCLE;
+                        startShare();
+                    }
+                });
+
+            }
+        });
+
+
     }
+    /**
+     * 分享
+     */
+    private void startShare() {
+        UMImage image = new UMImage(this, R.mipmap.ic_launcher);
+        int id=postListBean.getPostId();
+        LogUtils.e("getPostId==="+id);
+        UMWeb web = new UMWeb("http://zxw.yl-mall.cn/zhixue_c/Wxpay/aftershareskip.html?floorPostId="+String.valueOf(id));
+        web.setTitle("知学就学");
+        web.setDescription("帖子详情");
+        web.setThumb(image);
+        new ShareAction(this).setPlatform(share_media)
+                .setCallback(umShareListener)
+                .withMedia(web)
+                .share();
+    }
+
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        public void onStart(SHARE_MEDIA share_media) {
+        }
+
+        public void onResult(SHARE_MEDIA platform) {
+            if (platform.name().equals("WEIXIN_FAVORITE")) {
+                showMsg(getString(R.string.collect_success));
+            } else {
+                showMsg(getString(R.string.share_success));
+            }
+        }
+
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            if (t.getMessage().indexOf("2008") != -1) {
+                if (platform.name().equals("WEIXIN") || platform.name().equals("WEIXIN_CIRCLE")) {
+                    showMsg(getString(R.string.share_failed_install_wechat));
+                } else if (platform.name().equals("QQ") || platform.name().equals("QZONE")) {
+                    showMsg(getString(R.string.share_failed_install_qq));
+                }
+            }
+            showMsg(getString(R.string.share_failed));
+        }
+
+        public void onCancel(SHARE_MEDIA platform) {
+            showMsg(getString(R.string.share_canceled));
+        }
+    };
 
     private void initData() {
         EventBus.getDefault().register(this);
@@ -296,7 +380,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                     if(jsonObject.getInt("type")==2){
                         audioPath=jsonObject.getString("content");
                         timeLength=jsonObject.getInt("timeLength");
-                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/><br>" + "点击播放");
+                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/>" + "0:00/"+jsonObject.getString("strLength"));
                     }
                 }
                 //帖子内容
@@ -357,13 +441,22 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
     @Subscribe
     public void replyCommentEvent(PostEvent postEvent) {
         switch (postEvent.getEventType()) {
+            // 回复帖子
+            case PostEvent.REPLY_POST:
+                PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean postData = (PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean) postEvent.getData();
+                mFloorId = String.valueOf(postData.getFloorInfo().getFloorId());
+                mFloorUserName = postData.getFloorInfo().getUserName();
+                mFloorUserId = postData.getFloorInfo().getFloorUserId();
+                initFloorComment(mFloorUserName);
+                break;
             case PostEvent.REPLY_POST_COMMENT:
-                initFloorComment();
+                // 回复楼层
                 String postDataSt = (String) postEvent.getData();
                 String[] split2 = postDataSt.split("=");
                 mFloorUserId = split2[0];
                 mFloorUserName = split2[1];
                 mFloorId = split2[2];
+                initFloorComment(mFloorUserName);
                 break;
             case PostEvent.COMMENT_SUCCESS:
                 PAGE = 1;
@@ -372,10 +465,11 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         }
     }
 
-    private void initFloorComment() {
+    private void initFloorComment(String mFloorUserName) {
         isFloorComment = true;
         llComment.setVisibility(View.VISIBLE);
         tvComment.setVisibility(View.GONE);
+        etCommonContent.setHint("@"+mFloorUserName);
         etCommonContent.setText("");
     }
 

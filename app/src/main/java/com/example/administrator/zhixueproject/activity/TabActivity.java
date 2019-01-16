@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.fragment.InvitationFragment;
+import com.example.administrator.zhixueproject.fragment.LeftFragment;
 import com.example.administrator.zhixueproject.fragment.LiveFragment;
 import com.example.administrator.zhixueproject.fragment.PersonalManagerFragment;
 import com.example.administrator.zhixueproject.fragment.TopicFragment;
@@ -82,24 +84,10 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
 
         tabHost=this.getTabHost();
         TabHost.TabSpec spec;
-        if(MyApplication.homeBean.getAttendType()==1){
-            spec=tabHost.newTabSpec("学院").setIndicator("学院").setContent(new Intent(this, CollegeFragment.class));
-            tabHost.addTab(spec);
-            spec=tabHost.newTabSpec("帖子").setIndicator("帖子").setContent(new Intent(this, InvitationFragment.class));
-            tabHost.addTab(spec);
-            imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_true));
-            tvCollege.setTextColor(getResources().getColor(R.color.color_48c6ef));
-        }else{
-            spec=tabHost.newTabSpec("帖子").setIndicator("帖子").setContent(new Intent(this, InvitationFragment.class));
-            tabHost.addTab(spec);
-            spec=tabHost.newTabSpec("学院").setIndicator("学院").setContent(new Intent(this, CollegeFragment.class));
-            tabHost.addTab(spec);
-            imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_2_true));
-            tvCollege.setTextColor(getResources().getColor(R.color.color_48c6ef));
-            tvCollege.setText("帖子");
-            imgTopic.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_false));
-            tvTopic.setText("学院");
-        }
+        spec=tabHost.newTabSpec("学院").setIndicator("学院").setContent(new Intent(this, CollegeFragment.class));
+        tabHost.addTab(spec);
+        spec=tabHost.newTabSpec("帖子").setIndicator("帖子").setContent(new Intent(this, InvitationFragment.class));
+        tabHost.addTab(spec);
         spec=tabHost.newTabSpec("直播预告").setIndicator("直播预告").setContent(new Intent(this, LiveFragment.class));
         tabHost.addTab(spec);
         spec=tabHost.newTabSpec("话题管理").setIndicator("话题管理").setContent(new Intent(this, TopicFragment.class));
@@ -114,25 +102,11 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         switch (v.getId()){
             case R.id.lin_tab_college:
                 updateImg(0);
-                if(MyApplication.homeBean.getAttendType()==1){
-                    tabHost.setCurrentTabByTag("学院");
-                }else{
-                    tabHost.setCurrentTabByTag("帖子");
-                    imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_2_true));
-                    imgTopic.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_false));
-                    tvCollege.setText("帖子");
-                }
+                tabHost.setCurrentTabByTag("学院");
                  break;
             case R.id.lin_tab_topic:
                 updateImg(1);
-                if(MyApplication.homeBean.getAttendType()==1){
-                    tabHost.setCurrentTabByTag("帖子");
-                }else{
-                    tabHost.setCurrentTabByTag("学院");
-                    imgCollege.setImageDrawable(getResources().getDrawable(R.mipmap.tab_2_false));
-                    imgTopic.setImageDrawable(getResources().getDrawable(R.mipmap.tab_1_true));
-                    tvTopic.setText("学院");
-                }
+                tabHost.setCurrentTabByTag("帖子");
                  break;
             case R.id.lin_tab_zhibo:
                 updateImg(2);
@@ -170,29 +144,35 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
      */
     private void registerBoradcastReceiver(){
         IntentFilter myIntentFilter = new IntentFilter();
-        myIntentFilter.addAction(ACTION_SHOW_NEW_NEWS);
-        myIntentFilter.addAction(ACTION_CLEAR_NEW_NEWS);
+//        myIntentFilter.addAction(ACTION_SHOW_NEW_NEWS);
+//        myIntentFilter.addAction(ACTION_CLEAR_NEW_NEWS);
+        myIntentFilter.addAction(LeftFragment.GET_COLLEGE_DETAILS);
         registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
 
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getAction()){
-                case ACTION_SHOW_NEW_NEWS:
-                    if(MyApplication.homeBean.getAttendType()==1){
-                        imgRed.setVisibility(View.VISIBLE);
-                    }else{
-                        imgRed2.setVisibility(View.VISIBLE);
-                    }
-                     break;
-                case ACTION_CLEAR_NEW_NEWS:
-                    imgRed.setVisibility(View.GONE);
-                    imgRed2.setVisibility(View.GONE);
-                    break;
-                default:
-                    break;
+            String action = intent.getAction();
+            if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
+                updateImg(0);
+                tabHost.setCurrentTabByTag("学院");
             }
+//            switch (intent.getAction()){
+//                case ACTION_SHOW_NEW_NEWS:
+//                    if(MyApplication.homeBean.getAttendType()==1){
+//                        imgRed.setVisibility(View.VISIBLE);
+//                    }else{
+//                        imgRed2.setVisibility(View.VISIBLE);
+//                    }
+//                     break;
+//                case ACTION_CLEAR_NEW_NEWS:
+//                    imgRed.setVisibility(View.GONE);
+//                    imgRed2.setVisibility(View.GONE);
+//                    break;
+//                default:
+//                    break;
+//            }
         }
     };
 
@@ -253,7 +233,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
                 exitTime = System.currentTimeMillis();
             } else {
                 //关闭广播
-                unregisterReceiver(mBroadcastReceiver);
+                 unregisterReceiver(mBroadcastReceiver);
                 ActivitysLifecycle.getInstance().exit();
             }
             return false;

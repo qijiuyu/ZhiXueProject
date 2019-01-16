@@ -6,7 +6,7 @@ public class HttpConstant {
 
     //微信的appid
     public static final String WX_APPID="wxf2413139ede45239";
-    public static final String WX_APPSECRET="8083f3007ecb2540b65538946e3d5724";
+    public static final String WX_APPSECRET="59fecf8eedfd5c4fc7e699c4424a7dfa";
 
     //获取短信验证码
     public static final String GET_SMS_CODE="user/getSmsCode.do";
@@ -270,4 +270,6 @@ public class HttpConstant {
     public static final String UPDATE_POST_COLL="post/updatePostColl.do";
 
     public static final String UPDATE_VERSION="resources/version.json";
+
+    public static final String MY_FEEDBACK="advice/getMyAdviceList.do";
 }

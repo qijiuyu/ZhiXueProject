@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +63,20 @@ public class MyApplication extends Application {
         JPushInterface.init(this);     		// 初始化 JPush
 
         registerActivityLifecycleCallbacks(ActivitysLifecycle.getInstance());
+
+        initShare();
     }
 
 
+
+    /**
+     * 初始化友盟分享
+     */
+    private void initShare(){
+        UMConfigure.setLogEnabled(true);
+        UMConfigure.init(this,"561cae6ae0f55abd990035bf","umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
+        //微信
+        PlatformConfig.setWeixin("wxf2413139ede45239", "59fecf8eedfd5c4fc7e699c4424a7dfa");
+    }
 
 }

@@ -165,7 +165,7 @@ public class BlacklistActivity extends BaseActivity implements View.OnClickListe
         if (bean.isStatus()) {
             mBlackList.addAll(bean.getData().getBlackList());
             if (bean.getData().getBlackList().size() <= 0) {
-                showMsg(getString(R.string.no_more_data));
+                return;
             }
             mBlackListAdapter.setNewData(mBlackList);
             mBlackListAdapter.notifyDataSetChanged();

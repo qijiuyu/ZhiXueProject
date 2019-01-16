@@ -71,6 +71,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
         mrlActionManage.setMyRefreshLayoutListener(this);//刷新加载
         registerBroadCast();
         getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS);
+        adapterView();
     }
 
     /**
@@ -155,7 +156,9 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
             if (dataBean.getActivityList().size()==0){
                 return;
             }
-            adapterView();
+            // adapterView();
+            mAdapter.setNewData(listData);
+            mAdapter.notifyDataSetChanged();
         } else {
            // showMsg(bean.errorMsg);
 
@@ -173,11 +176,11 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
         if (bean.isStatus()) {
             ActionManageBean.DataBean dataBean = bean.getData();
             if (dataBean.getActivityList().size() <= 0) {
-                showMsg(getResources().getString(R.string.no_more_data));
                 return;
             }
             listData.addAll(dataBean.getActivityList());
-            adapterView();
+            mAdapter.setNewData(listData);
+            mAdapter.notifyDataSetChanged();
         } else {
            // showMsg(bean.errorMsg);
         }
