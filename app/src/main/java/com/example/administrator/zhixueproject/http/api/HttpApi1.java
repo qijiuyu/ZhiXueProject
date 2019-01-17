@@ -2,6 +2,7 @@ package com.example.administrator.zhixueproject.http.api;
 
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.BuyIness;
+import com.example.administrator.zhixueproject.bean.College;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.EntryGroup;
@@ -293,7 +294,7 @@ public interface HttpApi1 {
      */
     @FormUrlEncoded
     @POST(HttpConstant.ADD_COOPERTE)
-    Call<ResponseBody> addCooPerate(@FieldMap Map<String, String> map);
+    Call<BaseBean> addCooPerate(@FieldMap Map<String, String> map);
 
 
 
@@ -605,4 +606,13 @@ public interface HttpApi1 {
     @POST(HttpConstant.UPDATE_VERSION)
     Call<Version> updateVersion(@FieldMap Map<String, String> map);
 
+
+    /**
+     * 查询学院列表
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.COLLEGE_LIST)
+    Call<College> getCollegeList(@FieldMap Map<String, String> map);
 }

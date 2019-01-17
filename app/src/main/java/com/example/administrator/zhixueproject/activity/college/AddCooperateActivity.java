@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.college;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,30 +18,30 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.BuyIness;
+import com.example.administrator.zhixueproject.bean.College;
 import com.example.administrator.zhixueproject.bean.Teacher;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
 import com.example.administrator.zhixueproject.fragment.college.TopicListFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 
-import org.json.JSONObject;
-
 /**
  * 添加合作
  */
 public class AddCooperateActivity extends BaseActivity implements View.OnClickListener{
 
-    private EditText etName,etTimeNum;
-    private TextView tvTopic,tvTeacherName;
+    private EditText etTimeNum;
+    private TextView tvName,tvTopic,tvTeacherName;
     //侧滑菜单
     public static DrawerLayout mDrawerLayout;
     //话题对象
     private TopicListBean topicListBean;
     //讲师对象
     private Teacher teacher;
+    //学院对象
+    private College.CollegeDatas collegeDatas;
     private BuyIness.BusInessList busInessList;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,7 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
         //注册广播
         registerReceiver();
         showUpdateData();
+
     }
 
 
@@ -59,11 +61,12 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
     private void initView(){
         TextView tvHead = (TextView) findViewById(R.id.tv_title);
         tvHead.setText(getString(R.string.add_cooperation));
-        etName=(EditText)findViewById(R.id.et_institution_name);
+        tvName=(TextView) findViewById(R.id.et_institution_name);
         tvTopic=(TextView)findViewById(R.id.tv_topic_content);
         tvTeacherName=(TextView)findViewById(R.id.tv_teacher_name);
         etTimeNum=(EditText)findViewById(R.id.et_purchase_period);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        tvName.setOnClickListener(this);
         findViewById(R.id.rl_add_topic).setOnClickListener(this);
         findViewById(R.id.rl_choose_teacher).setOnClickListener(this);
         findViewById(R.id.tv_setting_save).setOnClickListener(this);
@@ -79,9 +82,12 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
         if(null==busInessList){
             return;
         }
-        etName.setClickable(false);
+        tvName.setClickable(false);
         findViewById(R.id.rl_add_topic).setClickable(false);
         findViewById(R.id.rl_choose_teacher).setClickable(false);
+        tvName.setText(busInessList.getCollegeName());
+        tvTopic.setText(busInessList.getTopicName());
+        tvTeacherName.setText(busInessList.getNewWriterName());
         etTimeNum.setText(busInessList.getBuytopicMonths()+"");
     }
 
@@ -90,6 +96,11 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            //选择学院
+            case R.id.et_institution_name:
+                 Intent intent2=new Intent(mContext,CollegeListActivity.class);
+                 startActivityForResult(intent2,2);
+                 break;
             //所选话题
             case R.id.rl_add_topic:
                  mDrawerLayout.openDrawer(Gravity.RIGHT);
@@ -102,10 +113,10 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
                  break;
             //保存
             case R.id.tv_setting_save:
-                 final String colleteName=etName.getText().toString().trim();
+                 final String colleteName=tvName.getText().toString().trim();
                  final String month=etTimeNum.getText().toString().trim();
                  if(TextUtils.isEmpty(colleteName) && busInessList==null){
-                     showMsg("请输入学院名称！");
+                     showMsg("请选择学院！");
                      return;
                  }
                  if(null==topicListBean && busInessList==null){
@@ -122,7 +133,7 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
                  }
                  showProgress(getString(R.string.loding));
                  if(busInessList==null){
-                     HttpMethod1.addCooPerate(topicListBean.getTopicId(),teacher.getTeacherId(),month,mHandler);
+                     HttpMethod1.addCooPerate(collegeDatas.getCollegeId(),topicListBean.getTopicId(),teacher.getTeacherId(),month,mHandler);
                  }else{
                      HttpMethod1.updateBuyTopic(busInessList.getBuytopicId()+"",month,mHandler);
                  }
@@ -136,35 +147,29 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
     }
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler=new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
+            BaseBean baseBean;
             switch (msg.what){
                 case HandlerConstant1.ADD_COOPERATE_SUCCESS:
-                     final String message= (String) msg.obj;
-                     if(TextUtils.isEmpty(message)){
-                         return;
-                     }
-                     try {
-                         final JSONObject jsonObject=new JSONObject(message);
-                         if(!jsonObject.getBoolean("status")){
-                             showMsg(jsonObject.getString("errorMsg"));
-                             return;
-                         }
-                         final JSONObject jsonObject1=new JSONObject(jsonObject.getString("data"));
-                         BuyIness.BusInessList busInessList= MyApplication.gson.fromJson(jsonObject1.getString("buyTopic"),BuyIness.BusInessList.class);
-                         Intent intent=new Intent();
-                         intent.putExtra("busInessList",busInessList);
-                         setResult(1,intent);
-                         finish();
-                     }catch (Exception e){
-                         e.printStackTrace();
-                     }
+                    baseBean= (BaseBean) msg.obj;
+                    if(null==baseBean){
+                        return;
+                    }
+                    if(baseBean.isStatus()){
+                        Intent intent=new Intent();
+                        setResult(1,intent);
+                        finish();
+                    }else{
+                        showMsg(baseBean.getErrorMsg());
+                    }
                      break;
                 //编辑成功
                 case HandlerConstant1.UPDATE_BUY_TOPIC_SUCCESS:
-                     final BaseBean baseBean= (BaseBean) msg.obj;
+                     baseBean= (BaseBean) msg.obj;
                      if(null==baseBean){
                          return;
                      }
@@ -228,12 +233,21 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==1){
-            teacher= (Teacher) data.getSerializableExtra("teacher");
-            if(teacher==null){
-                return;
-            }
-            tvTeacherName.setText(teacher.getUserName());
+        switch (resultCode){
+            case 1:
+                teacher= (Teacher) data.getSerializableExtra("teacher");
+                if(teacher==null){
+                    return;
+                }
+                tvTeacherName.setText(teacher.getUserName());
+                 break;
+            case 2:
+                collegeDatas= (College.CollegeDatas)data.getSerializableExtra("collegeDatas");
+                if(null==collegeDatas){
+                    return;
+                }
+                tvName.setText(collegeDatas.getCollegeName());
+                 break;
         }
     }
 

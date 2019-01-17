@@ -40,14 +40,15 @@ public class HttpMethod2 extends BaseRequst {
     /**
      * 获取话题列表
      *
-     * @param timestamp 时间戳
      * @param page      页号
      * @param limit     每页显示的条数
      * @param handler
      */
-    public static void getTopicList(String timestamp, String page, String limit, final int index, final Handler handler) {
+    public static void getTopicList(String postType ,String page, String limit, final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        map.put(TIME, timestamp);
+        if(!TextUtils.isEmpty(postType)){
+            map.put("postType",postType );
+        }
         map.put(PAGE, page);
         map.put(LIMIT, limit);
         Http.getRetrofit().create(HttpApi2.class).getTopicList(map).enqueue(new Callback<TopicsListBean>() {

@@ -313,6 +313,9 @@
             android:name=".activity.Mp3Activity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.college.CollegeListActivity"
+            android:screenOrientation="portrait" />
 
 
        <!--注册微信回调 WXEntryActivity -->

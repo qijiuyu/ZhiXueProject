@@ -182,9 +182,8 @@ public class BuyInessOutActivity extends BaseActivity  implements MyRefreshLayou
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==1){
-            BuyIness.BusInessList busInessList= (BuyIness.BusInessList) data.getSerializableExtra("busInessList");
-            listAll.add(0,busInessList);
-            buyInessOutAdapter.notifyDataSetChanged();
+            page=1;
+            getData(HandlerConstant1.BUY_INESS_OUT_SUCCESS);
         }
         if(resultCode==2){
             BuyIness.BusInessList busInessList= (BuyIness.BusInessList) data.getSerializableExtra("busInessList");
