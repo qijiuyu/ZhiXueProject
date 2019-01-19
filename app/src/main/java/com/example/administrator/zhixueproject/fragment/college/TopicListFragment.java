@@ -19,6 +19,7 @@ import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
 import java.text.SimpleDateFormat;
@@ -48,6 +49,7 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_topic_list, container, false);
         mRefreshLayout=(MyRefreshLayout)view.findViewById(R.id.re_list);
+
         listView=(ListView)view.findViewById(R.id.listView);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
@@ -141,8 +143,11 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
      * 查询话题列表
      */
     private void getData(int index){
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        HttpMethod2.getTopicList(simpleDateFormat.format(new Date()),page+"",limit+"",index,mHandler);
+        String postType=null;
+        if(null!=getTag() && getTag().toString().equals("添加友商")){
+            postType="1";
+        }
+        HttpMethod2.getTopicList(postType,page+"",limit+"",index,mHandler);
     }
 
 }

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.BuyIness;
+import com.example.administrator.zhixueproject.bean.College;
 import com.example.administrator.zhixueproject.bean.CollegeList;
 import com.example.administrator.zhixueproject.bean.ColleteVips;
 import com.example.administrator.zhixueproject.bean.DownLoad;
@@ -839,22 +840,23 @@ public class HttpMethod1  extends BaseRequst {
      * @param Months
      * @param handler
      */
-    public static void addCooPerate(long topicId,long newWriterId,String Months,final Handler handler) {
+    public static void addCooPerate(long collegeId,long topicId,long newWriterId,String Months,final Handler handler) {
         Map<String, String> map = new HashMap<>();
+        map.put("collegeId",collegeId+"");
         map.put("topicId",topicId+"");
         map.put("newWriterId",newWriterId+"");
         map.put("months",Months);
-        Http.getRetrofit().create(HttpApi1.class).addCooPerate(map).enqueue(new Callback<ResponseBody>() {
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+        Http.getRetrofit().create(HttpApi1.class).addCooPerate(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
                 try {
-                    sendMessage(handler, HandlerConstant1.ADD_COOPERATE_SUCCESS, response.body().string());
+                    sendMessage(handler, HandlerConstant1.ADD_COOPERATE_SUCCESS, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<BaseBean> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
@@ -1724,6 +1726,30 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<Version> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+
+    /**
+     * 查询学院列表
+     * @return
+     */
+    public static void getCollegeList(final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        Http.getRetrofit().create(HttpApi1.class).getCollegeList(map).enqueue(new Callback<College>() {
+            public void onResponse(Call<College> call, Response<College> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_COLLEGE_LIST_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<College> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
