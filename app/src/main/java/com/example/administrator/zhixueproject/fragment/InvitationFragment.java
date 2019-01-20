@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
@@ -51,9 +52,11 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
     private List<TopicListBean> listData = new ArrayList<>();
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP = DateUtil.getTime();;
+    private String TIMESTAMP = DateUtil.getTime();
+    ;
     private RecyclerView mRecyclerView;
     private MyRefreshLayout mRefreshLayout;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.topic_list);
@@ -64,10 +67,10 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
     }
 
     private void initView() {
-        imgHead=(CircleImageView)findViewById(R.id.img_fc_head);
-        tvHead=(TextView)findViewById(R.id.tv_head);
-        mRefreshLayout = (MyRefreshLayout)findViewById(R.id.mrl_topic_list);
-        mRecyclerView = (RecyclerView)findViewById(R.id.rv_topic_list);
+        imgHead = (CircleImageView) findViewById(R.id.img_fc_head);
+        tvHead = (TextView) findViewById(R.id.tv_head);
+        mRefreshLayout = (MyRefreshLayout) findViewById(R.id.mrl_topic_list);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_topic_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         //添加分隔线
         DividerItemDecoration itemDecoration = new DividerItemDecoration(mContext, R.drawable.divider_activity_line, LinearLayoutManager.VERTICAL);
@@ -90,7 +93,7 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
      * 设置侧边栏
      */
     private void leftMenu() {
-        mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         // 设置遮盖主要内容的布颜色
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -119,10 +122,6 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
     }
 
 
-    private void initData() {
-        getTopicList(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
-    }
-
     @Override
     public void onRefresh(View view) {
         PAGE = 1;
@@ -142,7 +141,7 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
      * @param index handler消息
      */
     private void getTopicList(int index) {
-        if (null!=listData&&listData.size()==0){
+        if (null != listData && listData.size() == 0) {
             showProgress(getString(R.string.loading));
         }
         HttpMethod2.getTopicList(TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
@@ -185,7 +184,7 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
             mAdapter = new TopicListAdapter(R.layout.topic_list_item, listData, true);
             mRecyclerView.setAdapter(mAdapter);
             mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) mRecyclerView.getParent());
-        }else {
+        } else {
             showMsg(bean.errorMsg);
 
         }
@@ -208,7 +207,7 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
             mAdapter = new TopicListAdapter(R.layout.topic_list_item, listData, true);
             mRecyclerView.setAdapter(mAdapter);
             mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) mRecyclerView.getParent());
-        }else {
+        } else {
             showMsg(bean.errorMsg);
         }
     }
@@ -225,10 +224,11 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
     @Override
     public void onResume() {
         super.onResume();
-        initData();
-        final UserBean userBean= MyApplication.userInfo.getData().getUser();
+        PAGE = 1;
+        getTopicList(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
+        final UserBean userBean = MyApplication.userInfo.getData().getUser();
         tvHead.setText(MyApplication.homeBean.getCollegeName());
-        Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
+        Glide.with(mContext).load(userBean.getUserImg()).override(30, 30).error(R.mipmap.head_bg).into(imgHead);
     }
 
 

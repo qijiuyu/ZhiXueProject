@@ -76,7 +76,8 @@
                 android:id="@+id/rv_member_manager"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dm000">
+                android:layout_height="@dimen/dm000"
+                android:overScrollMode="never">
 
             </android.support.v7.widget.RecyclerView>
         </com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout>
