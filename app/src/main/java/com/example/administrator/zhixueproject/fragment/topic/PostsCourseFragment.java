@@ -74,6 +74,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
     public void onResume() {
         super.onResume();
         // 查询帖子
+        PAGE = 1;
         getPostList(HandlerConstant2.GET_POST_LIST_SUCCESS1);
     }
 

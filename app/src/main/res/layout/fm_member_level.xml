@@ -1,32 +1,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-     >
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/member_level"
-        android:textColor="@color/color_333333"
-        android:textSize="13sp"
+        android:background="@color/color_ffffff"
         android:gravity="center_horizontal"
         android:padding="5dp"
-        android:background="@color/color_ffffff"
-        />
+        android:text="@string/member_level"
+        android:textColor="@color/color_333333"
+        android:textSize="13sp" />
+
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_level_list"
-            android:background="@color/color_ffffff"
-            android:layout_width="match_parent"
-            android:layout_height="220dp">
-    </android.support.v7.widget.RecyclerView>
+        android:id="@+id/rv_level_list"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@color/color_ffffff"
+        android:overScrollMode="never"/>
+
     <View
-            android:layout_width="match_parent"
-            android:layout_height="13dp"
-            android:background="@mipmap/member_level_bg"/>
+        android:layout_width="match_parent"
+        android:layout_height="13dp"
+        android:background="@mipmap/member_level_bg" />
+
     <RelativeLayout
         android:id="@+id/rl_level_bg"
-         android:background="#7fFFFFFF"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:background="#7fFFFFFF"/>
 </LinearLayout>
