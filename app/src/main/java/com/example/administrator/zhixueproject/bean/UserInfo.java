@@ -20,21 +20,12 @@ public class UserInfo extends BaseBean {
     }
 
     public static class UserInfoBean implements Serializable{
-        private List<Colleges> colleges=new ArrayList<>();
 
         private UserBean user;
 
         public boolean status;
 
         private String token;
-
-        public List<Colleges> getColleges() {
-            return colleges;
-        }
-
-        public void setColleges(List<Colleges> colleges) {
-            this.colleges = colleges;
-        }
 
         public UserBean getUser() {
             return user;

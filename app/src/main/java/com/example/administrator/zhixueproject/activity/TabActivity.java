@@ -57,7 +57,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         //注册广播
         registerBoradcastReceiver();
         //设置推送
-        setPush();
+//        setPush();
     }
 
 
@@ -239,5 +239,11 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
             return false;
         }
         return super.dispatchKeyEvent(event);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

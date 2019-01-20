@@ -29,7 +29,6 @@ public class MyApplication extends Application {
     public static Gson gson;
     public static SPUtil spUtil;
     public static UserInfo userInfo;
-    public static List<Colleges> listColleges=new ArrayList<>();
     public static Home.HomeBean homeBean;
     public static IWXAPI api;
     public void onCreate() {
@@ -42,12 +41,6 @@ public class MyApplication extends Application {
         final String strUserInfo=spUtil.getString(SPUtil.USER_INFO);
         if(!TextUtils.isEmpty(strUserInfo)){
             userInfo=gson.fromJson(strUserInfo,UserInfo.class);
-        }
-
-        //获取学院列表
-        final String  colleges=spUtil.getString(SPUtil.COLLEGE_LIST);
-        if(!TextUtils.isEmpty(strUserInfo)){
-            listColleges=gson.fromJson(colleges, new TypeToken<List<Colleges>>(){}.getType());
         }
 
         //获取学院信息

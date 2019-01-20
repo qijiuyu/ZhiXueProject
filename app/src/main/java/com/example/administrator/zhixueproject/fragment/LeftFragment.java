@@ -21,6 +21,7 @@ import com.example.administrator.zhixueproject.adapter.college.CollegeNameAdapte
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.Colleges;
 import com.example.administrator.zhixueproject.bean.Home;
+import com.example.administrator.zhixueproject.bean.MyColleges;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
@@ -29,6 +30,7 @@ import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,7 +45,6 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
     private CollegeNameAdapter mAdapter;
     private View view = null;
     public static final String GET_COLLEGE_DETAILS="com.zhixue.get.college.details";
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -92,6 +93,17 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
                     mActivity.sendBroadcast(new Intent(GET_COLLEGE_DETAILS));
                 }
             }
+            if(msg.what==HandlerConstant1.GET_MY_COLLEGE_SUCCESS){
+                final MyColleges myColleges= (MyColleges) msg.obj;
+                if(null==myColleges){
+                    return  false;
+                }
+                if(myColleges.isStatus()){
+                    mAdapter = new CollegeNameAdapter(R.layout.joined_college_item,myColleges.getData().getColleges());
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setOnItemClickListener(LeftFragment.this);
+                }
+            }
             return false;
         }
     });
@@ -121,8 +133,9 @@ public class LeftFragment extends BaseFragment implements BaseQuickAdapter.OnIte
         tvName.setText(userBean.getUserName());
         // 简介
         tvSign.setText(userBean.getUserIntro());
-        mAdapter = new CollegeNameAdapter(R.layout.joined_college_item,MyApplication.listColleges);
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(this);
+
+        //查询加入过的学院列表
+        HttpMethod1.getMyCollege(mHandler);
+
     }
 }

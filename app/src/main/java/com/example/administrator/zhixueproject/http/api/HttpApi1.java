@@ -12,6 +12,7 @@ import com.example.administrator.zhixueproject.bean.GiveScalAccount;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
+import com.example.administrator.zhixueproject.bean.MyColleges;
 import com.example.administrator.zhixueproject.bean.Notice;
 import com.example.administrator.zhixueproject.bean.Post;
 import com.example.administrator.zhixueproject.bean.QuestionAccount;
@@ -615,4 +616,14 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.COLLEGE_LIST)
     Call<College> getCollegeList(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 查询用户加入过的学院
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.MY_COLLEGE_LIST)
+    Call<MyColleges> getMyCollege(@FieldMap Map<String, String> map);
 }

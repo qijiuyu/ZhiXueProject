@@ -84,4 +84,5 @@ public class HandlerConstant1 {
     public static final int UP_OR_DOWN_SUCCESS=2058;
     public static final int UPDATE_VERSION_SUCCESS=2059;
     public static final int GET_COLLEGE_LIST_SUCCESS=2060;
+    public static final int GET_MY_COLLEGE_SUCCESS=2061;
 }

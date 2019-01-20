@@ -274,4 +274,6 @@ public class HttpConstant {
     public static final String MY_FEEDBACK="advice/getMyAdviceList.do";
 
     public static final String COLLEGE_LIST="college/list.do";
+
+    public static final String MY_COLLEGE_LIST="user/colleages.do";
 }
