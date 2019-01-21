@@ -30,6 +30,7 @@ import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.eventBus.TopicEvent;
 import com.example.administrator.zhixueproject.bean.topic.CostsListBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
+import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.HttpConstant;
@@ -482,9 +483,17 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                     break;
                 // 添加话题成功
                 case HandlerConstant2.ADD_TOPIC_SUCCESS:
-                    // 发广播
-                    finish();
-                    EventBus.getDefault().post(new TopicEvent().setEventType(TopicEvent.UPDATE_TOPIC_LIST));
+                    TopicsListBean topicsListBean= (TopicsListBean) msg.obj;
+                    if(null==topicsListBean){
+                        return;
+                    }
+                    if(topicsListBean.isStatus()){
+                        // 发广播
+                        finish();
+                        EventBus.getDefault().post(new TopicEvent().setEventType(TopicEvent.UPDATE_TOPIC_LIST));
+                    }else{
+                        showMsg(topicsListBean.getErrorMsg());
+                    }
                     break;
                 // 修改话题成功
                 case HandlerConstant2.UPDATE_TOPIC_SUCCESS:

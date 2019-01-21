@@ -29,7 +29,6 @@ import java.util.List;
  */
 
 public class AddTopicFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
-    private static String TIMESTAMP = System.currentTimeMillis() + "";
     private List<TopicListBean> listData = new ArrayList<>();
     private AddTopicAdapter mAddTopicAdapter;
     /**
@@ -56,7 +55,7 @@ public class AddTopicFragment extends BaseFragment implements BaseQuickAdapter.O
 
         // 查询话题列表
         showProgress(getString(R.string.loading));
-        HttpMethod2.getTopicList(TIMESTAMP, String.valueOf(page), String.valueOf(limit), HandlerConstant2.GET_TOPIC_LIST_SUCCESS, mHandler);
+        HttpMethod2.getTopicList(null, String.valueOf(page), String.valueOf(limit), HandlerConstant2.GET_TOPIC_LIST_SUCCESS, mHandler);
     }
 
     private Handler mHandler = new Handler() {

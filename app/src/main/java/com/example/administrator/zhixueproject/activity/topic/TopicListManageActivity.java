@@ -137,8 +137,7 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
         if (null!=listData&&listData.size()==0){
             showProgress(getString(R.string.loading));
         }
-        TIMESTAMP= DateUtil.getTime();
-        HttpMethod2.getTopicList(TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
+        HttpMethod2.getTopicList(null, PAGE + "", LIMIT, index, mHandler);
     }
 
     private Handler mHandler = new Handler() {

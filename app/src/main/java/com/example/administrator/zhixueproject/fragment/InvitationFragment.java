@@ -144,7 +144,7 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
         if (null != listData && listData.size() == 0) {
             showProgress(getString(R.string.loading));
         }
-        HttpMethod2.getTopicList(TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
+        HttpMethod2.getTopicList(null, PAGE + "", LIMIT, index, mHandler);
     }
 
     private Handler mHandler = new Handler() {

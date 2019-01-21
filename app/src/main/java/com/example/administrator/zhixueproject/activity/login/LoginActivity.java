@@ -49,7 +49,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
      * 初始化控件
      */
     //18610717775   a123456
-    //13121430770
+    //13121430770   123456
     private void initView(){
         TextView tvTitle=(TextView)findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.main_title));
