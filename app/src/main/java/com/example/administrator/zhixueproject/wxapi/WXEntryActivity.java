@@ -45,14 +45,19 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onResp(BaseResp resp) {
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
-                //发送成功
-                SendAuth.Resp sendResp = (SendAuth.Resp) resp;
-                if (sendResp != null) {
-                    String code = sendResp.code;
-                    getAccess_token(code);
+                if (resp instanceof SendAuth.Resp) {
+                    //发送成功
+                    SendAuth.Resp sendResp = (SendAuth.Resp) resp;
+                    if (sendResp != null) {
+                        String code = sendResp.code;
+                        getAccess_token(code);
+                    }
+                }else{
+                    finish();
                 }
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
+                 finish();
                 //发送取消
                 break;
             case BaseResp.ErrCode.ERR_AUTH_DENIED:

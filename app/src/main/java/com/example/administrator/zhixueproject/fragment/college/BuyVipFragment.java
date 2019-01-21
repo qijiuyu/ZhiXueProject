@@ -59,6 +59,7 @@ public class BuyVipFragment extends BaseFragment{
                          return;
                      }
                      if(colleteVips.isStatus()){
+                         list.clear();
                          list.addAll(colleteVips.getData().getCollegeGradeList());
                          colleteVipAdapter=new ColleteVipAdapter(getActivity(),list);
                          listView.setAdapter(colleteVipAdapter);
@@ -90,7 +91,7 @@ public class BuyVipFragment extends BaseFragment{
      * 查询学院vip等级
      */
     private void getVips(){
-        if(isVisibleToUser && view!=null && list.size()==0){
+        if(isVisibleToUser && view!=null){
             showProgress("数据查询中");
             HttpMethod1.getCollegeVips(mHandler);
         }
