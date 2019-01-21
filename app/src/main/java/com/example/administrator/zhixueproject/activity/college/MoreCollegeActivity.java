@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.example.administrator.zhixueproject.R;
@@ -16,13 +15,14 @@ import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.Colleges;
 import com.example.administrator.zhixueproject.bean.Home;
-import com.example.administrator.zhixueproject.bean.UserInfo;
+import com.example.administrator.zhixueproject.bean.MyColleges;
 import com.example.administrator.zhixueproject.callback.CollegeCallBack;
 import com.example.administrator.zhixueproject.fragment.LeftFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
-import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 加入过的更多学院
@@ -33,10 +33,14 @@ public class MoreCollegeActivity extends BaseActivity implements CollegeCallBack
     private ListView listView;
     private CollegeItemAdapter collegeItemAdapter;
     private String collegeId;
+    private List<Colleges> list=new ArrayList<>();
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_college);
         initView();
+        //查询加入过的学院列表
+        showProgress("数据加载中");
+        HttpMethod1.getMyCollege(mHandler);
     }
 
     /**
@@ -46,8 +50,6 @@ public class MoreCollegeActivity extends BaseActivity implements CollegeCallBack
         TextView tvHead=(TextView)findViewById(R.id.tv_title);
         tvHead.setText(getString(R.string.joined_college));
         listView = (ListView)findViewById(R.id.rv_college_list);
-        collegeItemAdapter=new CollegeItemAdapter(mContext,MyApplication.listColleges,this);
-        listView.setAdapter(collegeItemAdapter);
 
         findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -61,6 +63,17 @@ public class MoreCollegeActivity extends BaseActivity implements CollegeCallBack
         public boolean handleMessage(Message msg) {
             clearTask();
             switch (msg.what){
+                case HandlerConstant1.GET_MY_COLLEGE_SUCCESS:
+                    final MyColleges myColleges= (MyColleges) msg.obj;
+                    if(null==myColleges){
+                        return  false;
+                    }
+                    if(myColleges.isStatus()){
+                        list=myColleges.getData().getColleges();
+                        collegeItemAdapter=new CollegeItemAdapter(mContext,list,MoreCollegeActivity.this);
+                        listView.setAdapter(collegeItemAdapter);
+                    }
+                     break;
                 //退出学院
                 case HandlerConstant1.QUIT_COLLEGE_SUCCESS:
                      final BaseBean baseBean= (BaseBean) msg.obj;
@@ -68,14 +81,13 @@ public class MoreCollegeActivity extends BaseActivity implements CollegeCallBack
                          break;
                      }
                      if(baseBean.isStatus()){
-                         for (int i=0;i<MyApplication.listColleges.size();i++){
-                              if(MyApplication.listColleges.get(i).getCollegeId()==Integer.parseInt(collegeId)){
-                                  MyApplication.listColleges.remove(i);
+                         for (int i=0;i<list.size();i++){
+                              if(list.get(i).getCollegeId()==Integer.parseInt(collegeId)){
+                                  list.remove(i);
                                   collegeItemAdapter.notifyDataSetChanged();
                                   break;
                               }
                          }
-                         MyApplication.spUtil.addString(SPUtil.COLLEGE_LIST,MyApplication.gson.toJson(MyApplication.listColleges));
                      }else{
                          showMsg(baseBean.getErrorMsg());
                      }

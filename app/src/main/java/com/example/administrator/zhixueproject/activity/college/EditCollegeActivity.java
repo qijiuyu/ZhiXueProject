@@ -189,17 +189,17 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                     break;
                 //编辑学院
                 case HandlerConstant1.EDIT_COLLEGE_SUCCESS:
-                     final BaseBean baseBean= (BaseBean) msg.obj;
-                     if(null==baseBean){
-                         return;
-                     }
-                     if(baseBean.isStatus()){
-                         getCollegeDetails();
-                         showMsg("修改成功");
-                     }else{
-                         showMsg(baseBean.getErrorMsg());
-                     }
-                     break;
+                    final BaseBean baseBean= (BaseBean) msg.obj;
+                    if(null==baseBean){
+                        return;
+                    }
+                    if(baseBean.isStatus()){
+                        getCollegeDetails();
+                        showMsg("修改成功");
+                    }else{
+                        showMsg(baseBean.getErrorMsg());
+                    }
+                    break;
                 case HandlerConstant1.GET_COLLEGE_DETAILS_SUCCESS:
                     final Home home= (Home) msg.obj;
                     if(null==home){
@@ -210,7 +210,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                         MyApplication.spUtil.addString(SPUtil.HOME_INFO,MyApplication.gson.toJson(MyApplication.homeBean));
                         finish();
                     }
-                     break;
+                    break;
                 case HandlerConstant1.REQUST_ERROR:
                     showMsg(getString(R.string.net_error));
                     break;
@@ -225,48 +225,48 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()){
             //选择背景图
             case R.id.iv_college_back_img:
-                 imgType=0;
-                 addPic();
-                 break;
+                imgType=0;
+                addPic();
+                break;
             //学院logo
             case R.id.iv_college_logo:
-                 imgType=1;
-                 addPic();
-                 break;
-             //设为私密
+                imgType=1;
+                addPic();
+                break;
+            //设为私密
             case R.id.item_option1:
-                 setRadioButton(0);
-                 collegeType=0;
-                 break;
-             //开放入群
+                setRadioButton(0);
+                collegeType=0;
+                break;
+            //开放入群
             case R.id.item_option2:
-                 setRadioButton(1);
-                 collegeType=1;
+                setRadioButton(1);
+                collegeType=1;
                 break;
             //付费入群
             case R.id.item_option3:
-                 setRadioButton(2);
-                 collegeType=2;
-                 setMoney();
+                setRadioButton(2);
+                collegeType=2;
+                setMoney();
                 break;
-             //审核入群
+            //审核入群
             case R.id.item_option4:
-                 setRadioButton(3);
-                 collegeType=3;
+                setRadioButton(3);
+                collegeType=3;
                 break;
             case R.id.tv_right:
             case R.id.tv_commit:
-                 final String collegeName=etName.getText().toString().trim();
-                 final String registerName=etRegister.getText().toString().trim();
-                 final String backInfo=etBack.getText().toString().trim();
-                 final String backCard=etCard.getText().toString().trim();
-                 final String money=tvMoney.getText().toString().trim().replace("元","");
-                 final String details=etDetails.getText().toString().trim();
-                 final String welcome=etWelcome.getText().toString().trim();
-                 if(TextUtils.isEmpty(collegeName)){
-                     showMsg("请输入学院名称！");
-                     return;
-                 }
+                final String collegeName=etName.getText().toString().trim();
+                final String registerName=etRegister.getText().toString().trim();
+                final String backInfo=etBack.getText().toString().trim();
+                final String backCard=etCard.getText().toString().trim();
+                final String money=tvMoney.getText().toString().trim().replace("元","");
+                final String details=etDetails.getText().toString().trim();
+                final String welcome=etWelcome.getText().toString().trim();
+                if(TextUtils.isEmpty(collegeName)){
+                    showMsg("请输入学院名称！");
+                    return;
+                }
                 if(TextUtils.isEmpty(registerName)){
                     showMsg("请输入注册人！");
                     return;
@@ -288,8 +288,8 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                     return;
                 }
                 if(collegeType==2 && TextUtils.isEmpty(money)){
-                     setMoney();
-                     return;
+                    setMoney();
+                    return;
                 }
                 if(TextUtils.isEmpty(welcome)){
                     showMsg("请输入学院欢迎语！");
@@ -299,13 +299,13 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
                     showMsg("请输入学院简介！");
                     return;
                 }
-                 showProgress("数据加载中...");
-                 HttpMethod1.editCollege(collegeName,registerName,backInfo,backCard,collegeBackimg,(double)(seekBar.getProgress())/100,collegeType,money,collegeDelYn,details,colletgeLogo,welcome,mHandler);
-                 break;
+                showProgress("数据加载中...");
+                HttpMethod1.editCollege(collegeName,registerName,backInfo,backCard,collegeBackimg,(double)(seekBar.getProgress())/100,collegeType,money,collegeDelYn,details,colletgeLogo,welcome,mHandler);
+                break;
             case R.id.tv_cancel:
             case R.id.lin_back:
-                 finish();
-                 break;
+                finish();
+                break;
             default:
                 break;
         }
@@ -336,11 +336,11 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
      */
     private void setRadioButton(int index){
         for (int i=0;i<rbList.size();i++){
-             if(i==index){
-                 rbList.get(i).setChecked(true);
-             }else{
-                 rbList.get(i).setChecked(false);
-             }
+            if(i==index){
+                rbList.get(i).setChecked(true);
+            }else{
+                rbList.get(i).setChecked(false);
+            }
         }
         if(index!=2){
             tvMoney.setText(null);

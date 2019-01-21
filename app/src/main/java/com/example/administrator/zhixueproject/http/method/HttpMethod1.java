@@ -17,6 +17,7 @@ import com.example.administrator.zhixueproject.bean.GiveScalAccount;
 import com.example.administrator.zhixueproject.bean.Home;
 import com.example.administrator.zhixueproject.bean.Medal;
 import com.example.administrator.zhixueproject.bean.MemBerLevel;
+import com.example.administrator.zhixueproject.bean.MyColleges;
 import com.example.administrator.zhixueproject.bean.Notice;
 import com.example.administrator.zhixueproject.bean.Post;
 import com.example.administrator.zhixueproject.bean.QuestionAccount;
@@ -1750,6 +1751,29 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<College> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 查询用户加入过的学院
+     * @param handler
+     */
+    public static void getMyCollege(final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        Http.getRetrofit().create(HttpApi1.class).getMyCollege(map).enqueue(new Callback<MyColleges>() {
+            public void onResponse(Call<MyColleges> call, Response<MyColleges> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_MY_COLLEGE_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<MyColleges> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });
