@@ -44,10 +44,10 @@ public class HttpMethod2 extends BaseRequst {
      * @param limit     每页显示的条数
      * @param handler
      */
-    public static void getTopicList(String postType ,String page, String limit, final int index, final Handler handler) {
+    public static void getTopicList(String topicType ,String page, String limit, final int index, final Handler handler) {
         Map<String, String> map = new HashMap<>();
-        if(!TextUtils.isEmpty(postType)){
-            map.put("postType",postType );
+        if(!TextUtils.isEmpty(topicType)){
+            map.put("topicType",topicType );
         }
         map.put(PAGE, page);
         map.put(LIMIT, limit);
