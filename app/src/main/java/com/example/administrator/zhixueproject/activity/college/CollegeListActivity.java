@@ -48,6 +48,11 @@ public class CollegeListActivity extends BaseActivity {
         TextView tvHead = (TextView) findViewById(R.id.tv_title);
         tvHead.setText("选择学院");
         listView=(ListView)findViewById(R.id.listView);
+        findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                CollegeListActivity.this.finish();
+            }
+        });
     }
 
 
