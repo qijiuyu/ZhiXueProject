@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.college;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -67,6 +68,7 @@ public class AddFeedBackActivity extends BaseActivity {
                         return;
                     }
                     if(baseBean.isStatus()){
+                        setResult(1,new Intent());
                        finish();
                     }else{
                         showMsg(baseBean.getErrorMsg());
