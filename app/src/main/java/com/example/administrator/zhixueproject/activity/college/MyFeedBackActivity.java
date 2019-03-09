@@ -58,7 +58,7 @@ public class MyFeedBackActivity extends BaseActivity   implements MyRefreshLayou
         mRefreshLayout.setMyRefreshLayoutListener(this);
         feedBackAdapter=new FeedBackAdapter(MyFeedBackActivity.this,listAll);
         listView.setAdapter(feedBackAdapter);
-        findViewById(R.id.tv_feedback_platform).setVisibility(View.GONE);
+        findViewById(R.id.tv_feedback_platform).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
@@ -66,6 +66,11 @@ public class MyFeedBackActivity extends BaseActivity   implements MyRefreshLayou
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            //添加反馈
+            case R.id.tv_feedback_platform:
+                Intent intent=new Intent(mContext,AddFeedBackActivity.class);
+                startActivityForResult(intent,1);
+                break;
             case R.id.lin_back:
                  finish();
                  break;
@@ -157,4 +162,13 @@ public class MyFeedBackActivity extends BaseActivity   implements MyRefreshLayou
         HttpMethod1.getMyFeedBack(page,limit,index,mHandler);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==1){
+            page=1;
+            getData(HandlerConstant1.GET_FEEDBACK_SUCCESS);
+        }
+    }
 }

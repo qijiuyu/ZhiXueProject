@@ -74,8 +74,8 @@ public class FeedBackActivity extends BaseActivity   implements MyRefreshLayoutL
         mRefreshLayout.setMyRefreshLayoutListener(this);
         feedBackAdapter=new FeedBackAdapter(FeedBackActivity.this,listAll);
         listView.setAdapter(feedBackAdapter);
+        findViewById(R.id.tv_feedback_platform).setVisibility(View.GONE);
         findViewById(R.id.lin_right).setOnClickListener(this);
-        findViewById(R.id.tv_feedback_platform).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
@@ -100,10 +100,6 @@ public class FeedBackActivity extends BaseActivity   implements MyRefreshLayoutL
                  break;
             case R.id.tv_no_red:
                  updateTextView(2);
-                 break;
-            //添加反馈
-            case R.id.tv_feedback_platform:
-                 setClass(AddFeedBackActivity.class);
                  break;
             case R.id.lin_back:
                  finish();
@@ -238,7 +234,6 @@ public class FeedBackActivity extends BaseActivity   implements MyRefreshLayoutL
             }
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    LogUtils.e(position+"++++++++++++++");
                     FeedBack.FeedBackList feedBackList=listAll.get(position);
                     Intent intent=new Intent(mContext,FeedBackDetailsActivity.class);
                     intent.putExtra("feedBackList",feedBackList);

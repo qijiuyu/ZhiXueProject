@@ -1,7 +1,7 @@
-package com.example.administrator.zhixueproject.activity.topic;
+package com.example.administrator.zhixueproject.activity.live;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -12,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,11 +24,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.ReleaseContentsAdapter;
-import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.ReleaseContentsBean;
@@ -48,11 +47,14 @@ import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.utils.record.RecordUtil;
 import com.example.administrator.zhixueproject.utils.record.VoiceManager;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import io.github.rockerhieu.emojicon.EmojiconEditText;
 import io.github.rockerhieu.emojicon.EmojiconGridFragment;
 import io.github.rockerhieu.emojicon.EmojiconsFragment;
@@ -64,32 +66,19 @@ import io.github.rockerhieu.emojicon.emoji.Emojicon;
  * @author petergee
  * @date 2018/10/11
  */
-public class ReleaseContentsActivity extends BaseActivity implements View.OnClickListener, EmojiconGridFragment.OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener {
+public class AddLiveContentActivity extends BaseActivity implements View.OnClickListener, EmojiconGridFragment.OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener {
     private List<ReleaseContentsBean> listData = new ArrayList<>();//发布内容的Json数据
     private ReleaseContentsAdapter mAdapter;
     private boolean mIsFocus;
     private CustomPopWindow recordPopWindow;
     private VoiceManager voiceManager;
     private TextView tv_time_length;
-    private String postType;//帖子类型
-    private String postTopicId;
-    private String postIsTop = "0";
-    private String postWriterId;
-    private String postIsFree; //1免费  2付费
-    private String postName;
-    private String postPrice;
-    private String topicImg;
-    private String startTime;
-    private String endTime;
-    private String activityId;
-    private PopIco popIco;
     private Uri mOutputUri;
     private int fileType;
     private long voiceLength = 0;
     public File mFileCamera;
     public File mVoiceFile;
     private String voiceStrLength;
-    private String postId;
     private EmojiconEditText etContent;
     private RecyclerView rvReleaseContent;
     private LinearLayout llContent;
@@ -97,16 +86,9 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
     private LinearLayout llReleaseContents;
     private FrameLayout flEmoji;
     private LinearLayout llRelease;
-    private String topicID;
-    private String voteName;
-    private String topicType;
-    private String voteIsTop;
-    private String voteWriterId;
-    private String voteSecNames;
-    private Boolean isMultipleChoice;
+    private PopIco popIco;
     //是否在录音
     private boolean isRecord=false;
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_release_content);
@@ -120,28 +102,6 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         tvTitle.setText(getString(R.string.release_content));
         findViewById(R.id.lin_back).setOnClickListener(this);
         voiceManager = VoiceManager.getInstance(this);
-        postType = getIntent().getStringExtra("postType");
-        postTopicId = getIntent().getStringExtra("postTopicId");
-        postIsTop = getIntent().getStringExtra("postIsTop");
-        postWriterId = getIntent().getStringExtra("postWriterId");
-        postIsFree = getIntent().getStringExtra("postIsFree");
-        postName = getIntent().getStringExtra("postName");
-        postPrice = getIntent().getStringExtra("postPrice");
-        topicImg = getIntent().getStringExtra("topicImg");
-        startTime = getIntent().getStringExtra("startTime");
-        endTime = getIntent().getStringExtra("endTime");
-        activityId = getIntent().getStringExtra("activityId");
-        postId = getIntent().getStringExtra("postId");
-
-        // 添加投票
-        topicID = getIntent().getStringExtra("topicId");
-        voteName = getIntent().getStringExtra("voteName");
-        topicType = getIntent().getStringExtra("topicType");
-        voteIsTop = getIntent().getStringExtra("voteIsTop");
-        voteWriterId = getIntent().getStringExtra("voteWriterId");
-        voteSecNames = getIntent().getStringExtra("voteSecNames");
-        isMultipleChoice = getIntent().getBooleanExtra("isMultipleChoice",false);
-
 
         llContent = (LinearLayout) findViewById(R.id.ll_content);
         findViewById(R.id.iv_expression).setOnClickListener(this);
@@ -187,155 +147,6 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         EmojiconsFragment.backspace(etContent);
     }
 
-    /**
-     * 发布贴子的
-     *
-     * @param context
-     * @param postType
-     * @param postName
-     * @param postTopicId
-     * @param postWriterId
-     * @param postIsFree
-     * @param postPrice
-     * @param postIsTop
-     */
-    public static void start(Context context, String postType, String postName, String postTopicId,
-                             String postWriterId, String postIsFree, String postPrice, String postIsTop) {
-        Intent starter = new Intent(context, ReleaseContentsActivity.class);
-        starter.putExtra("postType", postType);
-        starter.putExtra("postName", postName);
-        starter.putExtra("postTopicId", postTopicId);
-        starter.putExtra("postWriterId", postWriterId);
-        starter.putExtra("postIsFree", postIsFree);
-        starter.putExtra("postPrice", postPrice);
-        starter.putExtra("postIsTop", postIsTop);
-        context.startActivity(starter);
-    }
-
-
-    /**
-     * 修改贴子
-     *
-     * @param context
-     * @param postId
-     * @param postName
-     * @param postTopicId
-     * @param postIsFree
-     * @param postPrice
-     * @param postIsTop
-     */
-    public static void start(Context context, String postId, String postName, String postTopicId,
-                             String postIsFree, String postPrice, String postIsTop) {
-        Intent starter = new Intent(context, ReleaseContentsActivity.class);
-        starter.putExtra("postId", postId);
-        starter.putExtra("postName", postName);
-        starter.putExtra("postTopicId", postTopicId);
-        starter.putExtra("postIsFree", postIsFree);
-        starter.putExtra("postPrice", postPrice);
-        starter.putExtra("postIsTop", postIsTop);
-        context.startActivity(starter);
-    }
-
-    /**
-     * 发布活动的
-     *
-     * @param context
-     * @param postType
-     * @param postName
-     * @param postTopicId
-     * @param postWriterId
-     * @param topicImg
-     * @param startTime
-     * @param endTime
-     * @param postIsTop
-     */
-    public static void start(Context context,
-                             String postType,
-                             String postName,
-                             String postTopicId,
-                             String postWriterId,
-                             String topicImg,
-                             String startTime,
-                             String endTime,
-                             String postIsTop) {
-        Intent starter = new Intent(context, ReleaseContentsActivity.class);
-        starter.putExtra("postType", postType);
-        starter.putExtra("postName", postName);
-        starter.putExtra("postTopicId", postTopicId);
-        starter.putExtra("postWriterId", postWriterId);
-        starter.putExtra("topicImg", topicImg);
-        starter.putExtra("startTime", startTime);
-        starter.putExtra("endTime", endTime);
-        starter.putExtra("postIsTop", postIsTop);
-        context.startActivity(starter);
-    }
-
-
-    /**
-     * 修改活动
-     *
-     * @param context
-     * @param postType
-     * @param postName
-     * @param postTopicId
-     * @param postWriterId
-     * @param topicImg
-     * @param startTime
-     * @param endTime
-     * @param postIsTop
-     * @param activityId
-     */
-    public static void start(Context context,
-                             String postType,
-                             String postName,
-                             String postTopicId,
-                             String postWriterId,
-                             String topicImg,
-                             String startTime,
-                             String endTime,
-                             String postIsTop,
-                             String activityId) {
-        Intent starter = new Intent(context, ReleaseContentsActivity.class);
-        starter.putExtra("postType", postType);
-        starter.putExtra("postName", postName);
-        starter.putExtra("postTopicId", postTopicId);
-        starter.putExtra("postWriterId", postWriterId);
-        starter.putExtra("topicImg", topicImg);
-        starter.putExtra("startTime", startTime);
-        starter.putExtra("endTime", endTime);
-        starter.putExtra("postIsTop", postIsTop);
-        starter.putExtra("activityId", activityId);
-        context.startActivity(starter);
-    }
-
-    /**
-     * 发布投票
-     * @param context
-     * @param topicId
-     * @param voteName
-     * @param topicType
-     * @param voteIsTop
-     * @param voteWriterId
-     * @param startTime
-     * @param endTime
-     * @param voteSecNames
-     * @param isMultipleChoice
-     */
-    public static void start(Context context,String topicId, String voteName, String topicType, String voteIsTop, String voteWriterId,
-                             String startTime, String endTime, String voteSecNames, boolean isMultipleChoice) {
-        Intent starter = new Intent(context, ReleaseContentsActivity.class);
-        starter.putExtra("topicId", topicId);
-        starter.putExtra("voteName", voteName);
-        starter.putExtra("topicType", topicType);
-        starter.putExtra("voteIsTop", voteIsTop);
-        starter.putExtra("voteWriterId", voteWriterId);
-        starter.putExtra("startTime", startTime);
-        starter.putExtra("endTime", endTime);
-        starter.putExtra("voteSecNames", voteSecNames);
-        starter.putExtra("isMultipleChoice", String.valueOf(isMultipleChoice));
-        context.startActivity(starter);
-    }
-
 
     /**
      * RecyclerView监听
@@ -355,7 +166,6 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         });
         //条目子控件的点击事件监听
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.iv_delete:
@@ -382,16 +192,16 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 case AddImageUtils.REQUEST_PICK_IMAGE://从相册选择
                     if (data != null) {
                         if (Build.VERSION.SDK_INT >= 19) {
-                            AddImageUtils.handleImageOnKitKat(data, ReleaseContentsActivity.this);
+                            AddImageUtils.handleImageOnKitKat(data, AddLiveContentActivity.this);
                         } else {
-                            AddImageUtils.handleImageBeforeKitKat(data, ReleaseContentsActivity.this);
+                            AddImageUtils.handleImageBeforeKitKat(data, AddLiveContentActivity.this);
                         }
-                        mOutputUri = AddImageUtils.cropPhotoSmall(ReleaseContentsActivity.this);
+                        mOutputUri = AddImageUtils.cropPhotoSmall(AddLiveContentActivity.this);
 
                     }
                     break;
                 case AddImageUtils.REQUEST_CAPTURE://拍照
-                    mOutputUri = AddImageUtils.cropPhotoSmall(ReleaseContentsActivity.this);
+                    mOutputUri = AddImageUtils.cropPhotoSmall(AddLiveContentActivity.this);
                     break;
                 case AddImageUtils.REQUEST_PICTURE_CUT_SMALL://裁剪完成
                     if (data != null) {
@@ -438,31 +248,6 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 }
                 break;
             case R.id.tv_release:
-                if (!TextUtils.isEmpty(startTime) && "0".equals(activityId)) {
-                    // 发布活动
-                    HttpMethod2.addActivity(postTopicId, topicImg, postName, postType, postIsTop, postWriterId, startTime, endTime
-                            , MyApplication.gson.toJson(listData), mHandler);
-                } else if (!TextUtils.isEmpty(activityId) && !"0".equals(activityId)) {
-                    // 修改活动
-                    HttpMethod2.updateActivity(postTopicId, activityId, topicImg, postName, postType, postIsTop, postWriterId
-                            , startTime, endTime, MyApplication.gson.toJson(listData), mHandler);
-                }else if (!TextUtils.isEmpty(voteName)){
-                    // 添加投票
-                      HttpMethod2.addVote(topicID, voteName, topicType, voteIsTop, voteWriterId
-                        , startTime, endTime, voteSecNames, isMultipleChoice, MyApplication.gson.toJson(listData), mHandler);
-
-                }else {
-                    // 发布贴子
-                    if (TextUtils.isEmpty(postId)) {
-                        HttpMethod2.addPost(postType, postName, postTopicId, postWriterId, postIsFree, postPrice, postIsTop,
-                                MyApplication.gson.toJson(listData), mHandler);
-                    } else {
-                        // 修改贴子
-                        HttpMethod2.updatePost(postId, postName, postIsFree, postPrice, postIsTop,
-                                MyApplication.gson.toJson(listData), mHandler);
-                    }
-                }
-                Log.i("ReleaseContentsUI", listData.toString());
                 break;
             case R.id.iv_voice:
                 showRecordPopWindow();
@@ -515,10 +300,10 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.tv_pop_ico_camera:
-                        AddImageUtils.openCamera(ReleaseContentsActivity.this);
+                        AddImageUtils.openCamera(AddLiveContentActivity.this);
                         break;
                     case R.id.tv_pop_ico_photo:
-                        AddImageUtils.selectFromAlbum(ReleaseContentsActivity.this);
+                        AddImageUtils.selectFromAlbum(AddLiveContentActivity.this);
                         break;
                 }
             }
@@ -649,8 +434,8 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 y < llContent.getTop();
     }
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
-        @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
@@ -691,67 +476,9 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         LogUtils.e("发布帖子成功");
                         //发布贴子成功
                         finish();
-                        postEvent();
+//                        postEvent();
                     } else {
                         showMsg(bean.getErrorMsg());
-                    }
-                    break;
-                // 修改帖子成功
-                case HandlerConstant2.UPDATE_POST_SUCCESS:
-                    if (null == bean) {
-                        return;
-                    }
-                    LogUtils.e("修改帖子成功");
-                    if (bean.status) {
-                        showMsg("编辑成功");
-                        finish();
-                        postEvent();
-                    } else {
-                        showMsg(bean.getErrorMsg());
-                    }
-                    break;
-                // 发布活动成功
-                case HandlerConstant2.ADD_ACTIVITY_SUCCESS:
-                    if (null == bean) {
-                        return;
-                    }
-                    LogUtils.e("发布活动成功");
-                    if (bean.status) {
-                        showMsg("发布成功");
-                        finish();
-                        postEvent();
-                        postActivityEvent();
-                    } else {
-                        showMsg(bean.getErrorMsg());
-                    }
-                    break;
-                // 修改活动成功
-                case HandlerConstant2.UPDATE_ACTIVITY_SUCCESS:
-                    if (null == bean) {
-                        return;
-                    }
-                    LogUtils.e("修改活动成功");
-                    if (bean.isStatus()) {
-                        showMsg("编辑成功");
-                        finish();
-                        postEvent();
-                        postActivityEvent();
-                    } else {
-                        showMsg(bean.getErrorMsg());
-                    }
-                    break;
-                case HandlerConstant2.ADD_VOTE_SUCCESS:
-                    // 发布投票
-                    if (null == bean) {
-                        return;
-                    }
-                    if (bean.isStatus()) {
-                        showMsg("发布成功");
-                        finish();
-                        postEvent();
-                        postVoteEvent();
-                    } else {
-                        showMsg(bean.errorMsg);
                     }
                     break;
                 case HandlerConstant1.REQUST_ERROR:
@@ -764,17 +491,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         }
     };
 
-    private void postEvent() {
-        EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.RELEASE_SUCCESS));
-    }
 
-    private void postVoteEvent() {
-        EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.RELEASE_VOTE_SUCCESS));
-    }
-
-    private void postActivityEvent() {
-        EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.RELEASE_ACTIVITY_SUCCESS));
-    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

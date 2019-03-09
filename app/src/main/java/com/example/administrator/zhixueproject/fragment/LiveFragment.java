@@ -12,6 +12,7 @@ import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
 import com.example.administrator.zhixueproject.activity.live.AddLiveActivity;
+import com.example.administrator.zhixueproject.activity.live.AddLiveContentActivity;
 import com.example.administrator.zhixueproject.adapter.live.LiveListAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
@@ -29,6 +31,7 @@ import com.example.administrator.zhixueproject.bean.live.Live;
 import com.example.administrator.zhixueproject.callback.LiveCallBack;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
@@ -233,6 +236,13 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
             LiveFragment.this.postId=postId;
             showProgress("删除数据中...");
             HttpMethod1.deleteLive(postId,mHandler);
+        }
+
+        @Override
+        public void itemClick(Live.LiveList liveList) {
+            Intent intent=new Intent(mContext,AddLiveContentActivity.class);
+            intent.putExtra("liveList",liveList);
+            mContext.startActivity(intent);
         }
     };
 

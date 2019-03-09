@@ -52,6 +52,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
@@ -84,10 +87,6 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
     private LinearLayout llComment;
     private RecyclerView rvPostTask;
     private ImageView imgArrow;
-    //音频路径
-    private String audioPath;
-    //播放时长
-    private int timeLength;
     //分享渠道
     private SHARE_MEDIA share_media;
     // 帖子内容Str
@@ -372,6 +371,9 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
 
     }
 
+
+    private Map<Integer,String> pathMap=new HashMap<>();
+    private Map<Integer,Integer> timeMap=new HashMap<>();
     private void showDetail(String postContent) {
         if(!TextUtils.isEmpty(postContent)){
             StringBuffer stringBuffer=new StringBuffer();
@@ -390,9 +392,9 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                     }
                     //音频
                     if(jsonObject.getInt("type")==2){
-                        audioPath=jsonObject.getString("content");
-                        timeLength=jsonObject.getInt("timeLength");
-                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio()'/>" + "0:00/"+jsonObject.getString("strLength"));
+                        pathMap.put(i,jsonObject.getString("content"));
+                        timeMap.put(i,jsonObject.getInt("timeLength"));
+                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio("+i+")'/>" + "0:00/"+jsonObject.getString("strLength"));
                     }
                 }
                 //帖子内容
@@ -428,10 +430,10 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
 
 
     @JavascriptInterface
-    public void playAutio() {
+    public void playAutio(final int index) {
         mHandler.post(new Runnable() {
             public void run() {
-                ReleaseContentsBean releaseContentsBean=new ReleaseContentsBean(audioPath,2,null,timeLength);
+                ReleaseContentsBean releaseContentsBean = new ReleaseContentsBean(pathMap.get(index), 2, null, timeMap.get(index));
                 PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(releaseContentsBean);
                 fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
             }
