@@ -23,10 +23,10 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
 
 
     private boolean mIsPostList;
-    public static final String TOPIC_ITEM_ID="topicItemId";
-    public static final String TOPIC_TYPE="topicType";
-    public static final String TOPIC_NAME="topicName";
-    private Context mContext=MyApplication.application;
+    public static final String TOPIC_ITEM_ID = "topicItemId";
+    public static final String TOPIC_TYPE = "topicType";
+    public static final String TOPIC_NAME = "topicName";
+    private Context mContext = MyApplication.application;
 
     public TopicListAdapter(int layoutResId, List<TopicListBean> data, boolean isPostList) {
         super(layoutResId, data);
@@ -49,9 +49,9 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
             helper.setText(R.id.tv_post_status, topics[1]);
         } else if (type == 3) {
             helper.setText(R.id.tv_post_status, topics[2]);
-        }else if (type==4){
+        } else if (type == 4) {
             helper.setText(R.id.tv_post_status, topics[3]);
-        }else {
+        } else {
             helper.setText(R.id.tv_post_status, topics[2]);
         }
         int costType = item.getTopicPayType();//话题付费类型
@@ -63,13 +63,13 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
             helper.setText(R.id.tv_charge, costs[1]);
             helper.getView(R.id.tv_restrict).setVisibility(View.GONE);
         } else if (costType == 3) {
-           if (TextUtils.isEmpty(item.getTopicVipName())){
-               helper.getView(R.id.tv_restrict).setVisibility(View.GONE);
-               helper.setText(R.id.tv_charge, costs[1]);
-           }else {
-               helper.setText(R.id.tv_restrict, "限制：" +item.getTopicVipName() );
-               helper.getView(R.id.tv_charge).setVisibility(View.GONE);
-           }
+            if (TextUtils.isEmpty(item.getTopicVipName())) {
+                helper.getView(R.id.tv_restrict).setVisibility(View.GONE);
+                helper.setText(R.id.tv_charge, costs[1]);
+            } else {
+                helper.setText(R.id.tv_restrict, "限制：" + item.getTopicVipName());
+                helper.getView(R.id.tv_charge).setVisibility(View.GONE);
+            }
 
         } else if (costType == 4) {
             helper.setText(R.id.tv_restrict, "限制：" + costs[3]);
@@ -77,52 +77,57 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
         }
         helper.setText(R.id.tv_topic_time, item.getCreationTime());
 
+        int topicUseyn = item.getTopicUseyn();//是否上架
+
+        if (topicUseyn == 1) {
+            helper.setText(R.id.tv_added, "已上架");
+        } else if (topicUseyn == 0) {
+            helper.setText(R.id.tv_added, "已下架");
+        }
+
         if (mIsPostList) {
             helper.setGone(R.id.menu_right, false);
         } else {
             helper.setVisible(R.id.menu_right, true);
-            int topicUseyn = item.getTopicUseyn();//是否上架
             if (topicUseyn == 1) {
-                helper.setText(R.id.tv_added, "已上架");
                 helper.setText(R.id.tv_menu_two, "下架");//侧滑菜单文字
                 helper.setBackgroundColor(R.id.tv_menu_two, mContext.getResources().getColor(R.color.color_ffffff));
                 helper.setTextColor(R.id.tv_menu_two, mContext.getResources().getColor(R.color.color_999999));
             } else if (topicUseyn == 0) {
-                helper.setText(R.id.tv_added, "已下架");
                 helper.setText(R.id.tv_menu_two, "上架");
             }
 
             helper.addOnClickListener(R.id.tv_menu_one).addOnClickListener(R.id.tv_menu_two).addOnClickListener(R.id.content);
         }
         // 帖子列表页可以点击
-        if (!mIsPostList){
+        if (!mIsPostList) {
             return;
         }
         helper.getView(R.id.content).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LogUtils.e("topicItemClicked   id  is: "+item.getTopicId());
-                Intent intent=new Intent();
+                LogUtils.e("topicItemClicked   id  is: " + item.getTopicId());
+                Intent intent = new Intent();
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setClass(mContext,TopicListActivity.class);
-                intent.putExtra(TOPIC_ITEM_ID,item.getTopicId());
-                intent.putExtra(TOPIC_TYPE,item.getTopicType());
-                intent.putExtra(TOPIC_NAME,item.getTopicName());
+                intent.setClass(mContext, TopicListActivity.class);
+                intent.putExtra(TOPIC_ITEM_ID, item.getTopicId());
+                intent.putExtra(TOPIC_TYPE, item.getTopicType());
+                intent.putExtra(TOPIC_NAME, item.getTopicName());
 
                 //控制Vip等级
-                if (item.getTopicPayType()==3){
-                     int userType=MyApplication.userInfo.getData().getUser().getUserType();
-                     if (!TextUtils.isEmpty(item.getTopicVipName())){
-                         int type=Integer.parseInt(item.getTopicVipName().substring(3,4));
-                         LogUtils.e("userType->"+userType+"  type====>"+type);
-                         if (userType<type){
-                             // 弹吐司
-                             Toast.makeText(mContext,"等级权限不够",Toast.LENGTH_SHORT).show();
-                             return;
-                         }
-                     }else {
-                         LogUtils.e("话题Vip为空");
-                     }
+                if (item.getTopicPayType() == 3) {
+                    int userType = MyApplication.homeBean.getCollegeGrade();
+                    if (!TextUtils.isEmpty(item.getTopicVipName())) {
+                        int type = Integer.parseInt(item.getTopicVipName().substring(3, 4));
+                        LogUtils.e("userType->" + userType + "  type====>" + type);
+                        if (userType < type) {
+                            // 弹吐司
+                            Toast.makeText(mContext, "等级权限不够", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    } else {
+                        LogUtils.e("话题Vip为空");
+                    }
 
                 }
                 mContext.startActivity(intent);
