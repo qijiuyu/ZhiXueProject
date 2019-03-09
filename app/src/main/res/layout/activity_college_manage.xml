@@ -44,6 +44,7 @@
                 </RelativeLayout>
 
                 <View
+                    android:id="@+id/view1"
                     style="@style/view_line"/>
 
             </LinearLayout>
@@ -65,6 +66,7 @@
                 <ImageView
                     style="@style/iv_right_arrow"/>
                 <View
+                    android:id="@+id/view2"
                     style="@style/view_line"/>
             </RelativeLayout>
             <!--会员等级设置-->

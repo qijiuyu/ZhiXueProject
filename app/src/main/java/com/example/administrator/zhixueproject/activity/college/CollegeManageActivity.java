@@ -110,4 +110,19 @@ public class CollegeManageActivity extends BaseActivity implements View.OnClickL
                  break;
         }
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(null!=MyApplication.homeBean){
+            if(MyApplication.homeBean.getCollegeDelYn()==2){
+                findViewById(R.id.rl_institution_manage).setVisibility(View.GONE);
+                findViewById(R.id.view1).setVisibility(View.GONE);
+            }else{
+                findViewById(R.id.rl_open_institution).setVisibility(View.GONE);
+                findViewById(R.id.view2).setVisibility(View.GONE);
+            }
+        }
+    }
 }

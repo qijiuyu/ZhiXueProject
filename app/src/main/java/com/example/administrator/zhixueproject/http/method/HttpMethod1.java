@@ -811,8 +811,11 @@ public class HttpMethod1  extends BaseRequst {
      * @param index
      * @param handler
      */
-    public static void getTeacherList(String key,int page,int limit,final int index,final Handler handler) {
+    public static void getTeacherList(long collegeId,String key,int page,int limit,final int index,final Handler handler) {
         Map<String, String> map = new HashMap<>();
+        if(collegeId!=0){
+            map.put("collegeId",collegeId+"");
+        }
         map.put("key",key);
         map.put("page",page+"");
         map.put("limit",limit+"");
