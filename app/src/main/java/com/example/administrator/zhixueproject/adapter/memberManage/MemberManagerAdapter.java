@@ -2,6 +2,7 @@ package com.example.administrator.zhixueproject.adapter.memberManage;
 
 import android.support.annotation.LayoutRes;
 import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -21,8 +22,9 @@ public class MemberManagerAdapter extends BaseQuickAdapter<AttendanceBean, BaseV
     @Override
     protected void convert(BaseViewHolder helper, AttendanceBean item) {
         helper.setText(R.id.tv_member_name, item.getAttendUsername());//昵称
+        // helper.setText(R.id.tv_member_name, "哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");//昵称
         final ImageView iv_member_head = helper.getView(R.id.iv_member_head);//头像
-        GlideCirclePictureUtil.setCircleImg(mContext,item.getUserImg(),iv_member_head);
+        GlideCirclePictureUtil.setCircleImg(mContext, item.getUserImg(), iv_member_head);
         ImageView iv_member_level = helper.getView(R.id.iv_member_level);//会员等级图片
         Glide.with(mContext).load(item.getAttendGradeImg()).error(R.mipmap.unify_image_ing).into(iv_member_level);
         int type = item.getAttendType();//人员类型(0：学生、1：管理员、2老师
