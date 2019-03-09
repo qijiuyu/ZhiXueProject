@@ -104,7 +104,8 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
     private String voteWriterId;
     private String voteSecNames;
     private Boolean isMultipleChoice;
-
+    //是否在录音
+    private boolean isRecord=false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -548,15 +549,20 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 switch (v.getId()) {
                     case R.id.tv_record_delete:
                         if (voiceManager != null) {
+                            isRecord=false;
                             voiceManager.cancelVoiceRecord();
                         }
                         recordPopWindow.dissmiss();
                         break;
                     case R.id.tv_record_start:
-                        startRecord();
+                         if(!isRecord){
+                             isRecord=true;
+                             startRecord();
+                         }
                         break;
                     case R.id.tv_record_conform:
                         if (voiceManager != null) {
+                            isRecord=false;
                             voiceManager.stopVoiceRecord();
                         }
                         recordPopWindow.dissmiss();

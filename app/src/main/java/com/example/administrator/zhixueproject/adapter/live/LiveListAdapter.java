@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
@@ -59,6 +60,7 @@ public class LiveListAdapter extends BaseAdapter{
 			holder.tvContent=(TextView)view.findViewById(R.id.tv_notice_content);
 			holder.tvUpdate=(TextView)view.findViewById(R.id.tv_menu_update);
 			holder.tvDel=(TextView)view.findViewById(R.id.tv_menu_del);
+			holder.linearLayout=(LinearLayout)view.findViewById(R.id.content);
 			view.setTag(holder);
 		}else{
 			holder=(ViewHolder)view.getTag();
@@ -76,6 +78,7 @@ public class LiveListAdapter extends BaseAdapter{
 		holder.tvContent.setText("预告："+liveList.getPostInfo());
 		holder.tvDel.setTag(liveList.getPostId());
         holder.tvUpdate.setTag(liveList);
+		holder.linearLayout.setTag(liveList);
 		//删除
 		holder.tvDel.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -98,6 +101,15 @@ public class LiveListAdapter extends BaseAdapter{
                 activity.startActivityForResult(intent,1);
             }
         });
+		holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if(null==v.getTag()){
+					return;
+				}
+				Live.LiveList liveList= (Live.LiveList) v.getTag();
+				liveCallBack.itemClick(liveList);
+			}
+		});
 		return view;
 	}
 
@@ -108,6 +120,7 @@ public class LiveListAdapter extends BaseAdapter{
 
 
 	 private class ViewHolder{
+		private LinearLayout linearLayout;
 		private ImageView imageView;
 		TextView tvTime,tvName,tvTopicName,tvTeacher,tvContent,tvUpdate,tvDel;
 	 }

@@ -87,6 +87,8 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     private FrameLayout flEmoji;
     private LinearLayout llRelease;
     private PopIco popIco;
+    //是否在录音
+    private boolean isRecord=false;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_release_content);
@@ -332,15 +334,20 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                 switch (v.getId()) {
                     case R.id.tv_record_delete:
                         if (voiceManager != null) {
+                            isRecord=false;
                             voiceManager.cancelVoiceRecord();
                         }
                         recordPopWindow.dissmiss();
                         break;
                     case R.id.tv_record_start:
-                        startRecord();
+                         if(!isRecord){
+                             isRecord=true;
+                             startRecord();
+                         }
                         break;
                     case R.id.tv_record_conform:
                         if (voiceManager != null) {
+                            isRecord=false;
                             voiceManager.stopVoiceRecord();
                         }
                         recordPopWindow.dissmiss();
