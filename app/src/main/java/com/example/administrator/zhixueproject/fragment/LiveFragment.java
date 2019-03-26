@@ -58,6 +58,7 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
     private List<Live.LiveList> listAll=new ArrayList<>();
     //直播id
     private long postId;
+    public static final String LIVE_END_SUCCESS="com.zhixue.LIVE_END_SUCCESS";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtils.transparencyBar(this);
@@ -270,6 +271,7 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
     private void registerReceiver() {
         IntentFilter myIntentFilter = new IntentFilter();
         myIntentFilter.addAction(LeftFragment.GET_COLLEGE_DETAILS);
+        myIntentFilter.addAction(LIVE_END_SUCCESS);
         // 注册广播监听
         registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
@@ -281,6 +283,17 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
             if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 tvHead.setText(MyApplication.homeBean.getCollegeName());
+            }
+
+            if(action.equals(LIVE_END_SUCCESS)){
+                long postId=intent.getLongExtra("postId",0);
+                for (int i=0;i<listAll.size();i++){
+                     if(postId==listAll.get(i).getPostId()){
+                         listAll.remove(i);
+                         liveListAdapter.notifyDataSetChanged();
+                         break;
+                     }
+                }
             }
         }
     };

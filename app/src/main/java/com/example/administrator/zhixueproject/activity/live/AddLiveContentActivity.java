@@ -28,10 +28,14 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.adapter.live.LiveContentsAdapter;
 import com.example.administrator.zhixueproject.adapter.topic.ReleaseContentsAdapter;
+import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
+import com.example.administrator.zhixueproject.bean.live.Live;
 import com.example.administrator.zhixueproject.bean.topic.ReleaseContentsBean;
+import com.example.administrator.zhixueproject.fragment.LiveFragment;
 import com.example.administrator.zhixueproject.fragment.topic.PlaybackDialogFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
@@ -68,7 +72,7 @@ import io.github.rockerhieu.emojicon.emoji.Emojicon;
  */
 public class AddLiveContentActivity extends BaseActivity implements View.OnClickListener, EmojiconGridFragment.OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener {
     private List<ReleaseContentsBean> listData = new ArrayList<>();//发布内容的Json数据
-    private ReleaseContentsAdapter mAdapter;
+    private LiveContentsAdapter mAdapter;
     private boolean mIsFocus;
     private CustomPopWindow recordPopWindow;
     private VoiceManager voiceManager;
@@ -89,6 +93,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     private PopIco popIco;
     //是否在录音
     private boolean isRecord=false;
+    private Live.LiveList liveList;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_release_content);
@@ -96,7 +101,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     }
 
     private void initView() {
-        EventBus.getDefault().register(this);
+        liveList= (Live.LiveList) getIntent().getSerializableExtra("liveList");
         StatusBarUtils.transparencyBar(this);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.release_content));
@@ -107,12 +112,14 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
         findViewById(R.id.iv_expression).setOnClickListener(this);
         ivPicture = (ImageView) findViewById(R.id.iv_picture);
         ivPicture.setOnClickListener(this);
+        TextView tvEnd=(TextView)findViewById(R.id.tv_release) ;
+        tvEnd.setText("直播结束");
         findViewById(R.id.iv_voice).setOnClickListener(this);
-        findViewById(R.id.tv_release).setOnClickListener(this);
+        tvEnd.setOnClickListener(this);
         findViewById(R.id.tv_confirm).setOnClickListener(this);
         llReleaseContents = (LinearLayout) findViewById(R.id.ll_release_contents);
         llRelease = (LinearLayout) findViewById(R.id.ll_release);
-        mAdapter = new ReleaseContentsAdapter(null);
+        mAdapter = new LiveContentsAdapter(null);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvReleaseContent = (RecyclerView) findViewById(R.id.rv_release_content);
         rvReleaseContent.setAdapter(mAdapter);
@@ -153,7 +160,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
      */
     private void institutionListener() {
         //文字改变的监听
-        mAdapter.setChangInstitutionDataListener(new ReleaseContentsAdapter.ChangInstitutionDataListener() {
+        mAdapter.setChangInstitutionDataListener(new LiveContentsAdapter.ChangInstitutionDataListener() {
             @Override
             public void onChangInstitutionDataListener(int position, String data) {
             }
@@ -244,10 +251,14 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                 if (!TextUtils.isEmpty(etContent.getText().toString().trim())) {
                     addList(etContent.getText().toString().trim(), fileType, null, 0);
                     listData.add(new ReleaseContentsBean(etContent.getText().toString().trim(), fileType, voiceStrLength, voiceLength));
+                    //上传文字数据
+                    sendMessage();
                     etContent.setText("");
                 }
                 break;
             case R.id.tv_release:
+                 showProgress(getString(R.string.loding));
+                 HttpMethod1.liveEnd(String.valueOf(liveList.getPostId()),mHandler);
                 break;
             case R.id.iv_voice:
                 showRecordPopWindow();
@@ -439,9 +450,10 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
-            UploadFile bean = (UploadFile) msg.obj;
+            BaseBean baseBean=null;
             switch (msg.what) {
                 case HandlerConstant1.UPLOAD_HEAD_SUCCESS:
+                    UploadFile bean = (UploadFile) msg.obj;
                     if (null == bean) {
                         return;
                     }
@@ -459,13 +471,16 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                         showMsg(bean.getErrorMsg());
                     }
                     break;
-                // 发布帖子成功
-                case HandlerConstant2.ADD_POST_SUCCESS:
-                    if (null == bean) {
+                    //发布文字成功
+                case HandlerConstant1.SEND_TEXT_SUCCESS:
+                     break;
+                // 直播结束
+                case HandlerConstant1.LIVE_END_SUCCESS:
+                    baseBean= (BaseBean) msg.obj;
+                    if(null==baseBean){
                         return;
                     }
-                    if (bean.status) {
-                        showMsg("发布成功");
+                    if (baseBean.status) {
                         //删除文件
                         if (mFileCamera != null) {
                             FileStorage.deleteFile(mFileCamera.getAbsolutePath());
@@ -473,12 +488,12 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                         if (mVoiceFile != null) {
                             FileStorage.deleteFile(mVoiceFile.getAbsolutePath());
                         }
-                        LogUtils.e("发布帖子成功");
-                        //发布贴子成功
+                        Intent intent=new Intent(LiveFragment.LIVE_END_SUCCESS);
+                        intent.putExtra("postId",liveList.getPostId());
+                        sendBroadcast(intent);
                         finish();
-//                        postEvent();
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        showMsg(baseBean.getErrorMsg());
                     }
                     break;
                 case HandlerConstant1.REQUST_ERROR:
@@ -492,15 +507,16 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     };
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe
-    public void postEvent(PostEvent postEvent) {
-
+    private void sendMessage(){
+        switch (fileType){
+            case ReleaseContentsBean.TEXT:
+                 HttpMethod1.sendText(String.valueOf(liveList.getPostId()),etContent.getText().toString(),mHandler);
+                 break;
+            case ReleaseContentsBean.IMG:
+                break;
+            case ReleaseContentsBean.RECORD:
+                break;
+        }
     }
 
 }
