@@ -267,10 +267,6 @@
         android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.live.AddLiveContentActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".activity.topic.ActionManageActivity"
             android:screenOrientation="portrait" />
         <activity
