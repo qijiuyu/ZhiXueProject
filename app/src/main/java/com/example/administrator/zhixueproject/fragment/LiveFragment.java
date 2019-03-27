@@ -20,6 +20,7 @@ import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
 import com.example.administrator.zhixueproject.activity.live.AddLiveActivity;
+import com.example.administrator.zhixueproject.activity.live.AddLiveContentActivity;
 import com.example.administrator.zhixueproject.adapter.live.LiveListAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
