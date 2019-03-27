@@ -30,6 +30,7 @@ import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.live.LiveContentsAdapter;
 import com.example.administrator.zhixueproject.adapter.topic.ReleaseContentsAdapter;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
@@ -252,7 +253,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                     addList(etContent.getText().toString().trim(), fileType, null, 0);
                     listData.add(new ReleaseContentsBean(etContent.getText().toString().trim(), fileType, voiceStrLength, voiceLength));
                     //上传文字数据
-                    sendMessage();
+                    sendMsg();
                     etContent.setText("");
                 }
                 break;
@@ -467,6 +468,9 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                         listData.add(new ReleaseContentsBean(url, fileType, voiceStrLength, voiceLength));
                         voiceStrLength = "";
                         voiceLength = 0;
+
+                        //上传图片或者mp3
+                        sendMsg();
                     } else {
                         showMsg(bean.getErrorMsg());
                     }
@@ -507,7 +511,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     };
 
 
-    private void sendMessage(){
+    private void sendMsg(){
         switch (fileType){
             case ReleaseContentsBean.TEXT:
                  HttpMethod1.sendText(String.valueOf(liveList.getPostId()),etContent.getText().toString(),mHandler);
@@ -515,6 +519,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
             case ReleaseContentsBean.IMG:
                 break;
             case ReleaseContentsBean.RECORD:
+                HttpMethod1.sendMp3(String.valueOf(liveList.getPostId()), MyApplication.gson.toJson(listData),mHandler);
                 break;
         }
     }

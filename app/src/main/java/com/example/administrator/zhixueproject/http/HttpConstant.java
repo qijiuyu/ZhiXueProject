@@ -280,4 +280,6 @@ public class HttpConstant {
     public static final String SEND_TEXT="live/send/content.do";
 
     public static final String LIVE_END="live/end.do";
+
+    public static final String SEND_MP3="live/audiomedia.do";
 }
