@@ -1781,4 +1781,51 @@ public class HttpMethod1  extends BaseRequst {
             }
         });
     }
+
+
+
+    public static void sendText(String postId ,String message,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("postId",postId);
+        map.put("message",message);
+        Http.getRetrofit().create(HttpApi1.class).sendText(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.SEND_TEXT_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 直播结束
+     * @param postId
+     * @param handler
+     */
+    public static void liveEnd(String postId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("postId",postId);
+        Http.getRetrofit().create(HttpApi1.class).liveEnd(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.LIVE_END_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
 }
