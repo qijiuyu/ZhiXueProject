@@ -419,7 +419,6 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             imgArrow.setVisibility(View.VISIBLE);
         }
         //帖子内容
-        LogUtils.e("++++" + data.getPostContent().getPostContentApp());
         showDetail(data.getPostContent().getPostContentApp());
     }
 

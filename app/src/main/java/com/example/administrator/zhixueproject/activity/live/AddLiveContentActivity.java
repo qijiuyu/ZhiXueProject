@@ -29,37 +29,27 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.live.LiveContentsAdapter;
-import com.example.administrator.zhixueproject.adapter.topic.ReleaseContentsAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
-import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.live.Live;
 import com.example.administrator.zhixueproject.bean.topic.ReleaseContentsBean;
 import com.example.administrator.zhixueproject.fragment.LiveFragment;
 import com.example.administrator.zhixueproject.fragment.topic.PlaybackDialogFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
-import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
-import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
 import com.example.administrator.zhixueproject.utils.FileStorage;
-import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.SoftInputUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.utils.record.RecordUtil;
 import com.example.administrator.zhixueproject.utils.record.VoiceManager;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import io.github.rockerhieu.emojicon.EmojiconEditText;
 import io.github.rockerhieu.emojicon.EmojiconGridFragment;
 import io.github.rockerhieu.emojicon.EmojiconsFragment;
@@ -99,6 +89,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_release_content);
         initView();
+        getLiveContent();
     }
 
     private void initView() {
@@ -251,6 +242,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                 fileType = ReleaseContentsBean.TEXT;
                 if (!TextUtils.isEmpty(etContent.getText().toString().trim())) {
                     addList(etContent.getText().toString().trim(), fileType, null, 0);
+                    listData.clear();
                     listData.add(new ReleaseContentsBean(etContent.getText().toString().trim(), fileType, voiceStrLength, voiceLength));
                     //上传文字数据
                     sendMsg();
@@ -465,6 +457,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                             url = url.substring(head.length(), url.length());
                         }
                         //发布时需要用到的去http
+                        listData.clear();
                         listData.add(new ReleaseContentsBean(url, fileType, voiceStrLength, voiceLength));
                         voiceStrLength = "";
                         voiceLength = 0;
@@ -477,6 +470,13 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                     break;
                     //发布文字成功
                 case HandlerConstant1.SEND_TEXT_SUCCESS:
+                    baseBean= (BaseBean) msg.obj;
+                    if(null==baseBean){
+                        return;
+                    }
+                    if (!baseBean.status) {
+                        showMsg(baseBean.getErrorMsg());
+                    }
                      break;
                 // 直播结束
                 case HandlerConstant1.LIVE_END_SUCCESS:
@@ -512,16 +512,19 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
 
 
     private void sendMsg(){
-        switch (fileType){
-            case ReleaseContentsBean.TEXT:
-                 HttpMethod1.sendText(String.valueOf(liveList.getPostId()),etContent.getText().toString(),mHandler);
-                 break;
-            case ReleaseContentsBean.IMG:
-                break;
-            case ReleaseContentsBean.RECORD:
-                HttpMethod1.sendMp3(String.valueOf(liveList.getPostId()), MyApplication.gson.toJson(listData),mHandler);
-                break;
+        String msg=MyApplication.gson.toJson(listData);
+        if(!TextUtils.isEmpty(msg)){
+            if(msg.substring(0,1).equals("[") && msg.substring(msg.length()-1,msg.length()).equals("]")){
+                msg=msg.substring(1,msg.length()-1);
+            }
+            showProgress("上传中");
+            HttpMethod1.sendText(String.valueOf(liveList.getPostId()),msg,mHandler);
         }
+    }
+
+
+    private void getLiveContent(){
+        HttpMethod1.getLiveContent(String.valueOf(liveList.getPostId()),mHandler);
     }
 
 }

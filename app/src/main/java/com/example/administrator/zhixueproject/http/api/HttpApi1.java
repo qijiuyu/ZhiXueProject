@@ -632,11 +632,11 @@ public interface HttpApi1 {
     Call<BaseBean> sendText(@FieldMap Map<String, String> map);
 
     @FormUrlEncoded
-    @POST(HttpConstant.SEND_MP3)
-    Call<BaseBean> sendMp3(@FieldMap Map<String, String> map);
+    @POST(HttpConstant.LIVE_END)
+    Call<BaseBean> liveEnd(@FieldMap Map<String, String> map);
 
 
     @FormUrlEncoded
-    @POST(HttpConstant.LIVE_END)
-    Call<BaseBean> liveEnd(@FieldMap Map<String, String> map);
+    @POST(HttpConstant.GET_LIVE_CONTENT)
+    Call<BaseBean> getLiveContent(@FieldMap Map<String, String> map);
 }

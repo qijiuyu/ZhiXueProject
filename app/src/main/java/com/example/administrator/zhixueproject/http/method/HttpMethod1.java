@@ -1805,26 +1805,6 @@ public class HttpMethod1  extends BaseRequst {
     }
 
 
-    public static void sendMp3(String postId ,String postContent ,final Handler handler) {
-        Map<String, String> map = new HashMap<>();
-        map.put("postId",postId);
-        map.put("postContent",postContent );
-        Http.getRetrofit().create(HttpApi1.class).sendMp3(map).enqueue(new Callback<BaseBean>() {
-            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
-                try {
-                    sendMessage(handler, HandlerConstant1.SEND_TEXT_SUCCESS, response.body());
-                }catch (Exception e){
-                    e.printStackTrace();
-                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
-                }
-            }
-
-            public void onFailure(Call<BaseBean> call, Throwable t) {
-                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
-            }
-        });
-    }
-
 
     /**
      * 直播结束
@@ -1838,6 +1818,27 @@ public class HttpMethod1  extends BaseRequst {
             public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
                 try {
                     sendMessage(handler, HandlerConstant1.LIVE_END_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<BaseBean> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+
+    public static void getLiveContent(String postId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("postId",postId);
+        Http.getRetrofit().create(HttpApi1.class).getLiveContent(map).enqueue(new Callback<BaseBean>() {
+            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_LIVE_CONTENT_SUCCESS, response.body());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
