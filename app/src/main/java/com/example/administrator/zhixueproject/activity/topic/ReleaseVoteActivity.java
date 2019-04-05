@@ -120,12 +120,30 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private void initData() {
         mVoteListBean = (VoteListBean) getIntent().getSerializableExtra("voteListBean");
         if (mVoteListBean != null) {
+            String mItemViewType=TextUtils.isEmpty(mVoteListBean.getVoteType())?"":mVoteListBean.getVoteType();
+            //设置回显示
+            if (!"0".equals(mItemViewType)) {
+                switch (mItemViewType) {
+                    case "1":
+                        tvVoteType.setText("课程");
+                        break;
+                    case "2":
+                        tvVoteType.setText("大家谈");
+                        break;
+                    default:
+                        tvVoteType.setText("全部");
+                        break;
+                }
+            }
+
             etTitle.setText(mVoteListBean.getVoteName());
             tvStartTime.setText(mVoteListBean.getStartTime());
             mStartTime = mVoteListBean.getStartTime();
             tvEndTime.setText(mVoteListBean.getEndTime());
             mEndTime = mVoteListBean.getEndTime();
             topicId = mVoteListBean.getVoteId() + "";
+            tvIssuer.setText(mVoteListBean.getUserName());
+            tvTopic.setText(mVoteListBean.getTopicName());// 话题名称
         }
     }
 

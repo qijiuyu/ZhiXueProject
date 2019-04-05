@@ -101,6 +101,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
 
         findViewById(R.id.rl_toll_mode).setOnClickListener(this);
         tvTollMode = (TextView) findViewById(R.id.tv_toll_mode);
+        tvTollMode.setText("免费");
 
         findViewById(R.id.rl_topic_type).setOnClickListener(this);
         tvTopicType = (TextView) findViewById(R.id.tv_topic_type);
