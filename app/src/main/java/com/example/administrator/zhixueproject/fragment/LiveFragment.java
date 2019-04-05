@@ -12,14 +12,12 @@ import android.os.Message;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
-import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.activity.college.CollegeManageActivity;
 import com.example.administrator.zhixueproject.activity.live.AddLiveActivity;
 import com.example.administrator.zhixueproject.activity.live.AddLiveContentActivity;
@@ -31,7 +29,6 @@ import com.example.administrator.zhixueproject.bean.live.Live;
 import com.example.administrator.zhixueproject.callback.LiveCallBack;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
-import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CircleImageView;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
@@ -58,6 +55,7 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
     private List<Live.LiveList> listAll=new ArrayList<>();
     //直播id
     private long postId;
+    public static final String LIVE_END_SUCCESS="com.zhixue.LIVE_END_SUCCESS";
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtils.transparencyBar(this);
@@ -270,6 +268,7 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
     private void registerReceiver() {
         IntentFilter myIntentFilter = new IntentFilter();
         myIntentFilter.addAction(LeftFragment.GET_COLLEGE_DETAILS);
+        myIntentFilter.addAction(LIVE_END_SUCCESS);
         // 注册广播监听
         registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
@@ -281,6 +280,17 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
             if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 tvHead.setText(MyApplication.homeBean.getCollegeName());
+            }
+
+            if(action.equals(LIVE_END_SUCCESS)){
+                long postId=intent.getLongExtra("postId",0);
+                for (int i=0;i<listAll.size();i++){
+                     if(postId==listAll.get(i).getPostId()){
+                         listAll.remove(i);
+                         liveListAdapter.notifyDataSetChanged();
+                         break;
+                     }
+                }
             }
         }
     };

@@ -48,6 +48,8 @@ public class SelectTeacherActivity extends BaseActivity   implements MyRefreshLa
     private int page=1;
     private int limit=20;
     private SelectTeacherAdapter selectTeacherAdapter;
+    //学院的id
+    private long collegeId=0;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_teacher);
@@ -60,6 +62,7 @@ public class SelectTeacherActivity extends BaseActivity   implements MyRefreshLa
      * 初始化
      */
     private void initView(){
+        collegeId=getIntent().getLongExtra("collegeId",0);
         TextView tvHead=(TextView)findViewById(R.id.tv_title);
         tvHead.setText(getString(R.string.select_lecturer));
         etKey=(EditText)findViewById(R.id.et_search);
@@ -181,6 +184,10 @@ public class SelectTeacherActivity extends BaseActivity   implements MyRefreshLa
      */
     private void getData(int index){
         final String keys=etKey.getText().toString().trim();
-        HttpMethod1.getTeacherList(keys,page,limit,index,mHandler);
+        if(collegeId==0){
+            HttpMethod1.getTeacherList(0,keys,page,limit,index,mHandler);
+        }else{
+            HttpMethod1.getTeacherList(collegeId,keys,page,limit,index,mHandler);
+        }
     }
 }

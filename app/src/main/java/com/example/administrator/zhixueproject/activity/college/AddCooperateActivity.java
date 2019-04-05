@@ -107,7 +107,12 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
                  break;
             //发布人
             case R.id.rl_choose_teacher:
+                 if(null==collegeDatas){
+                     showMsg("请先选择学院！");
+                     return;
+                 }
                  Intent intent=new Intent(mContext,SelectTeacherActivity.class);
+                 intent.putExtra("collegeId",collegeDatas.getCollegeId());
                  startActivityForResult(intent,1);
                  overridePendingTransition(R.anim.activity_bottom_in, R.anim.alpha);
                  break;

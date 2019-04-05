@@ -24,6 +24,7 @@ public class ParameterUtil {
        if(null==map.get("collegeId") && null!= MyApplication.homeBean){
            map.put("collegeId",String.valueOf(MyApplication.homeBean.getCollegeId()));
        }
+       LogUtils.e("参数：collegeId="+map.get("collegeId"));
 
        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
        map.put("timestamp",simpleDateFormat.format(new Date()));

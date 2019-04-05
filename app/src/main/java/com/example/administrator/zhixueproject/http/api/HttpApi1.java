@@ -626,4 +626,17 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.MY_COLLEGE_LIST)
     Call<MyColleges> getMyCollege(@FieldMap Map<String, String> map);
+
+    @FormUrlEncoded
+    @POST(HttpConstant.SEND_TEXT)
+    Call<BaseBean> sendText(@FieldMap Map<String, String> map);
+
+    @FormUrlEncoded
+    @POST(HttpConstant.LIVE_END)
+    Call<BaseBean> liveEnd(@FieldMap Map<String, String> map);
+
+
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_LIVE_CONTENT)
+    Call<BaseBean> getLiveContent(@FieldMap Map<String, String> map);
 }
