@@ -26,16 +26,11 @@ public class VoteListBean implements Serializable {
     private int voteId;
     private String userName;
     private int voteJoinNum;
-    private String activityType;//活动类型
+    private String voteType;//投票类型
 
 
-    public String getActivityType() {
-        return activityType;
-    }
 
-    public void setActivityType(String activityType) {
-        this.activityType = activityType;
-    }
+
 
 
     public String getVoteImg() {
@@ -108,5 +103,13 @@ public class VoteListBean implements Serializable {
 
     public void setVoteJoinNum(int voteJoinNum) {
         this.voteJoinNum = voteJoinNum;
+    }
+
+    public String getVoteType() {
+        return voteType;
+    }
+
+    public void setVoteType(String voteType) {
+        this.voteType = voteType;
     }
 }

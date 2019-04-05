@@ -84,7 +84,7 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         llReleasePost = (LinearLayout) findViewById(R.id.ll_release_post);
         RelativeLayout relIssuer = (RelativeLayout) findViewById(R.id.rl_issuer);
         relIssuer.setOnClickListener(this);
-        tvIssuer = (TextView) findViewById(R.id.tv_issuer);
+        tvIssuer = (TextView) findViewById(R.id.tv_issuer); // TODO 发布人
         findViewById(R.id.tv_confirm).setOnClickListener(this);
         findViewById(R.id.rl_cost).setOnClickListener(this);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);

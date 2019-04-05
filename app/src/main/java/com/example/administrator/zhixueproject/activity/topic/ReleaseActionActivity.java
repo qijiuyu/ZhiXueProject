@@ -140,6 +140,9 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                     case "2":
                         tvTopicType.setText("大家谈");
                         break;
+                     default:
+                         tvTopicType.setText("全部");
+                         break;
                 }
             }
 
@@ -151,6 +154,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             tvEndTime.setText(mActivityListBean.getEndTime());
             mEndTime=mActivityListBean.getEndTime();
             topicId=mActivityListBean.getTopicId()+"";
+            tvIssuer.setText(mActivityListBean.getUserName());
         }
     }
 
