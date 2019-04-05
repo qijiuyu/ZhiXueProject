@@ -6,11 +6,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,15 +34,15 @@ import java.util.List;
 /**
  * 学院列表
  */
-public class CollegeListActivity extends BaseActivity {
+public class CollegeListActivity extends BaseActivity implements TextView.OnEditorActionListener{
 
     private ListView listView;
+    private EditText etKey;
     private List<College.CollegeDatas> listAll=new ArrayList<>();
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_college_list);
         initView();
-        getData();
     }
 
 
@@ -47,7 +52,11 @@ public class CollegeListActivity extends BaseActivity {
     private void initView(){
         TextView tvHead = (TextView) findViewById(R.id.tv_title);
         tvHead.setText("选择学院");
+        etKey=(EditText)findViewById(R.id.et_key);
         listView=(ListView)findViewById(R.id.listView);
+        final View view = getLayoutInflater().inflate(R.layout.empty_view, null);
+        ((ViewGroup) listView.getParent()).addView(view, new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT));
+        listView.setEmptyView(view);
         findViewById(R.id.lin_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 CollegeListActivity.this.finish();
@@ -99,9 +108,26 @@ public class CollegeListActivity extends BaseActivity {
      */
     private void getData(){
         showProgress("数据加载中");
-        HttpMethod1.getCollegeList(mHandler);
+        HttpMethod1.getCollegeList(etKey.getText().toString().trim(),mHandler);
     }
 
+
+    /**
+     * 搜索键触发事件
+     */
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH){
+            //隐藏软键盘
+            lockKey(etKey);
+            if(TextUtils.isEmpty(etKey.getText().toString().trim())){
+                showMsg("请输入要搜索的关键字！");
+                return false;
+            }
+            getData();
+        }
+        return false;
+    }
 
 
     public class CollegeAdapter extends BaseAdapter {

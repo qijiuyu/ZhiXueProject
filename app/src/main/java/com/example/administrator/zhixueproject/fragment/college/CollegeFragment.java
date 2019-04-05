@@ -52,8 +52,6 @@ public class CollegeFragment extends BaseActivity implements View.OnClickListene
         imgHead.setOnClickListener(this);
         findViewById(R.id.iv_college).setOnClickListener(this);
         tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
-        findViewById(R.id.iv_college).setOnClickListener(this);
-        tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
         dm = getResources().getDisplayMetrics();
         pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         pager.setOffscreenPageLimit(2);
@@ -81,6 +79,10 @@ public class CollegeFragment extends BaseActivity implements View.OnClickListene
             String action = intent.getAction();
             if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
+
+                pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+                tabs.setViewPager(pager);
+                setTabsValue();
             }
         }
     };
@@ -171,16 +173,24 @@ public class CollegeFragment extends BaseActivity implements View.OnClickListene
             super(fm);
         }
 
-        private final String[] titles = { "基本信息","学院VIP购买"};
-
         @Override
         public CharSequence getPageTitle(int position) {
-            return titles[position];
+            if(MyApplication.homeBean.getAttendType()==1){
+                String[]  titles = { "基本信息","学院VIP购买"};
+                return titles[position];
+            }else{
+                String[]  titles = { "基本信息"};
+                return titles[position];
+            }
         }
 
         @Override
         public int getCount() {
-            return titles.length;
+            if(MyApplication.homeBean.getAttendType()==1){
+                return 2;
+            }else{
+                return 1;
+            }
         }
 
         @Override
@@ -200,6 +210,9 @@ public class CollegeFragment extends BaseActivity implements View.OnClickListene
         super.onResume();
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
         Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
+        if(MyApplication.homeBean.getAttendType()!=1){
+            findViewById(R.id.iv_college).setVisibility(View.GONE);
+        }
     }
 
     @Override

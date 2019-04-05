@@ -229,6 +229,10 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
         final UserBean userBean = MyApplication.userInfo.getData().getUser();
         tvHead.setText(MyApplication.homeBean.getCollegeName());
         Glide.with(mContext).load(userBean.getUserImg()).override(30, 30).error(R.mipmap.head_bg).into(imgHead);
+
+        if(MyApplication.homeBean.getAttendType()!=1){
+            findViewById(R.id.iv_college).setVisibility(View.GONE);
+        }
     }
 
 
@@ -253,9 +257,11 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
                 //重新加载
                 PAGE = 1;
                 getTopicList(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
+
             }
         }
     };
+
 
     @Override
     protected void onDestroy() {

@@ -259,6 +259,10 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
         Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
         tvHead.setText(MyApplication.homeBean.getCollegeName());
+
+        if(MyApplication.homeBean.getAttendType()!=1){
+            findViewById(R.id.iv_college).setVisibility(View.GONE);
+        }
     }
 
 

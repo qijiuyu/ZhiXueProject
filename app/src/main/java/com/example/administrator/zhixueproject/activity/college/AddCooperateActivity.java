@@ -252,6 +252,8 @@ public class AddCooperateActivity extends BaseActivity implements View.OnClickLi
                     return;
                 }
                 tvName.setText(collegeDatas.getCollegeName());
+                tvTeacherName.setText(null);
+                teacher=null;
                  break;
         }
     }

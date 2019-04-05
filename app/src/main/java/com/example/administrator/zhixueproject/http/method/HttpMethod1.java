@@ -1741,8 +1741,9 @@ public class HttpMethod1  extends BaseRequst {
      * 查询学院列表
      * @return
      */
-    public static void getCollegeList(final Handler handler) {
+    public static void getCollegeList(String collegeName,final Handler handler) {
         Map<String, String> map = new HashMap<>();
+        map.put("collegeName",collegeName);
         Http.getRetrofit().create(HttpApi1.class).getCollegeList(map).enqueue(new Callback<College>() {
             public void onResponse(Call<College> call, Response<College> response) {
                 try {

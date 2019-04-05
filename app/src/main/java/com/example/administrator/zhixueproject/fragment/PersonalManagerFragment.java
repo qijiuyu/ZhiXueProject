@@ -129,6 +129,10 @@ public class PersonalManagerFragment extends BaseActivity implements View.OnClic
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
         tvHead.setText(MyApplication.homeBean.getCollegeName());
         Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
+
+        if(MyApplication.homeBean.getAttendType()!=1){
+            findViewById(R.id.iv_college).setVisibility(View.GONE);
+        }
     }
 
 
