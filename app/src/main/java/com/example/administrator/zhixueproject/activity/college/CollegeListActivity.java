@@ -54,6 +54,7 @@ public class CollegeListActivity extends BaseActivity implements TextView.OnEdit
         tvHead.setText("选择学院");
         etKey=(EditText)findViewById(R.id.et_key);
         listView=(ListView)findViewById(R.id.listView);
+        etKey.setOnEditorActionListener(this);
         final View view = getLayoutInflater().inflate(R.layout.empty_view, null);
         ((ViewGroup) listView.getParent()).addView(view, new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT));
         listView.setEmptyView(view);
@@ -75,6 +76,7 @@ public class CollegeListActivity extends BaseActivity implements TextView.OnEdit
                          break;
                      }
                      if(college.isStatus() && null!=college.getData()){
+                         listAll.clear();
                          listAll.addAll(college.getData().getCollegelist());
                          listView.setAdapter(new CollegeAdapter());
                          listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
