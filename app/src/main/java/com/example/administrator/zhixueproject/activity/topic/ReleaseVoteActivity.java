@@ -121,17 +121,24 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         mVoteListBean = (VoteListBean) getIntent().getSerializableExtra("voteListBean");
         if (mVoteListBean != null) {
             String mItemViewType=TextUtils.isEmpty(mVoteListBean.getVoteType())?"":mVoteListBean.getVoteType();
+            if (TextUtils.isEmpty(mVoteListBean.getVoteType())){
+                // 默认为课程类型
+                topicType = 1;
+            }
             //设置回显示
             if (!"0".equals(mItemViewType)) {
                 switch (mItemViewType) {
                     case "1":
                         tvVoteType.setText("课程");
+                        topicType = 1;
                         break;
                     case "2":
                         tvVoteType.setText("大家谈");
+                        topicType = 2;
                         break;
                     default:
-                        tvVoteType.setText("全部");
+                        tvVoteType.setText("课程");
+                        topicType = 1;
                         break;
                 }
             }
@@ -142,8 +149,9 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
             tvEndTime.setText(mVoteListBean.getEndTime());
             mEndTime = mVoteListBean.getEndTime();
             topicId = mVoteListBean.getVoteId() + "";
-            tvIssuer.setText(mVoteListBean.getUserName());
+            tvIssuer.setText(mVoteListBean.getPostWriterName());
             tvTopic.setText(mVoteListBean.getTopicName());// 话题名称
+            activityWriterId=mVoteListBean.getPostWriterId();
         }
     }
 
@@ -319,6 +327,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         contentView.findViewById(R.id.tv_all).setVisibility(View.GONE);
         contentView.findViewById(R.id.tv_course).setOnClickListener(listener);
         contentView.findViewById(R.id.tv_voices).setOnClickListener(listener);
+        contentView.findViewById(R.id.tv_price_ask).setVisibility(View.GONE);
     }
 
     private void handleAddVote(View contentView) {

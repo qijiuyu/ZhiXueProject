@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.CostsListAdapter;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.live.TeacherListBean;
 import com.example.administrator.zhixueproject.bean.topic.CostsListBean;
@@ -42,7 +44,7 @@ import java.util.List;
 public class ReleasePostActivity extends BaseActivity implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
     private CustomPopWindow mCostPopWindow;
     private List<CostsListBean> list = new ArrayList<>();
-    private String mCost = "";
+    private String mCost = "1";
     private CostsListAdapter mAdapter;
     private String[] costs;
     private int postType;//帖子类型
@@ -59,6 +61,8 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
     private SwitchButton sbStick;
     private TextView tvIssuer;
     private LinearLayout llReleasePost;
+    private int  type; // 1管理员，2老师
+    private RelativeLayout relIssuer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,16 +79,32 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         postTopicId = getIntent().getIntExtra("postTopicId", postTopicId);
         postId = getIntent().getStringExtra("postId");
         postName = getIntent().getStringExtra("postName");
-        postIsFree = getIntent().getStringExtra("postIsFree");
+        postIsFree = TextUtils.isEmpty(getIntent().getStringExtra("postIsFree"))?"1":getIntent().getStringExtra("postIsFree");
         postPrice = getIntent().getStringExtra("postPrice");
         postIsTop = getIntent().getStringExtra("postIsTop");
         etTitle = (EditText) findViewById(R.id.et_title);
         tvCost = (TextView) findViewById(R.id.tv_cost);
+        tvCost.setText("免费");
         sbStick = (SwitchButton) findViewById(R.id.sb_stick);
         llReleasePost = (LinearLayout) findViewById(R.id.ll_release_post);
-        RelativeLayout relIssuer = (RelativeLayout) findViewById(R.id.rl_issuer);
+        relIssuer = (RelativeLayout) findViewById(R.id.rl_issuer);
         relIssuer.setOnClickListener(this);
-        tvIssuer = (TextView) findViewById(R.id.tv_issuer); // TODO 发布人
+        tvIssuer = (TextView) findViewById(R.id.tv_issuer);
+        ImageView ivRightIssuer= (ImageView) findViewById(R.id.iv_right_issuer);
+        type=  MyApplication.homeBean.getAttendType();
+        LogUtils.e("讲师还是管理员类型===》 "+type);
+        String userName=MyApplication.userInfo.getData().getUser().getUserName()+"";
+        // id
+        int userId= (int) MyApplication.userInfo.getData().getUser().getUserId();
+        // set default value
+        tvIssuer.setText(userName);
+        postWriterId=userId;
+        if (type==2){
+            // 老师身份
+            // 设置不能选择发布人
+            relIssuer.setClickable(false);
+            ivRightIssuer.setVisibility(View.GONE);
+        }
         findViewById(R.id.tv_confirm).setOnClickListener(this);
         findViewById(R.id.rl_cost).setOnClickListener(this);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
@@ -219,8 +239,10 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
                 showMsg("讲师不能为空");
                 return;
             }
+            LogUtils.e("发布帖子");
             ReleaseContentsActivity.start(this, String.valueOf(postType), postName, String.valueOf(postTopicId), String.valueOf(postWriterId), postIsFree, postPrice, postIsTop);
         } else {
+            LogUtils.e("更新帖子");
             ReleaseContentsActivity.start(this, postId, postName, String.valueOf(postTopicId), postIsFree, postPrice, postIsTop);
         }
     }
