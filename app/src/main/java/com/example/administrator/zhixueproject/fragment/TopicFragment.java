@@ -127,6 +127,8 @@ public class TopicFragment extends BaseActivity implements View.OnClickListener 
 
         if(MyApplication.homeBean.getAttendType()!=1){
             findViewById(R.id.iv_college).setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.iv_college).setVisibility(View.VISIBLE);
         }
     }
 

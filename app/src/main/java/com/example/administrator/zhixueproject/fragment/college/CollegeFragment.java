@@ -83,6 +83,12 @@ public class CollegeFragment extends BaseActivity implements View.OnClickListene
                 pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
                 tabs.setViewPager(pager);
                 setTabsValue();
+
+                if(MyApplication.homeBean.getAttendType()!=1){
+                    findViewById(R.id.iv_college).setVisibility(View.GONE);
+                }else{
+                    findViewById(R.id.iv_college).setVisibility(View.VISIBLE);
+                }
             }
         }
     };
@@ -212,6 +218,8 @@ public class CollegeFragment extends BaseActivity implements View.OnClickListene
         Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
         if(MyApplication.homeBean.getAttendType()!=1){
             findViewById(R.id.iv_college).setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.iv_college).setVisibility(View.VISIBLE);
         }
     }
 

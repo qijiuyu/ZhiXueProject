@@ -262,6 +262,8 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
 
         if(MyApplication.homeBean.getAttendType()!=1){
             findViewById(R.id.iv_college).setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.iv_college).setVisibility(View.VISIBLE);
         }
     }
 

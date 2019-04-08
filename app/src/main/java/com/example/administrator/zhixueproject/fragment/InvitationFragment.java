@@ -232,6 +232,8 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
 
         if(MyApplication.homeBean.getAttendType()!=1){
             findViewById(R.id.iv_college).setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.iv_college).setVisibility(View.VISIBLE);
         }
     }
 
