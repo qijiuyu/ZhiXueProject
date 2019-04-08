@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -28,6 +30,7 @@ import com.example.administrator.zhixueproject.bean.topic.AddVoteBean;
 import com.example.administrator.zhixueproject.bean.topic.VoteListBean;
 import com.example.administrator.zhixueproject.fragment.topic.AddTopicFragment;
 import com.example.administrator.zhixueproject.utils.KeyboardUtils;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.example.administrator.zhixueproject.view.SwitchButton;
@@ -73,6 +76,9 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private RecyclerView rvVote;
     private TextView tvVoteType;
     private TextView tvTopic;
+    private int  type; // 1管理员，2老师
+    private RelativeLayout relIssuer;
+    private ImageView ivRightIssure;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,14 +104,33 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         sbMultiSelect = (SwitchButton) findViewById(R.id.sb_select);
         sbStick = (SwitchButton) findViewById(R.id.sb_stick);
         rvVote = (RecyclerView) findViewById(R.id.rv_vote);
+        relIssuer = (RelativeLayout) findViewById(R.id.rl_issuer);
+        ivRightIssure = (ImageView) findViewById(R.id.iv_right_issuer);
 
-        findViewById(R.id.rl_issuer).setOnClickListener(this);
+        relIssuer.setOnClickListener(this);
         findViewById(R.id.rl_start_time).setOnClickListener(this);
         findViewById(R.id.rl_end_time).setOnClickListener(this);
         findViewById(R.id.tv_add_vote).setOnClickListener(this);
         findViewById(R.id.tv_confirm).setOnClickListener(this);
         findViewById(R.id.rl_topic).setOnClickListener(this);
         findViewById(R.id.rl_vote_type).setOnClickListener(this);
+
+
+        type=  MyApplication.homeBean.getAttendType();
+        String userName=MyApplication.userInfo.getData().getUser().getUserName()+"";
+        // id
+        int userId= (int) MyApplication.userInfo.getData().getUser().getUserId();
+        // set default value
+        tvIssuer.setText(userName);
+        activityWriterId=userId;
+        if (type==2){
+            // 老师身份
+            // 设置不能选择发布人
+            relIssuer.setClickable(false);
+            ivRightIssure.setVisibility(View.INVISIBLE);
+        }
+
+
         initCustomTimePicker();
         sbStick.setOnCheckedChangeListener(this);
         sbMultiSelect.setOnCheckedChangeListener(this);

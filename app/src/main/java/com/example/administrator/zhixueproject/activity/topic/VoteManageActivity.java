@@ -162,6 +162,7 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
         if (bean.isStatus()) {
             VoteManageBean.DataBean dataBean = bean.getData();
             if (dataBean.getVoteList().size() <= 0) {
+                showMsg("无更多数据");
                 return;
             }
             listData.addAll(dataBean.getVoteList());

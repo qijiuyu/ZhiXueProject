@@ -18,10 +18,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.live.TeacherListBean;
@@ -31,6 +33,7 @@ import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
@@ -79,6 +82,9 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     private TextView tvTopic;
     private ImageView ivAddPicture;
     public static final String RELAEASE_ACTION_SUCCESS="con.example.action.release";
+    private int  type; // 1管理员，2老师
+    private RelativeLayout relIssuer;
+    private ImageView ivRightIssuer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,12 +111,30 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         llAddAction = (LinearLayout) findViewById(R.id.ll_add_action);
         ivAddPicture = (ImageView) findViewById(R.id.iv_add_picture);
         ivAddPicture.setOnClickListener(this);
-        findViewById(R.id.rl_issuer).setOnClickListener(this);
+        relIssuer = (RelativeLayout) findViewById(R.id.rl_issuer);
+        ivRightIssuer = (ImageView) findViewById(R.id.iv_right_issuer);
+
+        relIssuer.setOnClickListener(this);
         findViewById(R.id.rl_start_time).setOnClickListener(this);
         findViewById(R.id.rl_end_time).setOnClickListener(this);
         findViewById(R.id.tv_confirm).setOnClickListener(this);
         findViewById(R.id.rl_action_type).setOnClickListener(this);
         findViewById(R.id.rl_topic).setOnClickListener(this);
+
+
+        type=  MyApplication.homeBean.getAttendType();
+        String userName=MyApplication.userInfo.getData().getUser().getUserName()+"";
+        // id
+        int userId= (int) MyApplication.userInfo.getData().getUser().getUserId();
+        // set default value
+        tvIssuer.setText(userName);
+        activityWriterId=userId;
+        if (type==2){
+            // 老师身份
+            // 设置不能选择发布人
+            relIssuer.setClickable(false);
+            ivRightIssuer.setVisibility(View.INVISIBLE);
+        }
 
         initCustomTimePicker();
         //是否置顶

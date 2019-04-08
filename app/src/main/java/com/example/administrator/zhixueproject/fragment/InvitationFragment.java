@@ -201,6 +201,7 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
         if (bean.isStatus()) {
             TopicsListBean.DataBean dataBean = bean.getData();
             if (dataBean.getTopicList().size() <= 0) {
+                showMsg("无更多数据");
                 return;
             }
             listData.addAll(dataBean.getTopicList());

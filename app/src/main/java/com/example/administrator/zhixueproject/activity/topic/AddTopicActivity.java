@@ -58,7 +58,7 @@ import java.util.List;
 public class AddTopicActivity extends BaseActivity implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
     private int topicIsTop; //是否置顶
     private int topicUseyn; // 是否上架
-    private int payType; //收费方式
+    private int payType=1; //收费方式,默认免费
     private int topicType;// 话题类型
     private String type;   //1 添加 2 编辑
     private TopicListBean bean;
@@ -268,9 +268,6 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                         } else if (mCost.equals(costs[2])) {
                             tvTollMode.setText("VIP" + etCost.getText().toString());
                             payType = 3;
-                        } else if (mCost.equals(costs[3])) {
-                            tvTollMode.setText(mCost);
-                            payType = 4;
                         }
                         mTollModePop.dissmiss();
                         break;
@@ -421,7 +418,9 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
         }
 
         LogUtils.e(tollMode + "+++++++++++" + "topicType===  " + topicType);
+        LogUtils.e("type===> "+type+"   payType=>"+payType);
         if (type.equals(FLAG_ADD)) {
+
             if (payType == 1) {
                 HttpMethod2.addTopic(topicName, payType + "", topicType + "", topicIsTop + "", topicUseyn + "", topicImg, "", "", "", mHandler);
             } else if (payType == 2) {

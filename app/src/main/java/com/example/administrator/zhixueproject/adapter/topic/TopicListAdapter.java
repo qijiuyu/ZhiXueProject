@@ -72,7 +72,7 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
             }
 
         } else if (costType == 4) {
-            helper.setText(R.id.tv_restrict, "限制：" + costs[3]);
+            helper.setText(R.id.tv_restrict, "限制：" + costs[2]);
             helper.getView(R.id.tv_charge).setVisibility(View.GONE);
         }
         helper.setText(R.id.tv_topic_time, item.getCreationTime());

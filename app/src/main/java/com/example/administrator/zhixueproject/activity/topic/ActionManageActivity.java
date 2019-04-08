@@ -176,6 +176,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
         if (bean.isStatus()) {
             ActionManageBean.DataBean dataBean = bean.getData();
             if (dataBean.getActivityList().size() <= 0) {
+                showMsg("无更多数据");
                 return;
             }
             listData.addAll(dataBean.getActivityList());

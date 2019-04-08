@@ -92,7 +92,6 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         tvIssuer = (TextView) findViewById(R.id.tv_issuer);
         ImageView ivRightIssuer= (ImageView) findViewById(R.id.iv_right_issuer);
         type=  MyApplication.homeBean.getAttendType();
-        LogUtils.e("讲师还是管理员类型===》 "+type);
         String userName=MyApplication.userInfo.getData().getUser().getUserName()+"";
         // id
         int userId= (int) MyApplication.userInfo.getData().getUser().getUserId();
@@ -103,7 +102,7 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
             // 老师身份
             // 设置不能选择发布人
             relIssuer.setClickable(false);
-            ivRightIssuer.setVisibility(View.GONE);
+            ivRightIssuer.setVisibility(View.INVISIBLE);
         }
         findViewById(R.id.tv_confirm).setOnClickListener(this);
         findViewById(R.id.rl_cost).setOnClickListener(this);

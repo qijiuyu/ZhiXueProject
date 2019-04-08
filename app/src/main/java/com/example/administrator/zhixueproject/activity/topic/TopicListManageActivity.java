@@ -205,6 +205,7 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
         if (bean.isStatus()) {
             TopicsListBean.DataBean dataBean = bean.getData();
            if (dataBean.getTopicList().size() <= 0) {
+               showMsg("无更多数据");
                 return;
             }
             listData.addAll(dataBean.getTopicList());
