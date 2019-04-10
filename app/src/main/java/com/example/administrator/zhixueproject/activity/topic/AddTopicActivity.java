@@ -81,7 +81,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
     private Uri mOutputUri;
     public static final String FLAG_ADD = "1"; //添加
     public static final String FLAG_EDIT = "2";//编辑
-    private String topicImg = "https://pic4.zhimg.com/02685b7a5f2d8cbf74e1fd1ae61d563b_xll.jpg";
+    private String topicImg;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -409,6 +409,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
             showMsg("话题类型不能为空");
             return;
         }
+
         // 付费问答
         if (topicType == 4) {
             if (payType != 2) {
@@ -416,7 +417,10 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                 return;
             }
         }
-
+        if (TextUtils.isEmpty(topicImg)) {
+            showMsg("请上传话题图片");
+            return;
+        }
         LogUtils.e(tollMode + "+++++++++++" + "topicType===  " + topicType);
         LogUtils.e("type===> "+type+"   payType=>"+payType);
         if (type.equals(FLAG_ADD)) {

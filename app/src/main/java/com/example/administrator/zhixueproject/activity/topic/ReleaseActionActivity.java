@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
@@ -66,7 +67,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     public String mIsTop;
     private AddTopicFragment mAddTopicFragment;
     private String topicId;
-    private String topicImg = "https://pic4.zhimg.com/02685b7a5f2d8cbf74e1fd1ae61d563b_xll.jpg";
+    private String topicImg;
     private int activityWriterId;
     public ActivityListBean mActivityListBean;
     private int mActivityId;
@@ -81,8 +82,8 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     private LinearLayout llAddAction;
     private TextView tvTopic;
     private ImageView ivAddPicture;
-    public static final String RELAEASE_ACTION_SUCCESS="con.example.action.release";
-    private int  type; // 1管理员，2老师
+    public static final String RELAEASE_ACTION_SUCCESS = "con.example.action.release";
+    private int type; // 1管理员，2老师
     private RelativeLayout relIssuer;
     private ImageView ivRightIssuer;
 
@@ -122,14 +123,14 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         findViewById(R.id.rl_topic).setOnClickListener(this);
 
 
-        type=  MyApplication.homeBean.getAttendType();
-        String userName=MyApplication.userInfo.getData().getUser().getUserName()+"";
+        type = MyApplication.homeBean.getAttendType();
+        String userName = MyApplication.userInfo.getData().getUser().getUserName() + "";
         // id
-        int userId= (int) MyApplication.userInfo.getData().getUser().getUserId();
+        int userId = (int) MyApplication.userInfo.getData().getUser().getUserId();
         // set default value
         tvIssuer.setText(userName);
-        activityWriterId=userId;
-        if (type==2){
+        activityWriterId = userId;
+        if (type == 2) {
             // 老师身份
             // 设置不能选择发布人
             relIssuer.setClickable(false);
@@ -164,9 +165,9 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                     case "2":
                         tvTopicType.setText("大家谈");
                         break;
-                     default:
-                         tvTopicType.setText("全部");
-                         break;
+                    default:
+                        tvTopicType.setText("全部");
+                        break;
                 }
             }
 
@@ -174,10 +175,10 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             tvActionTitle.setText(mActivityListBean.getActivityName());
             tvTopic.setText(mActivityListBean.getTopicName());
             tvStartTime.setText(mActivityListBean.getStartTime());
-            mStartTime=mActivityListBean.getStartTime();
+            mStartTime = mActivityListBean.getStartTime();
             tvEndTime.setText(mActivityListBean.getEndTime());
-            mEndTime=mActivityListBean.getEndTime();
-            topicId=mActivityListBean.getTopicId()+"";
+            mEndTime = mActivityListBean.getEndTime();
+            topicId = mActivityListBean.getTopicId() + "";
             tvIssuer.setText(mActivityListBean.getUserName());
         }
     }
@@ -309,12 +310,16 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             showMsg("请输入标题");
             return false;
         }
+        if (TextUtils.isEmpty(tvTopic.getText().toString().trim())) {
+            showMsg("请选择话题");
+            return false;
+        }
         if (TextUtils.isEmpty(String.valueOf(activityWriterId))) {
             showMsg("请选择发布人");
             return false;
         }
-        if (TextUtils.isEmpty(topicImg)) {
-            showMsg("请上传活动图片");
+        if (TextUtils.isEmpty(tvTopicType.getText().toString().trim())) {
+            showMsg("请选择活动类型");
             return false;
         }
         if (TextUtils.isEmpty(mStartTime)) {
@@ -323,6 +328,11 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         }
         if (TextUtils.isEmpty(mEndTime)) {
             showMsg("请选择结束时间");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(topicImg)) {
+            showMsg("请上传活动图片");
             return false;
         }
         return true;
@@ -443,7 +453,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                     }
                 })
                 .setType(new boolean[]{true, true, true, true, true, false})
-                .setLabel("年","月","日","时","分","")
+                .setLabel("年", "月", "日", "时", "分", "")
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(getResources().getColor(R.color.color_dbdbdb))
                 .setTextColorCenter(getResources().getColor(R.color.color_333333))
@@ -469,7 +479,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                     }
                     if (bean.isStatus()) {
                         String url = bean.getData().getUrl();
-                        topicImg=url;
+                        topicImg = url;
                         Glide.with(mContext).load(url).error(R.mipmap.unify_image_ing).into(ivAddPicture);
                     } else {
                         showMsg(bean.getErrorMsg());
@@ -507,7 +517,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     }
 
     private void sendLocalBroadCast() {
-        Intent intent=new Intent();
+        Intent intent = new Intent();
         intent.setAction(RELAEASE_ACTION_SUCCESS);
         sendBroadcast(intent);
     }
