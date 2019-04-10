@@ -35,6 +35,9 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
 
     @Override
     protected void convert(BaseViewHolder helper, final TopicListBean item) {
+        if(null==item){
+            return;
+        }
         //关闭复用
         helper.setIsRecyclable(false);
 
