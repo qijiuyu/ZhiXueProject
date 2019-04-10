@@ -229,7 +229,7 @@ public class TopicReportFragment extends BaseFragment implements MyRefreshLayout
      */
     private void deleteReport(String ids){
         showProgress("删除中...");
-        HttpMethod1.deleteReport("2",ids,mHandler);
+        HttpMethod1.deleteReport("1",ids,mHandler);
     }
 
     /**
