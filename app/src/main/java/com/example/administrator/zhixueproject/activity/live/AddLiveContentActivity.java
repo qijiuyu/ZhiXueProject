@@ -177,10 +177,8 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                         listData.remove(position);
                         break;
                     case R.id.iv_record_play:
-                        ReleaseContentsBean releaseContentsBean= (ReleaseContentsBean) view.getTag();
-                        LogUtils.e(releaseContentsBean.getContent()+"++++++++++"+releaseContentsBean.getTimeLength());
-//                        PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance((ReleaseContentsBean) view.getTag());
-//                        fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
+                        PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance((ReleaseContentsBean) view.getTag());
+                        fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
                         break;
                 }
             }
