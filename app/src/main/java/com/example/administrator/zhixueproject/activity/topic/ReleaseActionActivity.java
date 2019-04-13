@@ -181,6 +181,10 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             mEndTime = mActivityListBean.getEndTime();
             topicId = mActivityListBean.getTopicId() + "";
             tvIssuer.setText(mActivityListBean.getUserName());
+            if (!TextUtils.isEmpty(mActivityListBean.getPostPicture())){
+                topicImg=mActivityListBean.getPostPicture();
+                Glide.with(mContext).load(mActivityListBean.getPostPicture()).error(R.mipmap.unify_image_ing).into(ivAddPicture);
+            }
         }
     }
 
