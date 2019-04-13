@@ -162,6 +162,46 @@
 
                     <View style="@style/view_line" />
                 </RelativeLayout>
+                <!--近期收益-->
+                <RelativeLayout
+                    android:id="@+id/rl_shouyi"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <ImageView
+                        android:id="@+id/iv_shouyi"
+                        style="@style/iv_icon"
+                        android:background="@mipmap/recent_earnings_icon" />
+
+                    <TextView
+                        style="@style/tv_item"
+                        android:layout_toRightOf="@+id/iv_shouyi"
+                        android:text="近期收益" />
+
+                    <ImageView style="@style/iv_right_arrow" />
+
+                    <View style="@style/view_line" />
+                </RelativeLayout>
+                <!--关于平台-->
+                <RelativeLayout
+                    android:id="@+id/rl_about"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <ImageView
+                        android:id="@+id/iv_about"
+                        style="@style/iv_icon"
+                        android:background="@mipmap/about_platform_icon" />
+
+                    <TextView
+                        style="@style/tv_item"
+                        android:layout_toRightOf="@+id/iv_about"
+                        android:text="关于平台" />
+
+                    <ImageView style="@style/iv_right_arrow" />
+
+                    <View style="@style/view_line" />
+                </RelativeLayout>
                 <!--个性背景-->
                 <RelativeLayout
                     android:visibility="gone"

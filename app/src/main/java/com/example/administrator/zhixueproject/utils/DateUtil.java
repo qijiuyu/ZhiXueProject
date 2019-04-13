@@ -2,6 +2,7 @@ package com.example.administrator.zhixueproject.utils;
 
 import android.text.TextUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -103,5 +104,15 @@ public class DateUtil {
         Date date=new Date();
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         return format.format(date);
+    }
+
+
+    public static boolean IsToday(long time){
+        long newTime=System.currentTimeMillis()/1000;
+        LogUtils.e(newTime+"+++++++++++++="+time);
+        if((time/1000)>newTime){
+            return true;
+        }
+        return false;
     }
 }

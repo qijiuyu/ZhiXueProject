@@ -29,6 +29,7 @@ import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.activity.college.SelectTeacherActivity;
 import com.example.administrator.zhixueproject.adapter.topic.CostsListAdapter;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.Teacher;
 import com.example.administrator.zhixueproject.bean.live.Live;
@@ -39,6 +40,7 @@ import com.example.administrator.zhixueproject.fragment.college.TopicListFragmen
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.DateUtil;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.example.administrator.zhixueproject.view.SwitchButton;
 import com.example.administrator.zhixueproject.view.time.TimePickerView;
@@ -384,8 +386,13 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
         //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             public void onTimeSelect(Date date, View v) {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                tvTime.setText(format.format(date));
+                if(DateUtil.IsToday(date.getTime())){
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    tvTime.setText(format.format(date));
+                    pvCustomTime.dismiss();
+                }else{
+                    showMsg("不能选择已过期的时间！");
+                }
             }
         })
                 .setDate(selectedDate)
@@ -402,7 +409,6 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
                                 pvCustomTime.returnData();
-                                pvCustomTime.dismiss();
                             }
                         });
                         ivCancel.setOnClickListener(new View.OnClickListener() {
@@ -418,6 +424,27 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
                 .setDividerColor(getResources().getColor(R.color.color_dbdbdb))
                 .setTextColorCenter(getResources().getColor(R.color.color_333333))
                 .build();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //表示用户是老师
+        if(MyApplication.homeBean.getAttendType()!=1){
+            findViewById(R.id.rl_lecturer).setClickable(false);
+            teacher=new Teacher();
+            teacher.setTeacherId(MyApplication.userInfo.getData().getUser().getUserId());
+            tvTeacher.setText(MyApplication.userInfo.getData().getUser().getUserName());
+            tvCost.setText("免费");
+            postIsFree=1;
+            if(null!=liveList){
+                postIsFree=liveList.getPostIsFree();
+                if(postIsFree!=1){
+                    tvCost.setText("¥"+liveList.getPostPrice());
+                }
+            }
+        }
     }
 
     @Override

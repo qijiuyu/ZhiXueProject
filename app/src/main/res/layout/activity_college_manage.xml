@@ -185,6 +185,7 @@
             </RelativeLayout>
             <!--近期收益-->
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/rl_recent_earnings"
                 android:layout_width="match_parent"
                 android:layout_height="48dp">
@@ -281,6 +282,7 @@
             </RelativeLayout>
             <!--关于平台-->
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/rl_about_platform"
                 android:layout_width="match_parent"
                 android:layout_height="48dp">

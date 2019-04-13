@@ -638,5 +638,5 @@ public interface HttpApi1 {
 
     @FormUrlEncoded
     @POST(HttpConstant.GET_LIVE_CONTENT)
-    Call<BaseBean> getLiveContent(@FieldMap Map<String, String> map);
+    Call<ResponseBody> getLiveContent(@FieldMap Map<String, String> map);
 }

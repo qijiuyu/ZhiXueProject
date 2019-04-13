@@ -1832,21 +1832,25 @@ public class HttpMethod1  extends BaseRequst {
     }
 
 
-
+    /**
+     * 查询直播的详情
+     * @param postId
+     * @param handler
+     */
     public static void getLiveContent(String postId,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("postId",postId);
-        Http.getRetrofit().create(HttpApi1.class).getLiveContent(map).enqueue(new Callback<BaseBean>() {
-            public void onResponse(Call<BaseBean> call, Response<BaseBean> response) {
+        Http.getRetrofit().create(HttpApi1.class).getLiveContent(map).enqueue(new Callback<ResponseBody>() {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    sendMessage(handler, HandlerConstant1.GET_LIVE_CONTENT_SUCCESS, response.body());
+                    sendMessage(handler, HandlerConstant1.GET_LIVE_CONTENT_SUCCESS, response.body().string());
                 }catch (Exception e){
                     e.printStackTrace();
                     sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
                 }
             }
 
-            public void onFailure(Call<BaseBean> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });

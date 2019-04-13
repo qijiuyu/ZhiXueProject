@@ -63,6 +63,8 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
         initView();
         leftMenu();
         registerReceiver();
+        //查询数据
+        getData(HandlerConstant1.GET_LIVE_LIST_SUCCESS);
     }
 
 
@@ -79,8 +81,6 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
         liveListAdapter=new LiveListAdapter(this,listAll);
         listView.setAdapter(liveListAdapter);
         liveListAdapter.setCallBack(liveCallBack);
-        //查询举报数据
-        getData(HandlerConstant1.GET_LIVE_LIST_SUCCESS);
     }
 
     /**
@@ -208,13 +208,13 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
     @Override
     public void onRefresh(View view) {
         page=1;
-        HttpMethod1.getLiveList(page,limit,HandlerConstant1.GET_LIVE_LIST_SUCCESS,mHandler);
+        getData(HandlerConstant1.GET_LIVE_LIST_SUCCESS);
     }
 
     @Override
     public void onLoadMore(View view) {
         page++;
-        HttpMethod1.getLiveList(page,limit,HandlerConstant1.GET_LIVE_LIST_SUCCESS2,mHandler);
+        getData(HandlerConstant1.GET_LIVE_LIST_SUCCESS2);
     }
 
 
@@ -250,12 +250,13 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==1){
             page=1;
-            HttpMethod1.getLiveList(page,limit,HandlerConstant1.GET_LIVE_LIST_SUCCESS,mHandler);
+            getData(HandlerConstant1.GET_LIVE_LIST_SUCCESS);
         }
     }
 
     public void onResume() {
         super.onResume();
+
         final UserBean userBean= MyApplication.userInfo.getData().getUser();
         Glide.with(mContext).load(userBean.getUserImg()).override(30,30).error(R.mipmap.head_bg).into(imgHead);
         tvHead.setText(MyApplication.homeBean.getCollegeName());
@@ -286,6 +287,10 @@ public class LiveFragment extends BaseActivity implements MyRefreshLayoutListene
             if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
                 tvHead.setText(MyApplication.homeBean.getCollegeName());
+
+                //查询新学院的直播数据
+                page=1;
+                getData(HandlerConstant1.GET_LIVE_LIST_SUCCESS);
             }
 
             if(action.equals(LIVE_END_SUCCESS)){

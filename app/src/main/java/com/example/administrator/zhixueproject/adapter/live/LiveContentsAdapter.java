@@ -63,6 +63,7 @@ public class LiveContentsAdapter extends BaseMultiItemQuickAdapter<ReleaseConten
                 });
                 break;
             case ReleaseContentsBean.RECORD:
+                helper.setTag(R.id.iv_record_play,item);
                 ImageView delete2=helper.getView(R.id.iv_delete);
                 delete2.setVisibility(View.GONE);
                 helper.addOnClickListener(R.id.iv_record_play);

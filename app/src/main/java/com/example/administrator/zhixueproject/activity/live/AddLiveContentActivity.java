@@ -41,12 +41,17 @@ import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
 import com.example.administrator.zhixueproject.utils.FileStorage;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.SoftInputUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.utils.record.RecordUtil;
 import com.example.administrator.zhixueproject.utils.record.VoiceManager;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -172,8 +177,10 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                         listData.remove(position);
                         break;
                     case R.id.iv_record_play:
-                        PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(listData.get(position));
-                        fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
+                        ReleaseContentsBean releaseContentsBean= (ReleaseContentsBean) view.getTag();
+                        LogUtils.e(releaseContentsBean.getContent()+"++++++++++"+releaseContentsBean.getTimeLength());
+//                        PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance((ReleaseContentsBean) view.getTag());
+//                        fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
                         break;
                 }
             }
@@ -445,6 +452,32 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
             clearTask();
             BaseBean baseBean=null;
             switch (msg.what) {
+                case HandlerConstant1.GET_LIVE_CONTENT_SUCCESS:
+                      final String message= (String) msg.obj;
+                      if(TextUtils.isEmpty(message)){
+                          return;
+                      }
+                      try {
+                          JSONObject jsonObject=new JSONObject(message);
+                          if(jsonObject.getBoolean("status")){
+                              JSONObject jsonObject2=new JSONObject(jsonObject.getString("data"));
+                              JSONArray jsonArray=new JSONArray(jsonObject2.getString("postcontent"));
+                              for (int i=0;i<jsonArray.length();i++){
+                                   JSONObject jsonObject3=jsonArray.getJSONObject(i);
+                                   String content;
+                                   if(jsonObject3.getInt("type")==1){
+                                       content="http://"+jsonObject3.getString("content");
+                                   }else{
+                                       content=jsonObject3.getString("content");
+                                   }
+                                   addList (content,jsonObject3.getInt("type"),jsonObject3.isNull("strLength") ? "" : jsonObject3.getString("strLength"),jsonObject3.getLong("timeLength"));
+                              }
+                          }
+                      }
+                      catch (Exception e){
+                          e.printStackTrace();
+                      }
+                      break;
                 case HandlerConstant1.UPLOAD_HEAD_SUCCESS:
                     UploadFile bean = (UploadFile) msg.obj;
                     if (null == bean) {
@@ -456,7 +489,6 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                         if (url.contains(head)) {
                             url = url.substring(head.length(), url.length());
                         }
-                        //发布时需要用到的去http
                         listData.clear();
                         listData.add(new ReleaseContentsBean(url, fileType, voiceStrLength, voiceLength));
                         voiceStrLength = "";
@@ -523,6 +555,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     }
 
 
+    //查询直播的详情
     private void getLiveContent(){
         HttpMethod1.getLiveContent(String.valueOf(liveList.getPostId()),mHandler);
     }

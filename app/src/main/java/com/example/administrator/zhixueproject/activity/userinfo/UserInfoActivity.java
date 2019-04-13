@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.activity.college.AboutActivity;
+import com.example.administrator.zhixueproject.activity.college.RecentEarningActivity;
 import com.example.administrator.zhixueproject.activity.login.LoginActivity;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
@@ -65,6 +67,8 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         findViewById(R.id.rl_personal_bg).setOnClickListener(this);
         findViewById(R.id.tv_login_out).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
+        findViewById(R.id.rl_shouyi).setOnClickListener(this);
+        findViewById(R.id.rl_about).setOnClickListener(this);
     }
 
 
@@ -128,6 +132,12 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             case R.id.rl_sign://签名
                 setClass(EditSignActivity.class);
                 break;
+            case R.id.rl_shouyi:
+                setClass(RecentEarningActivity.class);
+                 break;
+            case R.id.rl_about:
+                setClass(AboutActivity.class);
+                 break;
             case R.id.rl_personal_bg://个性背景
                 break;
             case R.id.tv_login_out://退出登录
