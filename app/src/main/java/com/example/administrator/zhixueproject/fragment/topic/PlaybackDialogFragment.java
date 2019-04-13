@@ -22,6 +22,7 @@ import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.bean.topic.ReleaseContentsBean;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -220,7 +221,12 @@ public class PlaybackDialogFragment extends DialogFragment {
         }
         try {
             // mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mMediaPlayer.setDataSource("http://" + item.getContent());
+            File file=new File(item.getContent());
+            if(file.isFile()){
+                mMediaPlayer.setDataSource(item.getContent());
+            }else{
+                mMediaPlayer.setDataSource("http://" + item.getContent());
+            }
             mMediaPlayer.prepare();
             mSeekBar.setMax(mMediaPlayer.getDuration());
 

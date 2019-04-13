@@ -388,7 +388,7 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
             public void onTimeSelect(Date date, View v) {
                 if(DateUtil.IsToday(date.getTime())){
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                    tvTime.setText(format.format(date));
+                    tvTime.setText(format.format(date)+":00");
                     pvCustomTime.dismiss();
                 }else{
                     showMsg("不能选择已过期的时间！");
