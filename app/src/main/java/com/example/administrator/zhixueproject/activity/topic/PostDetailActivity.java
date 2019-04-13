@@ -94,6 +94,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private SHARE_MEDIA share_media;
     // 帖子内容Str
     private String postContentString;
+    private int mPosition; //用于标记是帖子还是作业fragment
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -257,6 +258,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onPageSelected(int position) {
                 LogUtils.e("position=== " + position);
+                mPosition=position;
                 type = String.valueOf(position + 1);
             }
 
@@ -295,6 +297,14 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_comment:
+                // 如果是作业并且不是老师身份return
+                LogUtils.e("身份是："+MyApplication.homeBean.getAttendType());
+                 if (mPosition==1){
+                     if (MyApplication.homeBean.getAttendType()!=2){
+                         showMsg("只有老师身份才能发布作业！");
+                         return;
+                     }
+                 }
                 tvComment.setVisibility(View.GONE);
                 llComment.setVisibility(View.VISIBLE);
                 isFloorComment = false;

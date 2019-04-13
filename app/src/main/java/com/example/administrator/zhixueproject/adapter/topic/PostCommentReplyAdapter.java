@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.PostsDetailsBean;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -23,6 +24,7 @@ import java.util.List;
 public class PostCommentReplyAdapter extends BaseQuickAdapter<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean.TalkInfoBean, BaseViewHolder> {
 
     private static int floorId;//贴子楼层ID
+    private static String timeStamp;
 
 
     public PostCommentReplyAdapter(@LayoutRes int layoutResId, @Nullable List<PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean.TalkInfoBean> data, int floorId) {
@@ -32,7 +34,6 @@ public class PostCommentReplyAdapter extends BaseQuickAdapter<PostsDetailsBean.P
 
     @Override
     protected void convert(BaseViewHolder helper, final PostsDetailsBean.PostDetailBeanOuter.PostCommentListBean.TalkInfoBean item) {
-        helper.setText(R.id.tv_comment_reply,item.getTalkStr());
         final String finalMFloorUserId = showReply(helper, item.getTalkStr(), floorId);
         helper.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +61,9 @@ public class PostCommentReplyAdapter extends BaseQuickAdapter<PostsDetailsBean.P
             talkStr = "";
         } else {
             String[] split = talkStr.split("=");
-            talkStr = split[0];//需要显示的内容部份
+            String talkInfo=split[0].split("#zhixue#")[0];
+            timeStamp = (split[0].split("#zhixue#"))[1];
+            talkStr = talkInfo;//需要显示的内容部份
 
             if (split.length == 5) {
                 commentUserId = split[3].split(",")[0];
@@ -110,6 +113,10 @@ public class PostCommentReplyAdapter extends BaseQuickAdapter<PostsDetailsBean.P
         if (start2 != 0 && end2 != 0) {
             style.setSpan(new ForegroundColorSpan(text.getContext().getResources().getColor(R.color.color_48c6ef)), start2, end2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
+        if (TextUtils.isEmpty(timeStamp))
         text.setText(style);
+        else {
+            text.setText(style+" "+DateUtil.getTimeHMS(Long.parseLong(timeStamp)));
+        }
     }
 }

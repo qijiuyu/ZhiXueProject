@@ -34,6 +34,7 @@ import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
@@ -415,13 +416,20 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             public void onTimeSelect(Date date, View v) {//选中事件回调
-                if (v == tvStartTime) {
-                    mStartTime = getTime(date);
-                    tvStartTime.setText(mStartTime);
-                } else if (v == tvEndTime) {
-                    mEndTime = getTime(date);
-                    tvEndTime.setText(mEndTime);
+
+                LogUtils.e("选择的时间为：-》" + date.getTime());
+                if (DateUtil.IsToday(date.getTime())) {
+                    if (v == tvStartTime) {
+                        mStartTime = getTime(date);
+                        tvStartTime.setText(mStartTime);
+                    } else if (v == tvEndTime) {
+                        mEndTime = getTime(date);
+                        tvEndTime.setText(mEndTime);
+                    }
+                } else {
+                    showMsg("不能选择已过期的时间！");
                 }
+
             }
         })
                 .setDate(selectedDate)

@@ -29,6 +29,7 @@ import com.example.administrator.zhixueproject.bean.live.TeacherListBean;
 import com.example.administrator.zhixueproject.bean.topic.AddVoteBean;
 import com.example.administrator.zhixueproject.bean.topic.VoteListBean;
 import com.example.administrator.zhixueproject.fragment.topic.AddTopicFragment;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.KeyboardUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
@@ -76,7 +77,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private RecyclerView rvVote;
     private TextView tvVoteType;
     private TextView tvTopic;
-    private int  type; // 1管理员，2老师
+    private int type; // 1管理员，2老师
     private RelativeLayout relIssuer;
     private ImageView ivRightIssure;
 
@@ -116,14 +117,14 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.rl_vote_type).setOnClickListener(this);
 
 
-        type=  MyApplication.homeBean.getAttendType();
-        String userName=MyApplication.userInfo.getData().getUser().getUserName()+"";
+        type = MyApplication.homeBean.getAttendType();
+        String userName = MyApplication.userInfo.getData().getUser().getUserName() + "";
         // id
-        int userId= (int) MyApplication.userInfo.getData().getUser().getUserId();
+        int userId = (int) MyApplication.userInfo.getData().getUser().getUserId();
         // set default value
         tvIssuer.setText(userName);
-        activityWriterId=userId;
-        if (type==2){
+        activityWriterId = userId;
+        if (type == 2) {
             // 老师身份
             // 设置不能选择发布人
             relIssuer.setClickable(false);
@@ -145,8 +146,8 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private void initData() {
         mVoteListBean = (VoteListBean) getIntent().getSerializableExtra("voteListBean");
         if (mVoteListBean != null) {
-            String mItemViewType=TextUtils.isEmpty(mVoteListBean.getVoteType())?"":mVoteListBean.getVoteType();
-            if (TextUtils.isEmpty(mVoteListBean.getVoteType())){
+            String mItemViewType = TextUtils.isEmpty(mVoteListBean.getVoteType()) ? "" : mVoteListBean.getVoteType();
+            if (TextUtils.isEmpty(mVoteListBean.getVoteType())) {
                 // 默认为课程类型
                 topicType = 1;
             }
@@ -176,7 +177,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
             topicId = mVoteListBean.getVoteId() + "";
             tvIssuer.setText(mVoteListBean.getPostWriterName());
             tvTopic.setText(mVoteListBean.getTopicName());// 话题名称
-            activityWriterId=mVoteListBean.getPostWriterId();
+            activityWriterId = mVoteListBean.getPostWriterId();
         }
     }
 
@@ -250,7 +251,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     showMsg("请输入标题");
                     return;
                 }
-                if (activityWriterId==0){
+                if (activityWriterId == 0) {
                     showMsg("请选择发布人");
                     return;
                 }
@@ -258,7 +259,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     showMsg("请输入话题");
                     return;
                 }
-                if (topicType==0){
+                if (topicType == 0) {
                     showMsg("请选择话题类型");
                     return;
                 }
@@ -431,13 +432,18 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             public void onTimeSelect(Date date, View v) {//选中事件回调
-                if (v == tvStartTime) {
-                    mStartTime = getTime(date);
-                    tvStartTime.setText(mStartTime);
-                } else if (v == tvEndTime) {
-                    mEndTime = getTime(date);
-                    tvEndTime.setText(mEndTime);
+                if (DateUtil.IsToday(date.getTime())) {
+                    if (v == tvStartTime) {
+                        mStartTime = getTime(date);
+                        tvStartTime.setText(mStartTime);
+                    } else if (v == tvEndTime) {
+                        mEndTime = getTime(date);
+                        tvEndTime.setText(mEndTime);
+                    }
+                } else {
+                    showMsg("不能选择已过期的时间！");
                 }
+
             }
         })
                 .setDate(selectedDate)
@@ -468,8 +474,8 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                         view_bg.setBackgroundColor(getResources().getColor(R.color.translete));
                     }
                 })
-                .setType(new boolean[]{true, true, true, false, false, false})
-                .setLabel("", "", "", "", "", "")
+                .setType(new boolean[]{true, true, true, true, true, false})
+                .setLabel("年", "月", "日", "时", "分", "")
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(getResources().getColor(R.color.color_dbdbdb))
                 .setTextColorCenter(getResources().getColor(R.color.color_333333))
