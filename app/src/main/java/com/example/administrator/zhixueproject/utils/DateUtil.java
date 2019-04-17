@@ -33,7 +33,7 @@ public class DateUtil {
         if (time <= 0) {
             return "";
         }
-        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(time);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time);
     }
 
 
