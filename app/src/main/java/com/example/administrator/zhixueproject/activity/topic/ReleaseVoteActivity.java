@@ -80,6 +80,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private int type; // 1管理员，2老师
     private RelativeLayout relIssuer;
     private ImageView ivRightIssure;
+    private long savedStartTime=0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -434,9 +435,14 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 if (DateUtil.IsToday(date.getTime())) {
                     if (v == tvStartTime) {
+                        savedStartTime=date.getTime();
                         mStartTime = getTime(date);
                         tvStartTime.setText(mStartTime);
                     } else if (v == tvEndTime) {
+                        if (date.getTime()<savedStartTime){
+                            showMsg("结束时间不能在开始时间之前");
+                            return;
+                        }
                         mEndTime = getTime(date);
                         tvEndTime.setText(mEndTime);
                     }

@@ -106,8 +106,14 @@ public class TopicListFragment  extends BaseFragment  implements MyRefreshLayout
             return;
         }
         if(topicsListBean.isStatus()){
-            List<TopicListBean> list=topicsListBean.getData().getTopicList();
-            listAll.addAll(list);
+             List<TopicListBean> list=topicsListBean.getData().getTopicList();
+            TopicsListBean.DataBean dataBean = topicsListBean.getData();
+            for (int i=0;i<dataBean.getTopicList().size();i++){
+                // 下架的不显示
+                if (dataBean.getTopicList().get(i).getTopicUseyn()==1){
+                    listAll.add(dataBean.getTopicList().get(i));
+                }
+            }
             topicNameAdapter.notifyDataSetChanged();
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

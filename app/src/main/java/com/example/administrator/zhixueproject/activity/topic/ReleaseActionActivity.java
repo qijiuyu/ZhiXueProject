@@ -87,6 +87,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     private int type; // 1管理员，2老师
     private RelativeLayout relIssuer;
     private ImageView ivRightIssuer;
+    private long savedStartTime=0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -335,7 +336,6 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             showMsg("请选择结束时间");
             return false;
         }
-
         if (TextUtils.isEmpty(topicImg)) {
             showMsg("请上传活动图片");
             return false;
@@ -424,9 +424,14 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                 LogUtils.e("选择的时间为：-》" + date.getTime());
                 if (DateUtil.IsToday(date.getTime())) {
                     if (v == tvStartTime) {
+                        savedStartTime=date.getTime();
                         mStartTime = getTime(date);
                         tvStartTime.setText(mStartTime);
                     } else if (v == tvEndTime) {
+                        if (date.getTime()<savedStartTime){
+                            showMsg("结束时间不能在开始时间之前");
+                            return;
+                        }
                         mEndTime = getTime(date);
                         tvEndTime.setText(mEndTime);
                     }

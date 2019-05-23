@@ -87,7 +87,11 @@ public class AddTopicFragment extends BaseFragment implements BaseQuickAdapter.O
         }
         if (bean.isStatus()) {
             TopicsListBean.DataBean dataBean = bean.getData();
-            listData = dataBean.getTopicList();
+            for (int i=0;i<dataBean.getTopicList().size();i++){
+                if (dataBean.getTopicList().get(i).getTopicUseyn()==1){
+                    listData.add(dataBean.getTopicList().get(i));
+                }
+            }
             if (dataBean.getTopicList().size() == 0) {
                 return;
             }

@@ -180,7 +180,11 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
         }
         if (bean.isStatus()) {
             TopicsListBean.DataBean dataBean = bean.getData();
-            listData = dataBean.getTopicList();
+            for (int i=0;i<dataBean.getTopicList().size();i++){
+                if (dataBean.getTopicList().get(i).getTopicUseyn()==1){
+                    listData.add(dataBean.getTopicList().get(i));
+                }
+            }
             mAdapter = new TopicListAdapter(R.layout.topic_list_item, listData, true);
             mRecyclerView.setAdapter(mAdapter);
         } else {
@@ -203,7 +207,13 @@ public class InvitationFragment extends BaseActivity implements MyRefreshLayoutL
                 showMsg("无更多数据");
                 return;
             }
-            listData.addAll(dataBean.getTopicList());
+            for (int i=0;i<dataBean.getTopicList().size();i++){
+                if (dataBean.getTopicList().get(i).getTopicUseyn()==1){
+                    listData.add(dataBean.getTopicList().get(i));
+                }
+            }
+
+
             mAdapter.notifyDataSetChanged();
         } else {
             showMsg(bean.errorMsg);
