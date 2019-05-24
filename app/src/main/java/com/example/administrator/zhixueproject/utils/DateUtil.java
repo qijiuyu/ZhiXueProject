@@ -113,7 +113,7 @@ public class DateUtil {
      */
     public static String getTimeHMS(long time){
         Date date=new Date(time);
-        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
     }
 

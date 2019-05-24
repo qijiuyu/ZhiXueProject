@@ -214,6 +214,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tv_confirm:
                 //创建
+                LogUtils.d("activityWriterId  =》"+activityWriterId);
                 if (inputReal()) {
                     ReleaseContentsActivity.start(
                             view.getContext(),

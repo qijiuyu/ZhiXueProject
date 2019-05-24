@@ -145,6 +145,7 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
         tvLecture = (TextView) findViewById(R.id.tv_lecturer);
 
         type = MyApplication.homeBean.getAttendType();
+        LogUtils.e("type getAttendType  => "+type);
         String userName = MyApplication.userInfo.getData().getUser().getUserName() + "";
         // id
         long userId =  MyApplication.userInfo.getData().getUser().getUserId();
@@ -332,6 +333,7 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==1){
             teacher= (Teacher) data.getSerializableExtra("teacher");
+            teacherId=teacher.getTeacherId();
             if(teacher==null){
                 return;
             }
