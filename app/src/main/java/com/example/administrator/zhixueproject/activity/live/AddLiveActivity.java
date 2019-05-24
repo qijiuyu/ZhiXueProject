@@ -21,7 +21,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -73,6 +75,12 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
     private int postIsTop=0;//是否置顶
     private int postIsFree=0;//是否付费
     private Live.LiveList liveList;
+    private int type; // 1管理员，2老师
+    private RelativeLayout relLecture;
+    private ImageView ivRightLecture;
+    private TextView tvLecture;
+    private long teacherId=0;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_live);
@@ -98,6 +106,8 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
         tvTeacher=(TextView)findViewById(R.id.tv_lecturer);
         tvTime=(TextView)findViewById(R.id.tv_live_time);
         tvCost=(TextView)findViewById(R.id.tv_cost);
+        tvCost.setText("免费");
+        postIsFree=1;
         switchButton=(SwitchButton)findViewById(R.id.sb_stick);
         etContent=(EditText)findViewById(R.id.et_live_detail);
         tvNum=(TextView)findViewById(R.id.tv_num);
@@ -125,11 +135,30 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
             }
         });
         findViewById(R.id.rl_topic).setOnClickListener(this);
-        findViewById(R.id.rl_lecturer).setOnClickListener(this);
         findViewById(R.id.rl_live_time).setOnClickListener(this);
         findViewById(R.id.rl_cost).setOnClickListener(this);
         findViewById(R.id.tv_confirm).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
+        relLecture = (RelativeLayout) findViewById(R.id.rl_lecturer);
+        relLecture.setOnClickListener(this);
+        ivRightLecture = (ImageView) findViewById(R.id.iv_right_lecturer);
+        tvLecture = (TextView) findViewById(R.id.tv_lecturer);
+
+        type = MyApplication.homeBean.getAttendType();
+        String userName = MyApplication.userInfo.getData().getUser().getUserName() + "";
+        // id
+        long userId =  MyApplication.userInfo.getData().getUser().getUserId();
+        teacherId=userId;
+        teacher=new Teacher();
+        teacher.setTeacherId(userId);
+        // set default value
+        tvLecture.setText(userName);
+        if (type == 2) {
+            // 老师身份
+            // 设置不能选择发布人
+            relLecture.setClickable(false);
+            ivRightLecture.setVisibility(View.INVISIBLE);
+        }
     }
 
 
@@ -147,6 +176,7 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
         tvTopicName.setText(liveList.getTopicName());
         teacher=new Teacher();
         teacher.setTeacherId(liveList.getPostWriterId());
+        teacherId=liveList.getPostWriterId();
         tvTeacher.setText(liveList.getUserName());
         tvTime.setText(DateUtil.gethour(liveList.getPostLivetime()));
         postIsFree=liveList.getPostIsFree();
@@ -214,9 +244,9 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
                 }
                 showProgress(getString(R.string.loding));
                  if(null==liveList){
-                     HttpMethod1.addLive(title,topicListBean.getTopicId(),teacher.getTeacherId(),time,postIsFree,cost,postIsTop,content,mHandler);
+                     HttpMethod1.addLive(title,topicListBean.getTopicId(),teacherId,time,postIsFree,cost,postIsTop,content,mHandler);
                  }else{
-                     HttpMethod1.updateLive(title,liveList.getPostId(),topicListBean.getTopicId(),teacher.getTeacherId(),time,postIsFree,cost,postIsTop,content,mHandler);
+                     HttpMethod1.updateLive(title,liveList.getPostId(),topicListBean.getTopicId(),teacherId,time,postIsFree,cost,postIsTop,content,mHandler);
                  }
                  break;
             case R.id.tv_cancel:

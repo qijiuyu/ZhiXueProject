@@ -81,6 +81,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private RelativeLayout relIssuer;
     private ImageView ivRightIssure;
     private long savedStartTime=0;
+    private long savedEndTime=0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -272,6 +273,12 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     showMsg("请输入结束时间");
                     return;
                 }
+
+                if (savedEndTime<savedStartTime){
+                    showMsg("结束时间一定要在开始时间之后哦!");
+                    return ;
+                }
+
                 if (list.size() > 1 && mIsMultiple == false) {
                     showMsg("您未开启多选，不能添加多个投票项");
                     return;
@@ -439,7 +446,8 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                         mStartTime = getTime(date);
                         tvStartTime.setText(mStartTime);
                     } else if (v == tvEndTime) {
-                        if (date.getTime()<savedStartTime){
+                        savedEndTime=date.getTime();
+                        if (savedEndTime<savedStartTime){
                             showMsg("结束时间不能在开始时间之前");
                             return;
                         }

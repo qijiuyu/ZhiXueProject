@@ -109,11 +109,11 @@ public class DateUtil {
     /**
      *  获取格式化后时间
      *
-     * @return 年月日时分秒
+     * @return 年月日
      */
     public static String getTimeHMS(long time){
         Date date=new Date(time);
-        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);
     }
 
