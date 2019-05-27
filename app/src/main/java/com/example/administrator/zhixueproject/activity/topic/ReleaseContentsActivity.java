@@ -465,6 +465,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 Log.i("ReleaseContentsUI", listData.toString());
                 break;
             case R.id.iv_voice:
+                closeSoftInput();
                 showRecordPopWindow();
                 break;
             case R.id.lin_back:
