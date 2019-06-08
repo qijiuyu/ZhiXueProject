@@ -34,6 +34,7 @@ import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
+import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
@@ -86,6 +87,8 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     private int type; // 1管理员，2老师
     private RelativeLayout relIssuer;
     private ImageView ivRightIssuer;
+    private long savedStartTime=0;
+    private long savedEndTime=0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -180,6 +183,10 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             mEndTime = mActivityListBean.getEndTime();
             topicId = mActivityListBean.getTopicId() + "";
             tvIssuer.setText(mActivityListBean.getUserName());
+            if (!TextUtils.isEmpty(mActivityListBean.getPostPicture())){
+                topicImg=mActivityListBean.getPostPicture();
+                Glide.with(mContext).load(mActivityListBean.getPostPicture()).error(R.mipmap.unify_image_ing).into(ivAddPicture);
+            }
         }
     }
 
@@ -207,6 +214,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tv_confirm:
                 //创建
+                LogUtils.d("activityWriterId  =》"+activityWriterId);
                 if (inputReal()) {
                     ReleaseContentsActivity.start(
                             view.getContext(),
@@ -330,6 +338,10 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             showMsg("请选择结束时间");
             return false;
         }
+        if (savedEndTime<savedStartTime){
+            showMsg("结束时间一定要在开始时间之后哦!");
+            return false;
+        }
 
         if (TextUtils.isEmpty(topicImg)) {
             showMsg("请上传活动图片");
@@ -415,13 +427,26 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         //时间选择器 ，自定义布局
         pvCustomTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             public void onTimeSelect(Date date, View v) {//选中事件回调
-                if (v == tvStartTime) {
-                    mStartTime = getTime(date);
-                    tvStartTime.setText(mStartTime);
-                } else if (v == tvEndTime) {
-                    mEndTime = getTime(date);
-                    tvEndTime.setText(mEndTime);
+
+                LogUtils.e("选择的时间为：-》" + date.getTime());
+                if (DateUtil.IsToday(date.getTime())) {
+                    if (v == tvStartTime) {
+                        savedStartTime=date.getTime();
+                        mStartTime = getTime(date);
+                        tvStartTime.setText(mStartTime);
+                    } else if (v == tvEndTime) {
+                        savedEndTime=date.getTime();
+                        if (savedEndTime<savedStartTime){
+                            showMsg("结束时间不能在开始时间之前");
+                            return;
+                        }
+                        mEndTime = getTime(date);
+                        tvEndTime.setText(mEndTime);
+                    }
+                } else {
+                    showMsg("不能选择已过期的时间！");
                 }
+
             }
         })
                 .setDate(selectedDate)

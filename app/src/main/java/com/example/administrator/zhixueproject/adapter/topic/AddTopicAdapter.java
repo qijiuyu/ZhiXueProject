@@ -2,6 +2,8 @@ package com.example.administrator.zhixueproject.adapter.topic;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.zhixueproject.R;
@@ -23,7 +25,8 @@ public class AddTopicAdapter extends BaseQuickAdapter<TopicListBean, BaseViewHol
 
     @Override
     protected void convert(BaseViewHolder helper, TopicListBean item) {
-        LogUtils.e("话题名字==="+item.getTopicName());
+        LogUtils.e("话题名字==="+item.getTopicName()+"上架是否——》 "+item.getTopicUseyn());
         helper.setText(R.id.tv_topic, item.getTopicName());
+
     }
 }

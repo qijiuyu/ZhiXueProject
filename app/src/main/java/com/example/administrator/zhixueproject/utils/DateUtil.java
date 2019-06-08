@@ -33,7 +33,7 @@ public class DateUtil {
         if (time <= 0) {
             return "";
         }
-        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(time);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time);
     }
 
 
@@ -103,6 +103,17 @@ public class DateUtil {
     public static String getTime(){
         Date date=new Date();
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return format.format(date);
+    }
+
+    /**
+     *  获取格式化后时间
+     *
+     * @return 年月日时分秒
+     */
+    public static String getTimeHMS(long time){
+        Date date=new Date(time);
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
     }
 

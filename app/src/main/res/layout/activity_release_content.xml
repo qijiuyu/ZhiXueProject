@@ -7,12 +7,23 @@
     android:orientation="vertical">
 
     <include layout="@layout/head" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/translete" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_release_content"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+         />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_content"
@@ -25,25 +36,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+
+                android:id="@+id/iv_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:background="@mipmap/voice_iv"
+                android:gravity="bottom"
+                android:padding="15dp" />
+
             <io.github.rockerhieu.emojicon.EmojiconEditText
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/tv_confirm"
+                android:layout_toRightOf="@+id/iv_voice"
                 android:gravity="top"
                 android:hint="请输入内容"
                 android:padding="15dp"
                 android:textColor="@color/color_666666"
                 android:textColorHint="@color/color_999999"
                 android:textSize="15sp"
-                emojicon:emojiconSize="28sp"
-                android:layout_toLeftOf="@+id/tv_confirm"/>
+                emojicon:emojiconSize="28sp" />
 
             <TextView
                 android:id="@+id/tv_confirm"
                 android:layout_width="60dp"
                 android:layout_height="35dp"
-                android:layout_marginRight="10dp"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
                 android:background="@color/color_48c6ef"
                 android:gravity="center"
                 android:text="确认"
@@ -72,14 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="31dp"
                 android:background="@mipmap/picture_iv"
-                android:padding="5dp"/>
-
-            <ImageView
-                android:id="@+id/iv_voice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="31dp"
-                android:background="@mipmap/voice_iv" />
+                android:padding="5dp" />
 
             <View
                 android:layout_width="0dp"

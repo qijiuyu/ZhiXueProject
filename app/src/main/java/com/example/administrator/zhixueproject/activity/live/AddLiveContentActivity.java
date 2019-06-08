@@ -259,6 +259,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                  HttpMethod1.liveEnd(String.valueOf(liveList.getPostId()),mHandler);
                 break;
             case R.id.iv_voice:
+                closeSoftInput();
                 showRecordPopWindow();
                 break;
             case R.id.lin_back:
