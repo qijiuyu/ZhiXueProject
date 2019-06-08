@@ -18,6 +18,7 @@ import android.widget.ListView;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.college.ReportDetailsActivity;
 import com.example.administrator.zhixueproject.activity.college.ReportManagerActivity;
+import com.example.administrator.zhixueproject.adapter.college.FloorReportAdapter;
 import com.example.administrator.zhixueproject.adapter.college.ReportListAdapter;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.Report;
@@ -41,7 +42,7 @@ public class FloorReportFragment extends BaseFragment implements MyRefreshLayout
     private MyRefreshLayout mRefreshLayout;
     private int page=1;
     private int limit=20;
-    private ReportListAdapter reportListAdapter;
+    private FloorReportAdapter floorReportAdapter;
     private List<Report.ReportList> listAll=new ArrayList<>();
     //fragment是否可见
     private boolean isVisibleToUser=false;
@@ -58,8 +59,8 @@ public class FloorReportFragment extends BaseFragment implements MyRefreshLayout
         listView=(ListView)view.findViewById(R.id.listView);
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
-        reportListAdapter=new ReportListAdapter(mActivity,listAll);
-        listView.setAdapter(reportListAdapter);
+        floorReportAdapter=new FloorReportAdapter(mActivity,listAll);
+        listView.setAdapter(floorReportAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Report.ReportList reportList=listAll.get(position);
@@ -129,7 +130,7 @@ public class FloorReportFragment extends BaseFragment implements MyRefreshLayout
         if(report.isStatus()){
             List<Report.ReportList> list=report.getData().getComplaintList();
             listAll.addAll(list);
-            reportListAdapter.notifyDataSetChanged();
+            floorReportAdapter.notifyDataSetChanged();
             if(list.size()<limit){
                 mRefreshLayout.setIsLoadingMoreEnabled(false);
             }
@@ -178,9 +179,9 @@ public class FloorReportFragment extends BaseFragment implements MyRefreshLayout
                     HttpMethod1.getReportList(2, ReportManagerActivity.key,page,limit,HandlerConstant1.GET_REPORT_LIST_SUCCESS3,mHandler);
                     break;
                 case ReportManagerActivity.ACTION_DUO_XUAN://多选
-                    if(null!=reportListAdapter){
-                        reportListAdapter.isSelect=true;
-                        reportListAdapter.notifyDataSetChanged();
+                    if(null!=floorReportAdapter){
+                        floorReportAdapter.isSelect=true;
+                        floorReportAdapter.notifyDataSetChanged();
                     }
                     break;
                 case ReportManagerActivity.ACTION_QUAN_BU_SHAN_CHU://全部删除
@@ -192,14 +193,14 @@ public class FloorReportFragment extends BaseFragment implements MyRefreshLayout
                     deleteReport(id);
                     break;
                 case ReportManagerActivity.ACTION_QUAN_XUAN://全选
-                    if(null!=reportListAdapter){
-                        reportListAdapter.isAllSelect=true;
-                        reportListAdapter.notifyDataSetChanged();
+                    if(null!=floorReportAdapter){
+                        floorReportAdapter.isAllSelect=true;
+                        floorReportAdapter.notifyDataSetChanged();
                     }
                     break;
                 case ReportManagerActivity.ACTION_SHAN_CHU://删除
                     StringBuffer stringBuffer=new StringBuffer();
-                    for (Map.Entry<String, String> entry : reportListAdapter.maps.entrySet()) {
+                    for (Map.Entry<String, String> entry : floorReportAdapter.maps.entrySet()) {
                         stringBuffer.append(entry.getValue()+",");
                     }
                     if(TextUtils.isEmpty(stringBuffer)){
@@ -210,11 +211,11 @@ public class FloorReportFragment extends BaseFragment implements MyRefreshLayout
                     deleteReport(ids);
                     break;
                 case ReportManagerActivity.ACTION_QU_XIAO://取消
-                    if(null!=reportListAdapter){
-                        reportListAdapter.maps.clear();
-                        reportListAdapter.isSelect=false;
-                        reportListAdapter.isAllSelect=false;
-                        reportListAdapter.notifyDataSetChanged();
+                    if(null!=floorReportAdapter){
+                        floorReportAdapter.maps.clear();
+                        floorReportAdapter.isSelect=false;
+                        floorReportAdapter.isAllSelect=false;
+                        floorReportAdapter.notifyDataSetChanged();
                     }
                     break;
             }

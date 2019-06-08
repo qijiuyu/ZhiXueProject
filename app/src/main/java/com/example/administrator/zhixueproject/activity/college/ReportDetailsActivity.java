@@ -213,6 +213,12 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
         }
 
         if(reportDetails.isStatus()){
+            if(complaintType==2 && null!=reportDetails.getData().getFloor()){
+                findViewById(R.id.lin_floor).setVisibility(View.VISIBLE);
+                TextView tvFloorName=(TextView)findViewById(R.id.tv_floor_name);
+                tvFloorName.setText(reportDetails.getData().getFloor().getFloorData());
+            }
+
             List<ReportDetails.listBean> list=reportDetails.getData().getComplaintList();
             listAll.addAll(list);
             reportDetailsAdapter.notifyDataSetChanged();
