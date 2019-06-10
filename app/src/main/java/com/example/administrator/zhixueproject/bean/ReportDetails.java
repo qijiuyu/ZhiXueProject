@@ -25,6 +25,8 @@ public class ReportDetails extends BaseBean {
 
         private List<listBean> complaintList=new ArrayList<>();
 
+        private FloorBean floor;
+
         public List<listBean> getComplaintList() {
             return complaintList;
         }
@@ -39,6 +41,14 @@ public class ReportDetails extends BaseBean {
 
         public void setPost(postBean post) {
             this.post = post;
+        }
+
+        public FloorBean getFloor() {
+            return floor;
+        }
+
+        public void setFloor(FloorBean floor) {
+            this.floor = floor;
         }
     }
 
@@ -101,4 +111,19 @@ public class ReportDetails extends BaseBean {
             this.complaintInfoType = complaintInfoType;
         }
     }
+
+
+
+    public static class FloorBean implements Serializable{
+        private String floorData;
+
+        public String getFloorData() {
+            return floorData;
+        }
+
+        public void setFloorData(String floorData) {
+            this.floorData = floorData;
+        }
+    }
+
 }

@@ -105,11 +105,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/lin_floor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="楼层回帖信息"
+                    android:textColor="@color/color_222222"
+                    android:textSize="13sp"
+                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:background="#E8E8E8"/>
+
+                <TextView
+                    android:id="@+id/tv_floor_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/color_222222"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="举报内容"
+                android:textColor="@color/color_222222"
+                android:textSize="13sp"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:background="#E8E8E8"/>
+
             <com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout
                 android:id="@+id/re_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="5dp">
 
                 <com.example.administrator.zhixueproject.view.CustomListView
                     android:id="@+id/listView"
