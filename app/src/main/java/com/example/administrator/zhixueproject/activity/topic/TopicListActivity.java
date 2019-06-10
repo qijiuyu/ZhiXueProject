@@ -1,6 +1,8 @@
 package com.example.administrator.zhixueproject.activity.topic;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -28,6 +30,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 
 /**
  * 帖子列表
@@ -253,10 +257,10 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
                         ReleasePostActivity.start(TopicListActivity.this, type, postTopicId);
                         break;
                     case R.id.menu2:// 活动
-                        ReleaseActionActivity.start(TopicListActivity.this, null);
+                        ReleaseActionActivity.start(TopicListActivity.this, postTopicId,postName);
                         break;
                     case R.id.menu3:// 投票
-                        ReleaseVoteActivity.start(TopicListActivity.this, null);
+                        ReleaseVoteActivity.start(TopicListActivity.this, postTopicId,postName);
                         break;
                 }
             }

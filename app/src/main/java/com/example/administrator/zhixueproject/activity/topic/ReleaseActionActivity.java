@@ -156,6 +156,9 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initData() {
+        topicId=getIntent().getIntExtra("topicId",0)+"";
+        tvTopic.setText(getIntent().getStringExtra("topicName"));
+
         mActivityListBean = (ActivityListBean) getIntent().getSerializableExtra("activityListBean");
         if (mActivityListBean != null) {
             mItemViewType = mActivityListBean.getActivityType();
@@ -197,6 +200,12 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         context.startActivity(starter);
     }
 
+    public static void start(Context context,int topicId,String topicName) {
+        Intent starter = new Intent(context, ReleaseActionActivity.class);
+        starter.putExtra("topicId", topicId);
+        starter.putExtra("topicName", topicName);
+        context.startActivity(starter);
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

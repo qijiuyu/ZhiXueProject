@@ -146,6 +146,9 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initData() {
+        topicId=getIntent().getIntExtra("topicId",0)+"";
+        tvTopic.setText(getIntent().getStringExtra("topicName"));
+
         mVoteListBean = (VoteListBean) getIntent().getSerializableExtra("voteListBean");
         if (mVoteListBean != null) {
             String mItemViewType = TextUtils.isEmpty(mVoteListBean.getVoteType()) ? "" : mVoteListBean.getVoteType();
@@ -186,6 +189,13 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     public static void start(Context context, VoteListBean voteListBean) {
         Intent starter = new Intent(context, ReleaseVoteActivity.class);
         starter.putExtra("voteListBean", voteListBean);
+        context.startActivity(starter);
+    }
+
+    public static void start(Context context,int topicId,String topicName) {
+        Intent starter = new Intent(context, ReleaseVoteActivity.class);
+        starter.putExtra("topicId", topicId);
+        starter.putExtra("topicName", topicName);
         context.startActivity(starter);
     }
 
