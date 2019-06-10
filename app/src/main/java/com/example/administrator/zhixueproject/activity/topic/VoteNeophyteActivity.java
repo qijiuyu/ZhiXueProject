@@ -47,6 +47,8 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
     private MyRefreshLayout mrlVoteNeophyte;
     private RecyclerView rvVoteNeophyte;
     public static int position;// 被删除的投票者position
+    private TextView tvRight;
+    private int memberCount=0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +63,9 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.vote_neophyte));
         findViewById(R.id.lin_back).setOnClickListener(this);
+        tvRight = (TextView) findViewById(R.id.tv_right);
+        setMemberCount();
+        findViewById(R.id.img_right).setVisibility(View.GONE);
 
         mrlVoteNeophyte = (MyRefreshLayout) findViewById(R.id.mrl_vote_neophyte);
         rvVoteNeophyte = (RecyclerView) findViewById(R.id.rv_vote_neophyte);
@@ -68,6 +73,10 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
         mrlVoteNeophyte.setMyRefreshLayoutListener(this);//刷新加载
         getVoteUserList(HandlerConstant2.GET_VOTE_USER_LIST_SUCCESS);
 
+    }
+
+    private void setMemberCount() {
+        tvRight.setText("参与人数: "+memberCount);
     }
 
     private void getVoteUserList(int index) {
@@ -130,6 +139,8 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
             showMsg("删除成功");
             listData.remove(position);
             if (mAdapter!=null){
+                memberCount=listData.size();
+                setMemberCount();
                 mAdapter.notifyDataSetChanged();
             }
         }
@@ -188,6 +199,8 @@ public class VoteNeophyteActivity extends BaseActivity implements View.OnClickLi
      * 设置adapter 数据
      */
     private void adapterView() {
+        memberCount=listData.size();
+        setMemberCount();
         mAdapter = new VoteNeophyteAdapter(R.layout.vote_neophyte_item, listData);
         rvVoteNeophyte.setAdapter(mAdapter);
         mAdapter.setEmptyView(R.layout.empty_view, (ViewGroup) rvVoteNeophyte.getParent());
