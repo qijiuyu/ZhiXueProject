@@ -250,11 +250,12 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.tv_add_vote:
                 // 不是多选才能添加
-                if (list.size() >= 1 && mIsMultiple == false) {
+               /* if (list.size() >= 1 && mIsMultiple == false) {
                     showMsg("您未开启多选，不能添加多个投票项");
                 } else {
-                    showAddVotePop();
-                }
+
+                }*/
+                showAddVotePop();
                 break;
             case R.id.tv_confirm:
                 String voteName = etTitle.getText().toString().trim();
@@ -289,10 +290,10 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     return ;
                 }
 
-                if (list.size() > 1 && mIsMultiple == false) {
+                /*if (list.size() > 1 && mIsMultiple == false) {
                     showMsg("您未开启多选，不能添加多个投票项");
                     return;
-                }
+                }*/
                 // 跳转到发布内容页
                 ReleaseContentsActivity.start(this, topicId, voteName, String.valueOf(topicType), mIsTop, String.valueOf(activityWriterId)
                         , mStartTime, mEndTime, MyApplication.gson.toJson(list), mIsMultiple);
