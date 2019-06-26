@@ -46,7 +46,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
     private List<TextView> tvList=new ArrayList<>();
     private int[] notClick=new int[]{R.mipmap.tab_1_false,R.mipmap.tab_2_false,R.mipmap.tab_3_false,R.mipmap.tab_4_false,R.mipmap.tab_5_false};
     private int[] yesClick=new int[]{R.mipmap.tab_1_true,R.mipmap.tab_2_true,R.mipmap.tab_3_true,R.mipmap.tab_4_true,R.mipmap.tab_5_true};
-    private ImageView imgRed,imgRed2;
+    private ImageView imgRed;
     public static final String ACTION_SHOW_NEW_NEWS="com.zhixue.project.action.show.new.news";
     public static final String ACTION_CLEAR_NEW_NEWS="com.zhixue.project.action.clear.new.news";
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         //注册广播
         registerBoradcastReceiver();
         //设置推送
-//        setPush();
+        setPush();
     }
 
 
@@ -73,7 +73,6 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         imgRen=(ImageView)findViewById(R.id.img_tab_ren);
         tvRen=(TextView)findViewById(R.id.tv_tab_ren);
         imgRed=(ImageView)findViewById(R.id.img_red);
-        imgRed2=(ImageView)findViewById(R.id.img_red2);
         imgList.add(imgCollege);imgList.add(imgTopic);imgList.add(imgZhibo);imgList.add(imgHuati);imgList.add(imgRen);
         tvList.add(tvCollege);tvList.add(tvTopic);tvList.add(tvZhibo);tvList.add(tvHuati);tvList.add(tvRen);
         findViewById(R.id.lin_tab_college).setOnClickListener(this);
@@ -144,8 +143,8 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
      */
     private void registerBoradcastReceiver(){
         IntentFilter myIntentFilter = new IntentFilter();
-//        myIntentFilter.addAction(ACTION_SHOW_NEW_NEWS);
-//        myIntentFilter.addAction(ACTION_CLEAR_NEW_NEWS);
+        myIntentFilter.addAction(ACTION_SHOW_NEW_NEWS);
+        myIntentFilter.addAction(ACTION_CLEAR_NEW_NEWS);
         myIntentFilter.addAction(LeftFragment.GET_COLLEGE_DETAILS);
         registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
@@ -158,21 +157,16 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
                 updateImg(0);
                 tabHost.setCurrentTabByTag("学院");
             }
-//            switch (intent.getAction()){
-//                case ACTION_SHOW_NEW_NEWS:
-//                    if(MyApplication.homeBean.getAttendType()==1){
-//                        imgRed.setVisibility(View.VISIBLE);
-//                    }else{
-//                        imgRed2.setVisibility(View.VISIBLE);
-//                    }
-//                     break;
-//                case ACTION_CLEAR_NEW_NEWS:
-//                    imgRed.setVisibility(View.GONE);
-//                    imgRed2.setVisibility(View.GONE);
-//                    break;
-//                default:
-//                    break;
-//            }
+            switch (intent.getAction()){
+                case ACTION_SHOW_NEW_NEWS:
+                     imgRed.setVisibility(View.VISIBLE);
+                     break;
+                case ACTION_CLEAR_NEW_NEWS:
+                     imgRed.setVisibility(View.GONE);
+                     break;
+                default:
+                    break;
+            }
         }
     };
 
@@ -212,7 +206,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
                     logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
                     new Handler().postDelayed(new Runnable() {
                         public void run() {
-                            Set<String> tags = new HashSet<String>();
+                            Set<String> tags = new HashSet<>();
                             tags.add(MyApplication.userInfo.getData().getUser().getUserId()+"");
                             JPushInterface.setAliasAndTags(getApplicationContext(), MyApplication.userInfo.getData().getUser().getUserId()+"", tags, mAliasCallback);
                         }
