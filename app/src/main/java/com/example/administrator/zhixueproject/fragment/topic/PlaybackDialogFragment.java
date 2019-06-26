@@ -2,6 +2,7 @@ package com.example.administrator.zhixueproject.fragment.topic;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.media.AudioManager;
@@ -17,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.bean.topic.ReleaseContentsBean;
@@ -154,6 +156,13 @@ public class PlaybackDialogFragment extends DialogFragment {
             }
         });
 
+        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+
 //        mFileNameTextView.setText(item.getName());
         mFileLengthTextView.setText(String.format("%02d:%02d", minutes, seconds));
 
@@ -178,6 +187,7 @@ public class PlaybackDialogFragment extends DialogFragment {
         alertDialog.getButton(Dialog.BUTTON_POSITIVE).setEnabled(false);
         alertDialog.getButton(Dialog.BUTTON_NEGATIVE).setEnabled(false);
         alertDialog.getButton(Dialog.BUTTON_NEUTRAL).setEnabled(false);
+        alertDialog.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -245,6 +255,7 @@ public class PlaybackDialogFragment extends DialogFragment {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 stopPlaying();
+                dismiss();
             }
         });
 

@@ -7,7 +7,6 @@
     android:orientation="vertical">
 
     <include layout="@layout/head"/>
-    android:layout_height="match_parent"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -264,7 +263,10 @@
                     android:id="@+id/tv_confirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="40dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="60dp"
                     android:background="@mipmap/bg_botton"
                     android:gravity="center"
                     android:text="下一步"

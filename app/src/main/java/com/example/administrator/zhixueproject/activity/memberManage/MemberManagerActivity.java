@@ -127,6 +127,8 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
+        PAGE = 1;
+        getVipList(HandlerConstant2.GET_VIP_LIST_SUCCESS1);
         mMemberManagerAdapter.notifyDataSetChanged();
     }
 
