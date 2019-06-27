@@ -248,6 +248,7 @@ public class PlaybackDialogFragment extends DialogFragment {
                 }
             });
         } catch (IOException e) {
+
             Log.e(LOG_TAG, "prepare() failed  exception is: " + e.toString());
         }
 
