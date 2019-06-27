@@ -39,9 +39,9 @@ public class MyReceiver extends BroadcastReceiver {
 				//send the Registration Id to your server...
 
 			} else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-//				if(bundle.getString(JPushInterface.EXTRA_MESSAGE).equals("news")){
-//					context.sendBroadcast(new Intent(TabActivity.ACTION_SHOW_NEW_NEWS));
-//				}
+				if(bundle.getString(JPushInterface.EXTRA_MESSAGE).equals("news")){
+					context.sendBroadcast(new Intent(TabActivity.ACTION_SHOW_NEW_NEWS));
+				}
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
 
