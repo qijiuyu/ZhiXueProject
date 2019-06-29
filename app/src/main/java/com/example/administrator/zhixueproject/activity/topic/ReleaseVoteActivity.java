@@ -39,6 +39,8 @@ import com.example.administrator.zhixueproject.view.time.TimePickerView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -183,6 +185,21 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
             tvIssuer.setText(mVoteListBean.getPostWriterName());
             tvTopic.setText(mVoteListBean.getTopicName());// 话题名称
             activityWriterId = mVoteListBean.getPostWriterId();
+            String voteSecNames=mVoteListBean.getVoteSecNames();
+            if (TextUtils.isEmpty(voteSecNames))return;
+            try {
+                JSONArray jsonArray = new JSONArray(voteSecNames);
+                if (jsonArray.length()==0) return;
+                for (int i=0;i<jsonArray.length();i++){
+                    AddVoteBean bean = new AddVoteBean();
+                    bean.setContent((String) jsonArray.get(i));
+                    list.add(bean);
+                    mAdapter.setList(list);
+                    mAdapter.notifyDataSetChanged();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 

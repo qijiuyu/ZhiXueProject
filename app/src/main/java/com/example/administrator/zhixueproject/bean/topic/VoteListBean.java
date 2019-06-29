@@ -29,6 +29,7 @@ public class VoteListBean implements Serializable {
     private String voteType;//投票类型
     private String postWriterName;
     private int postWriterId;
+    private String voteSecNames;
 
 
 
@@ -129,5 +130,13 @@ public class VoteListBean implements Serializable {
 
     public void setPostWriterId(int postWriterId) {
         this.postWriterId = postWriterId;
+    }
+
+    public String getVoteSecNames() {
+        return voteSecNames;
+    }
+
+    public void setVoteSecNames(String voteSecNames) {
+        this.voteSecNames = voteSecNames;
     }
 }
