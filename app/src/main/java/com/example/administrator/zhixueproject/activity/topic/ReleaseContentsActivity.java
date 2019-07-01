@@ -393,7 +393,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
      * @param isMultipleChoice
      */
     public static void start(Context context, String topicId, String voteName, String topicType, String voteIsTop, String voteWriterId,
-                             String startTime, String endTime, String voteSecNames, boolean isMultipleChoice) {
+                             String startTime, String endTime, String voteSecNames, boolean isMultipleChoice,String postContentApp) {
         Intent starter = new Intent(context, ReleaseContentsActivity.class);
         starter.putExtra("topicId", topicId);
         starter.putExtra("voteName", voteName);
@@ -404,6 +404,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         starter.putExtra("endTime", endTime);
         starter.putExtra("voteSecNames", voteSecNames);
         starter.putExtra("isMultipleChoice", String.valueOf(isMultipleChoice));
+        starter.putExtra("postContentApp", postContentApp);
         context.startActivity(starter);
     }
 

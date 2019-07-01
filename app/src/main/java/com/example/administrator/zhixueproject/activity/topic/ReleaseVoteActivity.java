@@ -41,6 +41,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,6 +85,8 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private ImageView ivRightIssure;
     private long savedStartTime=0;
     private long savedEndTime=0;
+    private TextView tvTitle;
+    private String postContentApp="";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,7 +99,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private void initView() {
         EventBus.getDefault().register(this);
         StatusBarUtils.transparencyBar(this);
-        TextView tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
         findViewById(R.id.lin_back).setOnClickListener(this);
         tvTitle.setText(getString(R.string.release_vote));
         llReleaseVote = (LinearLayout) findViewById(R.id.ll_release_vote);
@@ -153,6 +156,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
 
         mVoteListBean = (VoteListBean) getIntent().getSerializableExtra("voteListBean");
         if (mVoteListBean != null) {
+            tvTitle.setText(getString(R.string.release_vote));
             String mItemViewType = TextUtils.isEmpty(mVoteListBean.getVoteType()) ? "" : mVoteListBean.getVoteType();
             if (TextUtils.isEmpty(mVoteListBean.getVoteType())) {
                 // 默认为课程类型
@@ -185,6 +189,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
             tvIssuer.setText(mVoteListBean.getPostWriterName());
             tvTopic.setText(mVoteListBean.getTopicName());// 话题名称
             activityWriterId = mVoteListBean.getPostWriterId();
+            postContentApp=mVoteListBean.getPostContentApp();
             String voteSecNames=mVoteListBean.getVoteSecNames();
             if (TextUtils.isEmpty(voteSecNames))return;
             try {
@@ -192,7 +197,8 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                 if (jsonArray.length()==0) return;
                 for (int i=0;i<jsonArray.length();i++){
                     AddVoteBean bean = new AddVoteBean();
-                    bean.setContent((String) jsonArray.get(i));
+                    JSONObject innerObject=jsonArray.getJSONObject(i);
+                    bean.setContent(innerObject.getString("content"));
                     list.add(bean);
                     mAdapter.setList(list);
                     mAdapter.notifyDataSetChanged();
@@ -307,13 +313,9 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     return ;
                 }
 
-                /*if (list.size() > 1 && mIsMultiple == false) {
-                    showMsg("您未开启多选，不能添加多个投票项");
-                    return;
-                }*/
                 // 跳转到发布内容页
                 ReleaseContentsActivity.start(this, topicId, voteName, String.valueOf(topicType), mIsTop, String.valueOf(activityWriterId)
-                        , mStartTime, mEndTime, MyApplication.gson.toJson(list), mIsMultiple);
+                        , mStartTime, mEndTime, MyApplication.gson.toJson(list), mIsMultiple,postContentApp);
                 break;
             case R.id.rl_vote_type:
                 showVoteTypePop();
