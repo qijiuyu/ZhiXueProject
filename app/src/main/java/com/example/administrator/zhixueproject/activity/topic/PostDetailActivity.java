@@ -96,6 +96,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private String postContentString;
     private int mPosition; //用于标记是帖子还是作业fragment
     private String topicWriteName;// 帖子发布人
+    private String postContentApp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -332,7 +333,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                         postListBean.getPostName(),
                         String.valueOf(postListBean.getPostIsFree()),
                         price,
-                        String.valueOf(postListBean.getPostIsTop()), postType);
+                        String.valueOf(postListBean.getPostIsTop()), postType,postContentApp);
+                LogUtils.e("postDetailActivity getPostContentApp  -> "+ postContentApp);
                 break;
             case R.id.img_topic_arrow:
                 // 点击收起
@@ -437,6 +439,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         }
         //帖子内容
         showDetail(data.getPostContent().getPostContentApp());
+        postContentApp=data.getPostContent().getPostContentApp();
     }
 
 

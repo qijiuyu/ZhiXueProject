@@ -63,6 +63,7 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
     private LinearLayout llReleasePost;
     private int  type; // 1管理员，2老师
     private RelativeLayout relIssuer;
+    private String postContentApp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +83,8 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         postIsFree = TextUtils.isEmpty(getIntent().getStringExtra("postIsFree"))?"1":getIntent().getStringExtra("postIsFree");
         postPrice = getIntent().getStringExtra("postPrice");
         postIsTop = getIntent().getStringExtra("postIsTop");
+        postContentApp=getIntent().getStringExtra("postContentApp");
+        LogUtils.e("ReleasePostActivity  postContentApp---> "+postContentApp );
         etTitle = (EditText) findViewById(R.id.et_title);
         tvCost = (TextView) findViewById(R.id.tv_cost);
         tvCost.setText("免费");
@@ -168,7 +171,7 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
             Context context,
             String postId, String postName,
             String postIsFree, String postPrice,
-            String postIsTop, String postType) {
+            String postIsTop, String postType,String postContentApp) {
         Intent starter = new Intent(context, ReleasePostActivity.class);
         starter.putExtra("postType", Integer.parseInt(postType));
         starter.putExtra("postId", postId);
@@ -176,6 +179,7 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         starter.putExtra("postIsFree", postIsFree);
         starter.putExtra("postPrice", postPrice);
         starter.putExtra("postIsTop", postIsTop);
+        starter.putExtra("postContentApp", postContentApp);
         context.startActivity(starter);
     }
 
@@ -242,7 +246,7 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
             ReleaseContentsActivity.start(this, String.valueOf(postType), postName, String.valueOf(postTopicId), String.valueOf(postWriterId), postIsFree, postPrice, postIsTop);
         } else {
             LogUtils.e("更新帖子");
-            ReleaseContentsActivity.start(this, postId, postName, String.valueOf(postTopicId), postIsFree, postPrice, postIsTop);
+            ReleaseContentsActivity.startT(this, postId, postName, String.valueOf(postTopicId), postIsFree, postPrice, postIsTop,postContentApp);
         }
     }
 
