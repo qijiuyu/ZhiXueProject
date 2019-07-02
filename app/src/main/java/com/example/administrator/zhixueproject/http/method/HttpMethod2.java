@@ -529,7 +529,7 @@ public class HttpMethod2 extends BaseRequst {
      * @param handler
      */
     public static void addVote(String topicId, String voteName, String topicType, String voteIsTop, String voteWriterId,
-                               String startTime, String endTime, String voteSecNames, boolean isMultipleChoice,String content, final Handler handler) {
+                               String startTime, String endTime, String voteSecNames, boolean isMultipleChoice,String content,String postId, final Handler handler) {
 
         Map<String, String> map = new HashMap<>();
         map.put("topicId", topicId);
@@ -542,6 +542,7 @@ public class HttpMethod2 extends BaseRequst {
         map.put("voteSecNames", voteSecNames);
         map.put("isMultipleChoice", String.valueOf(isMultipleChoice));
         map.put("content", content);
+        map.put("postId", postId);
         Http.getRetrofit().create(HttpApi2.class).addVote(map).enqueue(new Callback<UploadFile>() {
             @Override
             public void onResponse(Call<UploadFile> call, Response<UploadFile> response) {

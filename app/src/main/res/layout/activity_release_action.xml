@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        app:sb_checked="true"
+                        app:sb_checked="false"
                         app:sb_checked_color="@color/color_fd703e"
                         app:sb_show_indicator="false"/>
 

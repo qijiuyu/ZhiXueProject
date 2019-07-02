@@ -38,6 +38,7 @@ public class VoteListBean implements Serializable {
 
 
 
+
     public String getVoteImg() {
         return voteImg;
     }

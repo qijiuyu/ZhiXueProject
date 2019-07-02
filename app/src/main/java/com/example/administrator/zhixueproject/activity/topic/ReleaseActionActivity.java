@@ -65,7 +65,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     public String mItemViewType;
     public String mStartTime;
     public String mEndTime;
-    public String mIsTop;
+    public String mIsTop="0";
     private AddTopicFragment mAddTopicFragment;
     private String topicId;
     private String topicImg;
@@ -146,9 +146,9 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
                 if (isChecked)
-                    mIsTop = "是";
+                    mIsTop = "0";
                 else
-                    mIsTop = "否";
+                    mIsTop = "1";
             }
         });
 
@@ -224,6 +224,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             case R.id.tv_confirm:
                 //创建
                 LogUtils.d("activityWriterId  =》"+activityWriterId);
+                LogUtils.e("mIsTop-> "+mIsTop);
                 if (inputReal()) {
                     ReleaseContentsActivity.start(
                             view.getContext(),
@@ -234,7 +235,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                             topicImg,
                             mStartTime,
                             mEndTime,
-                            "是".equals(mIsTop) ? "0" : "1",
+                            mIsTop,
                             String.valueOf(mActivityId)
 
                     );
