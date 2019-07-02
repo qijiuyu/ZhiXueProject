@@ -188,8 +188,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                      }
                      if(home.isStatus()){
                         MyApplication.homeBean=home.getData().getCollege();
-                        MyApplication.homeBean.setAttendType(home.getData().getType());
-                        MyApplication.spUtil.addString(SPUtil.HOME_INFO,MyApplication.gson.toJson(MyApplication.homeBean));
+                        if(null==MyApplication.homeBean){
+                            Home.HomeBean homeBean=new Home.HomeBean();
+                            MyApplication.homeBean=homeBean;
+                        }
+                         MyApplication.homeBean.setAttendType(home.getData().getType());
+                         MyApplication.spUtil.addString(SPUtil.HOME_INFO,MyApplication.gson.toJson(MyApplication.homeBean));
                         setClass(TabActivity.class);
                         finish();
                      }else{
