@@ -25,6 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
@@ -48,11 +49,16 @@ import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.utils.record.RecordUtil;
 import com.example.administrator.zhixueproject.utils.record.VoiceManager;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import io.github.rockerhieu.emojicon.EmojiconEditText;
 import io.github.rockerhieu.emojicon.EmojiconGridFragment;
 import io.github.rockerhieu.emojicon.EmojiconsFragment;
@@ -104,8 +110,10 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
     private String voteWriterId;
     private String voteSecNames;
     private Boolean isMultipleChoice;
+    private String postContentApp;
     //是否在录音
-    private boolean isRecord=false;
+    private boolean isRecord = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +140,8 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         endTime = getIntent().getStringExtra("endTime");
         activityId = getIntent().getStringExtra("activityId");
         postId = getIntent().getStringExtra("postId");
+        postContentApp = getIntent().getStringExtra("postContentApp");
+        LogUtils.e("ReleaseContentActivity postContentApp=>"+postContentApp);
 
         // 添加投票
         topicID = getIntent().getStringExtra("topicId");
@@ -140,7 +150,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         voteIsTop = getIntent().getStringExtra("voteIsTop");
         voteWriterId = getIntent().getStringExtra("voteWriterId");
         voteSecNames = getIntent().getStringExtra("voteSecNames");
-        isMultipleChoice = getIntent().getBooleanExtra("isMultipleChoice",false);
+        isMultipleChoice = getIntent().getBooleanExtra("isMultipleChoice", false);
 
 
         llContent = (LinearLayout) findViewById(R.id.ll_content);
@@ -157,6 +167,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         rvReleaseContent = (RecyclerView) findViewById(R.id.rv_release_content);
         rvReleaseContent.setAdapter(mAdapter);
         rvReleaseContent.setLayoutManager(linearLayoutManager);
+        parseJsonStr();
         institutionListener();
 
         etContent = (EmojiconEditText) findViewById(R.id.et_content);
@@ -168,6 +179,37 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         });
         flEmoji = (FrameLayout) findViewById(R.id.emojicons);
         setEmojiconFragment(false);
+
+    }
+
+    private void parseJsonStr() {
+        LogUtils.e("帖子内容=== 》"+postContentApp);
+        if (!TextUtils.isEmpty(postContentApp)) {
+            try {
+                JSONArray jsonArray = new JSONArray(postContentApp);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    final JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    if (jsonObject.getInt("type") == 0){
+                        String text=jsonObject.getString("content");
+                        addList(text,ReleaseContentsBean.TEXT,null,0,true);
+                    }
+                    // 图片
+                    if (jsonObject.getInt("type") == 1) {
+                        String imgUrl="http://"+jsonObject.getString("content");
+                        addList(imgUrl,ReleaseContentsBean.IMG,null,0,true);
+                    }
+                    //音频
+                    if (jsonObject.getInt("type") == 2) {
+                        String path=jsonObject.getString("content");
+                        int timeLength=jsonObject.getInt("timeLength");
+                        String strLength=jsonObject.getString("strLength");
+                        addList(path,ReleaseContentsBean.RECORD,strLength,timeLength,true);
+                    }
+                }
+            } catch (Exception e) {
+
+            }
+        }
     }
 
     private void setEmojiconFragment(boolean useSystemDefault) {
@@ -226,6 +268,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
      */
     public static void start(Context context, String postId, String postName, String postTopicId,
                              String postIsFree, String postPrice, String postIsTop) {
+
         Intent starter = new Intent(context, ReleaseContentsActivity.class);
         starter.putExtra("postId", postId);
         starter.putExtra("postName", postName);
@@ -235,6 +278,33 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         starter.putExtra("postIsTop", postIsTop);
         context.startActivity(starter);
     }
+
+    /**
+     * 修改帖子
+     *
+     * @param context
+     * @param postId
+     * @param postName
+     * @param postTopicId
+     * @param postIsFree
+     * @param postPrice
+     * @param postIsTop
+     * @param postContentApp
+     */
+    public static void startT(Context context, String postId, String postName, String postTopicId,
+                              String postIsFree, String postPrice, String postIsTop, String postContentApp) {
+
+        Intent starter = new Intent(context, ReleaseContentsActivity.class);
+        starter.putExtra("postId", postId);
+        starter.putExtra("postName", postName);
+        starter.putExtra("postTopicId", postTopicId);
+        starter.putExtra("postIsFree", postIsFree);
+        starter.putExtra("postPrice", postPrice);
+        starter.putExtra("postIsTop", postIsTop);
+        starter.putExtra("postContentApp", postContentApp);
+        context.startActivity(starter);
+    }
+
 
     /**
      * 发布活动的
@@ -310,6 +380,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
 
     /**
      * 发布投票
+     *
      * @param context
      * @param topicId
      * @param voteName
@@ -321,8 +392,8 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
      * @param voteSecNames
      * @param isMultipleChoice
      */
-    public static void start(Context context,String topicId, String voteName, String topicType, String voteIsTop, String voteWriterId,
-                             String startTime, String endTime, String voteSecNames, boolean isMultipleChoice) {
+    public static void start(Context context, String topicId, String voteName, String topicType, String voteIsTop, String voteWriterId,
+                             String startTime, String endTime, String voteSecNames, boolean isMultipleChoice,String postContentApp) {
         Intent starter = new Intent(context, ReleaseContentsActivity.class);
         starter.putExtra("topicId", topicId);
         starter.putExtra("voteName", voteName);
@@ -333,6 +404,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         starter.putExtra("endTime", endTime);
         starter.putExtra("voteSecNames", voteSecNames);
         starter.putExtra("isMultipleChoice", String.valueOf(isMultipleChoice));
+        starter.putExtra("postContentApp", postContentApp);
         context.startActivity(starter);
     }
 
@@ -363,6 +435,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         listData.remove(position);
                         break;
                     case R.id.iv_record_play:
+                        LogUtils.e("点击播放按钮  地址是---》"+listData.get(position).getContent());
                         PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(listData.get(position));
                         fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
                         break;
@@ -404,7 +477,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                             list.add(mFileCamera);
                             showProgress("图片上传中");
                             //本地显示
-                            addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength);
+                            addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength,false);
                             //上传图片
                             HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
                         } catch (Exception e) {
@@ -432,7 +505,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
             case R.id.tv_confirm:
                 fileType = ReleaseContentsBean.TEXT;
                 if (!TextUtils.isEmpty(etContent.getText().toString().trim())) {
-                    addList(etContent.getText().toString().trim(), fileType, null, 0);
+                    addList(etContent.getText().toString().trim(), fileType, null, 0,false);
                     listData.add(new ReleaseContentsBean(etContent.getText().toString().trim(), fileType, voiceStrLength, voiceLength));
                     etContent.setText("");
                 }
@@ -446,12 +519,12 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                     // 修改活动
                     HttpMethod2.updateActivity(postTopicId, activityId, topicImg, postName, postType, postIsTop, postWriterId
                             , startTime, endTime, MyApplication.gson.toJson(listData), mHandler);
-                }else if (!TextUtils.isEmpty(voteName)){
+                } else if (!TextUtils.isEmpty(voteName)) {
                     // 添加投票
-                      HttpMethod2.addVote(topicID, voteName, topicType, voteIsTop, voteWriterId
-                        , startTime, endTime, voteSecNames, isMultipleChoice, MyApplication.gson.toJson(listData), mHandler);
+                    HttpMethod2.addVote(topicID, voteName, topicType, voteIsTop, voteWriterId
+                            , startTime, endTime, voteSecNames, isMultipleChoice, MyApplication.gson.toJson(listData), mHandler);
 
-                }else {
+                } else {
                     // 发布贴子
                     if (TextUtils.isEmpty(postId)) {
                         HttpMethod2.addPost(postType, postName, postTopicId, postWriterId, postIsFree, postPrice, postIsTop,
@@ -477,29 +550,30 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
     }
 
     private void shouEmoji() {
-        startAnim(flEmoji,2);
+        startAnim(flEmoji, 2);
         flEmoji.setVisibility(View.VISIBLE);
         // 隐藏发布按钮
         llRelease.setVisibility(View.GONE);
     }
 
     private void hideEmoji() {
-        startAnim(flEmoji,1);
+        startAnim(flEmoji, 1);
         flEmoji.setVisibility(View.GONE);
         llRelease.setVisibility(View.VISIBLE);
     }
 
     /**
      * emoji动画
+     *
      * @param flEmoji
      * @param index
      */
     private void startAnim(FrameLayout flEmoji, int index) {
-        Animation animationIn= AnimationUtils.loadAnimation(this,R.anim.emoji_enter);
-        Animation animationOut= AnimationUtils.loadAnimation(this,R.anim.emoji_exit);
-        if (index==1){
+        Animation animationIn = AnimationUtils.loadAnimation(this, R.anim.emoji_enter);
+        Animation animationOut = AnimationUtils.loadAnimation(this, R.anim.emoji_exit);
+        if (index == 1) {
             flEmoji.startAnimation(animationOut);
-        }else {
+        } else {
             flEmoji.startAnimation(animationIn);
         }
     }
@@ -550,20 +624,20 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 switch (v.getId()) {
                     case R.id.tv_record_delete:
                         if (voiceManager != null) {
-                            isRecord=false;
+                            isRecord = false;
                             voiceManager.cancelVoiceRecord();
                         }
                         recordPopWindow.dissmiss();
                         break;
                     case R.id.tv_record_start:
-                         if(!isRecord){
-                             isRecord=true;
-                             startRecord();
-                         }
+                        if (!isRecord) {
+                            isRecord = true;
+                            startRecord();
+                        }
                         break;
                     case R.id.tv_record_conform:
                         if (voiceManager != null) {
-                            isRecord=false;
+                            isRecord = false;
                             voiceManager.stopVoiceRecord();
                         }
                         recordPopWindow.dissmiss();
@@ -606,7 +680,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 voiceStrLength = strLength;
                 voiceLength = length;
                 //本地显示
-                addList(path, fileType, strLength, length);
+                addList(path, fileType, strLength, length,false);
             }
         });
         voiceManager.startVoiceRecord(RecordUtil.getAudioPath());
@@ -619,9 +693,12 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
      * @param content 数据内容
      * @param type    数据类型 0：文字；1：图片；2：录音
      */
-    private void addList(String content, int type, String strLength, long length) {
+    private void addList(String content, int type, String strLength, long length,boolean add) {
         ReleaseContentsBean data = new ReleaseContentsBean(content, type, strLength, length);
         mAdapter.addData(data);
+        if (add){
+            listData.add(data);
+        }
         mAdapter.notifyDataSetChanged();
         rvReleaseContent.scrollToPosition(mAdapter.getItemCount() - 1);
     }
@@ -776,6 +853,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
     private void postActivityEvent() {
         EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.RELEASE_ACTIVITY_SUCCESS));
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

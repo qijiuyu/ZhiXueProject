@@ -256,7 +256,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                         postListBean.getPostName(),
                         String.valueOf(postListBean.getPostIsFree()),
                         postListBean.getPostReward(),
-                        String.valueOf(postListBean.getPostIsTop()), postType);
+                        String.valueOf(postListBean.getPostIsTop()), postType,postListBean.getPostContentApp());
                 break;
             case R.id.img_topic_arrow:
                 // 收起箭头
