@@ -33,7 +33,8 @@ public class ReleaseContentsAdapter extends BaseMultiItemQuickAdapter<ReleaseCon
             case ReleaseContentsBean.IMG:
                 helper.addOnClickListener(R.id.iv_delete);
                 LogUtils.e("url=  "+item.getContent());
-                Glide.with(mContext).load(item.getContent()).diskCacheStrategy(DiskCacheStrategy.ALL).into((ImageView) helper.getView(R.id.iv_img));
+                String url=item.getContent();
+                Glide.with(mContext).load(url).diskCacheStrategy(DiskCacheStrategy.ALL).into((ImageView) helper.getView(R.id.iv_img));
                 break;
             case ReleaseContentsBean.TEXT:
                 helper.setText(R.id.et_text, item.getContent());
