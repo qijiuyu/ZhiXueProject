@@ -235,7 +235,11 @@ public class PlaybackDialogFragment extends DialogFragment {
             if(file.isFile()){
                 mMediaPlayer.setDataSource(item.getContent());
             }else{
-                mMediaPlayer.setDataSource("http://" + item.getContent());
+                if (item.getContent().contains("http://")){
+                    mMediaPlayer.setDataSource(item.getContent());
+                }else {
+                    mMediaPlayer.setDataSource("http://" + item.getContent());
+                }
             }
             mMediaPlayer.prepare();
             mSeekBar.setMax(mMediaPlayer.getDuration());
@@ -274,7 +278,12 @@ public class PlaybackDialogFragment extends DialogFragment {
 
         try {
             // mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mMediaPlayer.setDataSource("http://" + item.getContent());
+            if (item.getContent().contains("http://")){
+                mMediaPlayer.setDataSource(item.getContent());
+            }else {
+                mMediaPlayer.setDataSource("http://" + item.getContent());
+            }
+
             mMediaPlayer.prepare();
             mSeekBar.setMax(mMediaPlayer.getDuration());
             mMediaPlayer.seekTo(progress);

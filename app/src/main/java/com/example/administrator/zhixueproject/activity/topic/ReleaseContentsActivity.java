@@ -149,6 +149,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         voteName = getIntent().getStringExtra("voteName");
         topicType = getIntent().getStringExtra("topicType");
         voteIsTop = getIntent().getStringExtra("voteIsTop");
+        LogUtils.e("voteIsTop   -> "+voteIsTop);
         voteWriterId = getIntent().getStringExtra("voteWriterId");
         voteSecNames = getIntent().getStringExtra("voteSecNames");
         isMultipleChoice = getIntent().getBooleanExtra("isMultipleChoice", false);
@@ -197,7 +198,10 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                     }
                     // 图片
                     if (jsonObject.getInt("type") == 1) {
-                        String imgUrl="http://"+jsonObject.getString("content");
+                        String imgUrl=jsonObject.getString("content");
+                        if (!imgUrl.contains("http://")){
+                            imgUrl="http://"+imgUrl;
+                        }
                         addList(imgUrl,ReleaseContentsBean.IMG,null,0,true);
                     }
                     //音频
@@ -480,7 +484,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                             list.add(mFileCamera);
                             showProgress("图片上传中");
                             //本地显示
-                            addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength,false);
+                             addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength,false);
                             //上传图片
                             HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
                         } catch (Exception e) {
@@ -744,9 +748,9 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                     if (bean.isStatus()) {
                         String head = "http://";
                         String url = bean.getData().getUrl();
-                        if (url.contains(head)) {
+                        /*if (url.contains(head)) {
                             url = url.substring(head.length(), url.length());
-                        }
+                        }*/
                         //发布时需要用到的去http
                         listData.add(new ReleaseContentsBean(url, fileType, voiceStrLength, voiceLength));
                         voiceStrLength = "";
