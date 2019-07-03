@@ -131,6 +131,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         postType = getIntent().getStringExtra("postType");
         postTopicId = getIntent().getStringExtra("postTopicId");
         postIsTop = getIntent().getStringExtra("postIsTop");
+        LogUtils.e("postIsTop  ->"+ postIsTop);
         postWriterId = getIntent().getStringExtra("postWriterId");
         postIsFree = getIntent().getStringExtra("postIsFree");
         postName = getIntent().getStringExtra("postName");
@@ -151,6 +152,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         voteWriterId = getIntent().getStringExtra("voteWriterId");
         voteSecNames = getIntent().getStringExtra("voteSecNames");
         isMultipleChoice = getIntent().getBooleanExtra("isMultipleChoice", false);
+
 
 
         llContent = (LinearLayout) findViewById(R.id.ll_content);
@@ -393,7 +395,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
      * @param isMultipleChoice
      */
     public static void start(Context context, String topicId, String voteName, String topicType, String voteIsTop, String voteWriterId,
-                             String startTime, String endTime, String voteSecNames, boolean isMultipleChoice,String postContentApp) {
+                             String startTime, String endTime, String voteSecNames, boolean isMultipleChoice,String postContentApp,String postId) {
         Intent starter = new Intent(context, ReleaseContentsActivity.class);
         starter.putExtra("topicId", topicId);
         starter.putExtra("voteName", voteName);
@@ -405,6 +407,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         starter.putExtra("voteSecNames", voteSecNames);
         starter.putExtra("isMultipleChoice", String.valueOf(isMultipleChoice));
         starter.putExtra("postContentApp", postContentApp);
+        starter.putExtra("postId", postId);
         context.startActivity(starter);
     }
 
@@ -522,7 +525,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 } else if (!TextUtils.isEmpty(voteName)) {
                     // 添加投票
                     HttpMethod2.addVote(topicID, voteName, topicType, voteIsTop, voteWriterId
-                            , startTime, endTime, voteSecNames, isMultipleChoice, MyApplication.gson.toJson(listData), mHandler);
+                            , startTime, endTime, voteSecNames, isMultipleChoice, MyApplication.gson.toJson(listData),postId, mHandler);
 
                 } else {
                     // 发布贴子

@@ -87,6 +87,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private long savedEndTime=0;
     private TextView tvTitle;
     private String postContentApp="";
+    private String postId="";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -185,7 +186,8 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
             mStartTime = mVoteListBean.getStartTime();
             tvEndTime.setText(mVoteListBean.getEndTime());
             mEndTime = mVoteListBean.getEndTime();
-            topicId = mVoteListBean.getVoteId() + "";
+            topicId = mVoteListBean.getTopicId() + "";
+            postId=mVoteListBean.getVoteId()+"";
             tvIssuer.setText(mVoteListBean.getPostWriterName());
             tvTopic.setText(mVoteListBean.getTopicName());// 话题名称
             activityWriterId = mVoteListBean.getPostWriterId();
@@ -315,7 +317,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
 
                 // 跳转到发布内容页
                 ReleaseContentsActivity.start(this, topicId, voteName, String.valueOf(topicType), mIsTop, String.valueOf(activityWriterId)
-                        , mStartTime, mEndTime, MyApplication.gson.toJson(list), mIsMultiple,postContentApp);
+                        , mStartTime, mEndTime, MyApplication.gson.toJson(list), mIsMultiple,postContentApp,postId);
                 break;
             case R.id.rl_vote_type:
                 showVoteTypePop();
