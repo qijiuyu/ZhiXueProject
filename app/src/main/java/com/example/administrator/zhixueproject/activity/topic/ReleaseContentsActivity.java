@@ -405,7 +405,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         starter.putExtra("startTime", startTime);
         starter.putExtra("endTime", endTime);
         starter.putExtra("voteSecNames", voteSecNames);
-        starter.putExtra("isMultipleChoice", String.valueOf(isMultipleChoice));
+        starter.putExtra("isMultipleChoice", isMultipleChoice);
         starter.putExtra("postContentApp", postContentApp);
         starter.putExtra("postId", postId);
         context.startActivity(starter);
