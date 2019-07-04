@@ -62,7 +62,9 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
             grade=0;
         }
         tvGrade.setText("VIP"+grade);
-        tvTime.setText(DateUtil.getDay(MyApplication.homeBean.getCollegeGradetime())+"到期");
+        if(MyApplication.homeBean.getCollegeGradetime()!=0){
+            tvTime.setText(DateUtil.getDay(MyApplication.homeBean.getCollegeGradetime())+"到期");
+        }
         tvContent.setText(MyApplication.homeBean.getCollegeInfo());
 //
         imgEdit.setVisibility(View.VISIBLE);
