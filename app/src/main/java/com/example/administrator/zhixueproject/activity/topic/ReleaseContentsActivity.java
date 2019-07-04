@@ -370,7 +370,8 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                              String startTime,
                              String endTime,
                              String postIsTop,
-                             String activityId) {
+                             String activityId,
+                             String postContentApp) {
         Intent starter = new Intent(context, ReleaseContentsActivity.class);
         starter.putExtra("postType", postType);
         starter.putExtra("postName", postName);
@@ -381,6 +382,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         starter.putExtra("endTime", endTime);
         starter.putExtra("postIsTop", postIsTop);
         starter.putExtra("activityId", activityId);
+        starter.putExtra("postContentApp", postContentApp);
         context.startActivity(starter);
     }
 

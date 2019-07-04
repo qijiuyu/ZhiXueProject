@@ -31,6 +31,7 @@ public class ActivityListBean extends BaseBean implements Serializable {
     private int postIsTop; //是否置顶(0否 1是)
     private String postWriterName;//发布人名字
     private String userName;
+    private String postContentApp;
 
 
 
@@ -129,5 +130,13 @@ public class ActivityListBean extends BaseBean implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPostContentApp() {
+        return postContentApp;
+    }
+
+    public void setPostContentApp(String postContentApp) {
+        this.postContentApp = postContentApp;
     }
 }

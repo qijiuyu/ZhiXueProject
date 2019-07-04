@@ -59,7 +59,7 @@ import java.util.List;
  * @date 2018/10/10
  */
 public class ReleaseActionActivity extends BaseActivity implements View.OnClickListener, AddTopicFragment.OnTopicListener {
-    private int topicType;// 活动类型
+    private int topicType=1;// 活动类型
     private TimePickerView pvCustomTime;
     private CustomPopWindow mTopicTypePop;
     public String mItemViewType;
@@ -89,6 +89,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     private ImageView ivRightIssuer;
     private long savedStartTime=0;
     private long savedEndTime=0;
+    private String postContentApp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,6 +111,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         tvTopic = (TextView) findViewById(R.id.tv_topic);
         tvIssuer = (TextView) findViewById(R.id.tv_issuer);
         tvTopicType = (TextView) findViewById(R.id.tv_topic_type);
+        tvTopicType.setText("课程");
         tvStartTime = (TextView) findViewById(R.id.tv_start_time);
         tvEndTime = (TextView) findViewById(R.id.tv_end_time);
         llAddAction = (LinearLayout) findViewById(R.id.ll_add_action);
@@ -146,9 +148,9 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
                 if (isChecked)
-                    mIsTop = "0";
-                else
                     mIsTop = "1";
+                else
+                    mIsTop = "0";
             }
         });
 
@@ -185,6 +187,13 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             tvEndTime.setText(mActivityListBean.getEndTime());
             mEndTime = mActivityListBean.getEndTime();
             topicId = mActivityListBean.getTopicId() + "";
+            mIsTop= mActivityListBean.getPostIsTop()+"";
+            postContentApp=mActivityListBean.getPostContentApp();
+            if (mActivityListBean.getPostIsTop()==0){
+                sbStick.setChecked(false);
+            }else {
+                sbStick.setChecked(true);
+            }
             tvIssuer.setText(mActivityListBean.getUserName());
             if (!TextUtils.isEmpty(mActivityListBean.getPostPicture())){
                 topicImg=mActivityListBean.getPostPicture();
@@ -236,8 +245,8 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                             mStartTime,
                             mEndTime,
                             mIsTop,
-                            String.valueOf(mActivityId)
-
+                            String.valueOf(mActivityId),
+                            postContentApp
                     );
                 }
 
