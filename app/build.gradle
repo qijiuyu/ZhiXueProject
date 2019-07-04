@@ -9,8 +9,8 @@ android {
         applicationId "com.example.administrator.zhixueproject"
         minSdkVersion 18
         targetSdkVersion 18
-        versionCode 33
-        versionName "3.3"
+        versionCode 34
+        versionName "3.4"
         multiDexEnabled true
         //resConfigs "zh"
 //        resConfigs "zh"
