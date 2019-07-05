@@ -129,6 +129,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         findViewById(R.id.lin_back).setOnClickListener(this);
         voiceManager = VoiceManager.getInstance(this);
         postType = getIntent().getStringExtra("postType");
+        LogUtils.e("活动类型  postType  =>  "+postType);
         postTopicId = getIntent().getStringExtra("postTopicId");
         postIsTop = getIntent().getStringExtra("postIsTop");
         LogUtils.e("postIsTop  ->"+ postIsTop);
@@ -153,6 +154,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         voteWriterId = getIntent().getStringExtra("voteWriterId");
         voteSecNames = getIntent().getStringExtra("voteSecNames");
         isMultipleChoice = getIntent().getBooleanExtra("isMultipleChoice", false);
+        LogUtils.e("isMultipleChoice   ---> "+isMultipleChoice);
 
 
 
@@ -370,7 +372,8 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                              String startTime,
                              String endTime,
                              String postIsTop,
-                             String activityId) {
+                             String activityId,
+                             String postContentApp) {
         Intent starter = new Intent(context, ReleaseContentsActivity.class);
         starter.putExtra("postType", postType);
         starter.putExtra("postName", postName);
@@ -381,6 +384,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         starter.putExtra("endTime", endTime);
         starter.putExtra("postIsTop", postIsTop);
         starter.putExtra("activityId", activityId);
+        starter.putExtra("postContentApp", postContentApp);
         context.startActivity(starter);
     }
 
@@ -484,7 +488,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                             list.add(mFileCamera);
                             showProgress("图片上传中");
                             //本地显示
-                             addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength,false);
+                            addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength,false);
                             //上传图片
                             HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
                         } catch (Exception e) {

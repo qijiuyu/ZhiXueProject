@@ -27,20 +27,12 @@ public class ActivityListBean extends BaseBean implements Serializable {
     private String startTime;
     private String endTime;
     private String postPicture;
-    private String activityType;//活动类型
+    private int activityType;//活动类型
     private int postIsTop; //是否置顶(0否 1是)
     private String postWriterName;//发布人名字
     private String userName;
+    private String postContentApp;
 
-
-
-    public String getActivityType() {
-        return activityType;
-    }
-
-    public void setActivityType(String activityType) {
-        this.activityType = activityType;
-    }
 
 
     public int getActivityId() {
@@ -129,5 +121,21 @@ public class ActivityListBean extends BaseBean implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPostContentApp() {
+        return postContentApp;
+    }
+
+    public void setPostContentApp(String postContentApp) {
+        this.postContentApp = postContentApp;
+    }
+
+    public int getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(int activityType) {
+        this.activityType = activityType;
     }
 }
