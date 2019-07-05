@@ -66,7 +66,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private CustomPopWindow mTopicTypePop;
     private int activityWriterId;
     private String topicId;
-    private int topicType;
+    private int topicType=1;
     public String mStartTime;
     public String mEndTime;
     public VoteListBean mVoteListBean;
@@ -110,6 +110,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         tvIssuer = (TextView) findViewById(R.id.tv_issuer);
         tvTopic = (TextView) findViewById(R.id.tv_topic);
         tvVoteType = (TextView) findViewById(R.id.tv_vote_type);
+        tvVoteType.setText("课程");
         tvStartTime = (TextView) findViewById(R.id.tv_start_time);
         tvEndTime = (TextView) findViewById(R.id.tv_end_time);
         sbMultiSelect = (SwitchButton) findViewById(R.id.sb_select);
