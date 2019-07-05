@@ -44,7 +44,7 @@ public class Home extends BaseBean {
         private String collegeAccBankinfo;
         private String collegeAccPwd;
         private String collegeBackimg;
-        private double collegeBalance;
+        private double collegeBalance=0.0;
         private String collegeBanner;
         private String collegeCode;
         private long collegeCreationTime;
@@ -54,7 +54,7 @@ public class Home extends BaseBean {
         private String collegeGradeImg;
         private long collegeGradetime;
         private int collegeId;
-        private double collegeIncomes;
+        private double collegeIncomes=0.0;
         private String collegeInfo;
         private String collegeLoginPwd;
         private String collegeLogo;
@@ -64,7 +64,7 @@ public class Home extends BaseBean {
         private int collegeType;
         private String collegeUser;
         private double collegeZxScale;
-        private Double scale;
+        private Double scale=0.0;
         private int sort;
         private String updatetime;
         private String updator;

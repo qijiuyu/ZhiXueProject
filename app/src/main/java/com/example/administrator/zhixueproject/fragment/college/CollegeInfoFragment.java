@@ -65,11 +65,12 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
         tvTime.setText(DateUtil.getDay(MyApplication.homeBean.getCollegeGradetime())+"到期");
         tvContent.setText(MyApplication.homeBean.getCollegeInfo());
 //
-        if(MyApplication.homeBean.getAttendType()==1){
-            imgEdit.setVisibility(View.VISIBLE);
-        }else{
-            imgEdit.setVisibility(View.GONE);
-        }
+        imgEdit.setVisibility(View.VISIBLE);
+//        if(MyApplication.homeBean.getAttendType()==1){
+//
+//        }else{
+//            imgEdit.setVisibility(View.GONE);
+//        }
     }
 
 

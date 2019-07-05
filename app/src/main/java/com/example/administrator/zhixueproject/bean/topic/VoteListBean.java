@@ -32,6 +32,8 @@ public class VoteListBean implements Serializable {
     private String voteSecNames;
     private String postContentApp;
     private int topicId;
+    private boolean isMultipleChoice;
+
 
 
 
@@ -156,5 +158,13 @@ public class VoteListBean implements Serializable {
 
     public void setTopicId(int topicId) {
         this.topicId = topicId;
+    }
+
+    public boolean isMultipleChoice() {
+        return isMultipleChoice;
+    }
+
+    public void setMultipleChoice(boolean multipleChoice) {
+        isMultipleChoice = multipleChoice;
     }
 }

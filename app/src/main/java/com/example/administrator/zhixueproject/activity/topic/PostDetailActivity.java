@@ -459,7 +459,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                     }
                     //图片
                     if (jsonObject.getInt("type") == 1) {
-                        stringBuffer.append("<img src='http://" + jsonObject.getString("content") + "'/>");
+                        // stringBuffer.append("<img src='http://" + jsonObject.getString("content") + "'/>");
+                        stringBuffer.append("<img src='" + jsonObject.getString("content") + "'/>");
                     }
                     //音频
                     if (jsonObject.getInt("type") == 2) {

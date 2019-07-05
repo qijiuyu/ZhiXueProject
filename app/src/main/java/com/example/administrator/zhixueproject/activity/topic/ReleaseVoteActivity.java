@@ -60,7 +60,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private List<AddVoteBean> list = new ArrayList<>();
     private TimePickerView pvCustomTime;
     private CustomPopWindow mAddVotePop;
-    public String mIsTop = "1";
+    public String mIsTop = "0";
     private boolean mIsMultiple;
     private AddTopicFragment mAddTopicFragment;
     private CustomPopWindow mTopicTypePop;
@@ -88,6 +88,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private TextView tvTitle;
     private String postContentApp="";
     private String postId="";
+    private SwitchButton sbIsTop;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -115,7 +116,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         rvVote = (RecyclerView) findViewById(R.id.rv_vote);
         relIssuer = (RelativeLayout) findViewById(R.id.rl_issuer);
         ivRightIssure = (ImageView) findViewById(R.id.iv_right_issuer);
-
+        sbIsTop = (SwitchButton) findViewById(R.id.sb_stick);
         relIssuer.setOnClickListener(this);
         findViewById(R.id.rl_start_time).setOnClickListener(this);
         findViewById(R.id.rl_end_time).setOnClickListener(this);
@@ -188,6 +189,14 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
             mEndTime = mVoteListBean.getEndTime();
             topicId = mVoteListBean.getTopicId() + "";
             postId=mVoteListBean.getVoteId()+"";
+            mIsTop=mVoteListBean.getVoteIsTop()+"";
+            if (mVoteListBean.getVoteIsTop()==0){
+                sbIsTop.setChecked(false);
+            }else {
+                sbIsTop.setChecked(true);
+            }
+            mIsMultiple=mVoteListBean.isMultipleChoice();
+            sbMultiSelect.setChecked(mIsMultiple);
             tvIssuer.setText(mVoteListBean.getPostWriterName());
             tvTopic.setText(mVoteListBean.getTopicName());// 话题名称
             activityWriterId = mVoteListBean.getPostWriterId();
@@ -314,6 +323,7 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     showMsg("结束时间一定要在开始时间之后哦!");
                     return ;
                 }
+                LogUtils.e("mIsMultiple  -> "+mIsMultiple);
 
                 // 跳转到发布内容页
                 ReleaseContentsActivity.start(this, topicId, voteName, String.valueOf(topicType), mIsTop, String.valueOf(activityWriterId)
