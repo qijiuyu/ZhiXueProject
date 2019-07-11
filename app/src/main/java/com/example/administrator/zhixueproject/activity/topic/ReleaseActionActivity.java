@@ -62,7 +62,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     private int topicType=1;// 活动类型
     private TimePickerView pvCustomTime;
     private CustomPopWindow mTopicTypePop;
-    public String mItemViewType;
+    public int mItemViewType;
     public String mStartTime;
     public String mEndTime;
     public String mIsTop="0";
@@ -165,16 +165,17 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         if (mActivityListBean != null) {
             mItemViewType = mActivityListBean.getActivityType();
             //设置回显示
-            if (!"0".equals(mItemViewType)) {
+            if (mItemViewType!=0) {
+                topicType = mItemViewType;
                 switch (mItemViewType) {
-                    case "1":
+                    case 31:
                         tvTopicType.setText("课程");
                         break;
-                    case "2":
+                    case 32:
                         tvTopicType.setText("大家谈");
                         break;
                     default:
-                        tvTopicType.setText("全部");
+                        tvTopicType.setText("付费问答");
                         break;
                 }
             }
@@ -234,6 +235,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                 //创建
                 LogUtils.d("activityWriterId  =》"+activityWriterId);
                 LogUtils.e("mIsTop-> "+mIsTop);
+                LogUtils.e("topicType-> "+topicType);
                 if (inputReal()) {
                     ReleaseContentsActivity.start(
                             view.getContext(),
@@ -426,10 +428,15 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                         tvTopicType.setText("大家谈");
                         topicType = 2;
                         break;
+                    case R.id.tv_price_ask:
+                        tvTopicType.setText("付费问答");
+                        topicType = 3;
+                        break;
                 }
             }
         };
         contentView.findViewById(R.id.tv_all).setVisibility(View.GONE);
+        contentView.findViewById(R.id.tv_price_ask).setOnClickListener(listener);
         contentView.findViewById(R.id.tv_course).setOnClickListener(listener);
         contentView.findViewById(R.id.tv_voices).setOnClickListener(listener);
     }

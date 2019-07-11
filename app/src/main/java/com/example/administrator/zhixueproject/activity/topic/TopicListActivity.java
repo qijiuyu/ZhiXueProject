@@ -1,5 +1,6 @@
 package com.example.administrator.zhixueproject.activity.topic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.adapter.topic.TopicListAdapter;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.fragment.topic.PostsCourseFragment;
@@ -68,6 +70,9 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_item);
         initView();
+
+        //关闭帖子上的小红点
+        sendBroadcast(new Intent(TabActivity.ACTION_CLEAR_NEW_NEWS));
     }
 
     private void initView() {

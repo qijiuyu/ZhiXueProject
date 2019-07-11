@@ -129,6 +129,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         findViewById(R.id.lin_back).setOnClickListener(this);
         voiceManager = VoiceManager.getInstance(this);
         postType = getIntent().getStringExtra("postType");
+        LogUtils.e("活动类型  postType  =>  "+postType);
         postTopicId = getIntent().getStringExtra("postTopicId");
         postIsTop = getIntent().getStringExtra("postIsTop");
         LogUtils.e("postIsTop  ->"+ postIsTop);
@@ -153,6 +154,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         voteWriterId = getIntent().getStringExtra("voteWriterId");
         voteSecNames = getIntent().getStringExtra("voteSecNames");
         isMultipleChoice = getIntent().getBooleanExtra("isMultipleChoice", false);
+        LogUtils.e("isMultipleChoice   ---> "+isMultipleChoice);
 
 
 
@@ -486,7 +488,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                             list.add(mFileCamera);
                             showProgress("图片上传中");
                             //本地显示
-                             addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength,false);
+                            addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength,false);
                             //上传图片
                             HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
                         } catch (Exception e) {
