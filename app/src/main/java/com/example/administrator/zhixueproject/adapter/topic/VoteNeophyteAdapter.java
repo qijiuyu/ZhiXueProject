@@ -36,6 +36,7 @@ public class VoteNeophyteAdapter extends BaseQuickAdapter<VoteDetailListBean, Ba
         helper.addOnClickListener(R.id.img_delete);
 
         String voteSecNames = item.getVoteSecNames();
+       // String voteSecNames = "[{\"content\":\"微微一笑\"},{\"content\":\"你问一下\"}]";
         if (TextUtils.isEmpty(voteSecNames)) return;
         try {
             JSONArray jsonArray = new JSONArray(voteSecNames);

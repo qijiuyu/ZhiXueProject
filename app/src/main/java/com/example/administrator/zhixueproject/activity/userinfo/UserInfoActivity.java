@@ -144,6 +144,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 MyApplication.spUtil.removeMessage(SPUtil.USER_INFO);
                 MyApplication.spUtil.removeMessage(SPUtil.TOKEN);
                 MyApplication.userInfo=null;
+                MyApplication.homeBean=null;
                 Intent logoutIntent = new Intent(getApplicationContext(), LoginActivity.class);
                 logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(logoutIntent);

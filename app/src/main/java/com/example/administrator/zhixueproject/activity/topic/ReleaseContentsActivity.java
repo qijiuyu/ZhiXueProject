@@ -488,7 +488,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                             list.add(mFileCamera);
                             showProgress("图片上传中");
                             //本地显示
-                             addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength,false);
+                            addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength,false);
                             //上传图片
                             HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
                         } catch (Exception e) {
