@@ -57,6 +57,8 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
     public static final String TOPIC_INFO = "topic_info";
     public static final String TYPE = "type";
     private LinearLayout linBack;
+    private long topicId1;
+    private long topicId2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -320,20 +322,20 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
         holder.setBackgroundColor(R.id.content, getResources().getColor(R.color.color_dbdbdb));
         VibratorUtil.Vibrate(this, 70);   //震动70ms
         startPosition = pos;
+        topicId1 = listData.get(startPosition).getTopicId();
+        LogUtils.e("startPos===> "+pos+" topicId1== "+listData.get(startPosition).getTopicId());
     }
 
     @Override
     public void onItemDragMoving(RecyclerView.ViewHolder source, int from, RecyclerView.ViewHolder viewHolder, int to) {
+        topicId2 = listData.get(from).getTopicId();
+        LogUtils.e("onItemDragMoving  => topicId2= "+topicId2);
     }
 
     @Override
     public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
         BaseViewHolder holder = ((BaseViewHolder) viewHolder);
         holder.setBackgroundColor(R.id.content, Color.WHITE);
-        int endPosition = pos;
-        long topicId1 = listData.get(startPosition).getTopicId();
-        long topicId2 = listData.get(endPosition).getTopicId();
-        LogUtils.e("topicId1: " + topicId1 + "--" + topicId2);
         // 话题重新排序
         HttpMethod2.updateSort(topicId1 + "", topicId2 + "", mHandler);
     }
