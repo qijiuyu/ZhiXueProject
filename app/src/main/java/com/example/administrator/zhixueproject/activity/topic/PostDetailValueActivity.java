@@ -353,7 +353,12 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         GlideCirclePictureUtil.setCircleImg(mContext,postContent.getUserImg(),ivHead);
         tvNickName.setText(postContent.getUserName());
         tvAttentionNum.setText(String.valueOf(postContent.getAttentionNum()));
-        tvMoneyReward.setText("赏金" + postContent.getPostReward());
+        if (TextUtils.isEmpty(postContent.getPostReward())){
+            tvMoneyReward.setText("赏金0.00" );
+        }else {
+            tvMoneyReward.setText("赏金" + postContent.getPostReward());
+        }
+
         tvPeepNum.setText(TextUtils.isEmpty(postContent.getPostPeepNum())?"0":postContent.getPostPeepNum());
 
         //评论区域

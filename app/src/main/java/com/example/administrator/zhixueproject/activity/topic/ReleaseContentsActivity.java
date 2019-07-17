@@ -129,10 +129,10 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         findViewById(R.id.lin_back).setOnClickListener(this);
         voiceManager = VoiceManager.getInstance(this);
         postType = getIntent().getStringExtra("postType");
-        LogUtils.e("活动类型  postType  =>  "+postType);
+        LogUtils.e("活动类型  postType  =>  " + postType);
         postTopicId = getIntent().getStringExtra("postTopicId");
         postIsTop = getIntent().getStringExtra("postIsTop");
-        LogUtils.e("postIsTop  ->"+ postIsTop);
+        LogUtils.e("postIsTop  ->" + postIsTop);
         postWriterId = getIntent().getStringExtra("postWriterId");
         postIsFree = getIntent().getStringExtra("postIsFree");
         postName = getIntent().getStringExtra("postName");
@@ -143,19 +143,18 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         activityId = getIntent().getStringExtra("activityId");
         postId = getIntent().getStringExtra("postId");
         postContentApp = getIntent().getStringExtra("postContentApp");
-        LogUtils.e("ReleaseContentActivity postContentApp=>"+postContentApp);
+        LogUtils.e("ReleaseContentActivity postContentApp=>" + postContentApp);
 
         // 添加投票
         topicID = getIntent().getStringExtra("topicId");
         voteName = getIntent().getStringExtra("voteName");
         topicType = getIntent().getStringExtra("topicType");
         voteIsTop = getIntent().getStringExtra("voteIsTop");
-        LogUtils.e("voteIsTop   -> "+voteIsTop);
+        LogUtils.e("voteIsTop   -> " + voteIsTop);
         voteWriterId = getIntent().getStringExtra("voteWriterId");
         voteSecNames = getIntent().getStringExtra("voteSecNames");
         isMultipleChoice = getIntent().getBooleanExtra("isMultipleChoice", false);
-        LogUtils.e("isMultipleChoice   ---> "+isMultipleChoice);
-
+        LogUtils.e("isMultipleChoice   ---> " + isMultipleChoice);
 
 
         llContent = (LinearLayout) findViewById(R.id.ll_content);
@@ -188,30 +187,30 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
     }
 
     private void parseJsonStr() {
-        LogUtils.e("帖子内容=== 》"+postContentApp);
+        LogUtils.e("帖子内容=== 》" + postContentApp);
         if (!TextUtils.isEmpty(postContentApp)) {
             try {
                 JSONArray jsonArray = new JSONArray(postContentApp);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     final JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    if (jsonObject.getInt("type") == 0){
-                        String text=jsonObject.getString("content");
-                        addList(text,ReleaseContentsBean.TEXT,null,0,true);
+                    if (jsonObject.getInt("type") == 0) {
+                        String text = jsonObject.getString("content");
+                        addList(text, ReleaseContentsBean.TEXT, null, 0, true);
                     }
                     // 图片
                     if (jsonObject.getInt("type") == 1) {
-                        String imgUrl=jsonObject.getString("content");
-                        if (!imgUrl.contains("http://")){
-                            imgUrl="http://"+imgUrl;
+                        String imgUrl = jsonObject.getString("content");
+                        if (!imgUrl.contains("http://")) {
+                            imgUrl = "http://" + imgUrl;
                         }
-                        addList(imgUrl,ReleaseContentsBean.IMG,null,0,true);
+                        addList(imgUrl, ReleaseContentsBean.IMG, null, 0, true);
                     }
                     //音频
                     if (jsonObject.getInt("type") == 2) {
-                        String path=jsonObject.getString("content");
-                        int timeLength=jsonObject.getInt("timeLength");
-                        String strLength=jsonObject.getString("strLength");
-                        addList(path,ReleaseContentsBean.RECORD,strLength,timeLength,true);
+                        String path = jsonObject.getString("content");
+                        int timeLength = jsonObject.getInt("timeLength");
+                        String strLength = jsonObject.getString("strLength");
+                        addList(path, ReleaseContentsBean.RECORD, strLength, timeLength, true);
                     }
                 }
             } catch (Exception e) {
@@ -403,7 +402,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
      * @param isMultipleChoice
      */
     public static void start(Context context, String topicId, String voteName, String topicType, String voteIsTop, String voteWriterId,
-                             String startTime, String endTime, String voteSecNames, boolean isMultipleChoice,String postContentApp,String postId) {
+                             String startTime, String endTime, String voteSecNames, boolean isMultipleChoice, String postContentApp, String postId) {
         Intent starter = new Intent(context, ReleaseContentsActivity.class);
         starter.putExtra("topicId", topicId);
         starter.putExtra("voteName", voteName);
@@ -446,7 +445,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         listData.remove(position);
                         break;
                     case R.id.iv_record_play:
-                        LogUtils.e("点击播放按钮  地址是---》"+listData.get(position).getContent());
+                        LogUtils.e("点击播放按钮  地址是---》" + listData.get(position).getContent());
                         PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(listData.get(position));
                         fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
                         break;
@@ -488,7 +487,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                             list.add(mFileCamera);
                             showProgress("图片上传中");
                             //本地显示
-                            addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength,false);
+                            addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength, false);
                             //上传图片
                             HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
                         } catch (Exception e) {
@@ -516,10 +515,15 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
             case R.id.tv_confirm:
                 fileType = ReleaseContentsBean.TEXT;
                 if (!TextUtils.isEmpty(etContent.getText().toString().trim())) {
-                    addList(etContent.getText().toString().trim(), fileType, null, 0,false);
+                    addList(etContent.getText().toString().trim(), fileType, null, 0, false);
                     listData.add(new ReleaseContentsBean(etContent.getText().toString().trim(), fileType, voiceStrLength, voiceLength));
                     etContent.setText("");
                 }
+
+                if (flEmoji.getVisibility() == View.VISIBLE) {
+                    hideEmoji();
+                }
+
                 break;
             case R.id.tv_release:
                 if (!TextUtils.isEmpty(startTime) && "0".equals(activityId)) {
@@ -533,7 +537,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 } else if (!TextUtils.isEmpty(voteName)) {
                     // 添加投票
                     HttpMethod2.addVote(topicID, voteName, topicType, voteIsTop, voteWriterId
-                            , startTime, endTime, voteSecNames, isMultipleChoice, MyApplication.gson.toJson(listData),postId, mHandler);
+                            , startTime, endTime, voteSecNames, isMultipleChoice, MyApplication.gson.toJson(listData), postId, mHandler);
 
                 } else {
                     // 发布贴子
@@ -691,7 +695,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 voiceStrLength = strLength;
                 voiceLength = length;
                 //本地显示
-                addList(path, fileType, strLength, length,false);
+                addList(path, fileType, strLength, length, false);
             }
         });
         voiceManager.startVoiceRecord(RecordUtil.getAudioPath());
@@ -704,10 +708,10 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
      * @param content 数据内容
      * @param type    数据类型 0：文字；1：图片；2：录音
      */
-    private void addList(String content, int type, String strLength, long length,boolean add) {
+    private void addList(String content, int type, String strLength, long length, boolean add) {
         ReleaseContentsBean data = new ReleaseContentsBean(content, type, strLength, length);
         mAdapter.addData(data);
-        if (add){
+        if (add) {
             listData.add(data);
         }
         mAdapter.notifyDataSetChanged();

@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dm050"
+            android:layout_marginRight="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -93,7 +93,7 @@
                 android:id="@+id/tv_peep_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dm015"
+                android:layout_marginLeft="7dp"
                 android:textColor="@color/color_fd703e"
                 android:textSize="13sp" />
 
