@@ -11,3 +11,5 @@
 *.gradle
 /gradle
 /.idea
+.idea/caches/
+

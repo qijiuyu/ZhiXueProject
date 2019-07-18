@@ -24,6 +24,11 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
 
         helper.setText(R.id.tv_name, item.getUserName());
         int postType = item.getPostType();
+        int postIsTop=item.getPostIsTop();
+        if (postIsTop==1){
+            helper.setVisible(R.id.tv_post_is_top,true);
+        }
+
         Log.i("postType", postType + "");
         if (postType == 1 || postType == 2) {
             helper.setVisible(R.id.tv_cost_status, true);
@@ -36,7 +41,7 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
                 helper.setText(R.id.tv_cost_status, "付费");
             }
         } else if (postType == 3) {
-            helper.setVisible(R.id.tv_cost_status, false);
+            helper.setGone(R.id.tv_cost_status,false);
             helper.setVisible(R.id.tv_cost_money, true);
             helper.setText(R.id.tv_cost_money, "赏金" + item.getPostReward());
         }
