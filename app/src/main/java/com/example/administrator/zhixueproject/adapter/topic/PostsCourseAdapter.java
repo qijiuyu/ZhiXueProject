@@ -43,7 +43,11 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
         } else if (postType == 3) {
             helper.setGone(R.id.tv_cost_status,false);
             helper.setVisible(R.id.tv_cost_money, true);
-            helper.setText(R.id.tv_cost_money, "赏金" + item.getPostReward());
+            if (TextUtils.isEmpty(item.getPostReward())){
+                helper.setText(R.id.tv_cost_money, "赏金" + 0.00);
+            }else {
+                helper.setText(R.id.tv_cost_money, "赏金" + item.getPostReward());
+            }
         }
         helper.setText(R.id.tv_course_name, item.getPostName());
         String str=item.getPostContentApp();

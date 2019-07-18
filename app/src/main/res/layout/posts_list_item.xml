@@ -60,7 +60,7 @@
                 android:id="@+id/tv_cost_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/orange_box_bg"
                 android:padding="3dp"
                 android:text="赏金50"
