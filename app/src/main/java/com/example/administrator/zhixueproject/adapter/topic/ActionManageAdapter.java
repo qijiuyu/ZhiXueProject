@@ -2,19 +2,18 @@ package com.example.administrator.zhixueproject.adapter.topic;
 
 import android.view.View;
 import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.topic.ActionNeophyteActivity;
 import com.example.administrator.zhixueproject.bean.topic.ActivityListBean;
+
 import java.util.List;
 
 
-
-
-
-public class ActionManageAdapter extends BaseItemDraggableAdapter<ActivityListBean,BaseViewHolder> {
+public class ActionManageAdapter extends BaseItemDraggableAdapter<ActivityListBean, BaseViewHolder> {
 
     public ActionManageAdapter(int layoutResId, List<ActivityListBean> data) {
         super(layoutResId, data);
@@ -22,11 +21,16 @@ public class ActionManageAdapter extends BaseItemDraggableAdapter<ActivityListBe
 
     @Override
     protected void convert(final BaseViewHolder helper, final ActivityListBean item) {
-        helper.setText(R.id.tv_action_name,item.getActivityName());
-        helper.setText(R.id.tv_topic_name,"话题："+item.getTopicName());
+        helper.setText(R.id.tv_action_name, item.getActivityName());
+        helper.setText(R.id.tv_topic_name, "话题：" + item.getTopicName());
         helper.setText(R.id.tv_start_time, item.getStartTime());
         helper.setText(R.id.tv_end_time, item.getEndTime());
-        helper.setText(R.id.tv_action_num, item.getPostJoinNum()+"");
+        helper.setText(R.id.tv_action_num, item.getPostJoinNum() + "");
+        String isTop = "否";
+        if (item.getPostIsTop() == 1) {
+            isTop = "是";
+        }
+        helper.setText(R.id.tv_topic_is_top, "是否置顶："+isTop);
         ImageView iv_action_img = helper.getView(R.id.iv_action_img);
         Glide.with(mContext).load(item.getPostPicture()).error(R.mipmap.unify_image_ing).into(iv_action_img);
 
@@ -35,7 +39,7 @@ public class ActionManageAdapter extends BaseItemDraggableAdapter<ActivityListBe
         helper.getView(R.id.content).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActionNeophyteActivity.start(mContext, item.getActivityId()+"");
+                ActionNeophyteActivity.start(mContext, item.getActivityId() + "");
             }
         });
 
@@ -47,7 +51,7 @@ public class ActionManageAdapter extends BaseItemDraggableAdapter<ActivityListBe
         this.onItemListener = onItemListener;
     }
 
-    public interface OnItemListener{
+    public interface OnItemListener {
         void itemListener(View view, int position);
     }
 

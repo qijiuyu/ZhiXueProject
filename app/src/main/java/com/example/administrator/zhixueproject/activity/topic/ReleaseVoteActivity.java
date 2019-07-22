@@ -33,6 +33,7 @@ import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.KeyboardUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
+import com.example.administrator.zhixueproject.utils.TimeUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.example.administrator.zhixueproject.view.SwitchButton;
 import com.example.administrator.zhixueproject.view.time.TimePickerView;
@@ -183,6 +184,8 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                 }
             }
 
+            savedStartTime= TimeUtils.getTimestamp(mVoteListBean.getStartTime());
+            savedEndTime=TimeUtils.getTimestamp(mVoteListBean.getEndTime());
             etTitle.setText(mVoteListBean.getVoteName());
             tvStartTime.setText(mVoteListBean.getStartTime());
             mStartTime = mVoteListBean.getStartTime();
