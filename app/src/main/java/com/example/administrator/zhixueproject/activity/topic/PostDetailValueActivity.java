@@ -400,7 +400,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                     if(jsonObject.getInt("type")==2){
                         pathMap.put(i,jsonObject.getString("content"));
                         timeMap.put(i,jsonObject.getInt("timeLength"));
-                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio("+i+")'/>" + "0:00/"+jsonObject.getString("strLength"));
+                        stringBuffer.append("<img src='http://m.qpic.cn/psb?/V14FKuhr1M2Y16/GcffMwIp37DRR3IcfaAOR5VVehPaypyRkbD5VdOHpUM!/b/dLYAAAAAAAAA&bo=yADIAAAAAAADByI!&rf=viewer_4' height=30 width=30 onClick='window.hello.playAutio("+i+")'/>" + "0:00/" + jsonObject.getString("strLength"));
                     }
                 }
                 //帖子内容
