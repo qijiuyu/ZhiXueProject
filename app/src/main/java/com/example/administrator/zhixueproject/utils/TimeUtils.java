@@ -1,7 +1,11 @@
 package com.example.administrator.zhixueproject.utils;
 
 
+import android.text.TextUtils;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by fan on 2016/6/23.
@@ -38,6 +42,27 @@ public class TimeUtils {
     public static String  getCurrentTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         return sdf.format(System.currentTimeMillis());
+    }
+
+
+    /**
+     * 通过String格式时间获取毫秒值
+     * @param str
+     * @return
+     */
+    public static long getTimestamp(String str){
+        if (TextUtils.isEmpty(str)){
+            return 0;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date=null;
+        try {
+            date = sdf.parse(str);
+            LogUtils.e("毫秒值是："+date.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date.getTime();
     }
 
 

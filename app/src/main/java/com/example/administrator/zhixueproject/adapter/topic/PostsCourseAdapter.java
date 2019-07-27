@@ -27,6 +27,8 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
         int postIsTop=item.getPostIsTop();
         if (postIsTop==1){
             helper.setVisible(R.id.tv_post_is_top,true);
+        }else {
+            helper.setGone(R.id.tv_post_is_top,false);
         }
 
         Log.i("postType", postType + "");

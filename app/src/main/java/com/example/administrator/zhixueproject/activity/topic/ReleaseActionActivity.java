@@ -38,6 +38,7 @@ import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
+import com.example.administrator.zhixueproject.utils.TimeUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.example.administrator.zhixueproject.view.SwitchButton;
 import com.example.administrator.zhixueproject.view.time.TimePickerView;
@@ -164,6 +165,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         mActivityListBean = (ActivityListBean) getIntent().getSerializableExtra("activityListBean");
         if (mActivityListBean != null) {
             mItemViewType = mActivityListBean.getActivityType();
+            LogUtils.e("mItemViewType  => "+mItemViewType);
             //设置回显示
             if (mItemViewType!=0) {
                 topicType = mItemViewType;
@@ -179,7 +181,8 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                         break;
                 }
             }
-
+            savedStartTime= TimeUtils.getTimestamp(mActivityListBean.getStartTime());
+            savedEndTime=TimeUtils.getTimestamp(mActivityListBean.getEndTime());
             mActivityId = mActivityListBean.getActivityId();
             tvActionTitle.setText(mActivityListBean.getActivityName());
             tvTopic.setText(mActivityListBean.getTopicName());

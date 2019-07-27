@@ -35,7 +35,7 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
 
     @Override
     protected void convert(BaseViewHolder helper, final TopicListBean item) {
-        if(null==item){
+        if (null == item) {
             return;
         }
         //关闭复用
@@ -58,6 +58,11 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
             helper.setText(R.id.tv_post_status, topics[2]);
         }
         int costType = item.getTopicPayType();//话题付费类型
+        String isTop = "否";
+        if (item.getTopicIsTop() == 1) {
+            isTop = "是";
+        }
+        helper.setText(R.id.tv_topic_list_item_is_top, "是否置顶："+isTop);
         String[] costs = mContext.getResources().getStringArray(R.array.add_topic);
         if (costType == 1) {
             helper.setText(R.id.tv_charge, costs[0]);

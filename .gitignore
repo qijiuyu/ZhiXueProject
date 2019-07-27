@@ -8,5 +8,13 @@
 /build
 /captures
 .externalNativeBuild
+*.gradle
+/gradle
+/.idea
 .idea/caches/
+
 .idea/
+
+
+
+

@@ -1,8 +1,6 @@
 package com.example.administrator.zhixueproject.bean.topic;
 
 
-import java.util.List;
-
 public class VoteDetailListBean {
 
         /**
