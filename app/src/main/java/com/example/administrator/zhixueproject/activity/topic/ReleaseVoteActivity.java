@@ -157,6 +157,9 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private void initData() {
         topicId=getIntent().getIntExtra("topicId",0)+"";
         tvTopic.setText(getIntent().getStringExtra("topicName"));
+        String postTypeName = getIntent().getStringExtra("postTypeName");
+        tvVoteType.setText(postTypeName);
+        topicType = getIntent().getIntExtra("topicType", 0);
 
         mVoteListBean = (VoteListBean) getIntent().getSerializableExtra("voteListBean");
         if (mVoteListBean != null) {
@@ -230,10 +233,12 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         context.startActivity(starter);
     }
 
-    public static void start(Context context,int topicId,String topicName) {
+    public static void start(Context context,int topicId,String topicName,String postTypeName,int topicType) {
         Intent starter = new Intent(context, ReleaseVoteActivity.class);
         starter.putExtra("topicId", topicId);
         starter.putExtra("topicName", topicName);
+        starter.putExtra("postTypeName", postTypeName);
+        starter.putExtra("topicType", topicType);
         context.startActivity(starter);
     }
 
@@ -287,12 +292,6 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                 pvCustomTime.show(tvEndTime);
                 break;
             case R.id.tv_add_vote:
-                // 不是多选才能添加
-               /* if (list.size() >= 1 && mIsMultiple == false) {
-                    showMsg("您未开启多选，不能添加多个投票项");
-                } else {
-
-                }*/
                 showAddVotePop();
                 break;
             case R.id.tv_confirm:
@@ -327,8 +326,6 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     showMsg("结束时间一定要在开始时间之后哦!");
                     return ;
                 }
-                LogUtils.e("mIsMultiple  -> "+mIsMultiple);
-
                 // 跳转到发布内容页
                 ReleaseContentsActivity.start(this, topicId, voteName, String.valueOf(topicType), mIsTop, String.valueOf(activityWriterId)
                         , mStartTime, mEndTime, MyApplication.gson.toJson(list), mIsMultiple,postContentApp,postId);

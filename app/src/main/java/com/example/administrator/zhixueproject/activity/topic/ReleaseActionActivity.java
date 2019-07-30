@@ -60,13 +60,13 @@ import java.util.List;
  * @date 2018/10/10
  */
 public class ReleaseActionActivity extends BaseActivity implements View.OnClickListener, AddTopicFragment.OnTopicListener {
-    private int topicType=1;// 活动类型
+    private int topicType = 1;// 活动类型
     private TimePickerView pvCustomTime;
     private CustomPopWindow mTopicTypePop;
     public int mItemViewType;
     public String mStartTime;
     public String mEndTime;
-    public String mIsTop="0";
+    public String mIsTop = "0";
     private AddTopicFragment mAddTopicFragment;
     private String topicId;
     private String topicImg;
@@ -88,8 +88,8 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     private int type; // 1管理员，2老师
     private RelativeLayout relIssuer;
     private ImageView ivRightIssuer;
-    private long savedStartTime=0;
-    private long savedEndTime=0;
+    private long savedStartTime = 0;
+    private long savedEndTime = 0;
     private String postContentApp;
 
     @Override
@@ -159,15 +159,18 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initData() {
-        topicId=getIntent().getIntExtra("topicId",0)+"";
+        topicId = getIntent().getIntExtra("topicId", 0) + "";
         tvTopic.setText(getIntent().getStringExtra("topicName"));
+        String postTypeName = getIntent().getStringExtra("postTypeName");
+        tvTopicType.setText(postTypeName);
+        topicType = getIntent().getIntExtra("topicType", 0);
+
 
         mActivityListBean = (ActivityListBean) getIntent().getSerializableExtra("activityListBean");
         if (mActivityListBean != null) {
             mItemViewType = mActivityListBean.getActivityType();
-            LogUtils.e("mItemViewType  => "+mItemViewType);
             //设置回显示
-            if (mItemViewType!=0) {
+            if (mItemViewType != 0) {
                 topicType = mItemViewType;
                 switch (mItemViewType) {
                     case 31:
@@ -181,8 +184,8 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                         break;
                 }
             }
-            savedStartTime= TimeUtils.getTimestamp(mActivityListBean.getStartTime());
-            savedEndTime=TimeUtils.getTimestamp(mActivityListBean.getEndTime());
+            savedStartTime = TimeUtils.getTimestamp(mActivityListBean.getStartTime());
+            savedEndTime = TimeUtils.getTimestamp(mActivityListBean.getEndTime());
             mActivityId = mActivityListBean.getActivityId();
             tvActionTitle.setText(mActivityListBean.getActivityName());
             tvTopic.setText(mActivityListBean.getTopicName());
@@ -191,16 +194,16 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             tvEndTime.setText(mActivityListBean.getEndTime());
             mEndTime = mActivityListBean.getEndTime();
             topicId = mActivityListBean.getTopicId() + "";
-            mIsTop= mActivityListBean.getPostIsTop()+"";
-            postContentApp=mActivityListBean.getPostContentApp();
-            if (mActivityListBean.getPostIsTop()==0){
+            mIsTop = mActivityListBean.getPostIsTop() + "";
+            postContentApp = mActivityListBean.getPostContentApp();
+            if (mActivityListBean.getPostIsTop() == 0) {
                 sbStick.setChecked(false);
-            }else {
+            } else {
                 sbStick.setChecked(true);
             }
             tvIssuer.setText(mActivityListBean.getUserName());
-            if (!TextUtils.isEmpty(mActivityListBean.getPostPicture())){
-                topicImg=mActivityListBean.getPostPicture();
+            if (!TextUtils.isEmpty(mActivityListBean.getPostPicture())) {
+                topicImg = mActivityListBean.getPostPicture();
                 Glide.with(mContext).load(mActivityListBean.getPostPicture()).error(R.mipmap.unify_image_ing).into(ivAddPicture);
             }
         }
@@ -213,12 +216,15 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         context.startActivity(starter);
     }
 
-    public static void start(Context context,int topicId,String topicName) {
+    public static void start(Context context, int topicId, String topicName, String postTypeName, int topicType) {
         Intent starter = new Intent(context, ReleaseActionActivity.class);
         starter.putExtra("topicId", topicId);
         starter.putExtra("topicName", topicName);
+        starter.putExtra("postTypeName", postTypeName);
+        starter.putExtra("topicType", topicType);
         context.startActivity(starter);
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -236,9 +242,6 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tv_confirm:
                 //创建
-                LogUtils.d("activityWriterId  =》"+activityWriterId);
-                LogUtils.e("mIsTop-> "+mIsTop);
-                LogUtils.e("topicType-> "+topicType);
                 if (inputReal()) {
                     ReleaseContentsActivity.start(
                             view.getContext(),
@@ -362,7 +365,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             showMsg("请选择结束时间");
             return false;
         }
-        if (savedEndTime<savedStartTime){
+        if (savedEndTime < savedStartTime) {
             showMsg("结束时间一定要在开始时间之后哦!");
             return false;
         }
@@ -457,15 +460,14 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         pvCustomTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             public void onTimeSelect(Date date, View v) {//选中事件回调
 
-                LogUtils.e("选择的时间为：-》" + date.getTime());
                 if (DateUtil.IsToday(date.getTime())) {
                     if (v == tvStartTime) {
-                        savedStartTime=date.getTime();
+                        savedStartTime = date.getTime();
                         mStartTime = getTime(date);
                         tvStartTime.setText(mStartTime);
                     } else if (v == tvEndTime) {
-                        savedEndTime=date.getTime();
-                        if (savedEndTime<savedStartTime){
+                        savedEndTime = date.getTime();
+                        if (savedEndTime < savedStartTime) {
                             showMsg("结束时间不能在开始时间之前");
                             return;
                         }
