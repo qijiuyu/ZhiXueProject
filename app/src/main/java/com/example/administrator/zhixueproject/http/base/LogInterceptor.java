@@ -5,6 +5,7 @@ import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.http.api.HttpApi1;
 import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.utils.MyCustomLogUtil;
 import com.example.administrator.zhixueproject.utils.ParameterUtil;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 import org.json.JSONException;
@@ -54,7 +55,7 @@ public class LogInterceptor implements Interceptor {
             body = response2.body().string();
         }
 
-        LogUtils.e(String.format("response %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, body));
+        MyCustomLogUtil.e(String.format("response %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, body));
         return response.newBuilder().body(ResponseBody.create(response.body().contentType(), body)).build();
     }
 
