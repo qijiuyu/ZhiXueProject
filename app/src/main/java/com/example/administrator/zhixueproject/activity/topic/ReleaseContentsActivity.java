@@ -41,6 +41,7 @@ import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
+import com.example.administrator.zhixueproject.utils.ClickUtil;
 import com.example.administrator.zhixueproject.utils.FileStorage;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
@@ -526,30 +527,36 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
 
                 break;
             case R.id.tv_release:
-                if (!TextUtils.isEmpty(startTime) && "0".equals(activityId)) {
-                    // 发布活动
-                    HttpMethod2.addActivity(postTopicId, topicImg, postName, postType, postIsTop, postWriterId, startTime, endTime
-                            , MyApplication.gson.toJson(listData), mHandler);
-                } else if (!TextUtils.isEmpty(activityId) && !"0".equals(activityId)) {
-                    // 修改活动
-                    HttpMethod2.updateActivity(postTopicId, activityId, topicImg, postName, postType, postIsTop, postWriterId
-                            , startTime, endTime, MyApplication.gson.toJson(listData), mHandler);
-                } else if (!TextUtils.isEmpty(voteName)) {
-                    // 添加投票
-                    HttpMethod2.addVote(topicID, voteName, topicType, voteIsTop, voteWriterId
-                            , startTime, endTime, voteSecNames, isMultipleChoice, MyApplication.gson.toJson(listData), postId, mHandler);
+                if (ClickUtil.notFastClick()){
+                    LogUtils.e("ReleaseContentsUI  非快速点击");
+                    if (!TextUtils.isEmpty(startTime) && "0".equals(activityId)) {
+                        // 发布活动
+                        HttpMethod2.addActivity(postTopicId, topicImg, postName, postType, postIsTop, postWriterId, startTime, endTime
+                                , MyApplication.gson.toJson(listData), mHandler);
+                    } else if (!TextUtils.isEmpty(activityId) && !"0".equals(activityId)) {
+                        // 修改活动
+                        HttpMethod2.updateActivity(postTopicId, activityId, topicImg, postName, postType, postIsTop, postWriterId
+                                , startTime, endTime, MyApplication.gson.toJson(listData), mHandler);
+                    } else if (!TextUtils.isEmpty(voteName)) {
+                        // 添加投票
+                        HttpMethod2.addVote(topicID, voteName, topicType, voteIsTop, voteWriterId
+                                , startTime, endTime, voteSecNames, isMultipleChoice, MyApplication.gson.toJson(listData), postId, mHandler);
 
-                } else {
-                    // 发布贴子
-                    if (TextUtils.isEmpty(postId)) {
-                        HttpMethod2.addPost(postType, postName, postTopicId, postWriterId, postIsFree, postPrice, postIsTop,
-                                MyApplication.gson.toJson(listData), mHandler);
                     } else {
-                        // 修改贴子
-                        HttpMethod2.updatePost(postId, postName, postIsFree, postPrice, postIsTop,
-                                MyApplication.gson.toJson(listData), mHandler);
+                        // 发布贴子
+                        if (TextUtils.isEmpty(postId)) {
+                            HttpMethod2.addPost(postType, postName, postTopicId, postWriterId, postIsFree, postPrice, postIsTop,
+                                    MyApplication.gson.toJson(listData), mHandler);
+                        } else {
+                            // 修改贴子
+                            HttpMethod2.updatePost(postId, postName, postIsFree, postPrice, postIsTop,
+                                    MyApplication.gson.toJson(listData), mHandler);
+                        }
                     }
+                }else {
+                    LogUtils.e("ReleaseContentsUI  快速点击");
                 }
+
                 Log.i("ReleaseContentsUI", listData.toString());
                 break;
             case R.id.iv_voice:
