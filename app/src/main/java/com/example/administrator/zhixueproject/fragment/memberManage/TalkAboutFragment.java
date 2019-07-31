@@ -142,7 +142,7 @@ public class TalkAboutFragment extends BaseFragment implements MyRefreshLayoutLi
             mTopicList.addAll(bean.getData().getPostList());
             adapterView();
         } else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 

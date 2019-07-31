@@ -254,7 +254,7 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
             mMemberManagerAdapter.setNewData(mAttendanceList);
             mMemberManagerAdapter.notifyDataSetChanged();
         } else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 
@@ -275,7 +275,7 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
             mAttendanceList.addAll(bean.getData().getAttendanceList());
             mMemberManagerAdapter.notifyDataSetChanged();
         } else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 
@@ -293,7 +293,7 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
             mAttendanceList.remove(mPosition);
             mMemberManagerAdapter.notifyDataSetChanged();
         } else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 

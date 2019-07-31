@@ -107,7 +107,7 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
         Glide.with(mContext).load(reportList.getTopicImg()).override(105,78).centerCrop().into(imageView);
         tvTopicName.setText(reportList.getPostName());
         tvCount.setText(reportList.getComplaintCount()+"人  举报");
-        tvName.setText(reportList.getPostWriterId());
+        tvName.setText("发帖人："+reportList.getPostWriterId());
         tvTime.setText(reportList.getComplaintCreationTime());
 
         if(!TextUtils.isEmpty(reportList.getComplaintContent())){
@@ -226,7 +226,7 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
                 mRefreshLayout.setIsLoadingMoreEnabled(false);
             }
         }else{
-            showMsg(reportDetails.getErrorMsg());
+            // showMsg(reportDetails.getErrorMsg());
         }
     }
 

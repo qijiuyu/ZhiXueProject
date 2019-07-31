@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
-    <include layout="@layout/head"/>
+    android:orientation="vertical">
+
+    <include layout="@layout/head" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
                     android:id="@+id/iv_img"
                     android:layout_width="105dp"
                     android:layout_height="78dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -40,10 +41,10 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:orientation="horizontal"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/tv_report_topic"
@@ -52,29 +53,29 @@
                                 android:layout_gravity="center_vertical"
                                 android:maxLines="2"
                                 android:textColor="@color/color_222222"
-                                android:textSize="15sp"/>
+                                android:textSize="15sp" />
 
-                            <TextView
-                                android:id="@+id/tv_report_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="5dp"
-                                android:textColor="@color/color_40c5f1"
-                                android:textSize="13sp"/>
 
                         </LinearLayout>
 
                         <TextView
-                            android:layout_marginLeft="8dp"
                             android:id="@+id/tv_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
                             android:text="3人 举报"
                             android:textColor="@color/color_ff212c"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" />
 
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_report_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/color_40c5f1"
+                        android:textSize="13sp" />
 
                     <TextView
                         android:id="@+id/tv_time"
@@ -82,11 +83,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:textColor="@color/color_999999"
-                        android:textSize="11sp"/>
+                        android:textSize="11sp" />
 
                     <TextView
                         android:id="@+id/tv_content"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2.5dp"
@@ -94,7 +94,8 @@
                         android:lineSpacingExtra="2.5dp"
                         android:maxLines="2"
                         android:textColor="@color/color_5d5d5d"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -103,47 +104,47 @@
             <WebView
                 android:id="@+id/wv_post_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/lin_floor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:orientation="vertical"
-                android:layout_marginTop="20dp">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
+                    android:background="#E8E8E8"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
                     android:text="楼层回帖信息"
                     android:textColor="@color/color_222222"
-                    android:textSize="13sp"
-                    android:paddingLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:background="#E8E8E8"/>
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tv_floor_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:textColor="@color/color_222222"
+                    android:layout_marginTop="5dp"
                     android:paddingLeft="10dp"
-                    android:layout_marginTop="5dp"/>
+                    android:textColor="@color/color_222222"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:background="#E8E8E8"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
                 android:text="举报内容"
                 android:textColor="@color/color_222222"
-                android:textSize="13sp"
-                android:paddingLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:gravity="center_vertical"
-                android:background="#E8E8E8"/>
+                android:textSize="13sp" />
 
             <com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout
                 android:id="@+id/re_list"
@@ -153,9 +154,9 @@
 
                 <com.example.administrator.zhixueproject.view.CustomListView
                     android:id="@+id/listView"
-                    android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
 
             </com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout>
 

@@ -144,7 +144,7 @@ public class KickOutMemberActivity extends BaseActivity implements View.OnClickL
             mKickOutMemberAdapter.setNewData(kickOutList);
             mKickOutMemberAdapter.notifyDataSetChanged();
         } else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 
@@ -163,7 +163,7 @@ public class KickOutMemberActivity extends BaseActivity implements View.OnClickL
             mKickOutMemberAdapter.setNewData(kickOutList);
             mKickOutMemberAdapter.notifyDataSetChanged();
         } else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 
@@ -187,7 +187,7 @@ public class KickOutMemberActivity extends BaseActivity implements View.OnClickL
             kickOutList.remove(mPosition);
             mKickOutMemberAdapter.notifyDataSetChanged();
         } else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 }

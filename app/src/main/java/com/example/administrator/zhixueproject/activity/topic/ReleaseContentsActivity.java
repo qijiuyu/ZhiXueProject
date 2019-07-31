@@ -771,7 +771,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         voiceStrLength = "";
                         voiceLength = 0;
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                 // 发布帖子成功
@@ -793,7 +793,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         finish();
                         postEvent();
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                 // 修改帖子成功
@@ -807,7 +807,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         finish();
                         postEvent();
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                 // 发布活动成功
@@ -822,7 +822,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         postEvent();
                         postActivityEvent();
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                 // 修改活动成功
@@ -837,7 +837,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         postEvent();
                         postActivityEvent();
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                 case HandlerConstant2.ADD_VOTE_SUCCESS:

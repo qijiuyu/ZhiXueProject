@@ -237,7 +237,7 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
             mAdapter.notifyItemChanged(position);
             mAdapter.notifyDataSetChanged();
         } else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 

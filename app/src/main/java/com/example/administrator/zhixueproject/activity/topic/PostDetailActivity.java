@@ -384,7 +384,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                         EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.COMMENT_SUCCESS));
                         initComment();
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                 case HandlerConstant2.COMMENT_REPLY_SUCCESS:
@@ -397,7 +397,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                         EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.COMMENT_SUCCESS));
                         initComment();
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                 case HandlerConstant2.GET_POST_DETAIL_SUCCESS:

@@ -151,7 +151,7 @@ public class BlacklistActivity extends BaseActivity implements View.OnClickListe
             mBlackListAdapter.setNewData(mBlackList);
             mBlackListAdapter.notifyDataSetChanged();
         } else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 
@@ -170,7 +170,7 @@ public class BlacklistActivity extends BaseActivity implements View.OnClickListe
             mBlackListAdapter.setNewData(mBlackList);
             mBlackListAdapter.notifyDataSetChanged();
         } else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 
@@ -184,7 +184,7 @@ public class BlacklistActivity extends BaseActivity implements View.OnClickListe
             mBlackList.remove(mPosition);
             mBlackListAdapter.notifyDataSetChanged();
         }else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 

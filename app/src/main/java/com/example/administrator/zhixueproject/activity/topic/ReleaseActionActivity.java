@@ -538,7 +538,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
                         topicImg = url;
                         Glide.with(mContext).load(url).error(R.mipmap.unify_image_ing).into(ivAddPicture);
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                 case HandlerConstant1.REQUST_ERROR:

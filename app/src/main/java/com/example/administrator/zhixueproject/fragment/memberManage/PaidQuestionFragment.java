@@ -148,7 +148,7 @@ public class PaidQuestionFragment extends BaseFragment implements MyRefreshLayou
             mPaitQuestionListAdapter.setNewData(mQuestionList);
             mPaitQuestionListAdapter.notifyDataSetChanged();
         } else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 

@@ -313,7 +313,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                         EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.COMMENT_SUCCESS));
                         initComment();
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                 case HandlerConstant2.COMMENT_REPLY_SUCCESS:
@@ -326,7 +326,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                         EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.COMMENT_SUCCESS));
                         initComment();
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                 case HandlerConstant2.GET_YOU_CHANG_DETAIL_SUCCESS:

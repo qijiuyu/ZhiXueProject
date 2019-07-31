@@ -104,7 +104,7 @@ public class TopicReportFragment extends BaseFragment implements MyRefreshLayout
                          page=1;
                          HttpMethod1.getReportList(1, ReportManagerActivity.key,page,limit,HandlerConstant1.GET_REPORT_LIST_SUCCESS,mHandler);
                      }else{
-                         showMsg(baseBean.getErrorMsg());
+                         // showMsg(baseBean.getErrorMsg());
                      }
                      break;
                 case HandlerConstant1.REQUST_ERROR:
@@ -134,7 +134,7 @@ public class TopicReportFragment extends BaseFragment implements MyRefreshLayout
                 mRefreshLayout.setIsLoadingMoreEnabled(false);
             }
         }else{
-            showMsg(report.getErrorMsg());
+            // showMsg(report.getErrorMsg());
         }
     }
 
