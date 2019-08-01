@@ -114,23 +114,25 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
             StringBuffer stringBuffer=new StringBuffer();
             try {
                 final JSONArray jsonArray=new JSONArray(reportList.getComplaintContent());
-                for (int i=0;i<jsonArray.length();i++){
-                     final JSONObject jsonObject=jsonArray.getJSONObject(i);
-                     //文字
-                     if(jsonObject.getInt("type")==0){
-                        stringBuffer.append("<p>"+jsonObject.getString("content")+"</p>");
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    final JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    //文字
+                    if (jsonObject.getInt("type") == 0) {
+                        stringBuffer.append("<p>" + jsonObject.getString("content") + "</p>");
                     }
                     //图片
-                    if(jsonObject.getInt("type")==1){
-                        stringBuffer.append("<img src='http://"+jsonObject.getString("content")+"'/>");
+                    if (jsonObject.getInt("type") == 1) {
+                        stringBuffer.append("<img src='" + jsonObject.getString("content") + "'/>");
                     }
                     //音频
-                    if(jsonObject.getInt("type")==2){
+                    if (jsonObject.getInt("type") == 2) {
                         pathMap.put(i,jsonObject.getString("content"));
                         timeMap.put(i,jsonObject.getInt("timeLength"));
-                         stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio("+i+")'/>" + "0:00/"+jsonObject.getString("strLength"));
+                        stringBuffer.append("<img src='http://m.qpic.cn/psb?/V14FKuhr1M2Y16/GcffMwIp37DRR3IcfaAOR5VVehPaypyRkbD5VdOHpUM!/b/dLYAAAAAAAAA&bo=yADIAAAAAAADByI!&rf=viewer_4' height=30 width=30 onClick='window.hello.playAutio("+i+")'/>" + "0:00/" + jsonObject.getString("strLength"));
                     }
                 }
+
                 //帖子内容
                 String html = ToolUtils.imgStyleHtml(stringBuffer.toString());
                 initWebView();
