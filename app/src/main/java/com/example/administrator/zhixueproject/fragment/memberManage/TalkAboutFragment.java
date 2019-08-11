@@ -177,7 +177,7 @@ public class TalkAboutFragment extends BaseFragment implements MyRefreshLayoutLi
         bean.setPostReward("0.00");
         bean.setPostIsTop(0);
 
-        PostDetailActivity.start(getActivity(),bean,2);
+        PostDetailActivity.start(getActivity(),bean,2,false);
 
     }
 }

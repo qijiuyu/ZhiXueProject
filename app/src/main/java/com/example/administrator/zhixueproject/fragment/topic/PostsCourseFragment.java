@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.topic.PostDetailActivity;
@@ -29,8 +30,10 @@ import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +53,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
     private String type = "1"; //1 帖子列表  2 搜索
     private MyRefreshLayout mrlPostsCourse;
     private RecyclerView rvPostsCourse;
-    private Context mContext=MyApplication.application;
+    private Context mContext = MyApplication.application;
 
     @Nullable
     @Override
@@ -98,6 +101,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
     public String getKey() {
         return key;
     }
+
     public void setKey(String key) {
         this.key = key;
     }
@@ -128,7 +132,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
      * @param index
      */
     public void getPostList(int index) {
-        TIMESTAMP= DateUtil.getTime();
+        TIMESTAMP = DateUtil.getTime();
         // showProgress(getString(R.string.loading));
         HttpMethod2.getPostList(type, postType + "", postTopicId, key, PAGE + "", LIMIT, TIMESTAMP, index, mHandler);
     }
@@ -151,7 +155,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
             PAGE = 1;
             type = "1";
             getPostList(HandlerConstant2.GET_POST_LIST_SUCCESS1);
-            if (mAdapter!=null){
+            if (mAdapter != null) {
                 mAdapter.notifyDataSetChanged();
             }
         }
@@ -162,10 +166,14 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         int postType = listData.get(position).getPostType();
         if (postType == 1 || postType == 2) {
             LogUtils.e("免费帖子");
-            PostDetailActivity.start(mContext,listData.get(position),1);
+            if (postType == 1) {
+                PostDetailActivity.start(mContext, listData.get(position), 1, true);
+            } else {
+                PostDetailActivity.start(mContext, listData.get(position), 1, false);
+            }
         } else if (postType == 3) {
             LogUtils.e("付费帖子");
-            PostDetailValueActivity.start(mContext,listData.get(position),1);
+            PostDetailValueActivity.start(mContext, listData.get(position), 1);
         }
     }
 
@@ -179,7 +187,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-              // clearTask();
+            // clearTask();
             PostsCourseBean bean = (PostsCourseBean) msg.obj;
             switch (msg.what) {
                 case HandlerConstant2.GET_POST_LIST_SUCCESS1:

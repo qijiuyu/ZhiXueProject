@@ -97,6 +97,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private int mPosition; //用于标记是帖子还是作业fragment
     private String topicWriteName;// 帖子发布人
     private String postContentApp;
+    private boolean showWork=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -231,24 +232,30 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         StatusBarUtils.transparencyBar(this);
         postListBean = (PostListBean) getIntent().getSerializableExtra("postListBean");
         postType = String.valueOf(postListBean.getPostType());
+        showWork=getIntent().getBooleanExtra("showWork",false);
         //设置头部随着滚动
         AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) llPostDetailHead.getLayoutParams();
         layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
-
-        String[] strings = {"讨论", "作业"};
+        String[] strings;
+        if (showWork){
+            strings = new String[]{"讨论", "作业"};
+        }else{
+            strings = new String[]{"讨论"};
+        }
         ArrayList<Fragment> fragmentList = new ArrayList<>();
-
         PostsDetailsTaskFragment postsFragment1 = new PostsDetailsTaskFragment();
         postsFragment1.setType(1);
         postsFragment1.setPostId(String.valueOf(postListBean.getPostId()));
         fragmentList.add(postsFragment1);
 
-        WorksListDetailsFragment postsFragment2 = new WorksListDetailsFragment();
-        postsFragment2.setType(2);
-        postsFragment2.setPostId(String.valueOf(postListBean.getPostId()));
-        fragmentList.add(postsFragment2);
-
-
+        if (showWork){
+            WorksListDetailsFragment postsFragment2 = new WorksListDetailsFragment();
+            postsFragment2.setType(2);
+            postsFragment2.setPostId(String.valueOf(postListBean.getPostId()));
+            fragmentList.add(postsFragment2);
+            tabPostsDetail.setTextSelectColor(getResources().getColor(R.color.color_fd703e));
+            tabPostsDetail.setIndicatorColor(getResources().getColor(R.color.color_fd703e));
+        }
         tabPostsDetail.setViewPager(vpContent, strings, this, fragmentList);
 
         vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -274,12 +281,13 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         HttpMethod2.updatePostColl(String.valueOf(postListBean.getPostId()), mHandler);
     }
 
-    // type :1 帖子列表进入   2：会员详情页进入
-    public static void start(Context context, PostListBean postListBean, int type) {
+    // type :1 帖子列表进入   2：会员详情页进入  showWork:true  显示作业  false  不显示作业
+    public static void start(Context context, PostListBean postListBean, int type,Boolean showWork) {
         Intent starter = new Intent(context, PostDetailActivity.class);
         if (type == 1) {
             starter.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
+        starter.putExtra("showWork",showWork);
         starter.putExtra("postListBean", postListBean);
         context.startActivity(starter);
     }
