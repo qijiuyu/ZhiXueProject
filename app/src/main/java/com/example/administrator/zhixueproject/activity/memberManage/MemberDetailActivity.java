@@ -18,6 +18,7 @@ import com.example.administrator.zhixueproject.bean.memberManage.AttendanceBean;
 import com.example.administrator.zhixueproject.fragment.memberManage.PaidQuestionFragment;
 import com.example.administrator.zhixueproject.fragment.memberManage.TalkAboutFragment;
 import com.example.administrator.zhixueproject.utils.GlideCirclePictureUtil;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -146,6 +147,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
 
     @Subscribe
     public void postEventInfo(AttendanceBean result) {
+        mMemberInfoBean=result;
         initInfo(result);
 
     }
