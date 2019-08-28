@@ -103,6 +103,8 @@ public class TopicReportFragment extends BaseFragment implements MyRefreshLayout
                          showMsg("删除成功");
                          page=1;
                          HttpMethod1.getReportList(1, ReportManagerActivity.key,page,limit,HandlerConstant1.GET_REPORT_LIST_SUCCESS,mHandler);
+                         //刷新楼层数据
+                         mActivity.sendBroadcast(new Intent(ReportManagerActivity.REFRESH_LOU_CENT));
                      }else{
                          // showMsg(baseBean.getErrorMsg());
                      }

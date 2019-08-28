@@ -164,6 +164,7 @@ public class FloorReportFragment extends BaseFragment implements MyRefreshLayout
         myIntentFilter.addAction(ReportManagerActivity.ACTION_QUAN_XUAN);
         myIntentFilter.addAction(ReportManagerActivity.ACTION_SHAN_CHU);
         myIntentFilter.addAction(ReportManagerActivity.ACTION_QU_XIAO);
+        myIntentFilter.addAction(ReportManagerActivity.REFRESH_LOU_CENT);
         mActivity.registerReceiver(mBroadcastReceiver,myIntentFilter);
     }
 
@@ -218,6 +219,10 @@ public class FloorReportFragment extends BaseFragment implements MyRefreshLayout
                         floorReportAdapter.notifyDataSetChanged();
                     }
                     break;
+                case ReportManagerActivity.REFRESH_LOU_CENT:
+                     page=1;
+                     HttpMethod1.getReportList(2, ReportManagerActivity.key,page,limit,HandlerConstant1.GET_REPORT_LIST_SUCCESS3,mHandler);
+                      break;
             }
         }
     };

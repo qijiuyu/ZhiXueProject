@@ -81,7 +81,6 @@ public class LogInterceptor implements Interceptor {
             bodyBuilder.addEncoded(key, requstMap.get(key));
         }
         formBody = bodyBuilder.build();
-        LogUtils.e("Authentication===  "+MyApplication.spUtil.getString(SPUtil.TOKEN));
         request = request.newBuilder().addHeader("Authentication", MyApplication.spUtil.getString(SPUtil.TOKEN)).post(formBody).build();
         return request;
     }

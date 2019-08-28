@@ -51,6 +51,8 @@ public class ReportManagerActivity extends BaseActivity implements View.OnClickL
     public final static String ACTION_SHAN_CHU="net.zhixue.adminapp.ACTION_SHAN_CHU";
     //取消广播
     public final static String ACTION_QU_XIAO="net.zhixue.adminapp.ACTION_QU_XIAO";
+    //刷新楼层数据
+    public final static String REFRESH_LOU_CENT="net.zhixue.adminapp.REFRESH_LOU_CENT";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_manager);
