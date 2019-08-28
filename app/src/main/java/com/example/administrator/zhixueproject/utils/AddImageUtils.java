@@ -85,8 +85,8 @@ public class AddImageUtils {
             intent.putExtra("crop", "true");
             intent.putExtra("aspectX", 1);
             intent.putExtra("aspectY", 1);
-            intent.putExtra("outputX", 480);
-            intent.putExtra("outputY", 480);
+            intent.putExtra("outputX", 600);
+            intent.putExtra("outputY", 600);
             intent.putExtra("scale", true);
             intent.putExtra("return-data", false);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUriSmall);
