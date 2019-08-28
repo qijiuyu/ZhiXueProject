@@ -171,16 +171,19 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
             mItemViewType = mActivityListBean.getActivityType();
             //设置回显示
             if (mItemViewType != 0) {
-                topicType = mItemViewType;
+                // topicType = mItemViewType;
                 switch (mItemViewType) {
                     case 31:
                         tvTopicType.setText("课程");
+                        topicType = 1;
                         break;
                     case 32:
                         tvTopicType.setText("大家谈");
+                        topicType = 2;
                         break;
                     default:
                         tvTopicType.setText("付费问答");
+                        topicType = 3;
                         break;
                 }
             }

@@ -41,6 +41,7 @@ public class VoteNeophyteAdapter extends BaseQuickAdapter<VoteDetailListBean, Ba
         try {
             JSONArray jsonArray = new JSONArray(voteSecNames);
             if (jsonArray.length() == 0) return;
+             list.clear();
             for (int i = 0; i < jsonArray.length(); i++) {
                 AddVoteBean bean = new AddVoteBean();
                 JSONObject innerObject = jsonArray.getJSONObject(i);
