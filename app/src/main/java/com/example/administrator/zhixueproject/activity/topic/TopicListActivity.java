@@ -24,6 +24,7 @@ import com.example.administrator.zhixueproject.adapter.topic.TopicListAdapter;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.fragment.topic.PostsCourseFragment;
 import com.example.administrator.zhixueproject.utils.InputMethodUtils;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -64,6 +65,7 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
     private static final int TYPE_ALL_TALK = 2;
     private static final int TYPE_ALL = 3;
     private static final int TYPE_PRICE_ASK = 4;
+    private String postTypeName="课程";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,12 +101,14 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
         switch (postType) {
             case TYPE_COURSE:
                 titles = new String[]{"课程"};
+                postTypeName="课程";
                 type=1;
                 addCourseFragment(fragmentList);
                 tabs.setIndicatorHeight(0);
                 break;
             case TYPE_ALL_TALK:
                 titles = new String[]{ "大家谈"};
+                postTypeName="大家谈";
                 type=2;
                 addAllTalkFragment(fragmentList);
                 tabs.setIndicatorHeight(0);
@@ -117,6 +121,7 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
                 break;
             case TYPE_PRICE_ASK:
                 titles = new String[]{"有偿提问"};
+                postTypeName="有偿提问";
                 type=3;
                 addValueAskFragment(fragmentList);
                 tabs.setIndicatorHeight(0);
@@ -134,6 +139,7 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
                 @Override
                 public void onPageSelected(int position) {
                     type = position + 1;
+                    postTypeName=titles[position];
                 }
 
                 @Override
@@ -262,10 +268,10 @@ public class TopicListActivity extends BaseActivity implements View.OnClickListe
                         ReleasePostActivity.start(TopicListActivity.this, type, postTopicId);
                         break;
                     case R.id.menu2:// 活动
-                        ReleaseActionActivity.start(TopicListActivity.this, postTopicId,postName);
+                        ReleaseActionActivity.start(TopicListActivity.this, postTopicId,postName,postTypeName,type);
                         break;
                     case R.id.menu3:// 投票
-                        ReleaseVoteActivity.start(TopicListActivity.this, postTopicId,postName);
+                        ReleaseVoteActivity.start(TopicListActivity.this, postTopicId,postName,postTypeName,type);
                         break;
                 }
             }

@@ -1,6 +1,8 @@
 package com.example.administrator.zhixueproject.application;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
 import com.example.administrator.zhixueproject.bean.Colleges;
@@ -31,6 +33,13 @@ public class MyApplication extends Application {
     public static UserInfo userInfo;
     public static Home.HomeBean homeBean;
     public static IWXAPI api;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
     public void onCreate() {
         super.onCreate();
         application=this;

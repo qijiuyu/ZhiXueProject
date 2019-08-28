@@ -206,7 +206,7 @@ public class DecorationFragment extends BaseFragment implements BaseQuickAdapter
             mDecorationAdapter.setNewData(medalList);
             mDecorationAdapter.notifyDataSetChanged();
         } else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 

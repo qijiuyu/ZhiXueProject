@@ -74,7 +74,7 @@ public class ReportListAdapter extends BaseAdapter{
 			Glide.with(activity).load(imgUrl).override(105,78).centerCrop().into(holder.imageView);
 		}
 		holder.tvTopicName.setText(reportList.getPostName());
-		holder.tvReportName.setText(reportList.getPostWriterId());
+		holder.tvReportName.setText("发帖人："+reportList.getPostWriterId());
 		holder.tvTime.setText(reportList.getComplaintCreationTime());
 		holder.tvCount.setText(reportList.getComplaintCount()+"人  举报");
 

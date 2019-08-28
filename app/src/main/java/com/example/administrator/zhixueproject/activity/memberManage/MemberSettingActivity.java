@@ -373,7 +373,7 @@ public class MemberSettingActivity extends BaseActivity implements View.OnClickL
             postEventInfo(result);
             finish();
         }else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 

@@ -33,6 +33,7 @@ import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.KeyboardUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
+import com.example.administrator.zhixueproject.utils.TimeUtils;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
 import com.example.administrator.zhixueproject.view.SwitchButton;
 import com.example.administrator.zhixueproject.view.time.TimePickerView;
@@ -89,7 +90,6 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private String postContentApp="";
     private String postId="";
     private SwitchButton sbIsTop;
-    private SwitchButton sbIsMultySelect;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,7 +119,6 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         relIssuer = (RelativeLayout) findViewById(R.id.rl_issuer);
         ivRightIssure = (ImageView) findViewById(R.id.iv_right_issuer);
         sbIsTop = (SwitchButton) findViewById(R.id.sb_stick);
-        sbIsMultySelect = (SwitchButton) findViewById(R.id.sb_select);
         relIssuer.setOnClickListener(this);
         findViewById(R.id.rl_start_time).setOnClickListener(this);
         findViewById(R.id.rl_end_time).setOnClickListener(this);
@@ -158,6 +157,9 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
     private void initData() {
         topicId=getIntent().getIntExtra("topicId",0)+"";
         tvTopic.setText(getIntent().getStringExtra("topicName"));
+        String postTypeName = getIntent().getStringExtra("postTypeName");
+        tvVoteType.setText(postTypeName);
+        topicType = getIntent().getIntExtra("topicType", 0);
 
         mVoteListBean = (VoteListBean) getIntent().getSerializableExtra("voteListBean");
         if (mVoteListBean != null) {
@@ -185,6 +187,8 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                 }
             }
 
+            savedStartTime= TimeUtils.getTimestamp(mVoteListBean.getStartTime());
+            savedEndTime=TimeUtils.getTimestamp(mVoteListBean.getEndTime());
             etTitle.setText(mVoteListBean.getVoteName());
             tvStartTime.setText(mVoteListBean.getStartTime());
             mStartTime = mVoteListBean.getStartTime();
@@ -229,10 +233,12 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
         context.startActivity(starter);
     }
 
-    public static void start(Context context,int topicId,String topicName) {
+    public static void start(Context context,int topicId,String topicName,String postTypeName,int topicType) {
         Intent starter = new Intent(context, ReleaseVoteActivity.class);
         starter.putExtra("topicId", topicId);
         starter.putExtra("topicName", topicName);
+        starter.putExtra("postTypeName", postTypeName);
+        starter.putExtra("topicType", topicType);
         context.startActivity(starter);
     }
 
@@ -286,12 +292,6 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                 pvCustomTime.show(tvEndTime);
                 break;
             case R.id.tv_add_vote:
-                // 不是多选才能添加
-               /* if (list.size() >= 1 && mIsMultiple == false) {
-                    showMsg("您未开启多选，不能添加多个投票项");
-                } else {
-
-                }*/
                 showAddVotePop();
                 break;
             case R.id.tv_confirm:
@@ -326,7 +326,6 @@ public class ReleaseVoteActivity extends BaseActivity implements View.OnClickLis
                     showMsg("结束时间一定要在开始时间之后哦!");
                     return ;
                 }
-
                 // 跳转到发布内容页
                 ReleaseContentsActivity.start(this, topicId, voteName, String.valueOf(topicType), mIsTop, String.valueOf(activityWriterId)
                         , mStartTime, mEndTime, MyApplication.gson.toJson(list), mIsMultiple,postContentApp,postId);

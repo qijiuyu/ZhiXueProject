@@ -2,15 +2,15 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.1'
+    buildToolsVersion '28.0.3'
 
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.example.administrator.zhixueproject"
         minSdkVersion 18
         targetSdkVersion 18
-        versionCode 37
-        versionName "3.7"
+        versionCode 48
+        versionName "4.8"
         multiDexEnabled true
         //resConfigs "zh"
 //        resConfigs "zh"
@@ -84,13 +84,14 @@ dependencies {
     compile 'com.android.support:design:23.0.0'
     // emoji
     compile 'io.github.rockerhieu:emojicon:1.4.2'
-    compile 'cn.jiguang.sdk:jpush:3.1.6'
+    compile 'cn.jiguang.sdk:jpush:3.3.4'
     // 此处以JPush 3.1.6 版本为例。
-    compile 'cn.jiguang.sdk:jcore:1.2.5'
+    compile 'cn.jiguang.sdk:jcore:2.1.2'
     // 此处以JCore 1.2.5 版本为例。
     compile files('libs/umeng-common-1.5.4.jar')
     compile files('libs/umeng-share-core-6.9.4.jar')
     compile files('libs/umeng-share-QQ-simplify-6.9.4.jar')
     compile files('libs/umeng-share-wechat-simplify-6.9.4.jar')
     compile files('libs/umeng-sharetool-6.9.4.jar')
+    implementation 'com.android.support:multidex:1.0.0'
 }

@@ -496,7 +496,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                         //上传图片或者mp3
                         sendMsg();
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                     //发布文字成功

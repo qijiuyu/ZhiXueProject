@@ -313,7 +313,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                         EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.COMMENT_SUCCESS));
                         initComment();
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                 case HandlerConstant2.COMMENT_REPLY_SUCCESS:
@@ -326,7 +326,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                         EventBus.getDefault().post(new PostEvent().setEventType(PostEvent.COMMENT_SUCCESS));
                         initComment();
                     } else {
-                        showMsg(bean.getErrorMsg());
+                        // showMsg(bean.getErrorMsg());
                     }
                     break;
                 case HandlerConstant2.GET_YOU_CHANG_DETAIL_SUCCESS:
@@ -353,7 +353,12 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         GlideCirclePictureUtil.setCircleImg(mContext,postContent.getUserImg(),ivHead);
         tvNickName.setText(postContent.getUserName());
         tvAttentionNum.setText(String.valueOf(postContent.getAttentionNum()));
-        tvMoneyReward.setText("赏金" + postContent.getPostReward());
+        if (TextUtils.isEmpty(postContent.getPostReward())){
+            tvMoneyReward.setText("赏金0.00" );
+        }else {
+            tvMoneyReward.setText("赏金" + postContent.getPostReward());
+        }
+
         tvPeepNum.setText(TextUtils.isEmpty(postContent.getPostPeepNum())?"0":postContent.getPostPeepNum());
 
         //评论区域
@@ -395,7 +400,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                     if(jsonObject.getInt("type")==2){
                         pathMap.put(i,jsonObject.getString("content"));
                         timeMap.put(i,jsonObject.getInt("timeLength"));
-                        stringBuffer.append("<img src='http://1x9x.cn/college/res/img/Audiorun.png' onClick='window.hello.playAutio("+i+")'/>" + "0:00/"+jsonObject.getString("strLength"));
+                        stringBuffer.append("<img src='http://m.qpic.cn/psb?/V14FKuhr1M2Y16/GcffMwIp37DRR3IcfaAOR5VVehPaypyRkbD5VdOHpUM!/b/dLYAAAAAAAAA&bo=yADIAAAAAAADByI!&rf=viewer_4' height=30 width=30 onClick='window.hello.playAutio("+i+")'/>" + "0:00/" + jsonObject.getString("strLength"));
                     }
                 }
                 //帖子内容

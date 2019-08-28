@@ -226,7 +226,7 @@ public class MemberApplyActivity extends BaseActivity implements View.OnClickLis
             mMemberApplyAdapter.setNewData(mApplyVipList);
             mMemberApplyAdapter.notifyDataSetChanged();
         }else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 
@@ -240,7 +240,7 @@ public class MemberApplyActivity extends BaseActivity implements View.OnClickLis
             mMemberApplyAdapter.setNewData(mApplyVipList);
             mMemberApplyAdapter.notifyDataSetChanged();
         }else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 

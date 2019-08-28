@@ -169,6 +169,8 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
             tvTopicType.setText("大家谈");
         } else if (topicType == 3) {
             tvTopicType.setText("全部");
+        }else if (topicType ==4){
+            tvTopicType.setText("付费问答");
         }
 
         topicUseyn = bean.getTopicUseyn();

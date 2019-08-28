@@ -183,7 +183,7 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
             listData.remove(mCurrentPosition);
             mAdapter.notifyDataSetChanged();
         }else {
-            showMsg(bean.getErrorMsg());
+            // showMsg(bean.getErrorMsg());
         }
     }
 
