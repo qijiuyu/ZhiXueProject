@@ -48,6 +48,7 @@ import com.example.administrator.zhixueproject.utils.StatusBarUtils;
 import com.example.administrator.zhixueproject.utils.record.RecordUtil;
 import com.example.administrator.zhixueproject.utils.record.VoiceManager;
 import com.example.administrator.zhixueproject.view.CustomPopWindow;
+import com.example.administrator.zhixueproject.view.DialogView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -230,6 +231,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    DialogView dialogView;
     public void onClick(View view) {
         switch (view.getId()) {
             // emoji表情
@@ -255,8 +257,14 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                 }
                 break;
             case R.id.tv_release:
-                 showProgress(getString(R.string.loding));
-                 HttpMethod1.liveEnd(String.valueOf(liveList.getPostId()),mHandler);
+                dialogView=new DialogView(this, "确定结束直播吗？", "确定", "取消", new View.OnClickListener() {
+                    public void onClick(View v) {
+                        dialogView.dismiss();
+                        showProgress(getString(R.string.loding));
+                        HttpMethod1.liveEnd(String.valueOf(liveList.getPostId()),mHandler);
+                    }
+                },null);
+                dialogView.show();
                 break;
             case R.id.iv_voice:
                 closeSoftInput();
