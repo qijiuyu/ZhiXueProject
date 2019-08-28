@@ -21,6 +21,7 @@ public class VoteDetailListBean {
         private String userName;
         private int voteId;
         private String voteSecNames;
+        private int voteResultId;
 
 
         public String getVoteCreattime() {
@@ -87,5 +88,13 @@ public class VoteDetailListBean {
 
     public void setVoteSecNames(String voteSecNames) {
         this.voteSecNames = voteSecNames;
+    }
+
+    public int getVoteResultId() {
+        return voteResultId;
+    }
+
+    public void setVoteResultId(int voteResultId) {
+        this.voteResultId = voteResultId;
     }
 }
