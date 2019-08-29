@@ -13,9 +13,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.memberManage.MedalIconAdapter;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.memberManage.AttendanceBean;
 import com.example.administrator.zhixueproject.bean.memberManage.MemberSettingBean;
 import com.example.administrator.zhixueproject.fragment.memberManage.IdentityFragment;
@@ -60,6 +62,7 @@ public class MemberSettingActivity extends BaseActivity implements View.OnClickL
     private TextView tvIdentity;
     private RecyclerView rvMedalIcon;
     private EditText etMemberName;
+    private int type; // 1管理员，2老师
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,10 +96,11 @@ public class MemberSettingActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initData() {
-        etMemberName.setText(TextUtils.isEmpty(mMemberInfoBean.getAttendUsername())?"":mMemberInfoBean.getAttendUsername());
+        etMemberName.setText(TextUtils.isEmpty(mMemberInfoBean.getAttendUsername()) ? "" : mMemberInfoBean.getAttendUsername());
         etMemberName.requestFocus();
         etMemberName.setSelection(mMemberInfoBean.getAttendUsername().length());//将光标移至文字末尾
         mAttendId = mMemberInfoBean.getAttendId();
+        type = MyApplication.homeBean.getAttendType();
         //人员类型(0：学生、1：管理员、2老师
         attendType = mMemberInfoBean.getAttendType();
         String[] identity = getResources().getStringArray(R.array.member_identity);
@@ -151,7 +155,10 @@ public class MemberSettingActivity extends BaseActivity implements View.OnClickL
                 showNospeakingTimeFragment(isNospeaking);
                 break;
             case R.id.rl_show_identity://显示会员身份弹窗
-                showIdentityFragment(true);
+                if (type == 1) {
+                    // 管理员身份才能修改
+                    showIdentityFragment(true);
+                }
                 break;
             case R.id.rl_show_decoration://显示勋章弹窗
                 showFragment(true);
@@ -167,7 +174,7 @@ public class MemberSettingActivity extends BaseActivity implements View.OnClickL
     private void saveVip() {
         // 保存会员信息
         String attendUsername = etMemberName.getText().toString().trim() + "";
-        if (TextUtils.isEmpty(attendUsername)){
+        if (TextUtils.isEmpty(attendUsername)) {
             showMsg("会员名称不能为空");
             return;
         }
@@ -361,18 +368,18 @@ public class MemberSettingActivity extends BaseActivity implements View.OnClickL
     };
 
     /**
-     *  保存会员信息成功
+     * 保存会员信息成功
      */
     private void saveVipSuccess(MemberSettingBean bean) {
-        if (null==bean){
+        if (null == bean) {
             return;
         }
-        if (bean.isStatus()){
+        if (bean.isStatus()) {
             showMsg("保存成功");
-            AttendanceBean result=bean.getData().getAttendance();
+            AttendanceBean result = bean.getData().getAttendance();
             postEventInfo(result);
             finish();
-        }else {
+        } else {
             // showMsg(bean.getErrorMsg());
         }
     }

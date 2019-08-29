@@ -9,10 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.VoteManageAdapter;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.VoteListBean;
 import com.example.administrator.zhixueproject.bean.topic.VoteManageBean;
@@ -20,6 +22,7 @@ import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.DateUtil;
+import com.example.administrator.zhixueproject.view.DialogView;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -42,10 +45,12 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
     private List<VoteListBean> listData = new ArrayList<>();
     private int PAGE = 1;
     private String LIMIT = "10";
-    private String TIMESTAMP ="";
+    private String TIMESTAMP = "";
     private int mCurrentPosition;
     private MyRefreshLayout mrlVoteManage;
     private RecyclerView rvVoteManage;
+    private int type; // 1管理员，2老师
+    private DialogView dialogView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +64,7 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.vote_manage));
         findViewById(R.id.lin_back).setOnClickListener(this);
-        TextView tvRight= (TextView) findViewById(R.id.tv_right);
+        TextView tvRight = (TextView) findViewById(R.id.tv_right);
         tvRight.setBackground(getResources().getDrawable(R.mipmap.add_title_iv));
         tvRight.setOnClickListener(this);
         mrlVoteManage = (MyRefreshLayout) findViewById(R.id.mrl_vote_manage);
@@ -71,12 +76,13 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
         mrlVoteManage.setMyRefreshLayoutListener(this);
         getVoteList(HandlerConstant2.GET_VOTE_LIST_SUCCESS);
         adapterView();
+        type = MyApplication.homeBean.getAttendType();
     }
 
     private void getVoteList(int index) {
-        TIMESTAMP= DateUtil.getTime();
+        TIMESTAMP = DateUtil.getTime();
         showProgress(getString(R.string.loading));
-        HttpMethod2.getVoteList(TIMESTAMP, PAGE + "", LIMIT,index,mHandler);
+        HttpMethod2.getVoteList(TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
     }
 
     @Override
@@ -95,7 +101,7 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onRefresh(View view) {
-        PAGE=1;
+        PAGE = 1;
         getVoteList(HandlerConstant2.GET_VOTE_LIST_SUCCESS);
     }
 
@@ -105,12 +111,12 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
         getVoteList(HandlerConstant2.GET_VOTE_LIST_SUCCESS2);
     }
 
-    private Handler mHandler=new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
-            VoteManageBean bean= (VoteManageBean) msg.obj;
+            VoteManageBean bean = (VoteManageBean) msg.obj;
             switch (msg.what) {
                 case HandlerConstant2.GET_VOTE_LIST_SUCCESS:
                     getDataSuccess(bean);
@@ -141,13 +147,13 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
         if (bean.isStatus()) {
             VoteManageBean.DataBean dataBean = bean.getData();
             listData = dataBean.getVoteList();
-            if (dataBean.getVoteList().size()==0){
+            if (dataBean.getVoteList().size() == 0) {
                 return;
             }
             mAdapter.setNewData(listData);
             mAdapter.notifyDataSetChanged();
         } else {
-           // showMsg(bean.errorMsg);
+            // showMsg(bean.errorMsg);
         }
     }
 
@@ -175,14 +181,15 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
 
     /**
      * 删除活动成功
+     *
      * @param bean
      */
     public void deleteVoteSuccess(VoteManageBean bean) {
-        if (bean.isStatus()){
+        if (bean.isStatus()) {
             showMsg("删除成功");
             listData.remove(mCurrentPosition);
             mAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             // showMsg(bean.getErrorMsg());
         }
     }
@@ -210,15 +217,35 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
     public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
         switch (view.getId()) {
             case R.id.tv_menu_one:
-                ReleaseVoteActivity.start(this,listData.get(position));
+                ReleaseVoteActivity.start(this, listData.get(position));
                 break;
             case R.id.tv_menu_two:
+                if (type == 2) {
+                    showMsg("老师身份无权限删除");
+                    return;
+                }
+                showConfirmDialog();
                 this.mCurrentPosition = position;
-                HttpMethod2.deleteVote(String.valueOf(listData.get(position).getVoteId()),mHandler);
+                HttpMethod2.deleteVote(String.valueOf(listData.get(position).getVoteId()), mHandler);
                 break;
             default:
                 break;
         }
+    }
+
+    private void showConfirmDialog() {
+        dialogView = new DialogView(this, "确定要删除该投票吗？", "确定", "取消", new View.OnClickListener() {
+            public void onClick(View v) {
+                HttpMethod2.deleteVote(String.valueOf(listData.get(mCurrentPosition).getVoteId()), mHandler);
+                dialogView.dismiss();
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogView.dismiss();
+            }
+        });
+        dialogView.show();
     }
 
 
@@ -226,7 +253,7 @@ public class VoteManageActivity extends BaseActivity implements View.OnClickList
     public void postEvent(PostEvent postEvent) {
         if (PostEvent.RELEASE_VOTE_SUCCESS == postEvent.getEventType()) {
             //查询投票列表
-             PAGE = 1;
+            PAGE = 1;
             getVoteList(HandlerConstant2.GET_VOTE_LIST_SUCCESS);
         }
     }
