@@ -220,7 +220,6 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
      * 上传图片
      */
     private void uploadImg(){
-        LogUtils.e(mOutputUri+"++++++++++++++");
         try {
             mFileCamera = new File(mOutputUri);
             if (!mFileCamera.isFile()) {

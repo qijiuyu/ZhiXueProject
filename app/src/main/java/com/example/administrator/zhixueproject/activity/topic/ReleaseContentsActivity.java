@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.activity.live.AddLiveContentActivity;
 import com.example.administrator.zhixueproject.adapter.topic.ReleaseContentsAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.UploadFile;
@@ -43,6 +44,7 @@ import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
 import com.example.administrator.zhixueproject.utils.ClickUtil;
 import com.example.administrator.zhixueproject.utils.FileStorage;
+import com.example.administrator.zhixueproject.utils.FileUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.SoftInputUtils;
@@ -90,7 +92,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
     private String endTime;
     private String activityId;
     private PopIco popIco;
-    private Uri mOutputUri;
+    private String mOutputUri;
     private int fileType;
     private long voiceLength = 0;
     public File mFileCamera;
@@ -470,33 +472,39 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                         } else {
                             AddImageUtils.handleImageBeforeKitKat(data, ReleaseContentsActivity.this);
                         }
-                        mOutputUri = AddImageUtils.cropPhotoSmall(ReleaseContentsActivity.this);
+                        mOutputUri= FileUtils.compressBitMap(FileUtils.getFileByUri(AddImageUtils.imageUri,ReleaseContentsActivity.this));
+                        uploadImg();
 
                     }
                     break;
                 case AddImageUtils.REQUEST_CAPTURE://拍照
-                    mOutputUri = AddImageUtils.cropPhotoSmall(ReleaseContentsActivity.this);
-                    break;
-                case AddImageUtils.REQUEST_PICTURE_CUT_SMALL://裁剪完成
-                    if (data != null) {
-                        try {
-                            mFileCamera = new File(mOutputUri.getPath());
-                            if (!mFileCamera.isFile()) {
-                                return;
-                            }
-                            List<File> list = new ArrayList<>();
-                            list.add(mFileCamera);
-                            showProgress("图片上传中");
-                            //本地显示
-                            addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength, false);
-                            //上传图片
-                            HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    mOutputUri=FileUtils.compressBitMap(FileUtils.getFileByUri(AddImageUtils.imageUri,ReleaseContentsActivity.this));
+                    uploadImg();
                     break;
             }
+        }
+    }
+
+
+    /**
+     * 上传图片
+     */
+    private void uploadImg(){
+        LogUtils.e(mOutputUri+"++++++++++++++");
+        try {
+            mFileCamera = new File(mOutputUri);
+            if (!mFileCamera.isFile()) {
+                return;
+            }
+            List<File> list = new ArrayList<>();
+            list.add(mFileCamera);
+            showProgress("图片上传中");
+            //本地显示
+            addList(mOutputUri, fileType, voiceStrLength, voiceLength, false);
+            //上传图片
+            HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
