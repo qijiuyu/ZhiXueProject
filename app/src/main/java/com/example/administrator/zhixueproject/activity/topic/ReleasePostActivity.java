@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -287,6 +289,30 @@ public class ReleasePostActivity extends BaseActivity implements View.OnClickLis
         mAdapter = new CostsListAdapter(R.layout.cost_list_item, list);
         rv_cost_list.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
+
+
+        /**
+         * 限制小数点后两位
+         */
+        et_cost.addTextChangedListener(new TextWatcher()
+        {
+            public void afterTextChanged(Editable edt)
+            {
+                String temp = edt.toString();
+                int posDot = temp.indexOf(".");
+                if (posDot <= 0) return;
+                if (temp.length() - posDot - 1 > 2)
+                {
+                    edt.delete(posDot + 3, posDot + 4);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+        });
+
+
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override

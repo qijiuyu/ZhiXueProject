@@ -10,7 +10,9 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -82,6 +85,7 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
     public static final String FLAG_ADD = "1"; //添加
     public static final String FLAG_EDIT = "2";//编辑
     private String topicImg;
+    private String mMoney="";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -243,6 +247,29 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
         rv_cost_list.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
 
+
+        /**
+         * 限制小数点后两位
+         */
+        etCost.addTextChangedListener(new TextWatcher()
+        {
+            public void afterTextChanged(Editable edt)
+            {
+                String temp = edt.toString();
+                int posDot = temp.indexOf(".");
+                if (posDot <= 0) return;
+                if (temp.length() - posDot - 1 > 2)
+                {
+                    edt.delete(posDot + 3, posDot + 4);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+        });
+
+
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -256,14 +283,17 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
                             payType = 1;
                         } else if (mCost.equals(costs[1])) {
                             final String money = etCost.getText().toString().trim();
+
                             if (TextUtils.isEmpty(money)) {
                                 showMsg("付费金额不能为空");
                                 return;
                             }
+
                             if (Double.parseDouble(money) == 0) {
                                 showMsg("付费金额不能0");
                                 return;
                             }
+
                             tvTollMode.setTextColor(getResources().getColor(R.color.color_ff0000));
                             tvTollMode.setText("￥" + etCost.getText().toString());
                             payType = 2;

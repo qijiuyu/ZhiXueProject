@@ -127,7 +127,7 @@
 
                     <TextView
                         style="@style/release_common_tv"
-                        android:text="投票类型"/>
+                        android:text="投票归属"/>
 
                     <ImageView
                         android:id="@+id/iv_right"

@@ -13,10 +13,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.ActionManageAdapter;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.topic.ActionManageBean;
 import com.example.administrator.zhixueproject.bean.topic.ActivityListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
@@ -24,9 +26,11 @@ import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.view.DialogView;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +50,8 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
     private int mCurrentPosition;
     private MyRefreshLayout mrlActionManage;
     private RecyclerView rvActionManage;
+    private int type; // 1管理员，2老师
+    private DialogView dialogView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,21 +78,22 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
         registerBroadCast();
         getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS);
         adapterView();
+        type = MyApplication.homeBean.getAttendType();
     }
 
     /**
      * 注册广播
      */
     private void registerBroadCast() {
-        IntentFilter intentFilter=new IntentFilter();
+        IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ReleaseActionActivity.RELAEASE_ACTION_SUCCESS);
-        registerReceiver(mBroadCastReceiver,intentFilter);
+        registerReceiver(mBroadCastReceiver, intentFilter);
     }
 
     public void getActivityList(int index) {
-        TIMESTAMP= DateUtil.getTime();
+        TIMESTAMP = DateUtil.getTime();
         showProgress(getString(R.string.loading));
-        HttpMethod2.getActivityList(TIMESTAMP, PAGE+"", LIMIT, index, mHandler);
+        HttpMethod2.getActivityList(TIMESTAMP, PAGE + "", LIMIT, index, mHandler);
     }
 
     @Override
@@ -151,16 +158,16 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
             return;
         }
         if (bean.isStatus()) {
-             ActionManageBean.DataBean dataBean = bean.getData();
+            ActionManageBean.DataBean dataBean = bean.getData();
             listData = dataBean.getActivityList();
-            if (dataBean.getActivityList().size()==0){
+            if (dataBean.getActivityList().size() == 0) {
                 return;
             }
             // adapterView();
             mAdapter.setNewData(listData);
             mAdapter.notifyDataSetChanged();
         } else {
-           // showMsg(bean.errorMsg);
+            // showMsg(bean.errorMsg);
 
         }
     }
@@ -183,7 +190,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
             mAdapter.setNewData(listData);
             mAdapter.notifyDataSetChanged();
         } else {
-           // showMsg(bean.errorMsg);
+            // showMsg(bean.errorMsg);
         }
     }
 
@@ -216,7 +223,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, final int position) {
         this.mCurrentPosition = position;
         switch (view.getId()) {
             //编辑
@@ -226,17 +233,32 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
                 break;
             //删除
             case R.id.tv_menu_two:
-                HttpMethod2.deleteActivity(String.valueOf(listData.get(position).getActivityId()),mHandler);
+                if (type == 2) {
+                    showMsg("老师身份无权限删除");
+                    return;
+                }
+                dialogView = new DialogView(this, "确定要删除该活动吗？", "确定", "取消", new View.OnClickListener() {
+                    public void onClick(View v) {
+                        dialogView.dismiss();
+                        HttpMethod2.deleteActivity(String.valueOf(listData.get(position).getActivityId()), mHandler);
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialogView.dismiss();
+                    }
+                });
+                dialogView.show();
                 break;
             default:
                 break;
         }
     }
 
-    private BroadcastReceiver mBroadCastReceiver=new BroadcastReceiver() {
+    private BroadcastReceiver mBroadCastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction()==ReleaseActionActivity.RELAEASE_ACTION_SUCCESS){
+            if (intent.getAction() == ReleaseActionActivity.RELAEASE_ACTION_SUCCESS) {
                 LogUtils.e("刷新活动管理列表");
                 PAGE = 1;
                 getActivityList(HandlerConstant2.GET_ACTIVITY_LIST_SUCCESS);
@@ -247,7 +269,7 @@ public class ActionManageActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mBroadCastReceiver!=null){
+        if (mBroadCastReceiver != null) {
             unregisterReceiver(mBroadCastReceiver);
         }
     }

@@ -115,7 +115,7 @@
 
                 <TextView
                     style="@style/release_common_tv"
-                    android:text="上下架" />
+                    android:text="上架" />
 
                 <com.example.administrator.zhixueproject.view.SwitchButton
                     android:id="@+id/sb_put_away"
