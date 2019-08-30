@@ -20,7 +20,7 @@ import java.io.File;
  */
 
 public class AddImageUtils {
-    private static Uri imageUri;//原图保存地址
+    public static Uri imageUri;//原图保存地址
     public static String outputUri= FileUtils.getSdcardPath()+"crop.png";//裁剪后地址
     public static Uri outputUriSmall;// 缩略图展示
     public static final int REQUEST_PICK_IMAGE = 1; //相册选取
@@ -83,9 +83,9 @@ public class AddImageUtils {
             Intent intent = new Intent("com.android.camera.action.CROP");
             intent.setDataAndType(imageUri, "image/*");
             intent.putExtra("crop", "true");
-            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectX", 0.5);
             intent.putExtra("aspectY", 1);
-            intent.putExtra("outputX", 600);
+            intent.putExtra("outputX", 300);
             intent.putExtra("outputY", 600);
             intent.putExtra("scale", true);
             intent.putExtra("return-data", false);

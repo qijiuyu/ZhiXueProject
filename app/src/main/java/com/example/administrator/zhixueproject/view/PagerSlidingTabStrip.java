@@ -102,6 +102,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	private Locale locale;
 
+	private ViewPagerCallBack viewPagerCallBack;
+
 	public PagerSlidingTabStrip(Context context) {
 		this(context, null);
 	}
@@ -384,6 +386,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 			if (delegatePageListener != null) {
 				delegatePageListener.onPageSelected(position);
 			}
+
+			if(null!=viewPagerCallBack){
+				viewPagerCallBack.PageSelected(position);
+			}
 		}
 
 	}
@@ -594,6 +600,11 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 				return new SavedState[size];
 			}
 		};
+	}
+
+
+	public void setViewPagerCallBack(ViewPagerCallBack viewPagerCallBack){
+		this.viewPagerCallBack=viewPagerCallBack;
 	}
 
 }

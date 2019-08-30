@@ -3,6 +3,7 @@ package com.example.administrator.zhixueproject.activity.live;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Path;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.AddImageUtils;
 import com.example.administrator.zhixueproject.utils.FileStorage;
+import com.example.administrator.zhixueproject.utils.FileUtils;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.SoftInputUtils;
@@ -74,7 +76,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     private CustomPopWindow recordPopWindow;
     private VoiceManager voiceManager;
     private TextView tv_time_length;
-    private Uri mOutputUri;
+    private String mOutputUri;
     private int fileType;
     private long voiceLength = 0;
     public File mFileCamera;
@@ -201,33 +203,38 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                         } else {
                             AddImageUtils.handleImageBeforeKitKat(data, AddLiveContentActivity.this);
                         }
-                        mOutputUri = AddImageUtils.cropPhotoSmall(AddLiveContentActivity.this);
-
+                        mOutputUri=FileUtils.compressBitMap(FileUtils.getFileByUri(AddImageUtils.imageUri,AddLiveContentActivity.this));
+                        uploadImg();
                     }
                     break;
                 case AddImageUtils.REQUEST_CAPTURE://拍照
-                    mOutputUri = AddImageUtils.cropPhotoSmall(AddLiveContentActivity.this);
-                    break;
-                case AddImageUtils.REQUEST_PICTURE_CUT_SMALL://裁剪完成
-                    if (data != null) {
-                        try {
-                            mFileCamera = new File(mOutputUri.getPath());
-                            if (!mFileCamera.isFile()) {
-                                return;
-                            }
-                            List<File> list = new ArrayList<>();
-                            list.add(mFileCamera);
-                            showProgress("图片上传中");
-                            //本地显示
-                            addList(mOutputUri.getPath(), fileType, voiceStrLength, voiceLength);
-                            //上传图片
-                            HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    mOutputUri=FileUtils.compressBitMap(FileUtils.getFileByUri(AddImageUtils.imageUri,AddLiveContentActivity.this));
+                    uploadImg();
                     break;
             }
+        }
+    }
+
+
+    /**
+     * 上传图片
+     */
+    private void uploadImg(){
+        LogUtils.e(mOutputUri+"++++++++++++++");
+        try {
+            mFileCamera = new File(mOutputUri);
+            if (!mFileCamera.isFile()) {
+                return;
+            }
+            List<File> list = new ArrayList<>();
+            list.add(mFileCamera);
+            showProgress("图片上传中");
+            //本地显示
+            addList(mOutputUri, fileType, voiceStrLength, voiceLength);
+            //上传图片
+            HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

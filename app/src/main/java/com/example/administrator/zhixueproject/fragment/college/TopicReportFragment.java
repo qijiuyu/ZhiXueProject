@@ -212,12 +212,8 @@ public class TopicReportFragment extends BaseFragment implements MyRefreshLayout
                      deleteReport(ids);
                      break;
                 case ReportManagerActivity.ACTION_QU_XIAO://取消
-                     if(null!=reportListAdapter){
-                         reportListAdapter.maps.clear();
-                         reportListAdapter.isSelect=false;
-                         reportListAdapter.isAllSelect=false;
-                         reportListAdapter.notifyDataSetChanged();
-                     }
+                    //取消删除
+                     cancle();
                      break;
             }
 
@@ -251,6 +247,19 @@ public class TopicReportFragment extends BaseFragment implements MyRefreshLayout
         this.isVisibleToUser=isVisibleToUser;
         //查询举报数据
         getData(HandlerConstant1.GET_REPORT_LIST_SUCCESS);
+    }
+
+
+    /**
+     * 取消删除
+     */
+    public void cancle(){
+        if(null!=reportListAdapter){
+            reportListAdapter.maps.clear();
+            reportListAdapter.isSelect=false;
+            reportListAdapter.isAllSelect=false;
+            reportListAdapter.notifyDataSetChanged();
+        }
     }
 
 

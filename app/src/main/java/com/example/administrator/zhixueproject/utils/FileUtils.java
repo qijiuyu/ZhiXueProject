@@ -10,10 +10,13 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 /**
@@ -94,6 +97,82 @@ public class FileUtils {
         return BitmapFactory.decodeFile(imgPath,options);
     }
 
+    /**
+     * 对图片进行压缩
+     * @param file
+     * @return
+     */
+    public static String  compressBitMap(File file){
+        //将图片缩小为原来的一半
+        Bitmap bitmap=FileUtils.getBitMapBy2(file.getPath(), 2);
+        //对图片进行压缩
+        bitmap = FileUtils.compressImage(bitmap);
+        String newPath=getSdcardPath()+System.currentTimeMillis()+"_"+(Math.random()*9+1)*1000+".jpg";
+        try {
+            file = new File(newPath);
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+
+            File file1=new File(newPath);
+            LogUtils.e(FileUtils.getFileSize(file1.length())+"______");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(null!=bitmap){
+            bitmap.recycle();
+            bitmap=null;
+        }
+        return newPath;
+    }
+
+
+    public static File getFileByUri(Uri uri,Context context) {
+        String path = null;
+        if ("file".equals(uri.getScheme())) {
+            path = uri.getEncodedPath();
+            if (path != null) {
+                path = Uri.decode(path);
+                ContentResolver cr = context.getContentResolver();
+                StringBuffer buff = new StringBuffer();
+                buff.append("(").append(MediaStore.Images.ImageColumns.DATA).append("=").append("'" + path + "'").append(")");
+                Cursor cur = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new String[] { MediaStore.Images.ImageColumns._ID, MediaStore.Images.ImageColumns.DATA }, buff.toString(), null, null);
+                int index = 0;
+                int dataIdx = 0;
+                for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
+                    index = cur.getColumnIndex(MediaStore.Images.ImageColumns._ID);
+                    index = cur.getInt(index);
+                    dataIdx = cur.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    path = cur.getString(dataIdx);
+                }
+                cur.close();
+                if (index == 0) {
+                } else {
+                    Uri u = Uri.parse("content://media/external/images/media/" + index);
+                    System.out.println("temp uri is :" + u);
+                }
+            }
+            if (path != null) {
+                return new File(path);
+            }
+        } else if ("content".equals(uri.getScheme())) {
+            // 4.2.2以后
+            String[] proj = { MediaStore.Images.Media.DATA };
+            Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
+            if (cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                path = cursor.getString(columnIndex);
+            }
+            cursor.close();
+
+            return new File(path);
+        } else {
+            //Log.i(TAG, "Uri Scheme:" + uri.getScheme());
+        }
+        return null;
+    }
+
 
     /**
      * 质量压缩方法
@@ -104,7 +183,7 @@ public class FileUtils {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
         int options = 60;
-        while (baos.toByteArray().length / 1024 > 200) { // 循环判断如果压缩后图片是否大于1000kb,大于继续压缩
+        while (baos.toByteArray().length / 1024 > 100) { // 循环判断如果压缩后图片是否大于1000kb,大于继续压缩
             baos.reset(); // 重置baos即清空baos
             options -= 10;// 每次都减少10
             image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中

@@ -212,12 +212,8 @@ public class FloorReportFragment extends BaseFragment implements MyRefreshLayout
                     deleteReport(ids);
                     break;
                 case ReportManagerActivity.ACTION_QU_XIAO://取消
-                    if(null!=floorReportAdapter){
-                        floorReportAdapter.maps.clear();
-                        floorReportAdapter.isSelect=false;
-                        floorReportAdapter.isAllSelect=false;
-                        floorReportAdapter.notifyDataSetChanged();
-                    }
+                    //取消删除
+                    cancle();
                     break;
                 case ReportManagerActivity.REFRESH_LOU_CENT:
                      page=1;
@@ -256,6 +252,18 @@ public class FloorReportFragment extends BaseFragment implements MyRefreshLayout
         getData(HandlerConstant1.GET_REPORT_LIST_SUCCESS3);
     }
 
+
+    /**
+     * 取消删除
+     */
+    public void cancle(){
+        if(null!=floorReportAdapter){
+            floorReportAdapter.maps.clear();
+            floorReportAdapter.isSelect=false;
+            floorReportAdapter.isAllSelect=false;
+            floorReportAdapter.notifyDataSetChanged();
+        }
+    }
 
     @Override
     public void onDestroy() {

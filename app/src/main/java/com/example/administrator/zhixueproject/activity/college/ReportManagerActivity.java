@@ -21,6 +21,8 @@ import com.example.administrator.zhixueproject.fragment.college.FloorReportFragm
 import com.example.administrator.zhixueproject.fragment.college.TopicReportFragment;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.view.PagerSlidingTabStrip;
+import com.example.administrator.zhixueproject.view.ViewPagerCallBack;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +81,17 @@ public class ReportManagerActivity extends BaseActivity implements View.OnClickL
         pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         pager.setOffscreenPageLimit(2);
         tabs.setViewPager(pager);
+        tabs.setViewPagerCallBack(new ViewPagerCallBack() {
+            public void PageSelected(int position) {
+                ImageView imageView2=(ImageView)findViewById(R.id.iv_all_checked);
+                imageView2.setImageDrawable(getResources().getDrawable(R.mipmap.unchecked_gray_report));
+                findViewById(R.id.ll_bottom_choose).setVisibility(View.GONE);
+                findViewById(R.id.ll_bottom_delete).setVisibility(View.VISIBLE);
+
+                topicReportFragment.cancle();
+                floorReportFragment.cancle();
+            }
+        });
         findViewById(R.id.lin_right).setOnClickListener(this);
         findViewById(R.id.tv_delete_multiSelect).setOnClickListener(this);
         findViewById(R.id.tv_delete_all).setOnClickListener(this);
