@@ -706,6 +706,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 mVoiceFile = new File(path);
                 List<File> list = new ArrayList<>();
                 list.add(mVoiceFile);
+                showProgress("音频上传中，请稍后...");
                 HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
                 voiceStrLength = strLength;
                 voiceLength = length;
