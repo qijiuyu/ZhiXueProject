@@ -97,7 +97,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private int mPosition; //用于标记是帖子还是作业fragment
     private String topicWriteName;// 帖子发布人
     private String postContentApp;
-    private boolean showWork=false;
+    private boolean showWork = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -172,9 +172,9 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         int id = postListBean.getPostId();
         LogUtils.e("getPostId===" + id);
         UMWeb web = new UMWeb("http://zxw.yl-mall.cn/zhixue_c/Wxpay/aftershareskip.html?floorPostId=" + String.valueOf(id));
-        web.setTitle(TextUtils.isEmpty(postListBean.getPostName())?"帖子标题":postListBean.getPostName());
+        web.setTitle(TextUtils.isEmpty(postListBean.getPostName()) ? "帖子标题" : postListBean.getPostName());
         if (!TextUtils.isEmpty(postContentString)) {
-            if (postContentString.length() >=25) {
+            if (postContentString.length() >= 25) {
                 web.setDescription(postContentString.substring(0, 25));
             } else {
                 web.setDescription(postContentString);
@@ -232,14 +232,14 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         StatusBarUtils.transparencyBar(this);
         postListBean = (PostListBean) getIntent().getSerializableExtra("postListBean");
         postType = String.valueOf(postListBean.getPostType());
-        showWork=getIntent().getBooleanExtra("showWork",false);
+        showWork = getIntent().getBooleanExtra("showWork", false);
         //设置头部随着滚动
         AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) llPostDetailHead.getLayoutParams();
         layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
         String[] strings;
-        if (showWork){
+        if (showWork) {
             strings = new String[]{"讨论", "作业"};
-        }else{
+        } else {
             strings = new String[]{"讨论"};
         }
         ArrayList<Fragment> fragmentList = new ArrayList<>();
@@ -248,7 +248,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         postsFragment1.setPostId(String.valueOf(postListBean.getPostId()));
         fragmentList.add(postsFragment1);
 
-        if (showWork){
+        if (showWork) {
             WorksListDetailsFragment postsFragment2 = new WorksListDetailsFragment();
             postsFragment2.setType(2);
             postsFragment2.setPostId(String.valueOf(postListBean.getPostId()));
@@ -267,7 +267,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onPageSelected(int position) {
                 LogUtils.e("position=== " + position);
-                mPosition=position;
+                mPosition = position;
                 type = String.valueOf(position + 1);
             }
 
@@ -282,12 +282,12 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     // type :1 帖子列表进入   2：会员详情页进入  showWork:true  显示作业  false  不显示作业
-    public static void start(Context context, PostListBean postListBean, int type,Boolean showWork) {
+    public static void start(Context context, PostListBean postListBean, int type, Boolean showWork) {
         Intent starter = new Intent(context, PostDetailActivity.class);
         if (type == 1) {
             starter.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
-        starter.putExtra("showWork",showWork);
+        starter.putExtra("showWork", showWork);
         starter.putExtra("postListBean", postListBean);
         context.startActivity(starter);
     }
@@ -308,18 +308,20 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         switch (view.getId()) {
             case R.id.tv_comment:
                 // 如果是作业并且不是老师身份return
-                LogUtils.e("身份是："+MyApplication.homeBean.getAttendType());
-                 if (mPosition==1){
-                     if (MyApplication.homeBean.getAttendType()!=2){
-                         showMsg("只有老师身份才能发布作业！");
-                         return;
-                     }
-                     if (!TextUtils.equals(MyApplication.userInfo.getData().getUser().getUserName(),topicWriteName)){
-                         showMsg("只有本人发布的帖子才能留作业！");
-                         return;
-                     }
-
-                 }
+                LogUtils.e("身份是：" + MyApplication.homeBean.getAttendType());
+                if (mPosition == 1) {
+                    if (MyApplication.homeBean.getAttendType() != 2 && MyApplication.homeBean.getAttendType() != 1) {
+                        showMsg("您的身份不能发布作业！");
+                        return;
+                    }
+                    // 管理员放开限制
+                    if (MyApplication.homeBean.getAttendType() != 1){
+                        if (!TextUtils.equals(MyApplication.userInfo.getData().getUser().getUserName(), topicWriteName)) {
+                            showMsg("只有本人发布的帖子才能留作业！");
+                            return;
+                        }
+                    }
+                }
                 tvComment.setVisibility(View.GONE);
                 llComment.setVisibility(View.VISIBLE);
                 isFloorComment = false;
@@ -341,8 +343,8 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                         postListBean.getPostName(),
                         String.valueOf(postListBean.getPostIsFree()),
                         price,
-                        String.valueOf(postListBean.getPostIsTop()), postType,postContentApp);
-                LogUtils.e("postDetailActivity getPostContentApp  -> "+ postContentApp);
+                        String.valueOf(postListBean.getPostIsTop()), postType, postContentApp);
+                LogUtils.e("postDetailActivity getPostContentApp  -> " + postContentApp);
                 break;
             case R.id.img_topic_arrow:
                 // 点击收起
@@ -438,7 +440,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
      */
     public void postsDetailsSuccess(PostsDetailsBean postsDetailsBean) {
         PostsDetailsBean.PostDetailBeanOuter data = postsDetailsBean.getData();
-        topicWriteName=data.getPostContent().getUserName();
+        topicWriteName = data.getPostContent().getUserName();
         GlideCirclePictureUtil.setCircleImg(this, data.getPostContent().getUserImg(), ivHead);
         tvNickName.setText(data.getPostContent().getUserName());
         tvAttentionNum.setText(data.getPostContent().getAttentionNum() + "");
@@ -447,12 +449,13 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         }
         //帖子内容
         showDetail(data.getPostContent().getPostContentApp());
-        postContentApp=data.getPostContent().getPostContentApp();
+        postContentApp = data.getPostContent().getPostContentApp();
     }
 
 
-    private Map<Integer,String> pathMap=new HashMap<>();
-    private Map<Integer,Integer> timeMap=new HashMap<>();
+    private Map<Integer, String> pathMap = new HashMap<>();
+    private Map<Integer, Integer> timeMap = new HashMap<>();
+
     private void showDetail(String postContent) {
         if (!TextUtils.isEmpty(postContent)) {
             StringBuffer stringBuffer = new StringBuffer();
@@ -472,14 +475,14 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                     }
                     //音频
                     if (jsonObject.getInt("type") == 2) {
-                        pathMap.put(i,jsonObject.getString("content"));
-                        timeMap.put(i,jsonObject.getInt("timeLength"));
-                        stringBuffer.append("<img src='http://m.qpic.cn/psb?/V14FKuhr1M2Y16/GcffMwIp37DRR3IcfaAOR5VVehPaypyRkbD5VdOHpUM!/b/dLYAAAAAAAAA&bo=yADIAAAAAAADByI!&rf=viewer_4' height=30 width=30 onClick='window.hello.playAutio("+i+")'/>" + "0:00/" + jsonObject.getString("strLength"));
+                        pathMap.put(i, jsonObject.getString("content"));
+                        timeMap.put(i, jsonObject.getInt("timeLength"));
+                        stringBuffer.append("<img src='http://m.qpic.cn/psb?/V14FKuhr1M2Y16/GcffMwIp37DRR3IcfaAOR5VVehPaypyRkbD5VdOHpUM!/b/dLYAAAAAAAAA&bo=yADIAAAAAAADByI!&rf=viewer_4' height=30 width=30 onClick='window.hello.playAutio(" + i + ")'/>" + "0:00/" + jsonObject.getString("strLength"));
                     }
                 }
                 //帖子内容
                 String html = ToolUtils.imgStyleHtml(stringBuffer.toString());
-                LogUtils.e("url=   "+html);
+                LogUtils.e("url=   " + html);
                 initWebView();
                 wvPostContent.setWebViewClient(new WebViewClient() {
                     public boolean shouldOverrideUrlLoading(WebView view, String url) {

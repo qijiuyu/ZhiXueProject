@@ -141,7 +141,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_right:
                 if (type == 2) {
-                    showMsg("老师身份无编辑权限！");
+                    showMsg("老师身份无编辑权限!");
                     return;
                 }
                 Intent starter = new Intent(this, MemberSettingActivity.class);
