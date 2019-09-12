@@ -10,18 +10,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.memberManage.MedalIconAdapter;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.memberManage.AttendanceBean;
 import com.example.administrator.zhixueproject.fragment.memberManage.PaidQuestionFragment;
 import com.example.administrator.zhixueproject.fragment.memberManage.TalkAboutFragment;
 import com.example.administrator.zhixueproject.utils.GlideCirclePictureUtil;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.flyco.tablayout.SlidingTabLayout;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +46,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     private TextView tvMemberName;
     private ImageView mIvHeadPic;
     private ImageView mIvMemberLevel;
+    private int type; // 1管理员，2老师
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,8 +73,8 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-
     private void initData() {
+        type = MyApplication.homeBean.getAttendType();
         //会员基本信息
         mMemberInfoBean = getIntent().getParcelableExtra(MemberManagerActivity.MEMBER_INFO);
         if (mMemberInfoBean == null) {
@@ -82,6 +87,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
 
     /**
      * 初始化会员信息
+     *
      * @param mMemberInfoBean
      */
     private void initInfo(AttendanceBean mMemberInfoBean) {
@@ -124,7 +130,6 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -135,8 +140,12 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.tv_right:
-                Intent starter = new Intent(this,MemberSettingActivity.class);
-                starter.putExtra(MemberManagerActivity.MEMBER_INFO,mMemberInfoBean);
+                if (type == 2) {
+                    showMsg("老师身份无编辑权限！");
+                    return;
+                }
+                Intent starter = new Intent(this, MemberSettingActivity.class);
+                starter.putExtra(MemberManagerActivity.MEMBER_INFO, mMemberInfoBean);
                 startActivity(starter);
                 break;
             default:
@@ -147,7 +156,7 @@ public class MemberDetailActivity extends BaseActivity implements View.OnClickLi
 
     @Subscribe
     public void postEventInfo(AttendanceBean result) {
-        mMemberInfoBean=result;
+        mMemberInfoBean = result;
         initInfo(result);
 
     }

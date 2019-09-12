@@ -65,6 +65,7 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
     private EditText etMemberSearch;
     // 用于记录被踢出的会员position
     private int mPosition;
+    private int type; // 1管理员，2老师
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
         // 搜索
         etMemberSearch = (EditText) findViewById(R.id.et_member_search);
         findViewById(R.id.rl_member_level).setOnClickListener(this);
+        type = MyApplication.homeBean.getAttendType();
 
         mMemberManagerAdapter = new MemberManagerAdapter(R.layout.member_manager_item);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -190,12 +192,20 @@ public class MemberManagerActivity extends BaseActivity implements View.OnClickL
     public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
         switch (view.getId()) {
             case R.id.tv_edit://编辑_跳转会员设置页面
+                if (type==2){
+                    showMsg("老师身份无权限！");
+                    return;
+                }
                 this.itemCheckedPosition = position;
                 Intent starter = new Intent(this, MemberSettingActivity.class);
                 starter.putExtra(MEMBER_INFO, mAttendanceList.get(position));
                 startActivityForResult(starter, REQUEST_CODE_EDIT);
                 break;
             case R.id.tv_kick_out://踢出
+                if (type==2){
+                    showMsg("老师身份无权限！");
+                    return;
+                }
                 this.mPosition = position;
                 HttpMethod2.kickOutVip(mAttendanceList.get(position).getAttendId() + "", mHandler);
                 break;

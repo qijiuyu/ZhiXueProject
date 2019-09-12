@@ -125,7 +125,8 @@
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:textColor="@color/color_999999"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp"
+                            />
                     </RelativeLayout>
                     <View
                         style="@style/view_line"/>
