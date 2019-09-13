@@ -24,10 +24,12 @@ import com.example.administrator.zhixueproject.fragment.memberManage.IdentityFra
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
+import com.example.administrator.zhixueproject.utils.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * 会员设置
@@ -198,7 +200,8 @@ public class MemberSettingActivity extends BaseActivity implements View.OnClickL
             ivIsNoSpeaking.setBackgroundResource(R.mipmap.open);
             attendTalkLimit = NOSPEAKING_TRUE;//1：是禁言
             tvNoSpeakingTime.setVisibility(View.VISIBLE);
-            attendTalkTime = "3";//0分钟
+            // TODO 设置禁言时间
+            // attendTalkTime = "3";//0分钟
             if (!TextUtils.isEmpty(mTalkTime)) {
                 tvNoSpeakingTime.setText("禁言".concat(mTalkTime));
             }
@@ -343,7 +346,22 @@ public class MemberSettingActivity extends BaseActivity implements View.OnClickL
         this.mTalkTime = tip;
         isNospeaking = true;
         showNoSpeakingIcon(isNospeaking);
-        this.attendTalkTime = position;
+        int mPositon = Integer.parseInt(position);
+        LogUtils.e("  peter mPositon== " + mPositon);
+        switch (mPositon) {
+            case 0:
+                attendTalkTime = String.valueOf(30); // 30min
+                break;
+            case 1:
+                attendTalkTime = String.valueOf(480); // 8h
+                break;
+            case 2:
+                attendTalkTime = String.valueOf(1440); // 24 h
+                break;
+            default:
+                break;
+        }
+        LogUtils.e("peter  attendTalkTime== " + attendTalkTime);
         showNospeakingTimeFragment(false);
     }
 

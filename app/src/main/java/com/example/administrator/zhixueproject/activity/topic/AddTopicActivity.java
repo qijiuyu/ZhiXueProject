@@ -442,13 +442,13 @@ public class AddTopicActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        // 付费问答
+       /* // 付费问答
         if (topicType == 4) {
             if (payType != 2) {
                 showMsg("只有收费方式为付费类型才能选择付费问答");
                 return;
             }
-        }
+        }*/
         if (TextUtils.isEmpty(topicImg)) {
             showMsg("请上传话题图片");
             return;
