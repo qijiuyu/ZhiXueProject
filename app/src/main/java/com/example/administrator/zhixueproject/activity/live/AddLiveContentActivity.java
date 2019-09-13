@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
+import com.example.administrator.zhixueproject.activity.ShowImgActivity;
 import com.example.administrator.zhixueproject.adapter.live.LiveContentsAdapter;
 import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
@@ -194,24 +195,27 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case AddImageUtils.REQUEST_PICK_IMAGE://从相册选择
-                    if (data != null) {
-                        if (Build.VERSION.SDK_INT >= 19) {
-                            AddImageUtils.handleImageOnKitKat(data, AddLiveContentActivity.this);
-                        } else {
-                            AddImageUtils.handleImageBeforeKitKat(data, AddLiveContentActivity.this);
-                        }
-                        mOutputUri=FileUtils.compressBitMap(FileUtils.getFileByUri(AddImageUtils.imageUri,AddLiveContentActivity.this));
-                        uploadImg();
+        Intent intent=new Intent(AddLiveContentActivity.this, ShowImgActivity.class);
+        switch (requestCode) {
+            case AddImageUtils.REQUEST_PICK_IMAGE://从相册选择
+                if (data != null) {
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        AddImageUtils.handleImageOnKitKat(data, AddLiveContentActivity.this);
+                    } else {
+                        AddImageUtils.handleImageBeforeKitKat(data, AddLiveContentActivity.this);
                     }
-                    break;
-                case AddImageUtils.REQUEST_CAPTURE://拍照
-                    mOutputUri=FileUtils.compressBitMap(FileUtils.getFileByUri(AddImageUtils.imageUri,AddLiveContentActivity.this));
-                    uploadImg();
-                    break;
-            }
+                    intent.putExtra("imgPath",FileUtils.getFileByUri(AddImageUtils.imageUri,AddLiveContentActivity.this).getPath());
+                    startActivityForResult(intent,0x00a);
+                }
+                break;
+            case AddImageUtils.REQUEST_CAPTURE://拍照
+                intent.putExtra("imgPath",FileUtils.getFileByUri(AddImageUtils.imageUri,AddLiveContentActivity.this).getPath());
+                startActivityForResult(intent,0x00a);
+                break;
+        }
+        if(resultCode==0x00a){
+            mOutputUri=FileUtils.compressBitMap(FileUtils.getFileByUri(AddImageUtils.imageUri,AddLiveContentActivity.this));
+            uploadImg();
         }
     }
 

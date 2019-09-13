@@ -44,6 +44,7 @@ public class CollegeFragment extends BaseActivity implements View.OnClickListene
     private ViewPager pager;
     private CollegeInfoFragment collegeInfoFragment=new CollegeInfoFragment();
     private BuyVipFragment buyVipFragment=new BuyVipFragment();
+    private MyPagerAdapter myPagerAdapter;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_college);
@@ -53,7 +54,7 @@ public class CollegeFragment extends BaseActivity implements View.OnClickListene
         findViewById(R.id.iv_college).setOnClickListener(this);
         tabs = (PagerSlidingTabStrip)findViewById(R.id.tabs);
         dm = getResources().getDisplayMetrics();
-        pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        pager.setAdapter(myPagerAdapter=new MyPagerAdapter(getSupportFragmentManager()));
         pager.setOffscreenPageLimit(2);
         tabs.setViewPager(pager);
         setTabsValue();
@@ -83,6 +84,7 @@ public class CollegeFragment extends BaseActivity implements View.OnClickListene
                 pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
                 tabs.setViewPager(pager);
                 setTabsValue();
+                myPagerAdapter.notifyDataSetChanged();
 
                 if(MyApplication.homeBean.getAttendType()!=1){
                     findViewById(R.id.iv_college).setVisibility(View.GONE);

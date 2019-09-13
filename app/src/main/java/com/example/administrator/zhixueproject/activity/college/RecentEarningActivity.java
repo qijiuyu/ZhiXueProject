@@ -59,6 +59,7 @@ public class RecentEarningActivity extends BaseActivity implements View.OnClickL
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
         findViewById(R.id.tv_search).setOnClickListener(this);
+        findViewById(R.id.lin_back).setOnClickListener(this);
     }
 
 
@@ -68,6 +69,9 @@ public class RecentEarningActivity extends BaseActivity implements View.OnClickL
             //按时间查询
             case R.id.tv_search:
                 showFragment(true);
+                break;
+            case R.id.lin_back:
+                 finish();
                 break;
         }
     }
