@@ -192,7 +192,7 @@ public class VoiceManager implements Mp3Recorder.RecorderListener {
     /**
      * 完成录音
      */
-    public void stopVoiceRecord() {
+    public void stopVoiceRecord(int type) {
         try {
             mHandler.removeMessages(MSG_TIME_INTERVAL);
             mDeviceState = MEDIA_STATE_RECORD_STOP;
@@ -204,6 +204,7 @@ public class VoiceManager implements Mp3Recorder.RecorderListener {
                 LogUtils.e("音频文件大小   " + file.length());
                 if (file != null && file.length() > 0) {
                     cleanFieArrayList(mRecList);
+                    if (type == 0) return;
                     final VoiceTimeUtils ts = VoiceTimeUtils.timeSpanSecond(mRecTimeSum);
                     //完成录音
                     if (voiceRecordCallBack != null) {
@@ -239,7 +240,7 @@ public class VoiceManager implements Mp3Recorder.RecorderListener {
                 file.delete();
             currentFilePath = null;
         }
-        stopVoiceRecord();
+        stopVoiceRecord(0);
 
     }
 

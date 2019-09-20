@@ -376,7 +376,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                     case R.id.tv_record_conform:
                         if (voiceManager != null) {
                             isRecord=false;
-                            voiceManager.stopVoiceRecord();
+                            voiceManager.stopVoiceRecord(1);
                         }
                         recordPopWindow.dissmiss();
                         break;
