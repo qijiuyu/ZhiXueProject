@@ -105,7 +105,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
     /**
      * 显示学院数据
      */
-    private void showData(){
+    private void showData(int type){
         if(null==MyApplication.homeBean){
             return;
         }
@@ -128,6 +128,13 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
 //        }else{
 //            imgEdit.setVisibility(View.GONE);
 //        }
+
+
+        if(type==0){
+            //查询加入过的学院列表
+            showProgress("数据加载中");
+            HttpMethod1.getMyCollege(mHandler);
+        }
     }
 
 
@@ -167,7 +174,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals(LeftFragment.GET_COLLEGE_DETAILS)) {
-                showData();
+                showData(1);
             }
         }
     };
@@ -175,7 +182,7 @@ public class CollegeInfoFragment extends BaseFragment implements View.OnClickLis
 
     public void onResume() {
         super.onResume();
-        showData();
+        showData(0);
     }
 
     public void onDestroy() {
