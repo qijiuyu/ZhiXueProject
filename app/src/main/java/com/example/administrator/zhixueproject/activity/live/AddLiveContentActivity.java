@@ -505,9 +505,9 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                     if (bean.isStatus()) {
                         String head = "http://";
                         String url = bean.getData().getUrl();
-                        if (url.contains(head)) {
-                            url = url.substring(head.length(), url.length());
-                        }
+//                        if (url.contains(head)) {
+//                            url = url.substring(head.length(), url.length());
+//                        }
                         listData.clear();
                         listData.add(new ReleaseContentsBean(url, fileType, voiceStrLength, voiceLength));
                         voiceStrLength = "";
