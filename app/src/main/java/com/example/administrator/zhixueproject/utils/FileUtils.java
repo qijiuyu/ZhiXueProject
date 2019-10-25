@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -272,5 +274,106 @@ public class FileUtils {
         }
         return fileSizeString;
     }
+
+
+    /**
+     * 处理旋转后的图片
+     * @param context 上下文
+     * @return 返回修复完毕后的图片路径
+     */
+    public static String amendRotatePhoto(File file, Context context) {
+        // 取得图片旋转角度
+        int angle = readPictureDegree(file.getPath());
+        // 把原图压缩后得到Bitmap对象
+        Bitmap bmp = getCompressPhoto(file);
+        // 修复图片被旋转的角度
+        Bitmap bitmap = rotaingImageView(angle, bmp);
+        String newPath=getSdcardPath()+System.currentTimeMillis()+"_"+(Math.random()*9+1)*1000+".jpg";
+        try {
+            file = new File(newPath);
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+
+            File file1=new File(newPath);
+            LogUtils.e(FileUtils.getFileSize(file1.length())+"______");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(null!=bitmap){
+            bitmap.recycle();
+            bitmap=null;
+        }
+        return newPath;
+    }
+
+
+    //获取图片的旋转角度
+    public static int readPictureDegree(String path) {
+        int degree = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(path);
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return degree;
+    }
+
+
+    /**
+     * 对图片进行压缩
+     * @param file
+     * @return
+     */
+    public static Bitmap  getCompressPhoto(File file){
+        //将图片缩小为原来的一半
+        Bitmap bitmap=FileUtils.getBitMapBy2(file.getPath(), 2);
+        //对图片进行压缩
+        bitmap = FileUtils.compressImage(bitmap);
+
+        return bitmap;
+    }
+
+
+
+
+    /**
+     * 旋转图片
+     * @param angle 被旋转角度
+     * @param bitmap 图片对象
+     * @return 旋转后的图片
+     */
+    public static Bitmap rotaingImageView(int angle, Bitmap bitmap) {
+        Bitmap returnBm = null;
+        // 根据旋转角度，生成旋转矩阵
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        try {
+            // 将原始图片按照旋转矩阵进行旋转，并得到新的图片
+            returnBm = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        } catch (OutOfMemoryError e) {
+        }
+        if (returnBm == null) {
+            returnBm = bitmap;
+        }
+        if (bitmap != returnBm) {
+            bitmap.recycle();
+        }
+        return returnBm;
+    }
+
 
 }

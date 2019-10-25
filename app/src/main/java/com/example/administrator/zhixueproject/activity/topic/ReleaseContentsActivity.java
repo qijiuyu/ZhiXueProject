@@ -484,7 +484,7 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
                 break;
         }
         if(resultCode==0x00a){
-            mOutputUri=FileUtils.compressBitMap(FileUtils.getFileByUri(AddImageUtils.imageUri,ReleaseContentsActivity.this));
+            mOutputUri=FileUtils.amendRotatePhoto(FileUtils.getFileByUri(AddImageUtils.imageUri,ReleaseContentsActivity.this),ReleaseContentsActivity.this);
             uploadImg();
         }
     }

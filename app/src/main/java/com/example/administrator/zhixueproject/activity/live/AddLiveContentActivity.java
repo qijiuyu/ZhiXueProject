@@ -215,7 +215,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                 break;
         }
         if(resultCode==0x00a){
-            mOutputUri=FileUtils.compressBitMap(FileUtils.getFileByUri(AddImageUtils.imageUri,AddLiveContentActivity.this));
+            mOutputUri=FileUtils.amendRotatePhoto(FileUtils.getFileByUri(AddImageUtils.imageUri,AddLiveContentActivity.this),AddLiveContentActivity.this);
             uploadImg();
         }
     }
@@ -483,12 +483,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                               JSONArray jsonArray=new JSONArray(jsonObject2.getString("postcontent"));
                               for (int i=0;i<jsonArray.length();i++){
                                    JSONObject jsonObject3=jsonArray.getJSONObject(i);
-                                   String content;
-                                   if(jsonObject3.getInt("type")==1){
-                                       content="http://"+jsonObject3.getString("content");
-                                   }else{
-                                       content=jsonObject3.getString("content");
-                                   }
+                                   String content=jsonObject3.getString("content");
                                    addList (content,jsonObject3.getInt("type"),jsonObject3.isNull("strLength") ? "" : jsonObject3.getString("strLength"),jsonObject3.getLong("timeLength"));
                               }
                           }
