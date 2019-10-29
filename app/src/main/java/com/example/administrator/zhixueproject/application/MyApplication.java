@@ -91,14 +91,8 @@ public class MyApplication extends Application {
     /**
      * 反射 禁止弹窗
      */
-    private void disableAPIDialog() {
-        try {
-            Class aClass = Class.forName("android.content.pm.PackageParser$Package");
-            Constructor declaredConstructor = aClass.getDeclaredConstructor(String.class);
-            declaredConstructor.setAccessible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void disableAPIDialog(){
+        if (Build.VERSION.SDK_INT < 28)return;
         try {
             Class clazz = Class.forName("android.app.ActivityThread");
             Method currentActivityThread = clazz.getDeclaredMethod("currentActivityThread");
@@ -111,6 +105,5 @@ public class MyApplication extends Application {
             e.printStackTrace();
         }
     }
-
 
 }

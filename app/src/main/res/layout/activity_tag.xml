@@ -53,7 +53,7 @@
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:layout_gravity="center"
-                                    android:src="@mipmap/tab_1_false" />
+                                    android:src="@mipmap/tab_1_true" />
 
                                 <TextView
                                     android:id="@+id/tv_tab_college"
@@ -63,7 +63,7 @@
                                     android:layout_marginTop="6dp"
                                     android:gravity="center"
                                     android:text="学院"
-                                    android:textColor="@color/color_91dcf5"
+                                    android:textColor="@color/color_ff9620"
                                     android:textSize="10sp" />
 
                             </LinearLayout>

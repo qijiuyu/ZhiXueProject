@@ -129,7 +129,7 @@ public class TabActivity extends android.app.TabActivity implements View.OnClick
         for(int i=0;i<5;i++){
             if(i==type){
                 imgList.get(i).setImageDrawable(getResources().getDrawable(yesClick[i]));
-                tvList.get(i).setTextColor(getResources().getColor(R.color.color_48c6ef));
+                tvList.get(i).setTextColor(getResources().getColor(R.color.color_ff9620));
             }else{
                 imgList.get(i).setImageDrawable(getResources().getDrawable(notClick[i]));
                 tvList.get(i).setTextColor(getResources().getColor(R.color.color_91dcf5));

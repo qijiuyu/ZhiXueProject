@@ -48,6 +48,7 @@ import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.PopIco;
 import com.example.administrator.zhixueproject.utils.SoftInputUtils;
 import com.example.administrator.zhixueproject.utils.StatusBarUtils;
+import com.example.administrator.zhixueproject.utils.TimerUtil;
 import com.example.administrator.zhixueproject.utils.Utils;
 import com.example.administrator.zhixueproject.utils.record.RecordUtil;
 import com.example.administrator.zhixueproject.utils.record.VoiceManager;
@@ -83,7 +84,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     private long voiceLength = 0;
     public File mFileCamera;
     public File mVoiceFile;
-    private String voiceStrLength;
+    private String voiceStrLength,mp3Path;
     private EmojiconEditText etContent;
     private RecyclerView rvReleaseContent;
     private LinearLayout llContent;
@@ -95,6 +96,8 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     //是否在录音
     private boolean isRecord=false;
     private Live.LiveList liveList;
+    private List<ReleaseContentsBean> firstList=new ArrayList<>();
+    private boolean isBottom=false;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_release_content);
@@ -121,7 +124,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
         findViewById(R.id.tv_confirm).setOnClickListener(this);
         llReleaseContents = (LinearLayout) findViewById(R.id.ll_release_contents);
         llRelease = (LinearLayout) findViewById(R.id.ll_release);
-        mAdapter = new LiveContentsAdapter(null);
+        mAdapter = new LiveContentsAdapter(firstList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvReleaseContent = (RecyclerView) findViewById(R.id.rv_release_content);
         rvReleaseContent.setAdapter(mAdapter);
@@ -234,8 +237,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
             list.add(mFileCamera);
             showProgress("图片上传中");
             //本地显示
-            addList(mOutputUri, fileType, voiceStrLength, voiceLength);
-            //上传图片
+//            addList(mOutputUri, fileType, voiceStrLength, voiceLength);
             HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
         } catch (Exception e) {
             e.printStackTrace();
@@ -259,12 +261,11 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
             case R.id.tv_confirm:
                 fileType = ReleaseContentsBean.TEXT;
                 if (!TextUtils.isEmpty(etContent.getText().toString().trim())) {
-                    addList(etContent.getText().toString().trim(), fileType, null, 0);
+//                    addList(etContent.getText().toString().trim(), fileType, null, 0);
                     listData.clear();
                     listData.add(new ReleaseContentsBean(etContent.getText().toString().trim(), fileType, voiceStrLength, voiceLength));
                     //上传文字数据
                     sendMsg();
-                    etContent.setText("");
                 }
                 break;
             case R.id.tv_release:
@@ -412,15 +413,17 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
 
             @Override
             public void recFinish(long length, String strLength, String path) {
+                mp3Path=path;
+                voiceStrLength = strLength;
+                voiceLength = length;
+                //本地显示
+//                addList(mp3Path, fileType, voiceStrLength, voiceLength);
+
                 mVoiceFile = new File(path);
                 List<File> list = new ArrayList<>();
                 list.add(mVoiceFile);
                 showProgress("音频上传中，请稍后...");
                 HttpMethod1.uploadFile(HttpConstant.UPDATE_FILES, list, mHandler);
-                voiceStrLength = strLength;
-                voiceLength = length;
-                //本地显示
-                addList(path, fileType, strLength, length);
             }
         });
         voiceManager.startVoiceRecord(RecordUtil.getAudioPath());
@@ -435,6 +438,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
      */
     private void addList(String content, int type, String strLength, long length) {
         ReleaseContentsBean data = new ReleaseContentsBean(content, type, strLength, length);
+//        firstList.add(data);
         mAdapter.addData(data);
         mAdapter.notifyDataSetChanged();
         rvReleaseContent.scrollToPosition(mAdapter.getItemCount() - 1);
@@ -481,11 +485,23 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                           if(jsonObject.getBoolean("status")){
                               JSONObject jsonObject2=new JSONObject(jsonObject.getString("data"));
                               JSONArray jsonArray=new JSONArray(jsonObject2.getString("postcontent"));
-                              for (int i=0;i<jsonArray.length();i++){
+
+//                              if(firstList.size()>=jsonArray.length()){
+//                                  return;
+//                              }
+//                              firstList.clear();
+                              for (int i=0,len=jsonArray.length();i<len;i++){
                                    JSONObject jsonObject3=jsonArray.getJSONObject(i);
-                                   String content=jsonObject3.getString("content");
-                                   addList (content,jsonObject3.getInt("type"),jsonObject3.isNull("strLength") ? "" : jsonObject3.getString("strLength"),jsonObject3.getLong("timeLength"));
+//                                   ReleaseContentsBean data = new ReleaseContentsBean(jsonObject3.getString("content"),jsonObject3.getInt("type"),jsonObject3.isNull("strLength") ? "" : jsonObject3.getString("strLength"),jsonObject3.getLong("timeLength"));
+//                                   firstList.add(data);
+
+                                  addList(jsonObject3.getString("content"),jsonObject3.getInt("type"),jsonObject3.isNull("strLength") ? "" : jsonObject3.getString("strLength"),jsonObject3.getLong("timeLength"));
                               }
+//                              mAdapter.notifyDataSetChanged();
+//                              if(!isBottom){
+//                                  isBottom=true;
+//                                  rvReleaseContent.scrollToPosition(mAdapter.getItemCount() - 1);
+//                              }
                           }
                       }
                       catch (Exception e){
@@ -498,20 +514,14 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                         return;
                     }
                     if (bean.isStatus()) {
-                        String head = "http://";
                         String url = bean.getData().getUrl();
-//                        if (url.contains(head)) {
-//                            url = url.substring(head.length(), url.length());
-//                        }
                         listData.clear();
                         listData.add(new ReleaseContentsBean(url, fileType, voiceStrLength, voiceLength));
-                        voiceStrLength = "";
-                        voiceLength = 0;
 
                         //上传图片或者mp3
                         sendMsg();
                     } else {
-                        // showMsg(bean.getErrorMsg());
+                         showMsg(bean.getErrorMsg());
                     }
                     break;
                     //发布文字成功
@@ -520,7 +530,20 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                     if(null==baseBean){
                         return;
                     }
-                    if (!baseBean.status) {
+                    if (baseBean.status) {
+                        switch (fileType){
+                            case ReleaseContentsBean.TEXT:
+                                  addList(etContent.getText().toString().trim(), fileType, null, 0);
+                                 etContent.setText("");
+                                  break;
+                            case ReleaseContentsBean.IMG:
+                                  addList(mOutputUri, fileType, voiceStrLength, voiceLength);
+                                  break;
+                            case ReleaseContentsBean.RECORD:
+                                 addList(mp3Path, fileType, voiceStrLength, voiceLength);
+                                  break;
+                        }
+                    }else{
                         showMsg(baseBean.getErrorMsg());
                     }
                      break;
@@ -570,8 +593,22 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
 
 
     //查询直播的详情
+    private TimerUtil timerUtil;
     private void getLiveContent(){
-        HttpMethod1.getLiveContent(String.valueOf(liveList.getPostId()),mHandler);
+//        timerUtil=new TimerUtil(0, 8000, new TimerUtil.TimerCallBack() {
+//            public void onFulfill() {
+                HttpMethod1.getLiveContent(String.valueOf(liveList.getPostId()),mHandler);
+//            }
+//        });
+//        timerUtil.start();
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(timerUtil!=null){
+            timerUtil.stop();
+        }
+    }
 }
