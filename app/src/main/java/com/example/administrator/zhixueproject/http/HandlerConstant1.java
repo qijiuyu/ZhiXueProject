@@ -88,4 +88,5 @@ public class HandlerConstant1 {
     public static final int SEND_TEXT_SUCCESS=2062;
     public static final int LIVE_END_SUCCESS=2063;
     public static final int GET_LIVE_CONTENT_SUCCESS=2064;
+    public static final int GET_POST_SEE_NUM_SUCCESS = 2065;
 }

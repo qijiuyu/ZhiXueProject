@@ -283,4 +283,8 @@ public class HttpConstant {
     public static final String LIVE_END="live/end.do";
 
     public static final String GET_LIVE_CONTENT="live/get/content.do";
+
+    // 获取观看人数
+    public static final String GET_POST_SEE_NUM="post/getPostSeeNum.do";
+
 }

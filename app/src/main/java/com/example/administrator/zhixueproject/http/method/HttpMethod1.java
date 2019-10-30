@@ -33,6 +33,7 @@ import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.bean.WithDraw;
 import com.example.administrator.zhixueproject.bean.WithDrawInfo;
 import com.example.administrator.zhixueproject.bean.live.Live;
+import com.example.administrator.zhixueproject.bean.live.SeeNumBean;
 import com.example.administrator.zhixueproject.bean.memberManage.BlackListBean;
 import com.example.administrator.zhixueproject.bean.memberManage.SignIn;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
@@ -1851,6 +1852,31 @@ public class HttpMethod1  extends BaseRequst {
             }
 
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+    }
+
+
+    /**
+     * 获取直播人数
+     * @param postId
+     * @param handler
+     */
+    public static void getPostSeeNumber(String postId,final Handler handler) {
+        Map<String, String> map = new HashMap<>();
+        map.put("postId",postId);
+        Http.getRetrofit().create(HttpApi1.class).getPostSeeNum(map).enqueue(new Callback<SeeNumBean>() {
+            public void onResponse(Call<SeeNumBean> call, Response<SeeNumBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant1.GET_POST_SEE_NUM_SUCCESS, response.body());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            public void onFailure(Call<SeeNumBean> call, Throwable t) {
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }
         });

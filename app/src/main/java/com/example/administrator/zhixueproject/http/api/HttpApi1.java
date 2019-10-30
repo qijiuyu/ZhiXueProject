@@ -27,6 +27,7 @@ import com.example.administrator.zhixueproject.bean.VipDetails;
 import com.example.administrator.zhixueproject.bean.WithDraw;
 import com.example.administrator.zhixueproject.bean.WithDrawInfo;
 import com.example.administrator.zhixueproject.bean.live.Live;
+import com.example.administrator.zhixueproject.bean.live.SeeNumBean;
 import com.example.administrator.zhixueproject.bean.memberManage.SignIn;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 
@@ -639,4 +640,9 @@ public interface HttpApi1 {
     @FormUrlEncoded
     @POST(HttpConstant.GET_LIVE_CONTENT)
     Call<ResponseBody> getLiveContent(@FieldMap Map<String, String> map);
+
+
+    @FormUrlEncoded
+    @POST(HttpConstant.GET_POST_SEE_NUM)
+    Call<SeeNumBean> getPostSeeNum(@FieldMap Map<String, String> map);
 }

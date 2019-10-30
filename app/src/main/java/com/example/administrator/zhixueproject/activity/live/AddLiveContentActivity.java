@@ -35,6 +35,7 @@ import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.BaseBean;
 import com.example.administrator.zhixueproject.bean.UploadFile;
 import com.example.administrator.zhixueproject.bean.live.Live;
+import com.example.administrator.zhixueproject.bean.live.SeeNumBean;
 import com.example.administrator.zhixueproject.bean.topic.ReleaseContentsBean;
 import com.example.administrator.zhixueproject.fragment.LiveFragment;
 import com.example.administrator.zhixueproject.fragment.topic.PlaybackDialogFragment;
@@ -61,6 +62,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import io.github.rockerhieu.emojicon.EmojiconEditText;
 import io.github.rockerhieu.emojicon.EmojiconGridFragment;
 import io.github.rockerhieu.emojicon.EmojiconsFragment;
@@ -84,7 +86,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     private long voiceLength = 0;
     public File mFileCamera;
     public File mVoiceFile;
-    private String voiceStrLength,mp3Path;
+    private String voiceStrLength, mp3Path;
     private EmojiconEditText etContent;
     private RecyclerView rvReleaseContent;
     private LinearLayout llContent;
@@ -93,23 +95,29 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     private FrameLayout flEmoji;
     private LinearLayout llRelease;
     private PopIco popIco;
+    private TextView tvRight;
     //是否在录音
-    private boolean isRecord=false;
+    private boolean isRecord = false;
     private Live.LiveList liveList;
-    private List<ReleaseContentsBean> firstList=new ArrayList<>();
-    private boolean isBottom=false;
+    private List<ReleaseContentsBean> firstList = new ArrayList<>();
+    private boolean isBottom = false;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_release_content);
         initView();
         getLiveContent();
+        getLiveSeeNumber();
     }
 
+
     private void initView() {
-        liveList= (Live.LiveList) getIntent().getSerializableExtra("liveList");
+        liveList = (Live.LiveList) getIntent().getSerializableExtra("liveList");
         StatusBarUtils.transparencyBar(this);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.release_content));
+        tvRight= (TextView) findViewById(R.id.tv_right);
+        findViewById(R.id.img_right).setVisibility(View.GONE);
         findViewById(R.id.lin_back).setOnClickListener(this);
         voiceManager = VoiceManager.getInstance(this);
 
@@ -117,7 +125,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
         findViewById(R.id.iv_expression).setOnClickListener(this);
         ivPicture = (ImageView) findViewById(R.id.iv_picture);
         ivPicture.setOnClickListener(this);
-        TextView tvEnd=(TextView)findViewById(R.id.tv_release) ;
+        TextView tvEnd = (TextView) findViewById(R.id.tv_release);
         tvEnd.setText("直播结束");
         findViewById(R.id.iv_voice).setOnClickListener(this);
         tvEnd.setOnClickListener(this);
@@ -199,7 +207,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Intent intent=new Intent(AddLiveContentActivity.this, ShowImgActivity.class);
+        Intent intent = new Intent(AddLiveContentActivity.this, ShowImgActivity.class);
         switch (requestCode) {
             case AddImageUtils.REQUEST_PICK_IMAGE://从相册选择
                 if (data != null) {
@@ -208,17 +216,17 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                     } else {
                         AddImageUtils.handleImageBeforeKitKat(data, AddLiveContentActivity.this);
                     }
-                    intent.putExtra("imgPath",FileUtils.getFileByUri(AddImageUtils.imageUri,AddLiveContentActivity.this).getPath());
-                    startActivityForResult(intent,0x00a);
+                    intent.putExtra("imgPath", FileUtils.getFileByUri(AddImageUtils.imageUri, AddLiveContentActivity.this).getPath());
+                    startActivityForResult(intent, 0x00a);
                 }
                 break;
             case AddImageUtils.REQUEST_CAPTURE://拍照
-                intent.putExtra("imgPath",FileUtils.getFileByUri(AddImageUtils.imageUri,AddLiveContentActivity.this).getPath());
-                startActivityForResult(intent,0x00a);
+                intent.putExtra("imgPath", FileUtils.getFileByUri(AddImageUtils.imageUri, AddLiveContentActivity.this).getPath());
+                startActivityForResult(intent, 0x00a);
                 break;
         }
-        if(resultCode==0x00a){
-            mOutputUri=FileUtils.amendRotatePhoto(FileUtils.getFileByUri(AddImageUtils.imageUri,AddLiveContentActivity.this),AddLiveContentActivity.this);
+        if (resultCode == 0x00a) {
+            mOutputUri = FileUtils.amendRotatePhoto(FileUtils.getFileByUri(AddImageUtils.imageUri, AddLiveContentActivity.this), AddLiveContentActivity.this);
             uploadImg();
         }
     }
@@ -227,7 +235,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     /**
      * 上传图片
      */
-    private void uploadImg(){
+    private void uploadImg() {
         try {
             mFileCamera = new File(mOutputUri);
             if (!mFileCamera.isFile()) {
@@ -245,6 +253,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     }
 
     DialogView dialogView;
+
     public void onClick(View view) {
         switch (view.getId()) {
             // emoji表情
@@ -269,13 +278,13 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                 }
                 break;
             case R.id.tv_release:
-                dialogView=new DialogView(this, "确定结束直播吗？", "确定", "取消", new View.OnClickListener() {
+                dialogView = new DialogView(this, "确定结束直播吗？", "确定", "取消", new View.OnClickListener() {
                     public void onClick(View v) {
                         dialogView.dismiss();
                         showProgress(getString(R.string.loding));
-                        HttpMethod1.liveEnd(String.valueOf(liveList.getPostId()),mHandler);
+                        HttpMethod1.liveEnd(String.valueOf(liveList.getPostId()), mHandler);
                     }
-                },null);
+                }, null);
                 dialogView.show();
                 break;
             case R.id.iv_voice:
@@ -291,29 +300,30 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     }
 
     private void shouEmoji() {
-        startAnim(flEmoji,2);
+        startAnim(flEmoji, 2);
         flEmoji.setVisibility(View.VISIBLE);
         // 隐藏发布按钮
         llRelease.setVisibility(View.GONE);
     }
 
     private void hideEmoji() {
-        startAnim(flEmoji,1);
+        startAnim(flEmoji, 1);
         flEmoji.setVisibility(View.GONE);
         llRelease.setVisibility(View.VISIBLE);
     }
 
     /**
      * emoji动画
+     *
      * @param flEmoji
      * @param index
      */
     private void startAnim(FrameLayout flEmoji, int index) {
-        Animation animationIn= AnimationUtils.loadAnimation(this,R.anim.emoji_enter);
-        Animation animationOut= AnimationUtils.loadAnimation(this,R.anim.emoji_exit);
-        if (index==1){
+        Animation animationIn = AnimationUtils.loadAnimation(this, R.anim.emoji_enter);
+        Animation animationOut = AnimationUtils.loadAnimation(this, R.anim.emoji_exit);
+        if (index == 1) {
             flEmoji.startAnimation(animationOut);
-        }else {
+        } else {
             flEmoji.startAnimation(animationIn);
         }
     }
@@ -364,20 +374,20 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                 switch (v.getId()) {
                     case R.id.tv_record_delete:
                         if (voiceManager != null) {
-                            isRecord=false;
+                            isRecord = false;
                             voiceManager.cancelVoiceRecord();
                         }
                         recordPopWindow.dissmiss();
                         break;
                     case R.id.tv_record_start:
-                         if(!isRecord){
-                             isRecord=true;
-                             startRecord();
-                         }
+                        if (!isRecord) {
+                            isRecord = true;
+                            startRecord();
+                        }
                         break;
                     case R.id.tv_record_conform:
                         if (voiceManager != null) {
-                            isRecord=false;
+                            isRecord = false;
                             voiceManager.stopVoiceRecord(1);
                         }
                         recordPopWindow.dissmiss();
@@ -413,7 +423,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
 
             @Override
             public void recFinish(long length, String strLength, String path) {
-                mp3Path=path;
+                mp3Path = path;
                 voiceStrLength = strLength;
                 voiceLength = length;
                 //本地显示
@@ -473,41 +483,40 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             clearTask();
-            BaseBean baseBean=null;
+            BaseBean baseBean = null;
             switch (msg.what) {
                 case HandlerConstant1.GET_LIVE_CONTENT_SUCCESS:
-                      final String message= (String) msg.obj;
-                      if(TextUtils.isEmpty(message)){
-                          return;
-                      }
-                      try {
-                          JSONObject jsonObject=new JSONObject(message);
-                          if(jsonObject.getBoolean("status")){
-                              JSONObject jsonObject2=new JSONObject(jsonObject.getString("data"));
-                              JSONArray jsonArray=new JSONArray(jsonObject2.getString("postcontent"));
+                    final String message = (String) msg.obj;
+                    if (TextUtils.isEmpty(message)) {
+                        return;
+                    }
+                    try {
+                        JSONObject jsonObject = new JSONObject(message);
+                        if (jsonObject.getBoolean("status")) {
+                            JSONObject jsonObject2 = new JSONObject(jsonObject.getString("data"));
+                            JSONArray jsonArray = new JSONArray(jsonObject2.getString("postcontent"));
 
 //                              if(firstList.size()>=jsonArray.length()){
 //                                  return;
 //                              }
 //                              firstList.clear();
-                              for (int i=0,len=jsonArray.length();i<len;i++){
-                                   JSONObject jsonObject3=jsonArray.getJSONObject(i);
+                            for (int i = 0, len = jsonArray.length(); i < len; i++) {
+                                JSONObject jsonObject3 = jsonArray.getJSONObject(i);
 //                                   ReleaseContentsBean data = new ReleaseContentsBean(jsonObject3.getString("content"),jsonObject3.getInt("type"),jsonObject3.isNull("strLength") ? "" : jsonObject3.getString("strLength"),jsonObject3.getLong("timeLength"));
 //                                   firstList.add(data);
 
-                                  addList(jsonObject3.getString("content"),jsonObject3.getInt("type"),jsonObject3.isNull("strLength") ? "" : jsonObject3.getString("strLength"),jsonObject3.getLong("timeLength"));
-                              }
+                                addList(jsonObject3.getString("content"), jsonObject3.getInt("type"), jsonObject3.isNull("strLength") ? "" : jsonObject3.getString("strLength"), jsonObject3.getLong("timeLength"));
+                            }
 //                              mAdapter.notifyDataSetChanged();
 //                              if(!isBottom){
 //                                  isBottom=true;
 //                                  rvReleaseContent.scrollToPosition(mAdapter.getItemCount() - 1);
 //                              }
-                          }
-                      }
-                      catch (Exception e){
-                          e.printStackTrace();
-                      }
-                      break;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
                 case HandlerConstant1.UPLOAD_HEAD_SUCCESS:
                     UploadFile bean = (UploadFile) msg.obj;
                     if (null == bean) {
@@ -521,36 +530,36 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                         //上传图片或者mp3
                         sendMsg();
                     } else {
-                         showMsg(bean.getErrorMsg());
+                        showMsg(bean.getErrorMsg());
                     }
                     break;
-                    //发布文字成功
+                //发布文字成功
                 case HandlerConstant1.SEND_TEXT_SUCCESS:
-                    baseBean= (BaseBean) msg.obj;
-                    if(null==baseBean){
+                    baseBean = (BaseBean) msg.obj;
+                    if (null == baseBean) {
                         return;
                     }
                     if (baseBean.status) {
-                        switch (fileType){
+                        switch (fileType) {
                             case ReleaseContentsBean.TEXT:
-                                  addList(etContent.getText().toString().trim(), fileType, null, 0);
-                                 etContent.setText("");
-                                  break;
+                                addList(etContent.getText().toString().trim(), fileType, null, 0);
+                                etContent.setText("");
+                                break;
                             case ReleaseContentsBean.IMG:
-                                  addList(mOutputUri, fileType, voiceStrLength, voiceLength);
-                                  break;
+                                addList(mOutputUri, fileType, voiceStrLength, voiceLength);
+                                break;
                             case ReleaseContentsBean.RECORD:
-                                 addList(mp3Path, fileType, voiceStrLength, voiceLength);
-                                  break;
+                                addList(mp3Path, fileType, voiceStrLength, voiceLength);
+                                break;
                         }
-                    }else{
+                    } else {
                         showMsg(baseBean.getErrorMsg());
                     }
-                     break;
+                    break;
                 // 直播结束
                 case HandlerConstant1.LIVE_END_SUCCESS:
-                    baseBean= (BaseBean) msg.obj;
-                    if(null==baseBean){
+                    baseBean = (BaseBean) msg.obj;
+                    if (null == baseBean) {
                         return;
                     }
                     if (baseBean.status) {
@@ -561,12 +570,25 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                         if (mVoiceFile != null) {
                             FileStorage.deleteFile(mVoiceFile.getAbsolutePath());
                         }
-                        Intent intent=new Intent(LiveFragment.LIVE_END_SUCCESS);
-                        intent.putExtra("postId",liveList.getPostId());
+                        Intent intent = new Intent(LiveFragment.LIVE_END_SUCCESS);
+                        intent.putExtra("postId", liveList.getPostId());
                         sendBroadcast(intent);
                         finish();
                     } else {
                         showMsg(baseBean.getErrorMsg());
+                    }
+                    break;
+                case HandlerConstant1.GET_POST_SEE_NUM_SUCCESS:
+                    // 获取直播人数成功
+                    SeeNumBean seeNumBean = (SeeNumBean) msg.obj;
+                    if (null==seeNumBean) {
+                        return;
+                    }
+                    if (seeNumBean.isStatus()){
+                        if (null==seeNumBean.getData()) return;
+                        tvRight.setText("观看人数："+seeNumBean.getData().getCount());
+                    }else {
+                        showMsg(seeNumBean.errorMsg);
                     }
                     break;
                 case HandlerConstant1.REQUST_ERROR:
@@ -580,34 +602,47 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     };
 
 
-    private void sendMsg(){
-        String msg=MyApplication.gson.toJson(listData);
-        if(!TextUtils.isEmpty(msg)){
-            if(msg.substring(0,1).equals("[") && msg.substring(msg.length()-1,msg.length()).equals("]")){
-                msg=msg.substring(1,msg.length()-1);
+    private void sendMsg() {
+        String msg = MyApplication.gson.toJson(listData);
+        if (!TextUtils.isEmpty(msg)) {
+            if (msg.substring(0, 1).equals("[") && msg.substring(msg.length() - 1, msg.length()).equals("]")) {
+                msg = msg.substring(1, msg.length() - 1);
             }
             showProgress("上传中");
-            HttpMethod1.sendText(String.valueOf(liveList.getPostId()),msg,mHandler);
+            HttpMethod1.sendText(String.valueOf(liveList.getPostId()), msg, mHandler);
         }
     }
 
 
     //查询直播的详情
     private TimerUtil timerUtil;
-    private void getLiveContent(){
+
+    private void getLiveContent() {
 //        timerUtil=new TimerUtil(0, 8000, new TimerUtil.TimerCallBack() {
 //            public void onFulfill() {
-                HttpMethod1.getLiveContent(String.valueOf(liveList.getPostId()),mHandler);
+        HttpMethod1.getLiveContent(String.valueOf(liveList.getPostId()), mHandler);
 //            }
 //        });
 //        timerUtil.start();
+    }
+
+    /**
+     * 获取直播观看人数
+     */
+    private void getLiveSeeNumber() {
+        timerUtil = new TimerUtil(0, 5000, new TimerUtil.TimerCallBack() {
+            public void onFulfill() {
+                HttpMethod1.getPostSeeNumber(String.valueOf(liveList.getPostId()), mHandler);
+            }
+        });
+        timerUtil.start();
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(timerUtil!=null){
+        if (timerUtil != null) {
             timerUtil.stop();
         }
     }
