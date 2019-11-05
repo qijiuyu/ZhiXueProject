@@ -55,7 +55,6 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.keyConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
         }
     }
 }
