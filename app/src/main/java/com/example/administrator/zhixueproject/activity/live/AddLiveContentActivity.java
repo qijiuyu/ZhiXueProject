@@ -100,7 +100,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     private boolean isRecord = false;
     private Live.LiveList liveList;
     private List<ReleaseContentsBean> firstList = new ArrayList<>();
-    private boolean isBottom = false;
+    private boolean isBottom = true;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +148,46 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
         });
         flEmoji = (FrameLayout) findViewById(R.id.emojicons);
         setEmojiconFragment(false);
+
+        rvReleaseContent.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            //用来标记是否正在向最后一个滑动
+            boolean isSlidingToLast = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                // 当不滚动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    //获取最后一个完全显示的ItemPosition
+                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                    int totalItemCount = manager.getItemCount();
+
+                    // 判断是否滚动到底部，并且是向右滚动
+                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
+                        //加载更多功能的代码
+                        isBottom=true;
+                        LogUtils.e("+++++++++++++++++++++1");
+                    }else{
+                        isBottom=false;
+                        LogUtils.e("+++++++++++++++++++++2");
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //dx用来判断横向滑动方向，dy用来判断纵向滑动方向
+                if (dy > 0) {
+                    //大于0表示正在向右滚动
+                    isSlidingToLast = true;
+                } else {
+                    //小于等于0表示停止或向左滚动
+                    isSlidingToLast = false;
+                }
+            }
+        });
     }
 
     private void setEmojiconFragment(boolean useSystemDefault) {
@@ -155,6 +195,7 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                 .beginTransaction()
                 .replace(R.id.emojicons, EmojiconsFragment.newInstance(useSystemDefault))
                 .commit();
+
     }
 
     @Override
@@ -496,22 +537,21 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
                             JSONObject jsonObject2 = new JSONObject(jsonObject.getString("data"));
                             JSONArray jsonArray = new JSONArray(jsonObject2.getString("postcontent"));
 
-//                              if(firstList.size()>=jsonArray.length()){
-//                                  return;
-//                              }
-//                              firstList.clear();
+                              if(firstList.size()>=jsonArray.length()){
+                                  return;
+                              }
+                              firstList.clear();
                             for (int i = 0, len = jsonArray.length(); i < len; i++) {
                                 JSONObject jsonObject3 = jsonArray.getJSONObject(i);
-//                                   ReleaseContentsBean data = new ReleaseContentsBean(jsonObject3.getString("content"),jsonObject3.getInt("type"),jsonObject3.isNull("strLength") ? "" : jsonObject3.getString("strLength"),jsonObject3.getLong("timeLength"));
-//                                   firstList.add(data);
+                                   ReleaseContentsBean data = new ReleaseContentsBean(jsonObject3.getString("content"),jsonObject3.getInt("type"),jsonObject3.isNull("strLength") ? "" : jsonObject3.getString("strLength"),jsonObject3.getLong("timeLength"));
+                                   firstList.add(data);
 
-                                addList(jsonObject3.getString("content"), jsonObject3.getInt("type"), jsonObject3.isNull("strLength") ? "" : jsonObject3.getString("strLength"), jsonObject3.getLong("timeLength"));
+//                                addList(jsonObject3.getString("content"), jsonObject3.getInt("type"), jsonObject3.isNull("strLength") ? "" : jsonObject3.getString("strLength"), jsonObject3.getLong("timeLength"));
                             }
-//                              mAdapter.notifyDataSetChanged();
-//                              if(!isBottom){
-//                                  isBottom=true;
-//                                  rvReleaseContent.scrollToPosition(mAdapter.getItemCount() - 1);
-//                              }
+                              mAdapter.notifyDataSetChanged();
+                              if(isBottom){
+                                  rvReleaseContent.scrollToPosition(mAdapter.getItemCount() - 1);
+                              }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -618,12 +658,12 @@ public class AddLiveContentActivity extends BaseActivity implements View.OnClick
     private TimerUtil timerUtil;
 
     private void getLiveContent() {
-//        timerUtil=new TimerUtil(0, 8000, new TimerUtil.TimerCallBack() {
-//            public void onFulfill() {
+        timerUtil=new TimerUtil(0, 6000, new TimerUtil.TimerCallBack() {
+            public void onFulfill() {
         HttpMethod1.getLiveContent(String.valueOf(liveList.getPostId()), mHandler);
-//            }
-//        });
-//        timerUtil.start();
+            }
+        });
+        timerUtil.start();
     }
 
     /**
