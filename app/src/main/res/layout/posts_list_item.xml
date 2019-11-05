@@ -124,30 +124,43 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
-
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@mipmap/img_view"
+                android:layout_marginRight="2dp"/>
             <TextView
                 android:id="@+id/tv_collect_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="浏览 20"
+                android:text="20"
                 android:textColor="@color/color_888888"
                 android:textSize="15sp" />
-
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@mipmap/img_comment"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="2dp"/>
             <TextView
                 android:id="@+id/tv_comment_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="评论 999"
+                android:text="999"
                 android:textColor="@color/color_888888"
                 android:textSize="15sp" />
-
+            <ImageView
+                android:id="@+id/img_steal_view"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@mipmap/img_steal_view"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="20dp"/>
             <TextView
                 android:id="@+id/tv_peep_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="偷看 20"
+                android:text="20"
                 android:textColor="@color/color_888888"
                 android:textSize="15sp" />
         </LinearLayout>

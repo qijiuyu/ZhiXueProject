@@ -36,6 +36,7 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
             helper.setVisible(R.id.tv_cost_status, true);
             helper.setVisible(R.id.tv_cost_money, false);
             helper.setVisible(R.id.tv_peep_num, false);
+            helper.setVisible(R.id.img_steal_view,false);
             int postIsFree = item.getPostIsFree(); //1=免费；2=付费
             if (postIsFree == 1) {
                 helper.setText(R.id.tv_cost_status, "免费");
@@ -58,14 +59,14 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
             helper.setText(R.id.tv_post_name2,Utils.getChineseChar(str) );
         }
         helper.setText(R.id.tv_post_time, item.getPostCreationTime());
-        helper.setText(R.id.tv_collect_num, "浏览 " + item.getPostCollection());
-        helper.setText(R.id.tv_comment_num, "回复 " + item.getPostTalkNum());
+        helper.setText(R.id.tv_collect_num, item.getPostCollection());
+        helper.setText(R.id.tv_comment_num, item.getPostTalkNum());
         String num="";
         if (TextUtils.isEmpty(item.getPostPeepNum())){
             num="0";
         }else {
             num=item.getPostPeepNum();
         }
-        helper.setText(R.id.tv_peep_num, "偷看 " + num);
+        helper.setText(R.id.tv_peep_num,  num);
     }
 }

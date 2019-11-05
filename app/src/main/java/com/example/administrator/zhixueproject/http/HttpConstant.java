@@ -2,8 +2,9 @@ package com.example.administrator.zhixueproject.http;
 
 public class HttpConstant {
 
-     public static final String IP="http://zxw.yl-mall.cn/client/";
-//       public static final String IP="http://zds.yl-mall.cn/";
+     // public static final String IP="http://zxw.yl-mall.cn/client/";
+     // public static final String IP="http://zds.yl-mall.cn/";
+     public static final String IP="http://1x9x.cn/";
 
     //微信的appid
     public static final String WX_APPID="wxf2413139ede45239";
