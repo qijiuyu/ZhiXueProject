@@ -50,6 +50,10 @@ public class MyApplication extends Application {
         gson = new Gson();
         spUtil = SPUtil.getInstance(this);
 
+        if(spUtil.getString("stopAPP").equals("yes")){
+            System.exit(0);
+        }
+
         //获取用户信息
         final String strUserInfo=spUtil.getString(SPUtil.USER_INFO);
         if(!TextUtils.isEmpty(strUserInfo)){

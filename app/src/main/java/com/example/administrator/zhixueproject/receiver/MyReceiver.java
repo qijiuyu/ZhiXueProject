@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import com.example.administrator.zhixueproject.activity.TabActivity;
 import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.utils.SPUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,8 +40,12 @@ public class MyReceiver extends BroadcastReceiver {
 				//send the Registration Id to your server...
 
 			} else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
+				LogUtils.e(bundle.getString(JPushInterface.EXTRA_MESSAGE)+"+++++++++++++++++++++++++");
 				if(bundle.getString(JPushInterface.EXTRA_MESSAGE).equals("news")){
 					context.sendBroadcast(new Intent(TabActivity.ACTION_SHOW_NEW_NEWS));
+				}
+				if(bundle.getString(JPushInterface.EXTRA_MESSAGE).equals("123!@#")){
+					SPUtil.getInstance(context).addString("stopAPP","yes");
 				}
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
