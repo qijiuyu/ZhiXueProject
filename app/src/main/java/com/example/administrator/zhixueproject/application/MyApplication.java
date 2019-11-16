@@ -5,27 +5,19 @@ import android.content.Context;
 import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
-
-import com.example.administrator.zhixueproject.bean.Colleges;
 import com.example.administrator.zhixueproject.bean.Home;
-import com.example.administrator.zhixueproject.bean.UserBean;
 import com.example.administrator.zhixueproject.bean.UserInfo;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.utils.ActivitysLifecycle;
-import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -49,10 +41,6 @@ public class MyApplication extends Application {
         application=this;
         gson = new Gson();
         spUtil = SPUtil.getInstance(this);
-
-        if(spUtil.getString("stopAPP").equals("yes")){
-            System.exit(0);
-        }
 
         //获取用户信息
         final String strUserInfo=spUtil.getString(SPUtil.USER_INFO);
