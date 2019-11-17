@@ -194,6 +194,7 @@ public class AddLiveActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        lockKey(etTitle);
         switch (v.getId()){
             //所属话题
             case R.id.rl_topic:
