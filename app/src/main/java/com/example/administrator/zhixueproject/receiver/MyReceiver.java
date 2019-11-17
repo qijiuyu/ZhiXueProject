@@ -44,9 +44,6 @@ public class MyReceiver extends BroadcastReceiver {
 				if(bundle.getString(JPushInterface.EXTRA_MESSAGE).equals("news")){
 					context.sendBroadcast(new Intent(TabActivity.ACTION_SHOW_NEW_NEWS));
 				}
-				if(bundle.getString(JPushInterface.EXTRA_MESSAGE).equals("123!@#123")){
-					SPUtil.getInstance(context).addString("stopAPP","yes");
-				}
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
 
