@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -78,7 +80,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
     private TextView tvIssuer;
     private TextView tvStartTime;
     private TextView tvEndTime;
-    private TextView tvActionTitle;
+    private EditText tvActionTitle;
     private SwitchButton sbStick;
     private TextView tvTopicType;
     private LinearLayout llAddAction;
@@ -107,7 +109,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.release_action));
         findViewById(R.id.lin_back).setOnClickListener(this);
-        tvActionTitle = (TextView) findViewById(R.id.tv_title_action);
+        tvActionTitle = (EditText) findViewById(R.id.tv_title_action);
         sbStick = (SwitchButton) findViewById(R.id.sb_stick);
         tvTopic = (TextView) findViewById(R.id.tv_topic);
         tvIssuer = (TextView) findViewById(R.id.tv_issuer);
@@ -230,6 +232,7 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
+        lockKey(tvActionTitle);
         switch (view.getId()) {
             case R.id.lin_back:
                 finish();
@@ -579,6 +582,14 @@ public class ReleaseActionActivity extends BaseActivity implements View.OnClickL
         Intent intent = new Intent();
         intent.setAction(RELAEASE_ACTION_SUCCESS);
         sendBroadcast(intent);
+    }
+
+    /**
+     * 隐藏键盘
+     */
+    public void lockKey(EditText et) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
     }
 
     @Override

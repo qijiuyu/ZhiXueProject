@@ -59,7 +59,7 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
             helper.setText(R.id.tv_post_name2,Utils.getChineseChar(str) );
         }
         helper.setText(R.id.tv_post_time, item.getPostCreationTime());
-        helper.setText(R.id.tv_collect_num, item.getPostCollection()+"");
+        helper.setText(R.id.tv_collect_num, item.getSeeNum()+"");
         helper.setText(R.id.tv_comment_num, item.getPostTalkNum()+"");
         String num="";
         if (TextUtils.isEmpty(item.getPostPeepNum())){
