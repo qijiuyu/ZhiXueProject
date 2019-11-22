@@ -222,6 +222,7 @@ public class EditCollegeActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
+        lockKey(etCard);
         switch (v.getId()){
             //选择背景图
             case R.id.iv_college_back_img:
