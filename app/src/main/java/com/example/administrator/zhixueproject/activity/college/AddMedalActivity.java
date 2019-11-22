@@ -109,6 +109,7 @@ public class AddMedalActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()){
             //选择照片
             case R.id.iv_add_pic:
+                  lockKey(etContent);
                  addPic();
                  break;
             //提交
