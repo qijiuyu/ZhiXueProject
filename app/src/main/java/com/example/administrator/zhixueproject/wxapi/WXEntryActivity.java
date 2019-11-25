@@ -96,7 +96,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         int sex = Integer.parseInt(jsonObject.get("sex").toString());
                         String headimgurl = jsonObject.getString("headimgurl");
                         Intent intent=new Intent(LoginActivity.ACTION_WEIXIN_LOGIN_OPENID);
-                        intent.putExtra("openId",openId);
+                        intent.putExtra("openId",jsonObject.getString("unionid"));
                         sendBroadcast(intent);
                     } catch (JSONException e) {
                         e.printStackTrace();
