@@ -141,7 +141,7 @@ public class HttpMethod1  extends BaseRequst {
      * 微信登陆
      * @param handler
      */
-    public static void wxLogin(String opendId,String isRegister,String mobile,String code,String pwd,final Handler handler) {
+    public static void wxLogin(String opendId,String isRegister,String mobile,String code,String pwd,String nickName,String headIco,final Handler handler) {
         Map<String, String> map = new HashMap<>();
         map.put("opendId",opendId);
         map.put("isRegister",isRegister);
@@ -153,6 +153,12 @@ public class HttpMethod1  extends BaseRequst {
         }
         if(!TextUtils.isEmpty(pwd)){
             map.put("pwd",pwd);
+        }
+        if(!TextUtils.isEmpty(nickName)){
+            map.put("nickName",nickName);
+        }
+        if(!TextUtils.isEmpty(headIco)){
+            map.put("headIco",headIco);
         }
         Http.getRetrofit().create(HttpApi1.class).wxLogin(map).enqueue(new Callback<ResponseBody>() {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

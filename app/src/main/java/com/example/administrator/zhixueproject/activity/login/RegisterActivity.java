@@ -198,7 +198,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 if(TextUtils.isEmpty(openId)){
                     HttpMethod1.register(mobile,pwd,smsCode,mHandler);
                 }else{
-                    HttpMethod1.wxLogin(openId,"1",mobile,smsCode,pwd,mHandler);
+                    String nickName=SPUtil.getInstance(this).getString("wxNickName");
+                    String headIco=SPUtil.getInstance(this).getString("wxHeadIco");
+                    HttpMethod1.wxLogin(openId,"1",mobile,smsCode,pwd,nickName,headIco,mHandler);
                 }
                 break;
             case R.id.lin_back:

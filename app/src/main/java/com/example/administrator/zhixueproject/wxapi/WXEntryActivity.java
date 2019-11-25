@@ -10,6 +10,7 @@ import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HttpConstant;
 import com.example.administrator.zhixueproject.http.base.Http;
 import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.utils.SPUtil;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -95,6 +96,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         String nickname = jsonObject.getString("nickname");
                         int sex = Integer.parseInt(jsonObject.get("sex").toString());
                         String headimgurl = jsonObject.getString("headimgurl");
+
+                        SPUtil.getInstance(WXEntryActivity.this).addString("wxNickName",nickname);
+                        SPUtil.getInstance(WXEntryActivity.this).addString("wxHeadIco",headimgurl);
                         Intent intent=new Intent(LoginActivity.ACTION_WEIXIN_LOGIN_OPENID);
                         intent.putExtra("openId",jsonObject.getString("unionid"));
                         sendBroadcast(intent);
