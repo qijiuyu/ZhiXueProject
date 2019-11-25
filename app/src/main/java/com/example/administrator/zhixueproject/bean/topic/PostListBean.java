@@ -80,6 +80,7 @@ public class PostListBean implements Serializable {
     private int postTalkNum;
     private String userName;
     private String postPeepNum;
+    private int seeNum;
     private int postType;
 
     public int getPostType() {
@@ -194,5 +195,13 @@ public class PostListBean implements Serializable {
 
     public void setPostPrice(String postPrice) {
         this.postPrice = postPrice;
+    }
+
+    public int getSeeNum() {
+        return seeNum;
+    }
+
+    public void setSeeNum(int seeNum) {
+        this.seeNum = seeNum;
     }
 }
