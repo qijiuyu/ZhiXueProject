@@ -102,6 +102,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         Intent intent=new Intent(LoginActivity.ACTION_WEIXIN_LOGIN_OPENID);
                         intent.putExtra("openId",jsonObject.getString("unionid"));
                         sendBroadcast(intent);
+                        finish();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
