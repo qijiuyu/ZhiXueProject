@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         TextView tvTitle=(TextView)findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.main_title));
         TextView tvRegister=(TextView)findViewById(R.id.tv_right);
-        tvRegister.setText(getString(R.string.register));
+        tvRegister.setVisibility(View.GONE);
         etMobile=(EditText)findViewById(R.id.et_telphone) ;
         etPwd=(EditText)findViewById(R.id.et_pwd);
         etCode=(EditText)findViewById(R.id.et_code);
