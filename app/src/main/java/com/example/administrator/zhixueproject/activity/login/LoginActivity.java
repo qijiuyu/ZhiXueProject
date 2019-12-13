@@ -26,6 +26,7 @@ import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.CodeUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
+import com.example.administrator.zhixueproject.utils.UpdateVersionUtils;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import org.json.JSONObject;
 /**
@@ -42,6 +43,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_login);
         initView();
         registerReceiver();
+        //查询最新版本
+        new UpdateVersionUtils().searchVersion(this);
     }
 
 
