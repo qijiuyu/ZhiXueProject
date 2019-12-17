@@ -171,40 +171,4 @@
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
         android:src="@mipmap/weixin"/>
-
-    <RelativeLayout
-        android:visibility="gone"
-        android:layout_above="@+id/iv_weixin_login"
-        android:layout_marginBottom="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/weixin_login"
-            android:textColor="@color/color_999999"
-            android:textSize="13sp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color_dbdbdb"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/tv_weixin_login"
-            android:layout_marginRight="17dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color_dbdbdb"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/tv_weixin_login"
-            android:layout_marginLeft="17dp"/>
-
-    </RelativeLayout>
-
 </RelativeLayout>
