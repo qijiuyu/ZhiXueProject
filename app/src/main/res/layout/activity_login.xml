@@ -133,19 +133,37 @@
             android:textColor="@android:color/white"
             android:textSize="15sp"/>
 
-        <TextView
-            android:id="@+id/tv_forget_pwd"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/forget_pwd"
-            android:textColor="@color/color_40c5f1"
-            android:textSize="15sp"/>
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/tv_weixin_login"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="100dp"
+                android:gravity="right"
+                android:text="注册"
+                android:textColor="#EC191B"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:id="@+id/tv_forget_pwd"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/forget_pwd"
+                android:textColor="@color/color_40c5f1"
+                android:textSize="17sp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/iv_weixin_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -153,39 +171,4 @@
         android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
         android:src="@mipmap/weixin"/>
-
-    <RelativeLayout
-        android:layout_above="@+id/iv_weixin_login"
-        android:layout_marginBottom="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp">
-
-        <TextView
-            android:id="@+id/tv_weixin_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/weixin_login"
-            android:textColor="@color/color_999999"
-            android:textSize="13sp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color_dbdbdb"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/tv_weixin_login"
-            android:layout_marginRight="17dp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color_dbdbdb"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/tv_weixin_login"
-            android:layout_marginLeft="17dp"/>
-
-    </RelativeLayout>
-
 </RelativeLayout>

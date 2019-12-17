@@ -171,7 +171,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         UMImage image = new UMImage(this, R.mipmap.ic_launcher);
         int id = postListBean.getPostId();
         LogUtils.e("getPostId===" + id);
-        UMWeb web = new UMWeb("http://zxw.yl-mall.cn/zhixue_c/Wxpay/aftershareskip.html?floorPostId=" + String.valueOf(id));
+        UMWeb web = new UMWeb("http://1x9x.cn/zhixue_c/Wxpay/aftershareskip.html?floorPostId=" + String.valueOf(id));
         web.setTitle(TextUtils.isEmpty(postListBean.getPostName()) ? "帖子标题" : postListBean.getPostName());
         if (!TextUtils.isEmpty(postContentString)) {
             if (postContentString.length() >= 25) {

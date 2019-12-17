@@ -26,6 +26,7 @@ import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.method.HttpMethod1;
 import com.example.administrator.zhixueproject.utils.CodeUtils;
 import com.example.administrator.zhixueproject.utils.SPUtil;
+import com.example.administrator.zhixueproject.utils.UpdateVersionUtils;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import org.json.JSONObject;
 /**
@@ -42,6 +43,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_login);
         initView();
         registerReceiver();
+        //查询最新版本
+        new UpdateVersionUtils().searchVersion(this);
     }
 
 
@@ -54,7 +57,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         TextView tvTitle=(TextView)findViewById(R.id.tv_title);
         tvTitle.setText(getString(R.string.main_title));
         TextView tvRegister=(TextView)findViewById(R.id.tv_right);
-        tvRegister.setText(getString(R.string.register));
+        tvRegister.setVisibility(View.GONE);
         etMobile=(EditText)findViewById(R.id.et_telphone) ;
         etPwd=(EditText)findViewById(R.id.et_pwd);
         etCode=(EditText)findViewById(R.id.et_code);
@@ -63,7 +66,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         findViewById(R.id.tv_login).setOnClickListener(this);
         findViewById(R.id.iv_get_code).setOnClickListener(this);
         findViewById(R.id.tv_forget_pwd).setOnClickListener(this);
-        findViewById(R.id.iv_weixin_login).setOnClickListener(this);
+        findViewById(R.id.tv_weixin_login).setOnClickListener(this);
         findViewById(R.id.lin_back).setOnClickListener(this);
         tvRegister.setOnClickListener(this);
     }
@@ -113,7 +116,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 setClass(SettingPwdActivity.class);
                 break;
             //微信登陆
-            case R.id.iv_weixin_login:
+            case R.id.tv_weixin_login:
                  if (!MyApplication.api.isWXAppInstalled()) {
                      showMsg("请先安装微信客户端!");
                  }else{
