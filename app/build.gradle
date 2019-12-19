@@ -10,7 +10,7 @@ android {
         minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
         versionCode 13
-        versionName "9.0"
+        versionName "1.3"
         multiDexEnabled true
         //resConfigs "zh"
 //        resConfigs "zh"
