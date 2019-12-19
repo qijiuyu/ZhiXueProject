@@ -162,6 +162,9 @@ public class ReportDetailsActivity extends BaseActivity  implements MyRefreshLay
         webView.setHorizontalScrollBarEnabled(false);//水平不显示
         webView.setVerticalScrollBarEnabled(false);
         webView.getSettings().setDomStorageEnabled(true);
+        wvPostContent.getSettings().setDomStorageEnabled(true);
+        wvPostContent.getSettings().setUseWideViewPort(true);
+        wvPostContent.getSettings().setTextZoom(100);
         webView.addJavascriptInterface(this, "hello");
     }
 

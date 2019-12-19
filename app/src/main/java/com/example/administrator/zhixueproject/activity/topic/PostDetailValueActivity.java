@@ -431,6 +431,9 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         wvPostContent.setHorizontalScrollBarEnabled(false);//水平不显示
         wvPostContent.setVerticalScrollBarEnabled(false);
         wvPostContent.getSettings().setDomStorageEnabled(true);
+        wvPostContent.getSettings().setUseWideViewPort(true);
+        wvPostContent.getSettings().setTextZoom(100);
+        wvPostContent.getSettings().setLoadWithOverviewMode(true);
         wvPostContent.addJavascriptInterface(this, "hello");
     }
 
