@@ -2,6 +2,7 @@ package com.example.administrator.zhixueproject.adapter.topic;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -54,9 +55,9 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
         }
         helper.setText(R.id.tv_course_name, item.getPostName());
         String str=item.getPostContentApp();
-        if (TextUtils.isEmpty(Utils.getChineseChar(str))){helper.getView(R.id.tv_post_name2).setVisibility(View.GONE);
+        if (TextUtils.isEmpty(Utils.parsingJson(str))){helper.getView(R.id.tv_post_name2).setVisibility(View.GONE);
         }else {
-            helper.setText(R.id.tv_post_name2,Utils.getChineseChar(str) );
+            helper.setText(R.id.tv_post_name2, Html.fromHtml(Utils.parsingJson(str)));
         }
         helper.setText(R.id.tv_post_time, item.getPostCreationTime());
         helper.setText(R.id.tv_collect_num, item.getSeeNum()+"");

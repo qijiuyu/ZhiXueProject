@@ -2,6 +2,9 @@ package com.example.administrator.zhixueproject.utils;
 
 import android.text.TextUtils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 
 public class Utils {
@@ -82,4 +85,23 @@ public class Utils {
         return buffer.toString();
     }
 
+
+    public static String parsingJson(String str){
+        if (TextUtils.isEmpty(str)){
+            return "";
+        }
+        StringBuffer buffer=new StringBuffer();
+        try {
+            JSONArray jsonArray=new JSONArray(str);
+            for (int i=0;i<jsonArray.length();i++){
+                JSONObject jsonObject=jsonArray.getJSONObject(i);
+                if(jsonObject.getInt("type")==0){
+                    buffer.append(jsonObject.getString("content")+"<br>");
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return buffer.toString();
+    }
 }
