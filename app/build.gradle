@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion Integer.parseInt(COMPLIE_SDK_VERSION)
-    buildToolsVersion BUILDTOLLS_VERSION
+    compileSdkVersion 26
+    buildToolsVersion '23.0.1'
 
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.example.administrator.zhixueproject"
-        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
-        versionCode 17
-        versionName "1.7"
+        minSdkVersion 18
+        targetSdkVersion 18
+        versionCode 14
+        versionName "9.0"
         multiDexEnabled true
         //resConfigs "zh"
 //        resConfigs "zh"
@@ -58,15 +58,21 @@ android {
         }
     }
 
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile "com.android.support:appcompat-v7:" + BUILDTOLLS_VERSION
+    compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
     compile 'com.zhy:autolayout:1.4.5'
-    compile "com.android.support:recyclerview-v7:" + BUILDTOLLS_VERSION
+    compile 'com.android.support:recyclerview-v7:26.1.0'
     //刷新和加载
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.7@aar'
     //通用adapter
@@ -81,7 +87,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     //时间选择器
     compile 'com.contrarywind:Android-PickerView:3.2.6'
-    compile "com.android.support:design:"+BUILDTOLLS_VERSION
+    compile 'com.android.support:design:26.1.0'
     // emoji
     compile 'io.github.rockerhieu:emojicon:1.4.2'
     compile 'cn.jiguang.sdk:jpush:3.3.4'
