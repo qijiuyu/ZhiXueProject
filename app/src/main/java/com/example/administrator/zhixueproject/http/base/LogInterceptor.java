@@ -44,7 +44,7 @@ public class LogInterceptor implements Interceptor {
                 if(jsonObject.getBoolean("status")){
                     final JSONObject jsonObject2=new JSONObject(jsonObject.getString("data"));
                     MyApplication.spUtil.addString(SPUtil.TOKEN,jsonObject2.getString("token"));
-                    LogUtils.e(jsonObject2.getString("token")+"________");
+                    LogUtils.e("token==== "+jsonObject2.getString("token")+"________");
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -71,14 +71,14 @@ public class LogInterceptor implements Interceptor {
             formBody = (FormBody) request.body();
             //把原来的参数添加到新的构造器，（因为没找到直接添加，所以就new新的）
             for (int i = 0; i < formBody.size(); i++) {
-                  requstMap.put(formBody.name(i), formBody.value(i).replace("+","%2B"));
+                  requstMap.put(formBody.name(i), formBody.value(i));
                   LogUtils.e(request.url() + "参数:" + formBody.name(i) + "=" + formBody.value(i));
             }
         }
         requstMap = ParameterUtil.getParamter(requstMap);
         //添加公共参数
         for (String key : requstMap.keySet()) {
-            bodyBuilder.addEncoded(key, requstMap.get(key));
+            bodyBuilder.add(key, requstMap.get(key));
         }
         formBody = bodyBuilder.build();
         request = request.newBuilder().addHeader("Authentication", MyApplication.spUtil.getString(SPUtil.TOKEN)).post(formBody).build();
