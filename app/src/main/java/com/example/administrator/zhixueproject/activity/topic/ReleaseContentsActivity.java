@@ -431,6 +431,10 @@ public class ReleaseContentsActivity extends BaseActivity implements View.OnClic
         mAdapter.setChangInstitutionDataListener(new ReleaseContentsAdapter.ChangInstitutionDataListener() {
             @Override
             public void onChangInstitutionDataListener(int position, String data) {
+                // 替换新的文案
+                if (listData.get(position).getType()==0){
+                    listData.get(position).setContent(data);
+                }
             }
 
             @Override
