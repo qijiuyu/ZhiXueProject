@@ -91,6 +91,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
     private SHARE_MEDIA share_media;
     // 帖子内容Str
     private String postContentString;
+    private TextView tvRight;
 
 
     @Override
@@ -105,7 +106,7 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
 
     private void initView() {
         findViewById(R.id.lin_back).setOnClickListener(this);
-        TextView tvRight = (TextView) findViewById(R.id.tv_right);
+        tvRight = (TextView) findViewById(R.id.tv_right);
         tvRight.setBackground(getResources().getDrawable(R.mipmap.edit_iv));
         tvRight.setOnClickListener(this);
         ivHead = (ImageView) findViewById(R.id.iv_head);
@@ -372,8 +373,25 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
         if (!TextUtils.isEmpty(data.getPostContent().getPostContentApp())){
             imgArrow.setVisibility(View.VISIBLE);
         }
-        showDetail(data.getPostContent().getPostContentApp());
 
+        //帖子内容
+        if (data.getPostContent().getPostCh()==1){
+            showDetailPostContent(data.getPostContent().getPostContentB());
+            tvRight.setVisibility(View.GONE);
+        }else {
+            tvRight.setVisibility(View.VISIBLE);
+            showDetail(data.getPostContent().getPostContentApp());
+        }
+    }
+
+    private void showDetailPostContent(String postContent) {
+        initWebView();
+        wvPostContent.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return true;
+            }
+        });
+        wvPostContent.loadDataWithBaseURL(null, postContent, "text/html", "utf-8", null);
     }
 
 
