@@ -200,7 +200,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }else{
                     String nickName=SPUtil.getInstance(this).getString("wxNickName");
                     String headIco=SPUtil.getInstance(this).getString("wxHeadIco");
-                    HttpMethod1.wxLogin(openId,"1",mobile,smsCode,pwd,nickName,headIco,mHandler);
+                    HttpMethod1.wxLogin("1",openId,"1",mobile,smsCode,pwd,nickName,headIco,mHandler);
                 }
                 break;
             case R.id.lin_back:
