@@ -106,6 +106,8 @@ public class PostsDetailsBean extends BaseBean {
             private String userName;
             private String postReward;
             private String postPeepNum;
+            private String postContentB;
+            private int postCh;
 
             public String getPostReward() {
                 return postReward;
@@ -161,6 +163,22 @@ public class PostsDetailsBean extends BaseBean {
 
             public void setPostContentApp(String postContentApp) {
                 this.postContentApp = postContentApp;
+            }
+
+            public String getPostContentB() {
+                return postContentB;
+            }
+
+            public void setPostContentB(String postContentB) {
+                this.postContentB = postContentB;
+            }
+
+            public int getPostCh() {
+                return postCh;
+            }
+
+            public void setPostCh(int postCh) {
+                this.postCh = postCh;
             }
         }
 

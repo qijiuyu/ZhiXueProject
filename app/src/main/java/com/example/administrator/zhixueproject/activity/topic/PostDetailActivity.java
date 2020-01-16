@@ -99,6 +99,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private String postContentApp;
     private boolean showWork = false;
     private WebSettings webSettings;
+    private TextView tvRight;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,7 +114,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
     private void initView() {
         findViewById(R.id.lin_back).setOnClickListener(this);
-        TextView tvRight = (TextView) findViewById(R.id.tv_right);
+        tvRight = (TextView) findViewById(R.id.tv_right);
         tvRight.setBackground(getResources().getDrawable(R.mipmap.edit_iv));
         tvRight.setOnClickListener(this);
         tvComment = (TextView) findViewById(R.id.tv_comment);
@@ -449,10 +450,25 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             imgArrow.setVisibility(View.VISIBLE);
         }
         //帖子内容
-        showDetail(data.getPostContent().getPostContentApp());
+        if (data.getPostContent().getPostCh()==1){
+            showDetailPostContent(data.getPostContent().getPostContentB());
+            tvRight.setVisibility(View.GONE);
+        }else {
+            tvRight.setVisibility(View.VISIBLE);
+            showDetail(data.getPostContent().getPostContentApp());
+        }
         postContentApp = data.getPostContent().getPostContentApp();
     }
 
+    private void showDetailPostContent(String postContent) {
+        initWebView();
+        wvPostContent.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return true;
+            }
+        });
+        wvPostContent.loadDataWithBaseURL(null, postContent, "text/html", "utf-8", null);
+    }
 
     private Map<Integer, String> pathMap = new HashMap<>();
     private Map<Integer, Integer> timeMap = new HashMap<>();
@@ -522,6 +538,18 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         mHandler.post(new Runnable() {
             public void run() {
                 ReleaseContentsBean releaseContentsBean = new ReleaseContentsBean(pathMap.get(index), 2, null, timeMap.get(index));
+                PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(releaseContentsBean);
+                fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
+            }
+        });
+    }
+
+
+    @JavascriptInterface
+    public void playMp3(final String path, final String timeLength) {
+        mHandler.post(new Runnable() {
+            public void run() {
+                ReleaseContentsBean releaseContentsBean = new ReleaseContentsBean(path, 2, null, Long.parseLong(timeLength));
                 PlaybackDialogFragment fragmentPlay = PlaybackDialogFragment.newInstance(releaseContentsBean);
                 fragmentPlay.show(getSupportFragmentManager(), PlaybackDialogFragment.class.getSimpleName());
             }
