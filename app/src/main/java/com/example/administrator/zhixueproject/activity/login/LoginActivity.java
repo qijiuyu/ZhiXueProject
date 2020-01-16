@@ -171,7 +171,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                               loginSuccess(userInfo);
                           }else{
                               clearTask();
-                              if(jsonObject.getString("errorCode").equals("200203")){
+                              if(jsonObject.getString("errorCode").equals("200203") || jsonObject.getString("errorCode").equals("200214")){
                                   Intent intent=new Intent(mContext,RegisterActivity.class);
                                   intent.putExtra("openId",openId);
                                   startActivity(intent);
