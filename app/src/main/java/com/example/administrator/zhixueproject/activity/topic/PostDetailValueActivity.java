@@ -391,7 +391,8 @@ public class PostDetailValueActivity extends BaseActivity implements View.OnClic
                 return true;
             }
         });
-        wvPostContent.loadDataWithBaseURL(null, postContent, "text/html", "utf-8", null);
+        String html = ToolUtils.imgStyleHtml(postContent);
+        wvPostContent.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
     }
 
 
