@@ -171,7 +171,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                               loginSuccess(userInfo);
                           }else{
                               clearTask();
-                              if(jsonObject.getString("errorCode").equals("200203")){
+                              if(jsonObject.getString("errorCode").equals("200203") || jsonObject.getString("errorCode").equals("200214")){
                                   Intent intent=new Intent(mContext,RegisterActivity.class);
                                   intent.putExtra("openId",openId);
                                   startActivity(intent);
@@ -245,7 +245,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             if(action.equals(ACTION_WEIXIN_LOGIN_OPENID)){
                 openId=intent.getStringExtra("openId");
                 showProgress("微信登录中");
-                HttpMethod1.wxLogin(openId,"0",null,null,null,null,null,mHandler);
+                HttpMethod1.wxLogin("0",openId,"0",null,null,null,null,null,mHandler);
             }
         }
     };

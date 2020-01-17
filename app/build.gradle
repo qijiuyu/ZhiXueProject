@@ -10,7 +10,7 @@ android {
         minSdkVersion 18
         targetSdkVersion 18
         versionCode 22
-        versionName "9.0"
+        versionName "2.0"
         multiDexEnabled true
 
         ndk {
