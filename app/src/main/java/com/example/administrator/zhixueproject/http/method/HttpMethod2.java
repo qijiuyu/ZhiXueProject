@@ -939,6 +939,36 @@ public class HttpMethod2 extends BaseRequst {
     }
 
     /**
+     *  删除帖子
+     * @param postId
+     * @param handler
+     */
+    public static void deletePost(String postId, final Handler handler) {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("postId", postId);
+        Http.getRetrofit().create(HttpApi2.class).deletePost(map).enqueue(new Callback<TopicsListBean>() {
+            @Override
+            public void onResponse(Call<TopicsListBean> call, Response<TopicsListBean> response) {
+                try {
+                    sendMessage(handler, HandlerConstant2.DELETE_POST_SUCCESS, response.body());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    LogUtils.e("查询数据异常："+e.getMessage());
+                    sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopicsListBean> call, Throwable t) {
+                LogUtils.e("查询数据报错："+t.getMessage());
+                sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
+            }
+        });
+
+    }
+
+    /**
      * 获取投票详情页
      *
      * @param voteId

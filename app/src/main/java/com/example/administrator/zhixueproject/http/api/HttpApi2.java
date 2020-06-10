@@ -229,6 +229,14 @@ public interface HttpApi2 {
     Call<VoteManageBean>deleteVote(@FieldMap Map<String,String> map);
 
     /**
+     * 删除帖子
+     * @param map
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(HttpConstant.DELETE_POST)
+    Call<TopicsListBean>deletePost(@FieldMap Map<String,String> map);
+    /**
      * 获取投票详情页
      * @param map
      * @return

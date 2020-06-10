@@ -216,6 +216,9 @@ public class HttpConstant {
     // 删除投票
     public static final String DELETE_VOTE = "vote/delVote.do";
 
+    // 删除帖子
+    public static final String DELETE_POST = "post/delPost.do";
+
     // 获取投票详情页
     public static final String GET_VOTE_DETAIL ="vote/getVoteDetail.do" ;
 

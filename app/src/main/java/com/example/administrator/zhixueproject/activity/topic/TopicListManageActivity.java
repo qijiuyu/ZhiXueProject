@@ -20,15 +20,16 @@ import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.example.administrator.zhixueproject.R;
 import com.example.administrator.zhixueproject.activity.BaseActivity;
 import com.example.administrator.zhixueproject.adapter.topic.TopicListAdapter;
+import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.eventBus.TopicEvent;
 import com.example.administrator.zhixueproject.bean.topic.TopicListBean;
 import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
-import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.LogUtils;
 import com.example.administrator.zhixueproject.utils.VibratorUtil;
+import com.example.administrator.zhixueproject.view.DialogView;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -59,6 +60,8 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
     private LinearLayout linBack;
     private long topicId1;
     private long topicId2;
+    private int type; // 1管理员，2老师
+    private DialogView dialogView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,6 +91,7 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
         //刷新加载
         mRefreshLayout.setMyRefreshLayoutListener(this);
         adapterView();
+        type = MyApplication.homeBean.getAttendType();
 
     }
 
@@ -166,6 +170,10 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
                     // 话题排序
                 case HandlerConstant2.UPDATE_SORT_SUCCESS:
                     updateSortSuccess(bean);
+                    break;
+                    // 删除帖子成功
+                case HandlerConstant2.DELETE_POST_SUCCESS:
+                    deletePostSuccess(bean);
                     break;
                 case HandlerConstant1.REQUST_ERROR:
                     requestError();
@@ -255,6 +263,21 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
     }
 
     /**
+     * 删除帖子成功
+     *
+     * @param bean
+     */
+    public void deletePostSuccess(TopicsListBean bean) {
+        if (bean.isStatus()) {
+            showMsg("删除成功");
+            listData.remove(itemCheckedPosition);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            showMsg(bean.getErrorMsg());
+        }
+    }
+
+    /**
      * 加载失败
      */
     private void requestError() {
@@ -311,6 +334,15 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
                     HttpMethod2.isUpOrDowm(topicId + "", "0", mHandler);
                 }
                 break;
+            case R.id.tv_menu_three:
+                // 删除帖子
+                if (type == 2) {
+                    showMsg("老师身份无权限删除");
+                    return;
+                }
+                showConfirmDialog();
+                this.itemCheckedPosition = position;
+                break;
             default:
                 break;
         }
@@ -348,6 +380,21 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
         }
     }
 
+
+    private void showConfirmDialog() {
+        dialogView = new DialogView(this, "确定要删除该帖子吗？", "确定", "取消", new View.OnClickListener() {
+            public void onClick(View v) {
+                HttpMethod2.deletePost(String.valueOf(listData.get(itemCheckedPosition).getTopicId()), mHandler);
+                dialogView.dismiss();
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogView.dismiss();
+            }
+        });
+        dialogView.show();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

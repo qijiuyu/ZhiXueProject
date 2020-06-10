@@ -105,7 +105,7 @@ public class TopicListAdapter extends BaseItemDraggableAdapter<TopicListBean, Ba
                 helper.setText(R.id.tv_menu_two, "上架");
             }
 
-            helper.addOnClickListener(R.id.tv_menu_one).addOnClickListener(R.id.tv_menu_two).addOnClickListener(R.id.content);
+            helper.addOnClickListener(R.id.tv_menu_one).addOnClickListener(R.id.tv_menu_two).addOnClickListener(R.id.tv_menu_three).addOnClickListener(R.id.content);
         }
         // 帖子列表页可以点击
         if (!mIsPostList) {

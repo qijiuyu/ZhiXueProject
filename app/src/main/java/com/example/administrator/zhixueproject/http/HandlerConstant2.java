@@ -54,4 +54,5 @@ public class HandlerConstant2 {
     public static final int DELETE_VOTE_MEMBER_SUCCESS = 2049;
     public static final int APPLY_PASS_SUCCESS = 2050;
     public static final int UPDATE_POST_COLL_SUCCESS = 2051;
+    public static final int DELETE_POST_SUCCESS = 2052;
 }
