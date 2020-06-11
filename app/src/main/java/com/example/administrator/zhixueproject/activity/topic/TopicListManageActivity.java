@@ -61,7 +61,6 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
     private long topicId1;
     private long topicId2;
     private int type; // 1管理员，2老师
-    private DialogView dialogView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -171,10 +170,6 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
                 case HandlerConstant2.UPDATE_SORT_SUCCESS:
                     updateSortSuccess(bean);
                     break;
-                    // 删除帖子成功
-                case HandlerConstant2.DELETE_POST_SUCCESS:
-                    deletePostSuccess(bean);
-                    break;
                 case HandlerConstant1.REQUST_ERROR:
                     requestError();
                     break;
@@ -263,21 +258,6 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
     }
 
     /**
-     * 删除帖子成功
-     *
-     * @param bean
-     */
-    public void deletePostSuccess(TopicsListBean bean) {
-        if (bean.isStatus()) {
-            showMsg("删除成功");
-            listData.remove(itemCheckedPosition);
-            mAdapter.notifyDataSetChanged();
-        } else {
-            showMsg(bean.getErrorMsg());
-        }
-    }
-
-    /**
      * 加载失败
      */
     private void requestError() {
@@ -334,15 +314,6 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
                     HttpMethod2.isUpOrDowm(topicId + "", "0", mHandler);
                 }
                 break;
-            case R.id.tv_menu_three:
-                // 删除帖子
-                if (type == 2) {
-                    showMsg("老师身份无权限删除");
-                    return;
-                }
-                showConfirmDialog();
-                this.itemCheckedPosition = position;
-                break;
             default:
                 break;
         }
@@ -378,22 +349,6 @@ public class TopicListManageActivity extends BaseActivity implements View.OnClic
             PAGE = 1;
             getTopicList(HandlerConstant2.GET_TOPIC_LIST_SUCCESS);
         }
-    }
-
-
-    private void showConfirmDialog() {
-        dialogView = new DialogView(this, "确定要删除该帖子吗？", "确定", "取消", new View.OnClickListener() {
-            public void onClick(View v) {
-                HttpMethod2.deletePost(String.valueOf(listData.get(itemCheckedPosition).getTopicId()), mHandler);
-                dialogView.dismiss();
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogView.dismiss();
-            }
-        });
-        dialogView.show();
     }
     @Override
     protected void onDestroy() {

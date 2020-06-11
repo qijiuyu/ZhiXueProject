@@ -36,8 +36,8 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
         if (postType == 1 || postType == 2) {
             helper.setVisible(R.id.tv_cost_status, true);
             helper.setVisible(R.id.tv_cost_money, false);
-            helper.setVisible(R.id.tv_peep_num, false);
-            helper.setVisible(R.id.img_steal_view,false);
+            helper.setGone(R.id.tv_peep_num, false);
+            helper.setGone(R.id.img_steal_view,false);
             int postIsFree = item.getPostIsFree(); //1=免费；2=付费
             if (postIsFree == 1) {
                 helper.setText(R.id.tv_cost_status, "免费");
@@ -69,5 +69,6 @@ public class PostsCourseAdapter extends BaseQuickAdapter<PostListBean, BaseViewH
             num=item.getPostPeepNum();
         }
         helper.setText(R.id.tv_peep_num,  num);
+        helper.addOnClickListener(R.id.iv_delete_post);
     }
 }

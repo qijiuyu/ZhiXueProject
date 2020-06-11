@@ -21,12 +21,14 @@ import com.example.administrator.zhixueproject.application.MyApplication;
 import com.example.administrator.zhixueproject.bean.eventBus.PostEvent;
 import com.example.administrator.zhixueproject.bean.topic.PostListBean;
 import com.example.administrator.zhixueproject.bean.topic.PostsCourseBean;
+import com.example.administrator.zhixueproject.bean.topic.TopicsListBean;
 import com.example.administrator.zhixueproject.fragment.BaseFragment;
 import com.example.administrator.zhixueproject.http.HandlerConstant1;
 import com.example.administrator.zhixueproject.http.HandlerConstant2;
 import com.example.administrator.zhixueproject.http.method.HttpMethod2;
 import com.example.administrator.zhixueproject.utils.DateUtil;
 import com.example.administrator.zhixueproject.utils.LogUtils;
+import com.example.administrator.zhixueproject.view.DialogView;
 import com.example.administrator.zhixueproject.view.DividerItemDecoration;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayout;
 import com.example.administrator.zhixueproject.view.refreshlayout.MyRefreshLayoutListener;
@@ -41,7 +43,7 @@ import java.util.List;
  * 帖子课程列表
  */
 
-public class PostsCourseFragment extends BaseFragment implements MyRefreshLayoutListener, BaseQuickAdapter.OnItemClickListener {
+public class PostsCourseFragment extends BaseFragment implements MyRefreshLayoutListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener {
     private PostsCourseAdapter mAdapter;
     private List<PostListBean> listData = new ArrayList<>();
     private int postType;//1 课程   2 大家谈  3 有偿提问
@@ -54,6 +56,8 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
     private MyRefreshLayout mrlPostsCourse;
     private RecyclerView rvPostsCourse;
     private Context mContext = MyApplication.application;
+    private int itemCheckedPosition;
+    private DialogView dialogView;
 
     @Nullable
     @Override
@@ -202,6 +206,10 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
                 case HandlerConstant2.GET_POST_LIST_SEARCH_SUCCESS2:
                     loadMoreSuccess(bean);
                     break;
+                // 删除帖子成功
+                case HandlerConstant2.DELETE_POST_SUCCESS:
+                    deletePostSuccess(bean);
+                    break;
                 case HandlerConstant1.REQUST_ERROR:
                     requestError();
                     break;
@@ -252,6 +260,20 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
             showMsg(bean.errorMsg);
         }
     }
+    /**
+     * 删除帖子成功
+     *
+     * @param bean
+     */
+    public void deletePostSuccess(PostsCourseBean bean) {
+        if (bean.isStatus()) {
+            showMsg("删除成功");
+            listData.remove(itemCheckedPosition);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            showMsg(bean.getErrorMsg());
+        }
+    }
 
     /**
      * 加载失败
@@ -270,6 +292,7 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
         rvPostsCourse.setAdapter(mAdapter);
         //条目点击
         mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnItemChildClickListener(this);
         //添加分隔线
         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), R.drawable.divider_activity_line, LinearLayoutManager.VERTICAL);
         rvPostsCourse.addItemDecoration(itemDecoration);
@@ -278,4 +301,27 @@ public class PostsCourseFragment extends BaseFragment implements MyRefreshLayout
     }
 
 
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        switch (view.getId()){
+            case R.id.iv_delete_post:
+                showConfirmDialog();
+                this.itemCheckedPosition = position;
+                break;
+        }
+    }
+    private void showConfirmDialog() {
+        dialogView = new DialogView(getActivity(), "确定要删除该帖子吗？", "确定", "取消", new View.OnClickListener() {
+            public void onClick(View v) {
+                HttpMethod2.deletePost(String.valueOf(listData.get(itemCheckedPosition).getPostId()), mHandler);
+                dialogView.dismiss();
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogView.dismiss();
+            }
+        });
+        dialogView.show();
+    }
 }

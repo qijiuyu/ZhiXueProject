@@ -235,7 +235,7 @@ public interface HttpApi2 {
      */
     @FormUrlEncoded
     @POST(HttpConstant.DELETE_POST)
-    Call<TopicsListBean>deletePost(@FieldMap Map<String,String> map);
+    Call<PostsCourseBean>deletePost(@FieldMap Map<String,String> map);
     /**
      * 获取投票详情页
      * @param map

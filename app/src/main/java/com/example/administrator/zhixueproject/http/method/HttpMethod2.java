@@ -947,9 +947,9 @@ public class HttpMethod2 extends BaseRequst {
 
         Map<String, String> map = new HashMap<>();
         map.put("postId", postId);
-        Http.getRetrofit().create(HttpApi2.class).deletePost(map).enqueue(new Callback<TopicsListBean>() {
+        Http.getRetrofit().create(HttpApi2.class).deletePost(map).enqueue(new Callback<PostsCourseBean>() {
             @Override
-            public void onResponse(Call<TopicsListBean> call, Response<TopicsListBean> response) {
+            public void onResponse(Call<PostsCourseBean> call, Response<PostsCourseBean> response) {
                 try {
                     sendMessage(handler, HandlerConstant2.DELETE_POST_SUCCESS, response.body());
                 } catch (Exception e) {
@@ -960,7 +960,7 @@ public class HttpMethod2 extends BaseRequst {
             }
 
             @Override
-            public void onFailure(Call<TopicsListBean> call, Throwable t) {
+            public void onFailure(Call<PostsCourseBean> call, Throwable t) {
                 LogUtils.e("查询数据报错："+t.getMessage());
                 sendMessage(handler, HandlerConstant1.REQUST_ERROR, null);
             }

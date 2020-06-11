@@ -113,12 +113,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
+            android:ellipsize="end"
             android:lineSpacingExtra="5dp"
+            android:maxLines="2"
             android:text="艺术博物馆学校艺术博馆学校艺术博物馆学校艺术博物馆学校艺术博物馆学校"
             android:textColor="@color/color_5d5d5d"
-            android:textSize="15sp"
-            android:maxLines="2"
-            android:ellipsize="end"/>
+            android:textSize="15sp" />
 
 
         <LinearLayout
@@ -126,11 +126,13 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@mipmap/img_view"
-                android:layout_marginRight="2dp"/>
+                android:layout_marginRight="2dp"
+                android:src="@mipmap/img_view" />
+
             <TextView
                 android:id="@+id/tv_collect_num"
                 android:layout_width="wrap_content"
@@ -138,12 +140,14 @@
                 android:text="20"
                 android:textColor="@color/color_888888"
                 android:textSize="15sp" />
+
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@mipmap/img_comment"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="2dp"/>
+                android:layout_marginRight="2dp"
+                android:src="@mipmap/img_comment" />
+
             <TextView
                 android:id="@+id/tv_comment_num"
                 android:layout_width="wrap_content"
@@ -151,13 +155,15 @@
                 android:text="999"
                 android:textColor="@color/color_888888"
                 android:textSize="15sp" />
+
             <ImageView
                 android:id="@+id/img_steal_view"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@mipmap/img_steal_view"
+                android:layout_marginLeft="20dp"
                 android:layout_marginRight="2dp"
-                android:layout_marginLeft="20dp"/>
+                android:src="@mipmap/img_steal_view" />
+
             <TextView
                 android:id="@+id/tv_peep_num"
                 android:layout_width="wrap_content"
@@ -165,6 +171,13 @@
                 android:text="20"
                 android:textColor="@color/color_888888"
                 android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/iv_delete_post"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/img_delete" />
         </LinearLayout>
 
     </LinearLayout>
